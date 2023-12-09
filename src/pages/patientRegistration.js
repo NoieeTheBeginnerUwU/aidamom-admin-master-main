@@ -386,7 +386,7 @@ export default function PatientRegistrationForm() {
   console.log(registrationForm);
 
   const handleChangeSetter = (setter) => (event) => {
-    setter(event.target.value);
+    setter(event.target.checked);
   };
 
 
@@ -689,7 +689,7 @@ export default function PatientRegistrationForm() {
 
                   />
                 </Grid>
-                <Grid item xs={1.5} mt={2} >
+                {/* <Grid item xs={1.5} mt={2} >
 
                   <FormControlLabel
                     value="top"
@@ -722,7 +722,7 @@ export default function PatientRegistrationForm() {
                     <MenuItem value='V'>V</MenuItem>
                     <MenuItem value='VI'>VI</MenuItem>
                   </Select>
-                </Grid>
+                </Grid> */}
 
                 <Grid item xs={12} mt={2}>
                   <Box>
@@ -1407,7 +1407,7 @@ export default function PatientRegistrationForm() {
                   value="top"
                   control={<Checkbox />}
 
-
+                  onChange={handleChangeSetter(setCheckboxEnable)}
                   size='small'
                   label="I have Extension"
                   labelPlacement="end"
@@ -1422,6 +1422,7 @@ export default function PatientRegistrationForm() {
                   size='small'
                   value={registrationForm.userFathersSuffix}
                   onChange={(text) => setRegistrationForm(prev => { return { ...prev, userFathersSuffix: text.target.value } })}
+                  disabled={!checkboxEnable}
                 >
 
                   <MenuItem value='JR'>JR</MenuItem>
@@ -1480,7 +1481,7 @@ export default function PatientRegistrationForm() {
                   required
                 />
               </Grid>
-              <Grid item xs={1.5} mt={2} >
+              {/* <Grid item xs={1.5} mt={2} >
 
                 <FormControlLabel
                   value="top"
@@ -1509,7 +1510,7 @@ export default function PatientRegistrationForm() {
                   <MenuItem value='V'>V</MenuItem>
                   <MenuItem value='VI'>VI</MenuItem>
                 </Select>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Box>
         </Grid>
