@@ -112,7 +112,7 @@ export default function Approval() {
     
     <Box  style={{ maxHeight: '90%', maxWidth: '98%' , padding:'1%'}} >
 <Grid container >
-<Grid xs={4} mb={2}>
+<Grid xs={5} mb={1}>
 <TextField
   label="Search"
   variant="standard"
@@ -128,8 +128,8 @@ export default function Approval() {
   }}
 />
     </Grid>
-    <Grid xs={2}></Grid>
-    <Grid xs={8} marginTop={3}>
+   <Grid xs={2}></Grid>
+    <Grid xs={5} marginTop={1}>
       <FormControlLabel
         control={
           <Checkbox
@@ -163,19 +163,16 @@ export default function Approval() {
       </Grid>
       <Grid xs={12}>
   {/* ----------------------------------------------------------------- Appointment Table ----------------------------------------------------------------- */}
-      <DataGrid
+  <Box sx={{ height: 460, width: '100%' }}>
+      <DataGrid autoHeight={false}
+      rowsPerPageOptions={[]} 
         rows={filteredRows}
         columns={columns}
         pageSize={5}
         density="compact"
-        getRowHeight={(params) => {
-          if (params.id === 'id') { 
-            return 70; // replace 100 with the desired height
-          }
-          return 30; // replace 50 with the default height
-        }} 
+       
       />
-      
+  </Box>
       </Grid>
       </Grid>
     </Box>
