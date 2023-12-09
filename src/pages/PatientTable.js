@@ -682,11 +682,28 @@ function PatientTable({ handleSubmit, userData }) {
     }
   }
 
+  const fetchAppointments = async () => {
+    let a = [];
+    let o = [];
+    const querySnapshot1 = await getDocs(query(collection(database,"appointments"),where("uid","==",selectedRow.docid)));
+    querySnapshot1.forEach((doc)=>{
+      a.push({id:doc.id, aog:doc.data().aog, appointmentDate:doc.data().appointmentDate, bmi:doc.data().bmi, bp:doc.data().bp, bpCategory:doc.data().bpCategory,diastolic:doc.data().diastolic,dilates:doc.data().dilates,efficases:doc.data().efficases,fetalMovement:doc.data().fetalMovement,fundalHeight:doc.data().fundalHeight,height:doc.data().height,lmp:doc.data().lmp,name:doc.data().name,presentation:doc.data().presentation,remarks:doc.data().remarks,systolic:doc.data().systolic,uid:doc.data().uid,weight:doc.data().weight})
+    })
+    setPastAppointments(a);
+    const querySnapshot2 = await getDocs(query(collection(database,"onlineAppointments"),where("uid","==",selectedRow.docid)));
+    querySnapshot2.forEach((doc)=>{
+      o.push({id:doc.id, appointmentDate:doc.data().appointmentDate, status:doc.data().status, purpose:doc.data().purpose})
+    })
+    setOnlineAppointments(o);
+  }
+
   useEffect(() => {
-    const fetchAppointments = async () => {
+   
+    if(selectedRow.docid!==undefined){
+      fetchAppointments()
+    }else{
 
     }
-
   }, [selectedRow.docid])
 
 
@@ -1164,11 +1181,11 @@ function PatientTable({ handleSubmit, userData }) {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {rows1.length > 0 ? (
-                            rows1.map((row1) => (
-                              <TableRow key={row1.dateAndTime}>
+                          {onlineAppointments.length > 0 ? (
+                            onlineAppointments.map((row1) => (
+                              <TableRow key={row1.appointmentDate}>
                                 <TableCell component="th" scope="row">
-                                  {row1.dateAndTime}
+                                  {row1.appointmentDate}
                                 </TableCell>
                                 <TableCell align="right">{row1.purpose}</TableCell>
                                 <TableCell align="right">{row1.status}</TableCell>
@@ -1205,14 +1222,14 @@ function PatientTable({ handleSubmit, userData }) {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {rows2.length > 0 ? (
-                            rows2.map((row2) => (
-                              <TableRow key={row2.dateOfVisit}>
-                                <TableCell>{row2.dateOfVisit}</TableCell>
-                                <TableCell>{row2.bloodPressure}</TableCell>
+                          {pastAppointments.length > 0 ? (
+                            pastAppointments.map((row2) => (
+                              <TableRow key={row2.appointmentDate}>
+                                <TableCell>{row2.appointmentDate}</TableCell>
+                                <TableCell>{row2.bp}</TableCell>
                                 <TableCell>{row2.weight}</TableCell>
                                 <TableCell>{row2.bmi}</TableCell>
-                                <TableCell align='center'>{row2.cervixExamination}</TableCell>
+                                <TableCell align='center'>{row2.dilates} / {row2.efficases}</TableCell>
                                 <TableCell>{row2.fundalHeight}</TableCell>
                                 <TableCell>{row2.fetalMovement}</TableCell>
                                 <TableCell>{row2.presentation}</TableCell>

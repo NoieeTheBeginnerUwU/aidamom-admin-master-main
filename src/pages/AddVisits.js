@@ -159,7 +159,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
 
     const submitVisit = async() =>{
         let arr = [];
-        const querySnapshot = await getDocs(query(collection(database,"onlineAppointments"),where("appointmentDate","==",moment(new Date()).format("YYYY/MM/DD")),where("uid","==",)))
+        const querySnapshot = await getDocs(query(collection(database,"onlineAppointments"),where("appointmentDate","==",moment(new Date()).format("YYYY/MM/DD")),where("uid","==",selectedPatient.docid)))
            
         try{
                 addDoc(collection(database,"appointments"),{
@@ -182,7 +182,16 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                     presentation: presentation,
                     remarks: text
                 }).then(alert("ADDED"))
-
+                    setHeight("");
+                    setWeight("");
+                    setSystolic("");
+                    setDiastolic("");
+                    setDilates("");
+                    setEfficaces("");
+                    setFetalMovement("");
+                    setFundalHeight("");
+                    setPresentation("");
+                    setText("");
         }catch(e){
 
         }
