@@ -667,6 +667,9 @@ const handleCreateAccount = async() => {
 }
 
 useEffect(()=>{
+  const fetchAppointments = async() => {
+
+  }
   
 },[selectedRow.docid])
 
