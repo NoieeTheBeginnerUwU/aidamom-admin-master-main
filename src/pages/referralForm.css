@@ -1,0 +1,40 @@
+body{
+    margin: 0;
+    padding: 0;
+   
+}
+
+.container{
+    width: 21cm;
+    height: 29.7cm;
+    margin: 1cm auto;
+    padding: 1cm;
+    border: 1px solid #ccc;
+    
+}
+table, th, td{  
+margin: 0;
+padding: 1px;
+margin-bottom: 50px;
+border: 1px solid black;
+border-collapse: collapse;
+}
+
+input{
+    width: 20px;
+   
+}
+input.checkbox{
+width:1%;
+
+}
+input.checkbox{
+    width:1%;
+    
+    }
+div{
+    margin-bottom: 1%;
+}
+label{
+    font-size: 12px;
+}

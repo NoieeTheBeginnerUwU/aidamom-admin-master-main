@@ -1,0 +1,19 @@
+.MuiFormControlLabel-label {
+    font-size: 12px;
+}
+label#demo-radio-buttons-group-label {
+    color: black;
+    font-weight: 600;
+}
+label#civilstatus {
+    color: black;
+    font-weight: 600;
+}
+label#bloodtype {
+    color: black;
+    font-weight: 600;
+}
+label#nationality {
+    color: black;
+    font-weight: 600;
+}

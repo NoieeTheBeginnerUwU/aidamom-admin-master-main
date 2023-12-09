@@ -1,0 +1,93 @@
+body{
+    height: 842px;
+    width: 595px;
+    margin-left: auto;
+    margin-right: auto;
+ 
+}
+header{
+    padding: 0;
+    margin: 0;
+}
+label{
+    display: inline-block;
+    font-size: 12px;
+}
+h4 {
+    display: block;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: 100;
+    font-size: 12px;
+  
+}
+div{
+    padding-left: 20px;
+    padding-right:20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    }
+.container1{
+    width: 21cm;
+    height: 29.7cm;
+    margin: 2cm auto;
+    padding: 2cm;
+    border: 1px solid #ccc;
+
+
+}
+input.history{
+    width: 70%;
+
+}
+input.physical{
+    width: 50%;
+}
+input.vital{
+    width: 85%;
+
+}
+input.vitals{
+    width: 11%;
+    border: none;
+    border-bottom: 1px solid black;
+}
+input.longline{
+    width: 65%;
+    border: none;
+    border-bottom: 1px solid black;
+}
+input.shortline{
+    width: 21%;
+    border: none;
+    border-bottom: 1px solid black;
+}
+input.longline1{
+    width: 48%;
+    border: none;
+    border-bottom: 1px solid black;
+}
+input.shortline1{
+    width: 33%;
+    border: none;
+    border-bottom: 1px solid black;
+}
+input.preggy{
+    width: 20px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+input.dual{
+width: 25%;
+margin-right: 40px;
+border: none;
+border-bottom: 1px solid black;
+
+}
+input.triple{
+    width: 20%;
+    border: none;
+    border-bottom: 1px solid black;
+}
