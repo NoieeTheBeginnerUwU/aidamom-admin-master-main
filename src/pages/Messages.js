@@ -169,7 +169,7 @@ const Messages = () => {
   const sendMessage = async (message) => {
     const messagesCollection = collection(database, "messages");
     const logCollection = collection(database, "adminLogs");
-    let now = moment(date).format("YYYY/MM/DD hh:mm a");
+    let now = moment(date).format("YYYY/MM/DD hh:mm:ss a");
     await addDoc(messagesCollection, {
       text: message,
       createdAt: now,
