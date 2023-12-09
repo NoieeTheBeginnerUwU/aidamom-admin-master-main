@@ -175,17 +175,23 @@ try {
       })
   }
 
-  const [counter, setCounter] = useState(0)
+  const [counter, setCounter] = useState(0);
+  const [messaged, setMessaged] = useState([]);
   useEffect(() => {
     const messagesCollection = query(collection(database, "messages"),where("status","==","unread"));
     const unsubscribe = onSnapshot(messagesCollection, (snapshot) => {
       let appointments = [];
+      let m = [];
       let count = 0;
       snapshot.forEach((doc)=>{
         count++;
         appointments.push({id:doc.id,name:doc.data().name, dateMade:doc.data().dateMade,uid:doc.data().uid})
+        if(doc.data().status==="unnread"){
+          m.push(doc.data().senderId)
+        }
       })
       setCounter(count);
+      setMessaged(m);
     });
   }, []);
 
@@ -360,7 +366,7 @@ try {
               </Link>
             </div>
         </div>
-        <div style={{width:hide===true?'97%':'80%',height:'100vh',backgroundColor:'ghostwhite',overflow:'hidden',transition:'ease-in-out',transitionDuration:'1s'}}>
+        <div style={{width:hide===true?'97%':'80%',height:'100%',backgroundColor:'ghostwhite',overflow:'hidden',transition:'ease-in-out',transitionDuration:'1s'}}>
           <Routes>
               {
                 user?
@@ -372,7 +378,7 @@ try {
                   <Route path='Screening' element={<Screening/>}/>
                   <Route path='Immunization' element={<Immunization/>}/>
                   <Route path='Users' element={<Users/>}/>
-                  <Route path='Messages' element={<Messages/>}/>
+                  <Route path='Messages' element={<Messages messaged={messaged}/>}/>
                   <Route path='Systemreport' element={<Systemreport/>}/>
                   <Route path='Forms' element={<Reports/>}/>
                   <Route path='Profile' element={<Profile/>}/>
