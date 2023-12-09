@@ -685,12 +685,12 @@ function PatientTable({ handleSubmit, userData }) {
   const fetchAppointments = async () => {
     let a = [];
     let o = [];
-    const querySnapshot1 = await getDocs(query(collection(database,"appointments"),where("uid","==",selectedRow.docid)));
+    const querySnapshot1 = await getDocs(query(collection(database,"appointments"),where("uid","==",selectedRow.docid)),orderBy("appointmentDate","desc"));
     querySnapshot1.forEach((doc)=>{
       a.push({id:doc.id, aog:doc.data().aog, appointmentDate:doc.data().appointmentDate, bmi:doc.data().bmi, bp:doc.data().bp, bpCategory:doc.data().bpCategory,diastolic:doc.data().diastolic,dilates:doc.data().dilates,efficases:doc.data().efficases,fetalMovement:doc.data().fetalMovement,fundalHeight:doc.data().fundalHeight,height:doc.data().height,lmp:doc.data().lmp,name:doc.data().name,presentation:doc.data().presentation,remarks:doc.data().remarks,systolic:doc.data().systolic,uid:doc.data().uid,weight:doc.data().weight})
     })
     setPastAppointments(a);
-    const querySnapshot2 = await getDocs(query(collection(database,"onlineAppointments"),where("uid","==",selectedRow.docid)));
+    const querySnapshot2 = await getDocs(query(collection(database,"onlineAppointments"),where("uid","==",selectedRow.docid)),orderBy("appointmentDate","desc"));
     querySnapshot2.forEach((doc)=>{
       o.push({id:doc.id, appointmentDate:doc.data().appointmentDate, status:doc.data().status, purpose:doc.data().purpose})
     })

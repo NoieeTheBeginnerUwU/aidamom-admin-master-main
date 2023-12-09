@@ -162,6 +162,12 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
         const querySnapshot = await getDocs(query(collection(database,"onlineAppointments"),where("appointmentDate","==",moment(new Date()).format("YYYY/MM/DD")),where("uid","==",selectedPatient.docid)))
            
         try{
+            addDoc(collection(database,"onlineAppointments"),{
+                uid: selectedPatient.docid,
+                appointmentDate: moment(new Date(),"YYYY/MM/DD").add(30,"days").format("YYYY/MM/DD"),
+                purpose: "prenatal",
+                status: "assigned by RHU",
+            })
                 addDoc(collection(database,"appointments"),{
                     name:selectedPatient.userFname + selectedPatient.userLname,
                     uid: selectedPatient.docid,
@@ -192,8 +198,9 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                     setFundalHeight("");
                     setPresentation("");
                     setText("");
+                    
         }catch(e){
-
+            alert(e)
         }
     }
 
@@ -251,7 +258,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                     <Typography fontSize={'medium'}>
                                         AOG
                                         <Box fontSize={'medium'} fontWeight={'650'} color={'black'}>
-                                        {moment(new Date(),"YYYY/MM/DD").diff(selectedPatient.lastPeriod,"weeks")} months
+                                        {moment(new Date(),"YYYY/MM/DD").diff(selectedPatient.lastPeriod,"weeks")} weeks
                                         </Box>
                                     </Typography>
                                 </Box>
