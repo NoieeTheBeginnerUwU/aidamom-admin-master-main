@@ -81,6 +81,11 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
     const [weight, setWeight] = React.useState('');
     const [systolic, setSystolic] = React.useState('');
     const [diastolic, setDiastolic] = React.useState('');
+    const [dilates, setDilates] = React.useState('');
+    const [efficases, setEfficaces] = React.useState('');
+    const [fundalHeight, setFundalHeight] = React.useState('');
+    const [fetalMovement, setFetalMovement] = React.useState('');
+
 
 
     const bmi = (weight && height) ? (weight / ((height / 100) ** 2)).toFixed(2) : '';
@@ -154,22 +159,48 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
 
     const submitVisit = async() =>{
         let arr = [];
+        const querySnapshot = await getDocs(query(collection(database,"onlineAppointments"),where("appointmentDate","==",moment(new Date()).format("YYYY/MM/DD")),where("uid","==",selectedPatient.docid)))
+           
         try{
-            const fetchAppointmentsToday = await getDocs(query(collection(database, "onlineAppointments"),where("uid"),"==",selectedPatient.id),where("status","==","approved"))
-            fetchAppointmentsToday.forEach((doc)=>{
-                arr.push(doc.id)
+            addDoc(collection(database,"onlineAppointments"),{
+                uid: selectedPatient.docid,
+                appointmentDate: moment(new Date(),"YYYY/MM/DD").add(30,"days").format("YYYY/MM/DD"),
+                purpose: "prenatal",
+                status: "assigned by RHU",
             })
-            if(arr.length>0){
-                for(let i = 1; i < arr.length; i++){
-                    updateDoc(doc(database,"onlineAppointments",arr[i]),{
-                        status:"completed"
-                    })
-                }
-            }
-            alert(arr.length)
-            console.log(arr);
+                addDoc(collection(database,"appointments"),{
+                    name:selectedPatient.userFname + selectedPatient.userLname,
+                    uid: selectedPatient.docid,
+                    appointmentDate: moment(new Date()).format("YYYY/MM/DD"),
+                    lmp: moment(selectedPatient.lastPeriod,"YYYY/MM/DD").format("MMMM DD, YYYY"),
+                    aog: moment(new Date()).diff(moment(selectedPatient.lastPeriod,"YYYY/MM/DD"),"weeks") + "weeks",
+                    height: height,
+                    weight: weight,
+                    bmi: bmi,
+                    systolic: systolic,
+                    diastolic:diastolic,
+                    bp: systolic+"/"+diastolic,
+                    bpCategory:bpCategory,
+                    dilates: dilates,
+                    efficases: efficases,
+                    fundalHeight: fundalHeight,
+                    fetalMovement: fetalMovement,
+                    presentation: presentation,
+                    remarks: text
+                }).then(alert("ADDED"))
+                    setHeight("");
+                    setWeight("");
+                    setSystolic("");
+                    setDiastolic("");
+                    setDilates("");
+                    setEfficaces("");
+                    setFetalMovement("");
+                    setFundalHeight("");
+                    setPresentation("");
+                    setText("");
+                    
         }catch(e){
-
+            alert(e)
         }
     }
 
@@ -227,7 +258,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                     <Typography fontSize={'medium'}>
                                         AOG
                                         <Box fontSize={'medium'} fontWeight={'650'} color={'black'}>
-                                        {moment(new Date(),"YYYY/MM/DD").diff(selectedPatient.lastPeriod,"weeks")} months
+                                        {moment(new Date(),"YYYY/MM/DD").diff(selectedPatient.lastPeriod,"weeks")} weeks
                                         </Box>
                                     </Typography>
                                 </Box>
@@ -412,6 +443,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                             <TextField
                                                 label="Dilates"
                                                 type="number"
+                                                onChange={(text)=> setDilates(text.target.value)}
                                                 inputProps={{ min: 0, max: 10 }}
                                                 InputProps={{
                                                     endAdornment: <InputAdornment position="end">cm</InputAdornment>,
@@ -422,6 +454,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                             <TextField
                                                 label="Effaces"
                                                 type="number"
+                                                onChange={(text)=> setEfficaces(text.target.value)}
                                                 inputProps={{ min: 0, max: 100 }}
                                                 InputProps={{
                                                     endAdornment: <InputAdornment position="end">%</InputAdornment>,
@@ -434,6 +467,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                             <TextField
                                                 label="Fundal height"
                                                 type="number"
+                                                onChange={(text)=> setFundalHeight(text.target.value)}
                                                 inputProps={{ min: 0, max: 100 }}
                                                 InputProps={{
                                                     endAdornment: <InputAdornment position="end">cm</InputAdornment>,
@@ -444,6 +478,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                             <TextField
                                                 label="Fetal movement"
                                                 type="number"
+                                                onChange={(text)=> setFetalMovement(text.target.value)}
                                                 inputProps={{ min: 0, max: 10 }}
                                                 InputProps={{
                                                     endAdornment: <InputAdornment position="end">count</InputAdornment>,
