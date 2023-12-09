@@ -666,6 +666,10 @@ const handleCreateAccount = async() => {
   }
 }
 
+useEffect(()=>{
+  
+},[selectedRow.docid])
+
   
   return (
 

@@ -144,6 +144,7 @@ const Messages = () => {
         appointments.push({id:doc.id,name:doc.data().name, dateMade:doc.data().dateMade,uid:doc.data().uid})
       })
       setMessages(messagesSnapshot.docs);
+      scrollToBottom()
     }
 
     fetchMessages();
@@ -159,6 +160,7 @@ const Messages = () => {
       })
       setUnread(un)
       setMessages(snapshot.docs);
+      scrollToBottom()
     });
 
     return () => {
@@ -183,6 +185,7 @@ const Messages = () => {
       timestamp: now,
     });
     setMessage("");
+    scrollToBottom
   };
 
   const scrollContainer = useRef(null);
@@ -193,6 +196,11 @@ const Messages = () => {
       scrollContainer.current.scrollTop = scrollContainer.current.scrollHeight;
     }
   };
+
+  const ref = useRef(null);
+  useEffect(() => {
+    ref.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
  
   const handleRead = async(id) => {
     try {
@@ -225,7 +233,7 @@ const Messages = () => {
         <Loading/>
         :
         <div style={{width:'100%',height:'100vh',backgroundColor:'ghostwhite',flexDirection:'row',display:'flex',alignItems:'center',justifyContent:'end',overflow:'hidden'}}>
-        <div style={{width:'20%',height:'100%',backgroundColor:'rgb(0,0,50)',overflowY:'scroll',}}>
+        <div  style={{width:'20%',height:'100%',backgroundColor:'rgb(0,0,50)',overflowY:'scroll',}}>
           <div style={{width:'100%',height:70,display:'flex',alignItems:'center',justifyContent:'center'}}>
             <div style={{display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
               <input type="text" placeholder="search patient" style={{fontSize:12,width:180,height:30}} onChange={(text)=> search(text.target.value)}/>
@@ -233,7 +241,7 @@ const Messages = () => {
           </div>
           {
             document.map((doc)=> (
-              <div key={doc.id} onClick={()=> [setActive(doc.id), setName(doc.fName+" "+doc.mName+" "+doc.lName), handleRead(doc.id),setPicture(doc.userPic)]} style={{width:'100%',height:60,display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'start',backgroundColor:active===doc.id?"navy":"transparent",cursor:'pointer'}}>
+              <div key={doc.id} onClick={()=> [setActive(doc.id), setName(doc.fName+" "+doc.mName+" "+doc.lName), scrollToBottom(), handleRead(doc.id),setPicture(doc.userPic)]} style={{width:'100%',height:60,display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'start',backgroundColor:active===doc.id?"navy":"transparent",cursor:'pointer'}}>
                 <div style={{width:40,height:40,borderRadius:40,backgroundImage:!doc.userPic?`url(${img})`:`url(${doc.userPic})`,backgroundSize:'cover',backgroundPosition:'center',backgroundColor:'white',marginLeft:4}}/>
                 <div style={{width:'80%',height:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
                   <p style={{fontSize:12,color:'white',marginLeft:10}}>{doc.fName} {doc.mName} {doc.lName}</p>
@@ -243,7 +251,7 @@ const Messages = () => {
             ))
           }
         </div>
-        <div style={{width:'80%',height:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
+        <div style={{width:'80%',height:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',color:'transparent'}}>
          {
           active!==""?
           <>
@@ -251,15 +259,23 @@ const Messages = () => {
               <div  style={{width:40,height:40,borderRadius:40,marginRight:40,backgroundImage:picture===""?`url(${pic})`:`url(${picture})`,backgroundSize:'contain',backgroundPosition:'center',marginLeft:40}}/>
               <p style={{color:'white',fontSize:18,fontWeight:700}}>{name}</p>
             </div>
-            <div style={{width:'100%',height:'80%',backgroundColor:'white',overflowY:'scroll'}} className="scroll-container">
+            <div style={{width:'100%',height:'80%',backgroundColor:'white',overflowY:'scroll'}} ref={scrollContainer} className="scroll-container">
                 {messages.map((doc) => (
                   <>
                     {
                       doc.data().receiverId===active|doc.data().senderId===active&&
                       <>
-                        <div  style={{listStyleType:'none',color:'black',padding:'2%',display:'flex',flexDirection:'column',justifyContent:"center",alignItems:doc.data().receiverId===active?"end":"start",backgroundColor:'transparent',}}>
-                          <li style={{width:'40%',height:'100%',textDecoration:'none',listStyleType:'none',marginBottom:'1%',padding:12,backgroundColor:doc.data().receiverId===active?'navy':"lightgrey",borderRadius:10,fontSize:12,fontWeight:700,color:doc.data().receiverId===active?'white':"black"}} key={doc.id}>{doc.data().text}</li>
-                          <p style={{color:'black',fontSize:10,color:'black',margin:0}}>{doc.data().createdAt}</p>
+                        <div  style={{listStyleType:'none',color:'black',padding:'1%',display:'flex',flexDirection:'column',justifyContent:"center",alignItems:doc.data().receiverId===active?"end":"start",backgroundColor:'transparent',}}>
+                          <div style={{width:'40%',display:'flex',flexDirection:'row'}}>
+                            {
+                              doc.data().senderId===active&&
+                              <div  style={{width:60,height:40,borderRadius:40,marginRight:40,backgroundImage:picture===""?`url(${pic})`:`url(${picture})`,backgroundSize:'contain',backgroundPosition:'center',marginLeft:10}}/>
+                            }
+                            <div style={{width:'100%',height:'100%',display:'flex',flexDirection:'column'}}>
+                              <li style={{width:'100%',height:'100%',textDecoration:'none',listStyleType:'none',marginBottom:'1%',padding:12,backgroundColor:doc.data().receiverId===active?'navy':"lightgrey",borderRadius:10,fontSize:12,fontWeight:700,color:doc.data().receiverId===active?'white':"black"}} key={doc.id}>{doc.data().text}</li>
+                              <p style={{color:'black',fontSize:10,color:'black',margin:0}}>{moment(doc.data().createdAt).format("MMMM DD, YYYY hh:mm a")} {doc.data().status}</p>
+                            </div>
+                          </div>
                         </div>
                       </>
                     }
@@ -267,7 +283,7 @@ const Messages = () => {
                 ))}
             </div>
             <div style={{width:'100%',height:'10%',backgroundColor:'ghostwhite',display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-            <div style={{width:'80%',height:'70%',backgroundColor:'white',border:'1px solid grey',borderTopLeftRadius:10,borderBottomLeftRadius:10,display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+              <div style={{width:'80%',height:'70%',backgroundColor:'white',border:'1px solid grey',borderTopLeftRadius:10,borderBottomLeftRadius:10,display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                 <input type="text" placeholder="Enter a message" value={message} onChange={(text)=> setMessage(text.target.value)} style={{outline:'none',height:40,width:'96%',border:'none',borderRadius:10}}/>
               </div>
               <button onClick={() => [sendMessage(message),scrollToBottom]} style={{width:100,height:'70%',color:'white',fontWeight:600,backgroundColor:'navy',cursor:'pointer'}}>Send</button>
