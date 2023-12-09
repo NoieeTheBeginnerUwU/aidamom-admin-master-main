@@ -8,6 +8,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Autocomplete from '@mui/material/Autocomplete';
 import { makeStyles, withStyles, createTheme, ThemeProvider } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
+import IconButton from '@material-ui/core/IconButton';
 import ReportIcon from '@material-ui/icons/InsertChart';
 import CreateIcon from '@material-ui/icons/Create';
 import DoneIcon from '@material-ui/icons/Done';
@@ -36,7 +37,9 @@ import TabPanel from '@mui/lab/TabPanel';
 import PatientRegistrationForm from './patientRegistration';
 import SearchIcon from '@mui/icons-material/Search';
 //firebase
-import { getDocs,query,collection,where,orderBy } from 'firebase/firestore';
+import { getDocs, query, collection, where, orderBy } from 'firebase/firestore';
+import Appoinment from './Approval';
+import Approval from './Approval';
 
 
 const useStyles = makeStyles({
@@ -75,18 +78,18 @@ const theme = createTheme({
 });
 
 
-function PatientTable({handleSubmit, userData}) {
+function PatientTable({ handleSubmit, userData }) {
 
-  
-const [modalIsOpen, setModalIsOpen] = useState(false);
 
-function openModal1() {
-  setModalIsOpen(true);
-}
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-function closeModal1() {
-  setModalIsOpen(false);
-}
+  function openModal1() {
+    setModalIsOpen(true);
+  }
+
+  function closeModal1() {
+    setModalIsOpen(false);
+  }
 
 
 
@@ -149,27 +152,27 @@ function closeModal1() {
 
   const [registrationForm, setRegistrationForm] = useState({
     //basic personal details
-    userFname:"",
-    userMname:"",
-    userLname:"",
-    userSuffix:"",
-    userSex:"",
-    userCivilStatus:"",
-    userBloodType:"",
-    userReligion:"",
-    userNumber:"",
-    userDob:"",
-    userAge:"",
-    userNationality:"",
-    userOccupation:"",
-    userPurok:"",
-    userBarangay:"",
-    userTown:"",
-    userProvince:"",
-    userPlaceOfBirth:"",
+    userFname: "",
+    userMname: "",
+    userLname: "",
+    userSuffix: "",
+    userSex: "",
+    userCivilStatus: "",
+    userBloodType: "",
+    userReligion: "",
+    userNumber: "",
+    userDob: "",
+    userAge: "",
+    userNationality: "",
+    userOccupation: "",
+    userPurok: "",
+    userBarangay: "",
+    userTown: "",
+    userProvince: "",
+    userPlaceOfBirth: "",
   })
 
-  
+
 
 
 
@@ -344,377 +347,416 @@ function closeModal1() {
   );
 
 
-const [openAddPatient, setOpenAddPatient] = React.useState(false);
-const handleClickAdd = () => {
-  setOpenAddPatient(true);
-};
+  const [openAddPatient, setOpenAddPatient] = React.useState(false);
+  const handleClickAdd = () => {
+    setOpenAddPatient(true);
+  };
 
-const handleCloseMinus = () => {
-  setOpenAddPatient(false);
-};
+  const handleCloseMinus = () => {
+    setOpenAddPatient(false);
+  };
 
-const [users, setUsers] = useState([]);
-const [row, setRow] = useState([]);
-const [userSearch, setUserSearch] = useState([]);
-async function fetchData(){
-  const querySnapshot = await getDocs(query(collection(database, 'userData')));
-  const userData = [];
-  const pending = [];
-  let i = 1;
-  let r =[];
-  const data = querySnapshot.forEach(doc=>{
-    if(doc.data().fName!==""){
-      userData.push({
-        id:i++,
-        docid:doc.id,
-        lastPeriod:doc.data().lastPeriod,
-        userFname:doc.data().userFname,
-        userMname:doc.data().userMname,
-        userLname:doc.data().userLname,
-        userSuffix:doc.data().userSuffix,
-        userSex:doc.data().userSex,
-        userCivilStatus:doc.data().userCivilStatus,
-        userBloodType:doc.data().userBloodType,
-        userReligion:doc.data().userReligion,
-        userNumber:doc.data().userNumber,
-        userDob:doc.data().userDob,
-        userAge:doc.data().userAge,
-        userAddress:doc.data().userBarangay+", "+doc.data().userTown,
-        userNationality:doc.data().userNationality,
-        userOccupation:doc.data().userOccupation,
-        userPurok:doc.data().userPurok,
-        userBarangay:doc.data().userBarangay,
-        userTown:doc.data().userTown,
-        userProvince:doc.data().userProvince,
-        userPlaceOfBirth:doc.data().userPlaceOfBirth,
-        //family details
-        userFathersName:doc.data().userFathersName,
-        userMothersName:doc.data().userMothersName,
-        userHusbandsName:doc.data().userHusbandsName,
-        userHusbandsOccuupation:doc.data().userHusbandsOccuupation,
-        userDateOfMarriage:doc.data().userDateOfMarriage,
-        userPlaceOfMarriage:doc.data().userPlaceOfMarriage,
-        userHusbandsNumber:doc.data().userHusbandsNumber,
-        userCompleteAddress:doc.data().userCompleteAddress,
-        userEmployedBy:doc.data().userEmployedBy,
-        userSalary:doc.data().userSalary,
-        userAddressOfEmployer:doc.data().userAddressOfEmployer,
-        userNameOfBarangayCaptain:doc.data().userNameOfBarangayCaptain,
-        //user pregnancy history
+  const [users, setUsers] = useState([]);
+  const [row, setRow] = useState([]);
+  const [userSearch, setUserSearch] = useState([]);
+  async function fetchData() {
+    const querySnapshot = await getDocs(query(collection(database, 'userData')));
+    const userData = [];
+    const pending = [];
+    let i = 1;
+    let r = [];
+    const data = querySnapshot.forEach(doc => {
+      if (doc.data().fName !== "") {
+        userData.push({
+          id: i++,
+          docid: doc.id,
+          lastPeriod: doc.data().lastPeriod,
+          userFname: doc.data().userFname,
+          userMname: doc.data().userMname,
+          userLname: doc.data().userLname,
+          userSuffix: doc.data().userSuffix,
+          userSex: doc.data().userSex,
+          userCivilStatus: doc.data().userCivilStatus,
+          userBloodType: doc.data().userBloodType,
+          userReligion: doc.data().userReligion,
+          userNumber: doc.data().userNumber,
+          userDob: doc.data().userDob,
+          userAge: doc.data().userAge,
+          userAddress: doc.data().userBarangay + ", " + doc.data().userTown,
+          userNationality: doc.data().userNationality,
+          userOccupation: doc.data().userOccupation,
+          userPurok: doc.data().userPurok,
+          userBarangay: doc.data().userBarangay,
+          userTown: doc.data().userTown,
+          userProvince: doc.data().userProvince,
+          userPlaceOfBirth: doc.data().userPlaceOfBirth,
+          //family details
+          userFathersName: doc.data().userFathersName,
+          userMothersName: doc.data().userMothersName,
+          userHusbandsName: doc.data().userHusbandsName,
+          userHusbandsOccuupation: doc.data().userHusbandsOccuupation,
+          userDateOfMarriage: doc.data().userDateOfMarriage,
+          userPlaceOfMarriage: doc.data().userPlaceOfMarriage,
+          userHusbandsNumber: doc.data().userHusbandsNumber,
+          userCompleteAddress: doc.data().userCompleteAddress,
+          userEmployedBy: doc.data().userEmployedBy,
+          userSalary: doc.data().userSalary,
+          userAddressOfEmployer: doc.data().userAddressOfEmployer,
+          userNameOfBarangayCaptain: doc.data().userNameOfBarangayCaptain,
+          //user pregnancy history
           //child1
-        userChild1:doc.data().userChild1,
-        userChildDateOfDelivery1:doc.data().userChildDateOfDelivery1,
-        userChildTypeOfDelivery1:doc.data().userChildTypeOfDelivery1,
-        userChildBirthOutcome1:doc.data().userChildBirthOutcome1,
-        userChildNumberOfChildDelivered1:doc.data().userChildNumberOfChildDelivered1,
-        userChildComplication1:doc.data().userChildComplication1,
+          userChild1: doc.data().userChild1,
+          userChildDateOfDelivery1: doc.data().userChildDateOfDelivery1,
+          userChildTypeOfDelivery1: doc.data().userChildTypeOfDelivery1,
+          userChildBirthOutcome1: doc.data().userChildBirthOutcome1,
+          userChildNumberOfChildDelivered1: doc.data().userChildNumberOfChildDelivered1,
+          userChildComplication1: doc.data().userChildComplication1,
           //child2
-        userChild2:doc.data().userChild2,
-        userChildDateOfDelivery2:doc.data().userChildDateOfDelivery2,
-        userChildTypeOfDelivery2:doc.data().userChildTypeOfDelivery2,
-        userChildBirthOutcome2:doc.data().userChildBirthOutcome2,
-        userChildNumberOfChildDelivered2:doc.data().userChildNumberOfChildDelivered2,
-        userChildComplication2:doc.data().userChildComplication2,
-        //child3
-        userChild3:doc.data().userChild3,
-        userChildDateOfDelivery3:doc.data().userChildDateOfDelivery3,
-        userChildTypeOfDelivery3:doc.data().userChildTypeOfDelivery3,
-        userChildBirthOutcome3:doc.data().userChildBirthOutcome3,
-        userChildNumberOfChildDelivered3:doc.data().userChildDateOfDelivery3,
-        userChildComplication3:doc.data().userChildComplication3,
-        //child4
-        userChild4:doc.data().userChild4,
-        userChildDateOfDelivery4:doc.data().userChildDateOfDelivery4,
-        userChildTypeOfDelivery4:doc.data().userChildTypeOfDelivery4,
-        userChildBirthOutcome4:doc.data().userChildBirthOutcome4,
-        userChildNumberOfChildDelivered4:doc.data().userChildNumberOfChildDelivered4,
-        userChildComplication4 :doc.data().userChildComplication4,    
-        //child5
-        userChild5:doc.data().userChild5,
-        userChildDateOfDelivery5:doc.data().userChildDateOfDelivery5,
-        userChildTypeOfDelivery5:doc.data().userChildTypeOfDelivery5,
-        userChildBirthOutcome5:doc.data().userChildBirthOutcome5,
-        userChildNumberOfChildDelivered5:doc.data().userChildNumberOfChildDelivered5,
-        userChildComplication5:doc.data().userChildComplication5,
-        //child6
-        userChild6:doc.data().userChild6,
-        userChildDateOfDelivery6:doc.data().userChildDateOfDelivery6,
-        userChildTypeOfDelivery6:doc.data().userChildTypeOfDelivery6,
-        userChildBirthOutcome6:doc.data().userChildBirthOutcome6,
-        userChildNumberOfChildDelivered6:doc.data().userChildNumberOfChildDelivered6,
-        userChildComplication6:doc.data().userChildComplication6,
-        //child7
-        userChild7:doc.data().userChild7,
-        userChildDateOfDelivery7:doc.data().userChildDateOfDelivery7,
-        userChildTypeOfDelivery7:doc.data().userChildTypeOfDelivery7,
-        userChildBirthOutcome7:doc.data().userChildBirthOutcome7,
-        userChildNumberOfChildDelivered7:doc.data().userChildNumberOfChildDelivered7,
-        userChildComplication7:doc.data().userChildComplication7,
-        //child8
-        userChild8:doc.data().userChild8,
-        userChildDateOfDelivery8:doc.data().userChildDateOfDelivery8,
-        userChildTypeOfDelivery8:doc.data().userChildTypeOfDelivery8,
-        userChildBirthOutcome8:doc.data().userChildBirthOutcome8,
-        userChildNumberOfChildDelivered8:doc.data().userChildNumberOfChildDelivered8,
-        userChildComplication8:doc.data().userChildComplication8,
-        //child9
-        userChild9:doc.data().userChild9,
-        userChildDateOfDelivery9:doc.data().userChildDateOfDelivery9,
-        userChildTypeOfDelivery9:doc.data().userChildTypeOfDelivery9,
-        userChildBirthOutcome9:doc.data().userChildBirthOutcome9,
-        userChildNumberOfChildDelivered9:doc.data().userChildNumberOfChildDelivered9,
-        userChildComplication9:doc.data().userChildComplication9,
-        //child10
-        userChild10:doc.data().userChild10,
-        userChildDateOfDelivery10:doc.data().userChildDateOfDelivery10,
-        userChildTypeOfDelivery10:doc.data().userChildTypeOfDelivery10,
-        userChildBirthOutcome10:doc.data().userChildBirthOutcome10,
-        userChildNumberOfChildDelivered10:doc.data().userChildNumberOfChildDelivered10,
-        userChildComplication10:doc.data().userChildComplication10,
-        //user other health conditions 
-        userTBPersonal:doc.data().userTBPersonal,
-        userTBFamily:doc.data().userTBFamily,
-        userHeartDiseasesPersonal:doc.data().userHeartDiseasesPersonal,
-        userHeartDiseasesFamily:doc.data().userHeartDiseasesFamily,
-        userDiabetesPersonal:doc.data().userDiabetesPersonal,
-        userDiabetesFamily:doc.data().userDiabetesFamily,
-        userHypertensionPersonal:doc.data().userHypertensionPersonal,
-        userHypertensionFamily:doc.data().userHypertensionFamily,
-        userBronchialAsthmaPersonal:doc.data().userBronchialAsthmaPersonal,
-        userBronchialAsthmaFamily:doc.data().userBronchialAsthmaFamily,
-        userUTIPersonal:doc.data().userUTIPersonal,
-        userUTIFamily:doc.data().userUTIFamily,
-        userParasitismPersonal:doc.data().userParasitismPersonal,
-        userParasitismFamily:doc.data().userParasitismFamily,
-        userGoiterPersonal:doc.data().userGoiterPersonal,
-        userGoiterFamily:doc.data().userGoiterFamily,
-        userAnemiaPersonal:doc.data().userAnemiaPersonal,
-        userAnemiaFamily:doc.data().userAnemiaFamily,
-        userGenitalTrackInfection:doc.data().userGenitalTrackInfection,
-        userOtherInfectiousDiseases:doc.data().userOtherInfectiousDiseases,
-        userHighRiskBehavior:doc.data().userHighRiskBehavior,
-        dateCreated: doc.data().dateCreated,
-        status:doc.data().status,
-        userLevel:doc.data().userLevel,
-        userPic:doc.data().userPic
-      });
+          userChild2: doc.data().userChild2,
+          userChildDateOfDelivery2: doc.data().userChildDateOfDelivery2,
+          userChildTypeOfDelivery2: doc.data().userChildTypeOfDelivery2,
+          userChildBirthOutcome2: doc.data().userChildBirthOutcome2,
+          userChildNumberOfChildDelivered2: doc.data().userChildNumberOfChildDelivered2,
+          userChildComplication2: doc.data().userChildComplication2,
+          //child3
+          userChild3: doc.data().userChild3,
+          userChildDateOfDelivery3: doc.data().userChildDateOfDelivery3,
+          userChildTypeOfDelivery3: doc.data().userChildTypeOfDelivery3,
+          userChildBirthOutcome3: doc.data().userChildBirthOutcome3,
+          userChildNumberOfChildDelivered3: doc.data().userChildDateOfDelivery3,
+          userChildComplication3: doc.data().userChildComplication3,
+          //child4
+          userChild4: doc.data().userChild4,
+          userChildDateOfDelivery4: doc.data().userChildDateOfDelivery4,
+          userChildTypeOfDelivery4: doc.data().userChildTypeOfDelivery4,
+          userChildBirthOutcome4: doc.data().userChildBirthOutcome4,
+          userChildNumberOfChildDelivered4: doc.data().userChildNumberOfChildDelivered4,
+          userChildComplication4: doc.data().userChildComplication4,
+          //child5
+          userChild5: doc.data().userChild5,
+          userChildDateOfDelivery5: doc.data().userChildDateOfDelivery5,
+          userChildTypeOfDelivery5: doc.data().userChildTypeOfDelivery5,
+          userChildBirthOutcome5: doc.data().userChildBirthOutcome5,
+          userChildNumberOfChildDelivered5: doc.data().userChildNumberOfChildDelivered5,
+          userChildComplication5: doc.data().userChildComplication5,
+          //child6
+          userChild6: doc.data().userChild6,
+          userChildDateOfDelivery6: doc.data().userChildDateOfDelivery6,
+          userChildTypeOfDelivery6: doc.data().userChildTypeOfDelivery6,
+          userChildBirthOutcome6: doc.data().userChildBirthOutcome6,
+          userChildNumberOfChildDelivered6: doc.data().userChildNumberOfChildDelivered6,
+          userChildComplication6: doc.data().userChildComplication6,
+          //child7
+          userChild7: doc.data().userChild7,
+          userChildDateOfDelivery7: doc.data().userChildDateOfDelivery7,
+          userChildTypeOfDelivery7: doc.data().userChildTypeOfDelivery7,
+          userChildBirthOutcome7: doc.data().userChildBirthOutcome7,
+          userChildNumberOfChildDelivered7: doc.data().userChildNumberOfChildDelivered7,
+          userChildComplication7: doc.data().userChildComplication7,
+          //child8
+          userChild8: doc.data().userChild8,
+          userChildDateOfDelivery8: doc.data().userChildDateOfDelivery8,
+          userChildTypeOfDelivery8: doc.data().userChildTypeOfDelivery8,
+          userChildBirthOutcome8: doc.data().userChildBirthOutcome8,
+          userChildNumberOfChildDelivered8: doc.data().userChildNumberOfChildDelivered8,
+          userChildComplication8: doc.data().userChildComplication8,
+          //child9
+          userChild9: doc.data().userChild9,
+          userChildDateOfDelivery9: doc.data().userChildDateOfDelivery9,
+          userChildTypeOfDelivery9: doc.data().userChildTypeOfDelivery9,
+          userChildBirthOutcome9: doc.data().userChildBirthOutcome9,
+          userChildNumberOfChildDelivered9: doc.data().userChildNumberOfChildDelivered9,
+          userChildComplication9: doc.data().userChildComplication9,
+          //child10
+          userChild10: doc.data().userChild10,
+          userChildDateOfDelivery10: doc.data().userChildDateOfDelivery10,
+          userChildTypeOfDelivery10: doc.data().userChildTypeOfDelivery10,
+          userChildBirthOutcome10: doc.data().userChildBirthOutcome10,
+          userChildNumberOfChildDelivered10: doc.data().userChildNumberOfChildDelivered10,
+          userChildComplication10: doc.data().userChildComplication10,
+          //user other health conditions 
+          userTBPersonal: doc.data().userTBPersonal,
+          userTBFamily: doc.data().userTBFamily,
+          userHeartDiseasesPersonal: doc.data().userHeartDiseasesPersonal,
+          userHeartDiseasesFamily: doc.data().userHeartDiseasesFamily,
+          userDiabetesPersonal: doc.data().userDiabetesPersonal,
+          userDiabetesFamily: doc.data().userDiabetesFamily,
+          userHypertensionPersonal: doc.data().userHypertensionPersonal,
+          userHypertensionFamily: doc.data().userHypertensionFamily,
+          userBronchialAsthmaPersonal: doc.data().userBronchialAsthmaPersonal,
+          userBronchialAsthmaFamily: doc.data().userBronchialAsthmaFamily,
+          userUTIPersonal: doc.data().userUTIPersonal,
+          userUTIFamily: doc.data().userUTIFamily,
+          userParasitismPersonal: doc.data().userParasitismPersonal,
+          userParasitismFamily: doc.data().userParasitismFamily,
+          userGoiterPersonal: doc.data().userGoiterPersonal,
+          userGoiterFamily: doc.data().userGoiterFamily,
+          userAnemiaPersonal: doc.data().userAnemiaPersonal,
+          userAnemiaFamily: doc.data().userAnemiaFamily,
+          userGenitalTrackInfection: doc.data().userGenitalTrackInfection,
+          userOtherInfectiousDiseases: doc.data().userOtherInfectiousDiseases,
+          userHighRiskBehavior: doc.data().userHighRiskBehavior,
+          dateCreated: doc.data().dateCreated,
+          status: doc.data().status,
+          userLevel: doc.data().userLevel,
+          userPic: doc.data().userPic
+        });
+      }
+    })
+    setUsers(userData);
+    setUserSearch(userData);
+    //var i = 1;
+    //alert("running "+i++ +" times")
+  };
+
+
+  useEffect(() => {
+    fetchData();
+    console.log("DATA: " + users)
+  }, [])
+
+  const [nChild, setNChild] = useState([]);
+
+
+
+  const handleCreateAccount = async () => {
+    if (registrationForm.userFname !== "" || registrationForm.userLname !== "" || registrationForm.userSex !== "" || registrationForm.userAge || registrationForm.userNumber !== "") {
+      try {
+        await addDoc(collection(database, "userData"), {
+          userFname: registrationForm.userFname,
+          userMname: registrationForm.userMname,
+          userLname: registrationForm.userLname,
+          userSuffix: registrationForm.userSuffix,
+          userSex: registrationForm.userSex,
+          userCivilStatus: registrationForm.userCivilStatus,
+          userBloodType: registrationForm.userBloodType,
+          userReligion: registrationForm.userReligion,
+          userNumber: registrationForm.userNumber,
+          userDob: registrationForm.userDob,
+          userAge: registrationForm.userAge,
+          userNationality: registrationForm.userNationality,
+          userOccupation: registrationForm.userOccupation,
+          userPurok: registrationForm.userPurok,
+          userBarangay: registrationForm.userBarangay,
+          userTown: registrationForm.userTown,
+          userProvince: registrationForm.userProvince,
+          userPlaceOfBirth: registrationForm.userPlaceOfBirth,
+          //family details
+          userFathersName: registrationForm.userFathersName,
+          userMothersName: registrationForm.userMothersName,
+          userHusbandsName: registrationForm.userHusbandsName,
+          userHusbandsOccuupation: registrationForm.userHusbandsOccuupation,
+          userDateOfMarriage: registrationForm.userDateOfMarriage,
+          userPlaceOfMarriage: registrationForm.userPlaceOfMarriage,
+          userHusbandsNumber: registrationForm.userHusbandsNumber,
+          userCompleteAddress: registrationForm.userCompleteAddress,
+          userEmployedBy: registrationForm.userEmployedBy,
+          userSalary: registrationForm.userSalary,
+          userAddressOfEmployer: registrationForm.userAddressOfEmployer,
+          userNameOfBarangayCaptain: registrationForm.userNameOfBarangayCaptain,
+          //user pregnancy history
+          //child1
+          userChild1: registrationForm.userChild1,
+          userChildDateOfDelivery1: registrationForm.userChildDateOfDelivery1,
+          userChildTypeOfDelivery1: registrationForm.userChildTypeOfDelivery1,
+          userChildBirthOutcome1: registrationForm.userChildBirthOutcome1,
+          userChildNumberOfChildDelivered1: registrationForm.userChildNumberOfChildDelivered1,
+          userChildComplication1: registrationForm.userChildComplication1,
+          //child2
+          userChild2: registrationForm.userChild2,
+          userChildDateOfDelivery2: registrationForm.userChildDateOfDelivery2,
+          userChildTypeOfDelivery2: registrationForm.userChildTypeOfDelivery2,
+          userChildBirthOutcome2: registrationForm.userChildBirthOutcome2,
+          userChildNumberOfChildDelivered2: registrationForm.userChildNumberOfChildDelivered2,
+          userChildComplication2: registrationForm.userChildComplication2,
+          //child3
+          userChild3: registrationForm.userChild3,
+          userChildDateOfDelivery3: registrationForm.userChildDateOfDelivery3,
+          userChildTypeOfDelivery3: registrationForm.userChildTypeOfDelivery3,
+          userChildBirthOutcome3: registrationForm.userChildBirthOutcome3,
+          userChildNumberOfChildDelivered3: registrationForm.userChildDateOfDelivery3,
+          userChildComplication3: registrationForm.userChildComplication3,
+          //child4
+          userChild4: registrationForm.userChild4,
+          userChildDateOfDelivery4: registrationForm.userChildDateOfDelivery4,
+          userChildTypeOfDelivery4: registrationForm.userChildTypeOfDelivery4,
+          userChildBirthOutcome4: registrationForm.userChildBirthOutcome4,
+          userChildNumberOfChildDelivered4: registrationForm.userChildNumberOfChildDelivered4,
+          userChildComplication4: registrationForm.userChildComplication4,
+          //child5
+          userChild5: registrationForm.userChild5,
+          userChildDateOfDelivery5: registrationForm.userChildDateOfDelivery5,
+          userChildTypeOfDelivery5: registrationForm.userChildTypeOfDelivery5,
+          userChildBirthOutcome5: registrationForm.userChildBirthOutcome5,
+          userChildNumberOfChildDelivered5: registrationForm.userChildNumberOfChildDelivered5,
+          userChildComplication5: registrationForm.userChildComplication5,
+          //child6
+          userChild6: registrationForm.userChild6,
+          userChildDateOfDelivery6: registrationForm.userChildDateOfDelivery6,
+          userChildTypeOfDelivery6: registrationForm.userChildTypeOfDelivery6,
+          userChildBirthOutcome6: registrationForm.userChildBirthOutcome6,
+          userChildNumberOfChildDelivered6: registrationForm.userChildNumberOfChildDelivered6,
+          userChildComplication6: registrationForm.userChildComplication6,
+          //child7
+          userChild7: registrationForm.userChild7,
+          userChildDateOfDelivery7: registrationForm.userChildDateOfDelivery7,
+          userChildTypeOfDelivery7: registrationForm.userChildTypeOfDelivery7,
+          userChildBirthOutcome7: registrationForm.userChildBirthOutcome7,
+          userChildNumberOfChildDelivered7: registrationForm.userChildNumberOfChildDelivered7,
+          userChildComplication7: registrationForm.userChildComplication7,
+          //child8
+          userChild8: registrationForm.userChild8,
+          userChildDateOfDelivery8: registrationForm.userChildDateOfDelivery8,
+          userChildTypeOfDelivery8: registrationForm.userChildTypeOfDelivery8,
+          userChildBirthOutcome8: registrationForm.userChildBirthOutcome8,
+          userChildNumberOfChildDelivered8: registrationForm.userChildNumberOfChildDelivered8,
+          userChildComplication8: registrationForm.userChildComplication8,
+          //child9
+          userChild9: registrationForm.userChild9,
+          userChildDateOfDelivery9: registrationForm.userChildDateOfDelivery9,
+          userChildTypeOfDelivery9: registrationForm.userChildTypeOfDelivery9,
+          userChildBirthOutcome9: registrationForm.userChildBirthOutcome9,
+          userChildNumberOfChildDelivered9: registrationForm.userChildNumberOfChildDelivered9,
+          userChildComplication9: registrationForm.userChildComplication9,
+          //child10
+          userChild10: registrationForm.userChild10,
+          userChildDateOfDelivery10: registrationForm.userChildDateOfDelivery10,
+          userChildTypeOfDelivery10: registrationForm.userChildTypeOfDelivery10,
+          userChildBirthOutcome10: registrationForm.userChildBirthOutcome10,
+          userChildNumberOfChildDelivered10: registrationForm.userChildNumberOfChildDelivered10,
+          userChildComplication10: registrationForm.userChildComplication10,
+          //user other health conditions 
+          userTBPersonal: registrationForm.userTBPersonal,
+          userTBFamily: registrationForm.userTBFamily,
+          userHeartDiseasesPersonal: registrationForm.userHeartDiseasesPersonal,
+          userHeartDiseasesFamily: registrationForm.userHeartDiseasesFamily,
+          userDiabetesPersonal: registrationForm.userDiabetesPersonal,
+          userDiabetesFamily: registrationForm.userDiabetesFamily,
+          userHypertensionPersonal: registrationForm.userHypertensionPersonal,
+          userHypertensionFamily: registrationForm.userHypertensionFamily,
+          userBronchialAsthmaPersonal: registrationForm.userBronchialAsthmaPersonal,
+          userBronchialAsthmaFamily: registrationForm.userBronchialAsthmaFamily,
+          userUTIPersonal: registrationForm.userUTIPersonal,
+          userUTIFamily: registrationForm.userUTIFamily,
+          userParasitismPersonal: registrationForm.userParasitismPersonal,
+          userParasitismFamily: registrationForm.userParasitismFamily,
+          userGoiterPersonal: registrationForm.userGoiterPersonal,
+          userGoiterFamily: registrationForm.userGoiterFamily,
+          userAnemiaPersonal: registrationForm.userAnemiaPersonal,
+          userAnemiaFamily: registrationForm.userAnemiaFamily,
+          userGenitalTrackInfection: registrationForm.userGenitalTrackInfection,
+          userOtherInfectiousDiseases: registrationForm.userOtherInfectiousDiseases,
+          userHighRiskBehavior: registrationForm.userHighRiskBehavior,
+          dateCreated: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
+          status: "pending",
+          userLevel: "standard user",
+          userPic: "",
+        }).then(alert("Account created successfully."))
+      } catch (e) {
+        alert(e);
+      }
+      addDoc(collection(database, "adminLogs"), {
+        activity: "added a new user to the database.",
+        category: "added",
+        timestamp: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
+        day: moment(new Date()).format("DD"),
+        month: moment(new Date()).format("MM"),
+        Year: moment(new Date()).format("YYYY"),
+      })
+      setActive("newsession")
+    } else {
+      alert("Please fill all the necessary inputs to create an account.")
     }
-  })
-  setUsers(userData);
-  setUserSearch(userData);
-  //var i = 1;
-  //alert("running "+i++ +" times")
-};
-
-
-useEffect(()=>{
-  fetchData();
-  console.log("DATA: " + users)
-},[])
-
-const[nChild, setNChild] = useState([]);
-
-
-
-const handleCreateAccount = async() => {
-  if(registrationForm.userFname!==""||registrationForm.userLname!==""||registrationForm.userSex!==""||registrationForm.userAge||registrationForm.userNumber!==""){
-   try{
-     await addDoc(collection(database, "userData"),{
-       userFname:registrationForm.userFname,
-       userMname:registrationForm.userMname,
-       userLname:registrationForm.userLname,
-       userSuffix:registrationForm.userSuffix,
-       userSex:registrationForm.userSex,
-       userCivilStatus:registrationForm.userCivilStatus,
-       userBloodType:registrationForm.userBloodType,
-       userReligion:registrationForm.userReligion,
-       userNumber:registrationForm.userNumber,
-       userDob:registrationForm.userDob,
-       userAge:registrationForm.userAge,
-       userNationality:registrationForm.userNationality,
-       userOccupation:registrationForm.userOccupation,
-       userPurok:registrationForm.userPurok,
-       userBarangay:registrationForm.userBarangay,
-       userTown:registrationForm.userTown,
-       userProvince:registrationForm.userProvince,
-       userPlaceOfBirth:registrationForm.userPlaceOfBirth,
-       //family details
-       userFathersName:registrationForm.userFathersName,
-       userMothersName:registrationForm.userMothersName,
-       userHusbandsName:registrationForm.userHusbandsName,
-       userHusbandsOccuupation:registrationForm.userHusbandsOccuupation,
-       userDateOfMarriage:registrationForm.userDateOfMarriage,
-       userPlaceOfMarriage:registrationForm.userPlaceOfMarriage,
-       userHusbandsNumber:registrationForm.userHusbandsNumber,
-       userCompleteAddress:registrationForm.userCompleteAddress,
-       userEmployedBy:registrationForm.userEmployedBy,
-       userSalary:registrationForm.userSalary,
-       userAddressOfEmployer:registrationForm.userAddressOfEmployer,
-       userNameOfBarangayCaptain:registrationForm.userNameOfBarangayCaptain,
-       //user pregnancy history
-         //child1
-       userChild1:registrationForm.userChild1,
-       userChildDateOfDelivery1:registrationForm.userChildDateOfDelivery1,
-       userChildTypeOfDelivery1:registrationForm.userChildTypeOfDelivery1,
-       userChildBirthOutcome1:registrationForm.userChildBirthOutcome1,
-       userChildNumberOfChildDelivered1:registrationForm.userChildNumberOfChildDelivered1,
-       userChildComplication1:registrationForm.userChildComplication1,
-         //child2
-       userChild2:registrationForm.userChild2,
-       userChildDateOfDelivery2:registrationForm.userChildDateOfDelivery2,
-       userChildTypeOfDelivery2:registrationForm.userChildTypeOfDelivery2,
-       userChildBirthOutcome2:registrationForm.userChildBirthOutcome2,
-       userChildNumberOfChildDelivered2:registrationForm.userChildNumberOfChildDelivered2,
-       userChildComplication2:registrationForm.userChildComplication2,
-       //child3
-       userChild3:registrationForm.userChild3,
-       userChildDateOfDelivery3:registrationForm.userChildDateOfDelivery3,
-       userChildTypeOfDelivery3:registrationForm.userChildTypeOfDelivery3,
-       userChildBirthOutcome3:registrationForm.userChildBirthOutcome3,
-       userChildNumberOfChildDelivered3:registrationForm.userChildDateOfDelivery3,
-       userChildComplication3:registrationForm.userChildComplication3,
-       //child4
-       userChild4:registrationForm.userChild4,
-       userChildDateOfDelivery4:registrationForm.userChildDateOfDelivery4,
-       userChildTypeOfDelivery4:registrationForm.userChildTypeOfDelivery4,
-       userChildBirthOutcome4:registrationForm.userChildBirthOutcome4,
-       userChildNumberOfChildDelivered4:registrationForm.userChildNumberOfChildDelivered4,
-       userChildComplication4 :registrationForm.userChildComplication4,    
-       //child5
-       userChild5:registrationForm.userChild5,
-       userChildDateOfDelivery5:registrationForm.userChildDateOfDelivery5,
-       userChildTypeOfDelivery5:registrationForm.userChildTypeOfDelivery5,
-       userChildBirthOutcome5:registrationForm.userChildBirthOutcome5,
-       userChildNumberOfChildDelivered5:registrationForm.userChildNumberOfChildDelivered5,
-       userChildComplication5:registrationForm.userChildComplication5,
-       //child6
-       userChild6:registrationForm.userChild6,
-       userChildDateOfDelivery6:registrationForm.userChildDateOfDelivery6,
-       userChildTypeOfDelivery6:registrationForm.userChildTypeOfDelivery6,
-       userChildBirthOutcome6:registrationForm.userChildBirthOutcome6,
-       userChildNumberOfChildDelivered6:registrationForm.userChildNumberOfChildDelivered6,
-       userChildComplication6:registrationForm.userChildComplication6,
-       //child7
-       userChild7:registrationForm.userChild7,
-       userChildDateOfDelivery7:registrationForm.userChildDateOfDelivery7,
-       userChildTypeOfDelivery7:registrationForm.userChildTypeOfDelivery7,
-       userChildBirthOutcome7:registrationForm.userChildBirthOutcome7,
-       userChildNumberOfChildDelivered7:registrationForm.userChildNumberOfChildDelivered7,
-       userChildComplication7:registrationForm.userChildComplication7,
-       //child8
-       userChild8:registrationForm.userChild8,
-       userChildDateOfDelivery8:registrationForm.userChildDateOfDelivery8,
-       userChildTypeOfDelivery8:registrationForm.userChildTypeOfDelivery8,
-       userChildBirthOutcome8:registrationForm.userChildBirthOutcome8,
-       userChildNumberOfChildDelivered8:registrationForm.userChildNumberOfChildDelivered8,
-       userChildComplication8:registrationForm.userChildComplication8,
-       //child9
-       userChild9:registrationForm.userChild9,
-       userChildDateOfDelivery9:registrationForm.userChildDateOfDelivery9,
-       userChildTypeOfDelivery9:registrationForm.userChildTypeOfDelivery9,
-       userChildBirthOutcome9:registrationForm.userChildBirthOutcome9,
-       userChildNumberOfChildDelivered9:registrationForm.userChildNumberOfChildDelivered9,
-       userChildComplication9:registrationForm.userChildComplication9,
-       //child10
-       userChild10:registrationForm.userChild10,
-       userChildDateOfDelivery10:registrationForm.userChildDateOfDelivery10,
-       userChildTypeOfDelivery10:registrationForm.userChildTypeOfDelivery10,
-       userChildBirthOutcome10:registrationForm.userChildBirthOutcome10,
-       userChildNumberOfChildDelivered10:registrationForm.userChildNumberOfChildDelivered10,
-       userChildComplication10:registrationForm.userChildComplication10,
-       //user other health conditions 
-       userTBPersonal:registrationForm.userTBPersonal,
-       userTBFamily:registrationForm.userTBFamily,
-       userHeartDiseasesPersonal:registrationForm.userHeartDiseasesPersonal,
-       userHeartDiseasesFamily:registrationForm.userHeartDiseasesFamily,
-       userDiabetesPersonal:registrationForm.userDiabetesPersonal,
-       userDiabetesFamily:registrationForm.userDiabetesFamily,
-       userHypertensionPersonal:registrationForm.userHypertensionPersonal,
-       userHypertensionFamily:registrationForm.userHypertensionFamily,
-       userBronchialAsthmaPersonal:registrationForm.userBronchialAsthmaPersonal,
-       userBronchialAsthmaFamily:registrationForm.userBronchialAsthmaFamily,
-       userUTIPersonal:registrationForm.userUTIPersonal,
-       userUTIFamily:registrationForm.userUTIFamily,
-       userParasitismPersonal:registrationForm.userParasitismPersonal,
-       userParasitismFamily:registrationForm.userParasitismFamily,
-       userGoiterPersonal:registrationForm.userGoiterPersonal,
-       userGoiterFamily:registrationForm.userGoiterFamily,
-       userAnemiaPersonal:registrationForm.userAnemiaPersonal,
-       userAnemiaFamily:registrationForm.userAnemiaFamily,
-       userGenitalTrackInfection:registrationForm.userGenitalTrackInfection,
-       userOtherInfectiousDiseases:registrationForm.userOtherInfectiousDiseases,
-       userHighRiskBehavior:registrationForm.userHighRiskBehavior,
-       dateCreated: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
-       status:"pending",
-       userLevel:"standard user",
-       userPic:"",
-     }).then(alert("Account created successfully."))
-   }catch(e){
-     alert(e); 
-   }
-   addDoc(collection(database, "adminLogs"),{
-     activity:"added a new user to the database.",
-     category:"added",
-     timestamp: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
-     day:moment(new Date()).format("DD"),
-     month:moment(new Date()).format("MM"),
-     Year:moment(new Date()).format("YYYY"),
-   })
-   setActive("newsession")
-  }else{
-   alert("Please fill all the necessary inputs to create an account.")
   }
-}
 
-useEffect(()=>{
-  const fetchAppointments = async() => {
+  useEffect(() => {
+    const fetchAppointments = async () => {
 
-  }
-  
-},[selectedRow.docid])
+    }
 
-  
+  }, [selectedRow.docid])
+
+
+  const [openModalOnlineRequest, setOpenModalOnlineRequest] = useState(false);
+
+  const handleOpenOnlineRequest = () => {
+    setOpenModalOnlineRequest(true);
+  };
+
+  const handleCloseOnlineRequest = () => {
+    setOpenModalOnlineRequest(false);
+  };
+
+
   return (
 
-    <div style={{ marginTop: '2px', height: '550px', width: '95%', textAlign: 'center', justifyContent: 'center', overflow:'hidden' }}>
+    <div style={{ marginTop: '2px', height: '550px', width: '95%', textAlign: 'center', justifyContent: 'center', overflow: 'hidden' }}>
 
       <Box backgroundColor={'primary'} flexDirection={'row'} textAlign={'left'}>
         <Typography variant="h6" component="h1" fontSize={'1.8em'} fontWeight={600} m={1}>
-         PATIENTS
+          PATIENTS
         </Typography>
-        <Button>
+
+
+ {/*---------------------- Modal for Online Request Approval ----------------------*/}
+        <Button variant="contained" color="primary" onClick={handleOpenOnlineRequest}>
           online requests
         </Button>
+
+        <Modal
+        open={openModalOnlineRequest}
+        onClose={handleCloseOnlineRequest}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '90%',
+         bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 }}>
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Appoinment
+            </Typography>
+            <IconButton onClick={handleCloseOnlineRequest}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+         <Approval/>
+        </Box>
+      </Modal>
+
+
+
+
+
       </Box>
       <Divider sx={{ marginBottom: 2 }}></Divider>
       <Box display="flex" justifyContent="center">
-      <Box display="flex" alignItems="center" ml={'40%'} mb={3}>
-    <Box display="flex" alignItems="center" width="100%" flex={1}>
-      <TextField
-        size='small'
-        variant='outlined'
-        placeholder="Search..."
-        fullWidth
-        InputProps={{style: {width: 400}}}
-      />
-      <SearchIcon size="large"/>
-    </Box>
-  </Box>
-  <Box ml={1} flex={.7} flexDirection='end '>
-    <Button variant="contained" size='small' sx={{backgroundColor:'orange'}} onClick={handleClickAdd}>
-      <AddIcon size='small'/> Register Patient
-    </Button>
-  </Box>
+        <Box display="flex" alignItems="center" ml={'40%'} mb={3}>
+          <Box display="flex" alignItems="center" width="100%" flex={1}>
+            <TextField
+              size='small'
+              variant='outlined'
+              placeholder="Search..."
+              fullWidth
+              InputProps={{ style: { width: 400 } }}
+            />
+            <SearchIcon size="large" />
+          </Box>
+        </Box>
+        <Box ml={1} flex={.7} flexDirection='end '>
+          <Button variant="contained" size='small' sx={{ backgroundColor: 'orange' }} onClick={handleClickAdd}>
+            <AddIcon size='small' /> Register Patient
+          </Button>
+        </Box>
 
-</Box>
+      </Box>
 
 
       <Dialog open={openAddPatient} onClose={handleClose}>
         <DialogTitle><Box fontWeight={'600'}>Register Patient</Box></DialogTitle>
         <DialogContent>
- {/*-------------------------------- Add Patient Forms -------------------------------- */} 
-<PatientRegistrationForm/>
- {/*-------------------------------- End Add Patient Forms -------------------------------- */}
+          {/*-------------------------------- Add Patient Forms -------------------------------- */}
+          <PatientRegistrationForm />
+          {/*-------------------------------- End Add Patient Forms -------------------------------- */}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseMinus} color="primary">
@@ -726,27 +768,27 @@ useEffect(()=>{
         </DialogActions>
       </Dialog>
 
-   
 
-      <div style={{ height: 600, width: '100%', marginTop:'10px' }}>
-      <DataGrid
-        rows={users}
-        columns={columns}
-        pageSize={5}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 20 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-        disableSelectionOnClick
-        componentsProps={{
-          columnMenu: {
-            style: { padding: '20px' },
-          },
-        }}
-      />
- </div>
+
+      <div style={{ height: 600, width: '100%', marginTop: '10px' }}>
+        <DataGrid
+          rows={users}
+          columns={columns}
+          pageSize={5}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 20 },
+            },
+          }}
+          pageSizeOptions={[5, 10]}
+          disableSelectionOnClick
+          componentsProps={{
+            columnMenu: {
+              style: { padding: '20px' },
+            },
+          }}
+        />
+      </div>
       {/* Modal for displaying details */}
 
       <Modal open={openModal} onClose={handleCloseModal} scroll='paper'>
@@ -774,10 +816,10 @@ useEffect(()=>{
                   {/* Container Box for Picture */}
                   <Grid item xs={12}>
                     {
-                      selectedRow.userPic!==""?
-                      <div style={{width:130,height:100,backgroundImage:`url(${selectedRow.userPic})`,backgroundSize:'cover',backgroundPosition:'center',backgroundColor:'white',marginLeft:4}}/>
-                      :
-                      <Avatar variant='square'>{initials}</Avatar>
+                      selectedRow.userPic !== "" ?
+                        <div style={{ width: 130, height: 100, backgroundImage: `url(${selectedRow.userPic})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: 'white', marginLeft: 4 }} />
+                        :
+                        <Avatar variant='square'>{initials}</Avatar>
                     }
                   </Grid>
                   <Grid item xs={12} mt={2} >
@@ -786,18 +828,18 @@ useEffect(()=>{
                       <Box fontSize={'large'} fontWeight={'750'} color={'black'}>
                         {`${selectedRow.userLname} ${selectedRow.userFname} , ${selectedRow.userMname}`}
                       </Box>
-                      LMP: <Box display='inline' color={'black'}>{moment(selectedRow.lastPeriod,"YYYY/MM/DD").format("MMMM DD, YYYY")}</Box>
+                      LMP: <Box display='inline' color={'black'}>{moment(selectedRow.lastPeriod, "YYYY/MM/DD").format("MMMM DD, YYYY")}</Box>
                       <Box></Box>
-                      AOG: <Box display='inline' color={'black'}>{moment(new Date(),"YYYY/MM/DD").diff(moment(selectedRow.lastPeriod,"YYYY/MM/DD"),"weeks")} weeks</Box>
+                      AOG: <Box display='inline' color={'black'}>{moment(new Date(), "YYYY/MM/DD").diff(moment(selectedRow.lastPeriod, "YYYY/MM/DD"), "weeks")} weeks</Box>
                       <Box></Box>
-                      EDD: <Box display='inline' color={'black'}> {moment(selectedRow.lastPeriod).add(280,"days").format("MMMM DD, YYYY")}</Box>
+                      EDD: <Box display='inline' color={'black'}> {moment(selectedRow.lastPeriod).add(280, "days").format("MMMM DD, YYYY")}</Box>
                       <Box></Box>
                       TOTAL PREGNANCY: <Box display='inline' color={'black'}> {selectedRow.Pregnancynumber} 1</Box>
                     </Typography>
                   </Grid>
                 </Grid>
               </Grid>
- {/* --------------------------------------Taaaaaaab ----------------------------------------------------------------------------------------------------------------- */}
+              {/* --------------------------------------Taaaaaaab ----------------------------------------------------------------------------------------------------------------- */}
               <Grid item xs={10}>
 
                 <Box padding={.3} sx={{ width: '100%', height: '100%' }} marginTop={0} mb={0}>
@@ -816,7 +858,7 @@ useEffect(()=>{
                               </TabList>
                             </Box>
 
- {/* ---------------------------------1st tab ----------------------------------------------------------------------------------------------------------------- */}
+                            {/* ---------------------------------1st tab ----------------------------------------------------------------------------------------------------------------- */}
                             <TabPanel value="1" sx={{ width: '100%', backgroundColor: '#F0F2F5' }}>
 
                               <ThemeProvider theme={theme}>
@@ -890,7 +932,7 @@ useEffect(()=>{
                             <Grid container >
 
 
-{/* ---------------------------------------------------------2nd tab ---------------------------------------------------------------------------- */}
+                              {/* ---------------------------------------------------------2nd tab ---------------------------------------------------------------------------- */}
                               <TabPanel value="2" sx={{ width: '100%', backgroundColor: '#F0F2F5' }}>
                                 <Grid xs={10}>
                                   <TableContainer component={Paper}>
@@ -926,7 +968,7 @@ useEffect(()=>{
 
                               </TabPanel>
                             </Grid>
-{/* --------------------------------------------------------3rd tab ----------------------------------------------------------------------------------------------------------------- */}
+                            {/* --------------------------------------------------------3rd tab ----------------------------------------------------------------------------------------------------------------- */}
                             <TabPanel value="3" sx={{ width: '100%', backgroundColor: '#F0F2F5' }}>
                               <Grid container >
                                 <Grid xs={6}>
@@ -963,7 +1005,7 @@ useEffect(()=>{
                                 <Grid xs={5} ml={2}>
                                   <Grid xs={12}>
 
- {/*-------------------------------------------------------- for Displaying Specified Diseases --------------------------------------------------------*/}
+                                    {/*-------------------------------------------------------- for Displaying Specified Diseases --------------------------------------------------------*/}
                                     <Paper >
                                       <Box mb={1} padding={1}>
                                         <Typography fontSize="large" fontWeight={'600'} >Genital Tract Infections Diseases:</Typography>
@@ -981,7 +1023,7 @@ useEffect(()=>{
                                   </Grid>
 
 
- {/*-------------------------------------------------------- Table for High-risk Behavior-------------------------------------------------------- */}
+                                  {/*-------------------------------------------------------- Table for High-risk Behavior-------------------------------------------------------- */}
                                   <Grid xs={12}>
                                     <Paper>
                                       <Box padding={1} textAlign={'center'} sx={{ backgroundColor: 'primary.main', color: 'white' }}><Typography fontWeight='700' >HIGH-RISK BEHAVIOR</Typography></Box>
@@ -1029,7 +1071,7 @@ useEffect(()=>{
                   </Grid>
                 </Box>
               </Grid>
-{/* ---------------------------------End of Tab------------------------------------------------------------------------------------------------------------- */}
+              {/* ---------------------------------End of Tab------------------------------------------------------------------------------------------------------------- */}
 
 
 
@@ -1048,7 +1090,7 @@ useEffect(()=>{
                 </Grid>
 
 
- {/* -------------------------------------------4buttons ---------------------------------------------------------------------------------------*/}
+                {/* -------------------------------------------4buttons ---------------------------------------------------------------------------------------*/}
                 <Grid container xs={3} mt={1}>
 
                   <Tooltip title="Add Pre Natal Visits">
@@ -1070,7 +1112,7 @@ useEffect(()=>{
                     <Button startIcon={<DoneIcon />} variant="contained" onClick={handleClickOpen} color="error"></Button>
                   </Tooltip>
 
-{/* --------------------- Dialog for Complete Pregnancy------------------------------------------------------------------------------------------ */}
+                  {/* --------------------- Dialog for Complete Pregnancy------------------------------------------------------------------------------------------ */}
                   <Dialog
                     open={open}
                     onClose={handleClose}
@@ -1097,7 +1139,7 @@ useEffect(()=>{
                   </Dialog>
 
                 </Grid>
-{/* ---------------------------------------------------------- Table for Appoinment ---------------------------------------------------------- */}
+                {/* ---------------------------------------------------------- Table for Appoinment ---------------------------------------------------------- */}
                 <Grid xs={4} padding={1}>
                   <Box margin={0}>
                     <Box padding={1} textAlign={'center'} sx={{ backgroundColor: 'skyblue', color: 'white' }}><Typography fontWeight='700' >APPOINTMENTS</Typography></Box>
@@ -1133,7 +1175,7 @@ useEffect(()=>{
                     </TableContainer>
                   </Box>
                 </Grid>
-{/* ----------------------------------------------------------------------Table for Prenatal Visits ----------------------------------------------------------------------*/}
+                {/* ----------------------------------------------------------------------Table for Prenatal Visits ----------------------------------------------------------------------*/}
                 <Grid xs={8} justify="center" padding={1}>
                   <Box>
                     <Box padding={1} textAlign={'center'} sx={{ backgroundColor: 'skyblue', color: 'white' }}><Typography fontWeight='700' >PRE-NATAL VISITS</Typography></Box>
@@ -1179,7 +1221,7 @@ useEffect(()=>{
                   </Box>
                 </Grid>
               </Grid>
-{/* -------------------------------------------------------------------------------Add Visits----------------------------------------------------------------------------------- */}
+              {/* -------------------------------------------------------------------------------Add Visits----------------------------------------------------------------------------------- */}
               <Modal open={openAddVisitModal} onClose={handleCloseAddVisitModal} >
 
                 <Box sx={{
@@ -1200,7 +1242,7 @@ useEffect(()=>{
                   {/* Add your form or other components here */}
                 </Box>
               </Modal>
-{/*--------------------------------------------------------------------------------------------- Modal for Visits Reports ---------------------------------------------------------------------------------------------*/}
+              {/*--------------------------------------------------------------------------------------------- Modal for Visits Reports ---------------------------------------------------------------------------------------------*/}
               <Modal open={openPrenatalVisitReports} onClose={handleClosePrenatalVisitReports}>
 
                 <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
@@ -1212,7 +1254,7 @@ useEffect(()=>{
                   {/* Add your form or other components here */}
                 </Box>
               </Modal>
-{/* -----------------------------------------------------------------------------------------------------Modal for Refferal----------------------------------------------------------------------------------------------------- */}
+              {/* -----------------------------------------------------------------------------------------------------Modal for Refferal----------------------------------------------------------------------------------------------------- */}
               <Modal open={openCreateRefferal} onClose={handleCloseCreateRefferal}>
 
                 <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
@@ -1223,7 +1265,7 @@ useEffect(()=>{
                   {/* Add your form or other components here */}
                 </Box>
               </Modal>
-{/*----------------------------------------------------------------------------------------------- Modal for Complete Pregnancy -----------------------------------------------------------------------------------------------*/}
+              {/*----------------------------------------------------------------------------------------------- Modal for Complete Pregnancy -----------------------------------------------------------------------------------------------*/}
               <Modal open={openCompletePregnancy} onClose={handleCloseCompletePregnancy}>
 
                 <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
@@ -1234,7 +1276,7 @@ useEffect(()=>{
                   {/* Add your form or other components here */}
                 </Box>
               </Modal>
- {/*------------------------------------------------------------------------------------------------------ End of Modals------------------------------------------------------------------------------------------------------ */}
+              {/*------------------------------------------------------------------------------------------------------ End of Modals------------------------------------------------------------------------------------------------------ */}
             </Grid>
           </Box>
         </Box>

@@ -15,7 +15,7 @@ import MuiAlert from '@mui/material/Alert';
 import { Paper, Grid, Divider, Typography , Box} from '@mui/material';
 
 
-export default function Appoinment() {
+export default function Approval() {
 
 
 // Dummy data for Appoinment table
@@ -103,21 +103,15 @@ export default function Appoinment() {
   };
 
   return (
-    <div style={{width:'100%',height:'100%',backgroundColor:'white',display:'flex',flexDirection:'column',alignItems:'start',justifyContent:'start'}}>
+    <div style={{width:'100%',height:'80%',backgroundColor:'white',display:'flex',flexDirection:'column',alignItems:'start',justifyContent:'start'}} marginTop={1}>
 
    
     <Box sx={{alignItems:'start',justifyContent:'start', textAlign:'left'}}>
      
 
     
-    <Paper  style={{ maxHeight: '90%', maxWidth: '98%' , padding:'3%'}} >
-    <Typography variant='h2' fontWeight='600'fontSize={28} mb={1}>
-  APPOINTMENTS
-</Typography>
-<Divider sx={{marginBottom:5}}></Divider>
-
-
-        <Grid container >
+    <Box  style={{ maxHeight: '90%', maxWidth: '98%' , padding:'1%'}} >
+<Grid container >
 <Grid xs={4} mb={2}>
 <TextField
   label="Search"
@@ -134,8 +128,8 @@ export default function Appoinment() {
   }}
 />
     </Grid>
-    <Grid xs={3}></Grid>
-    <Grid xs={5} marginTop={3}>
+    <Grid xs={2}></Grid>
+    <Grid xs={8} marginTop={3}>
       <FormControlLabel
         control={
           <Checkbox
@@ -173,17 +167,18 @@ export default function Appoinment() {
         rows={filteredRows}
         columns={columns}
         pageSize={5}
-        rowsPerPageOptions={[5]}
+        density="compact"
         getRowHeight={(params) => {
           if (params.id === 'id') { 
-            return 100; // replace 100 with the desired height
+            return 70; // replace 100 with the desired height
           }
-          return 50; // replace 50 with the default height
+          return 30; // replace 50 with the default height
         }} 
       />
+      
       </Grid>
       </Grid>
-    </Paper>
+    </Box>
     {/* ----------------------------------------------------------Messaggeeeeeeeee pop up---------------------------------------------------------- */}
     <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleSnackbarClose}>
         <MuiAlert elevation={6} variant="filled" severity={snackbarSeverity}>

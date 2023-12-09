@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBackward, faBell, faBox, faCake, faCakeCandles, faCalendarAlt, faCalendarXmark, faCircleInfo, faCirclePlus, faClose, faCoffee, faDroplet, faEllipsisVertical, faExclamationCircle, faList, faListDots, faListSquares, faMailBulk, faMailForward, faMapMarked, faMobile, faMobilePhone, faP, faPhone, faPlayCircle, faPlus, faPlusCircle, faRectangleAd, faRectangleList, faRuler, faSearch, faSquare, faTicket, faUserCircle, faUserPlus, faUsersRectangle, faUsersViewfinder, faWeightScale } from '@fortawesome/free-solid-svg-icons'
 import "../styles/Users.css";
-import Appointment from './Appointment';
+import Appointment from './Approval';
 //Import Firebase
 import { authentication } from '../config/firebase';
 import { database } from '../config/firebase';
