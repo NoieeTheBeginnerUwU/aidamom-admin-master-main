@@ -357,6 +357,8 @@ function PatientTable({ handleSubmit, userData }) {
   };
 
   const [users, setUsers] = useState([]);
+  const [pastAppointments, setPastAppointments] = useState([]);
+  const [onlineAppointments, setOnlineAppointments] = useState([]);
   const [row, setRow] = useState([]);
   const [userSearch, setUserSearch] = useState([]);
   async function fetchData() {
@@ -365,6 +367,8 @@ function PatientTable({ handleSubmit, userData }) {
     const pending = [];
     let i = 1;
     let r = [];
+    let o = [];
+    let a = [];
     const data = querySnapshot.forEach(doc => {
       if (doc.data().fName !== "") {
         userData.push({
@@ -514,6 +518,15 @@ function PatientTable({ handleSubmit, userData }) {
     fetchData();
     console.log("DATA: " + users)
   }, [])
+
+  useEffect(()=>{
+    if(selectedRow.docid!==undefined){
+      
+    }else{
+      
+    }
+  },[selectedRow.docid])
+
 
   const [nChild, setNChild] = useState([]);
 

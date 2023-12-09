@@ -145,7 +145,7 @@ const Messages = ({messaged}) => {
         appointments.push({id:doc.id,name:doc.data().name, dateMade:doc.data().dateMade,uid:doc.data().uid})
       })
       setMessages(messagesSnapshot.docs);
-      scrollToBottom()
+      scrollToBottom();
     }
 
     fetchMessages();
@@ -156,13 +156,20 @@ const Messages = ({messaged}) => {
       snapshot.forEach((doc)=>{
         appointments.push({id:doc.id,name:doc.data().name, dateMade:doc.data().dateMade,uid:doc.data().uid})
         if(doc.data().status==="unread"){
-          un.push(doc.data().uid)          
+          un.push(doc.data().uid)   
+          handleRead(doc.id)       
         }
       })
       setUnread(un)
       setMessages(snapshot.docs);
       scrollToBottom()
     });
+
+    messages.forEach((doc)=>{
+      if(doc.status==="unread"){
+        handleRead(doc.id)
+      }
+    })
 
     return () => {
       unsubscribe();
@@ -224,6 +231,10 @@ const Messages = ({messaged}) => {
     }
   }
 
+  useEffect(()=>{
+    console.log("WEW")
+  },[messages])
+
   useEffect(() => {
     // Scroll to the bottom on component mount
     scrollToBottom();
@@ -234,7 +245,7 @@ const Messages = ({messaged}) => {
         loading?
         <Loading/>
         :
-        <div style={{width:'100%',height:'100vh',backgroundColor:'ghostwhite',flexDirection:'row',display:'flex',alignItems:'center',justifyContent:'end',overflow:'hidden'}}>
+        <div style={{width:'100%',height:'100vh',backgroundColor:'ghostwhite',flexDirection:'row',display:'flex',alignItems:'center',justifyContent:'end',}}>
         <div  style={{width:'20%',height:'100%',backgroundColor:'rgb(0,0,50)',overflowY:'scroll',}}>
           <div style={{width:'100%',height:70,display:'flex',alignItems:'center',justifyContent:'center'}}>
             <div style={{display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
@@ -261,7 +272,7 @@ const Messages = ({messaged}) => {
               <div  style={{width:40,height:40,borderRadius:40,marginRight:40,backgroundImage:picture===""?`url(${pic})`:`url(${picture})`,backgroundSize:'contain',backgroundPosition:'center',marginLeft:40}}/>
               <p style={{color:'white',fontSize:18,fontWeight:700}}>{name}</p>
             </div>
-            <div style={{width:'100%',height:'80%',backgroundColor:'white',overflowY:'scroll'}} ref={scrollContainer} className="scroll-container">
+            <div style={{width:'100%',height:'100%',backgroundColor:'white',overflowY:'scroll',}} ref={scrollContainer} className="scroll-container">
                 {messages.map((doc) => (
                   <>
                     {
@@ -284,11 +295,11 @@ const Messages = ({messaged}) => {
                   </>
                 ))}
             </div>
-            <div style={{width:'100%',height:'10%',backgroundColor:'ghostwhite',display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-              <div style={{width:'80%',height:'70%',backgroundColor:'white',border:'1px solid grey',borderTopLeftRadius:10,borderBottomLeftRadius:10,display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                <input type="text" placeholder="Enter a message" value={message} onChange={(text)=> setMessage(text.target.value)} style={{outline:'none',height:40,width:'96%',border:'none',borderRadius:10}}/>
+            <div style={{width:'100%',height:'8%',backgroundColor:'black',display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+              <div style={{width:'80%',height:'60%',backgroundColor:'white',border:'1px solid grey',borderTopLeftRadius:10,borderBottomLeftRadius:10,display:'flex',flexDirection:'row',alignItems:'end',justifyContent:'center'}}>
+                <input type="text" placeholder="Enter a message" value={message} onChange={(text)=> setMessage(text.target.value)} style={{outline:'none',height:'100%',width:'96%',border:'none',borderRadius:10}}/>
               </div>
-              <button onClick={() => [sendMessage(message),scrollToBottom]} style={{width:100,height:'70%',color:'white',fontWeight:600,backgroundColor:'navy',cursor:'pointer'}}>Send</button>
+              <button onClick={() => [sendMessage(message),scrollToBottom]} style={{width:100,height:'70%',color:'white',fontWeight:600,margin:'none',backgroundColor:'navy',cursor:'pointer'}}>Send</button>
             </div>
           </>
           :

@@ -283,7 +283,7 @@ try {
                </div>
         :
         <div className='main'>
-        <div className='sideNav' style={{width:hide===true?"3%":"20%",transition:'ease-in-out',transitionDuration:'1s',backgroundColor:'white',overflow:'hidden',display:'flex',flexDirection:'column',textDecoration:'none',justifyContent:'start',alignItems:'center',backgroundColor:'white',color:'black',boxShadow:'1px 1px 7px 1px black',zIndex:10}}>
+        <div className='sideNav' style={{width:hide===true?"3%":"20%",transition:'ease-in-out',transitionDuration:'1s',backgroundColor:'white',overflowY:'hidden',display:'flex',flexDirection:'column',textDecoration:'none',justifyContent:'start',alignItems:'center',backgroundColor:'white',color:'black',boxShadow:'1px 1px 7px 1px black',zIndex:10}}>
           {
             hide===false?
             <div style={{width:'100%',height:50,display:'flex',alignItems:'center',justifyContent:'end'}}>
@@ -366,7 +366,7 @@ try {
               </Link>
             </div>
         </div>
-        <div style={{width:hide===true?'97%':'80%',height:'100%',backgroundColor:'ghostwhite',overflow:'hidden',transition:'ease-in-out',transitionDuration:'1s'}}>
+        <div style={{width:hide===true?'97%':'80%',height:'100vh',backgroundColor:'ghostwhite',overflow:'hidden',transition:'ease-in-out',transitionDuration:'1s'}}>
           <Routes>
               {
                 user?
