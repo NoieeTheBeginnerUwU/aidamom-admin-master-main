@@ -798,6 +798,34 @@ useEffect(()=>{
         <Button>
           online requests
         </Button>
+<<<<<<< HEAD
+=======
+
+        <Modal
+        open={openModalOnlineRequest}
+        onClose={handleCloseOnlineRequest}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '95%',
+         bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 }}>
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Typography id="modal-modal-title" variant="h6" component="h2" fontWeight={600}>
+             Online Request
+            </Typography>
+            <IconButton onClick={handleCloseOnlineRequest}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+         <Approval/>
+        </Box>
+      </Modal>
+
+
+
+
+
+>>>>>>> d3325b3384dcadac30bf18d4f36cf7d6a0e35ad3
       </Box>
       <Divider sx={{ marginBottom: 2 }}></Divider>
       <Box display="flex" justifyContent="center">

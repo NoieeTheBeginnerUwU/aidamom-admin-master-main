@@ -1051,10 +1051,12 @@ const Dashboard = ({ counter }) => {
     <Grid container item xs={4.5} ml={.5} mb={3} padding={2} sx={{ minHeight: '7vh', minWidth: '8%', }} component={Paper}>
       <Grid xs={3} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#486DF1' }}><EventNoteIcon fontSize='72' color="white" /></Box></Grid>
       <Grid xs={4.5} >
-        <Grid xs={12} > <Box fontSize={'medium'} ml={1}  fontWeight='500'>Appointments</Box></Grid>
+        <Grid xs={12} > <Box fontSize={'medium'} ml={1}fontWeight='500'>Appointments</Box></Grid>
         <Grid xs={12}> <Box fontSize='2em' ml={1} fontWeight='700' color={'#4E4B66'}>{completed}</Box></Grid>
       </Grid>
-      <Divider  orientation="vertical" flexItem marginBottom={2}/>
+     
+      <Divider  orientation="vertical" flexItem  sx={{ mx: 2 }}/>
+      
       <Grid xs={3} >
         <Grid xs={12}> <Box fontSize={'medium '} ml={1} fontWeight='600' color={'#F4B740'}>Upcoming</Box></Grid>
         <Grid xs={12}> <Box fontSize='2em' ml={1} fontWeight='800' color={'#486DF1'}>{pendings_}</Box></Grid>
@@ -1339,6 +1341,8 @@ const Dashboard = ({ counter }) => {
                   </TableBody>
                 </Table>
               </TableContainer>
+
+              
             )}
           </Box>
         </Grid>
