@@ -798,8 +798,6 @@ useEffect(()=>{
         <Button>
           online requests
         </Button>
-<<<<<<< HEAD
-=======
 
         <Modal
         open={openModalOnlineRequest}
@@ -822,10 +820,6 @@ useEffect(()=>{
       </Modal>
 
 
-
-
-
->>>>>>> d3325b3384dcadac30bf18d4f36cf7d6a0e35ad3
       </Box>
       <Divider sx={{ marginBottom: 2 }}></Divider>
       <Box display="flex" justifyContent="center">
