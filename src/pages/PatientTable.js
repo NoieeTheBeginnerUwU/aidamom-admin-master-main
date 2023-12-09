@@ -947,9 +947,10 @@ function PatientTable({ handleSubmit, userData }) {
 
                               {/* ---------------------------------------------------------2nd tab ---------------------------------------------------------------------------- */}
                               <TabPanel value="2" sx={{ width: '100%', backgroundColor: '#F0F2F5' }}>
-                                <Grid xs={10}>
-                                  <TableContainer component={Paper}>
-                                    <Table size='large'>
+                                <Grid xs={11} padding={1}>
+                                  <Box component={Paper}>
+                                  <TableContainer >
+                                    <Table size='small'>
                                       <TableHead>
                                         <TableRow>
                                           <TableCell>Pregnancy Number</TableCell>
@@ -974,11 +975,8 @@ function PatientTable({ handleSubmit, userData }) {
                                       </TableBody>
                                     </Table>
                                   </TableContainer>
+                                  </Box>
                                 </Grid>
-
-
-
-
                               </TabPanel>
                             </Grid>
                             {/* --------------------------------------------------------3rd tab ----------------------------------------------------------------------------------------------------------------- */}
@@ -1156,7 +1154,7 @@ function PatientTable({ handleSubmit, userData }) {
                 <Grid xs={4} padding={1}>
                   <Box margin={0}>
                     <Box padding={1} textAlign={'center'} sx={{ backgroundColor: 'skyblue', color: 'white' }}><Typography fontWeight='700' >APPOINTMENTS</Typography></Box>
-                    <TableContainer component={Paper} sx={{ maxHeight: '31vh' }}>
+                    <TableContainer component={Paper} sx={{ minHeight: '30vh', maxHeight: '50vh'  }}>
                       <Table aria-label="simple table" size='small' sx={{ minWidth: '' }} stickyHeader>
                         <TableHead >
                           <TableRow>
@@ -1192,7 +1190,7 @@ function PatientTable({ handleSubmit, userData }) {
                 <Grid xs={8} justify="center" padding={1}>
                   <Box>
                     <Box padding={1} textAlign={'center'} sx={{ backgroundColor: 'skyblue', color: 'white' }}><Typography fontWeight='700' >PRE-NATAL VISITS</Typography></Box>
-                    <TableContainer component={Paper} sx={{ maxHeight: '31vh' }} >
+                    <TableContainer component={Paper} sx={{ minHeight: '30vh', maxHeight: '50vh'  }} >
                       <Table size="small" aria-label="prenatalvistisTable" stickyHeader sx={{ minWidth: '' }}>
                         <TableHead style={{ backgroundColor: 'skyblue' }} >
                           <TableRow>
