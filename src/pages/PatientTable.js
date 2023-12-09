@@ -356,6 +356,131 @@ function PatientTable({ handleSubmit, userData }) {
     setOpenAddPatient(false);
   };
 
+<<<<<<< HEAD
+const [users, setUsers] = useState([]);
+const [row, setRow] = useState([]);
+const [userSearch, setUserSearch] = useState([]);
+const [pregHis, setPregHis] = useState([]);
+async function fetchData(){
+  const querySnapshot = await getDocs(query(collection(database, 'userData')));
+  const userData = [];
+  const pending = [];
+  let i = 1;
+  let r =[];
+  let p = [];
+  const data = querySnapshot.forEach(doc=>{
+    if(doc.data().fName!==""){
+      p.push({
+        //user pregnancy history
+          //child1
+          userChild1:doc.data().userChild1,
+          userChildDateOfDelivery1:doc.data().userChildDateOfDelivery1,
+          userChildTypeOfDelivery1:doc.data().userChildTypeOfDelivery1,
+          userChildBirthOutcome1:doc.data().userChildBirthOutcome1,
+          userChildNumberOfChildDelivered1:doc.data().userChildNumberOfChildDelivered1,
+          userChildComplication1:doc.data().userChildComplication1,
+            //child2
+          userChild2:doc.data().userChild2,
+          userChildDateOfDelivery2:doc.data().userChildDateOfDelivery2,
+          userChildTypeOfDelivery2:doc.data().userChildTypeOfDelivery2,
+          userChildBirthOutcome2:doc.data().userChildBirthOutcome2,
+          userChildNumberOfChildDelivered2:doc.data().userChildNumberOfChildDelivered2,
+          userChildComplication2:doc.data().userChildComplication2,
+          //child3
+          userChild3:doc.data().userChild3,
+          userChildDateOfDelivery3:doc.data().userChildDateOfDelivery3,
+          userChildTypeOfDelivery3:doc.data().userChildTypeOfDelivery3,
+          userChildBirthOutcome3:doc.data().userChildBirthOutcome3,
+          userChildNumberOfChildDelivered3:doc.data().userChildDateOfDelivery3,
+          userChildComplication3:doc.data().userChildComplication3,
+          //child4
+          userChild4:doc.data().userChild4,
+          userChildDateOfDelivery4:doc.data().userChildDateOfDelivery4,
+          userChildTypeOfDelivery4:doc.data().userChildTypeOfDelivery4,
+          userChildBirthOutcome4:doc.data().userChildBirthOutcome4,
+          userChildNumberOfChildDelivered4:doc.data().userChildNumberOfChildDelivered4,
+          userChildComplication4 :doc.data().userChildComplication4,    
+          //child5
+          userChild5:doc.data().userChild5,
+          userChildDateOfDelivery5:doc.data().userChildDateOfDelivery5,
+          userChildTypeOfDelivery5:doc.data().userChildTypeOfDelivery5,
+          userChildBirthOutcome5:doc.data().userChildBirthOutcome5,
+          userChildNumberOfChildDelivered5:doc.data().userChildNumberOfChildDelivered5,
+          userChildComplication5:doc.data().userChildComplication5,
+          //child6
+          userChild6:doc.data().userChild6,
+          userChildDateOfDelivery6:doc.data().userChildDateOfDelivery6,
+          userChildTypeOfDelivery6:doc.data().userChildTypeOfDelivery6,
+          userChildBirthOutcome6:doc.data().userChildBirthOutcome6,
+          userChildNumberOfChildDelivered6:doc.data().userChildNumberOfChildDelivered6,
+          userChildComplication6:doc.data().userChildComplication6,
+          //child7
+          userChild7:doc.data().userChild7,
+          userChildDateOfDelivery7:doc.data().userChildDateOfDelivery7,
+          userChildTypeOfDelivery7:doc.data().userChildTypeOfDelivery7,
+          userChildBirthOutcome7:doc.data().userChildBirthOutcome7,
+          userChildNumberOfChildDelivered7:doc.data().userChildNumberOfChildDelivered7,
+          userChildComplication7:doc.data().userChildComplication7,
+          //child8
+          userChild8:doc.data().userChild8,
+          userChildDateOfDelivery8:doc.data().userChildDateOfDelivery8,
+          userChildTypeOfDelivery8:doc.data().userChildTypeOfDelivery8,
+          userChildBirthOutcome8:doc.data().userChildBirthOutcome8,
+          userChildNumberOfChildDelivered8:doc.data().userChildNumberOfChildDelivered8,
+          userChildComplication8:doc.data().userChildComplication8,
+          //child9
+          userChild9:doc.data().userChild9,
+          userChildDateOfDelivery9:doc.data().userChildDateOfDelivery9,
+          userChildTypeOfDelivery9:doc.data().userChildTypeOfDelivery9,
+          userChildBirthOutcome9:doc.data().userChildBirthOutcome9,
+          userChildNumberOfChildDelivered9:doc.data().userChildNumberOfChildDelivered9,
+          userChildComplication9:doc.data().userChildComplication9,
+          //child10
+          userChild10:doc.data().userChild10,
+          userChildDateOfDelivery10:doc.data().userChildDateOfDelivery10,
+          userChildTypeOfDelivery10:doc.data().userChildTypeOfDelivery10,
+          userChildBirthOutcome10:doc.data().userChildBirthOutcome10,
+          userChildNumberOfChildDelivered10:doc.data().userChildNumberOfChildDelivered10,
+          userChildComplication10:doc.data().userChildComplication10
+      })
+      userData.push({
+        id:i++,
+        docid:doc.id,
+        lastPeriod:doc.data().lastPeriod,
+        userFname:doc.data().userFname,
+        userMname:doc.data().userMname,
+        userLname:doc.data().userLname,
+        userSuffix:doc.data().userSuffix,
+        userSex:doc.data().userSex,
+        userCivilStatus:doc.data().userCivilStatus,
+        userBloodType:doc.data().userBloodType,
+        userReligion:doc.data().userReligion,
+        userNumber:doc.data().userNumber,
+        userDob:doc.data().userDob,
+        userAge:doc.data().userAge,
+        userAddress:doc.data().userBarangay+", "+doc.data().userTown,
+        userNationality:doc.data().userNationality,
+        userOccupation:doc.data().userOccupation,
+        userPurok:doc.data().userPurok,
+        userBarangay:doc.data().userBarangay,
+        userTown:doc.data().userTown,
+        userProvince:doc.data().userProvince,
+        userPlaceOfBirth:doc.data().userPlaceOfBirth,
+        //family details
+        userFathersName:doc.data().userFathersName,
+        userMothersName:doc.data().userMothersName,
+        userHusbandsName:doc.data().userHusbandsName,
+        userHusbandsOccuupation:doc.data().userHusbandsOccuupation,
+        userDateOfMarriage:doc.data().userDateOfMarriage,
+        userPlaceOfMarriage:doc.data().userPlaceOfMarriage,
+        userHusbandsNumber:doc.data().userHusbandsNumber,
+        userCompleteAddress:doc.data().userCompleteAddress,
+        userEmployedBy:doc.data().userEmployedBy,
+        userSalary:doc.data().userSalary,
+        userAddressOfEmployer:doc.data().userAddressOfEmployer,
+        userNameOfBarangayCaptain:doc.data().userNameOfBarangayCaptain,
+        //user pregnancy history
+=======
   const [users, setUsers] = useState([]);
   const [row, setRow] = useState([]);
   const [userSearch, setUserSearch] = useState([]);
@@ -404,6 +529,7 @@ function PatientTable({ handleSubmit, userData }) {
           userAddressOfEmployer: doc.data().userAddressOfEmployer,
           userNameOfBarangayCaptain: doc.data().userNameOfBarangayCaptain,
           //user pregnancy history
+>>>>>>> cb00a95334d4cd90529051e6e283ac3afca4cc67
           //child1
           userChild1: doc.data().userChild1,
           userChildDateOfDelivery1: doc.data().userChildDateOfDelivery1,
@@ -667,6 +793,210 @@ function PatientTable({ handleSubmit, userData }) {
     } else {
       alert("Please fill all the necessary inputs to create an account.")
     }
+<<<<<<< HEAD
+  })
+  setUsers(userData);
+  setUserSearch(userData);
+  setPregHis(p);
+  //var i = 1;
+  //alert("running "+i++ +" times")
+};
+
+const [nOPreg, setNOPreg] = useState(0);
+const countPreg = () => {
+  let count = 0;
+  pregHis.forEach((doc)=>{
+    if(doc.userChildDateOfDelivery1!==""){
+      count = 1
+    }
+    if(doc.userChildDateOfDelivery2!==""){
+      count = 2
+    }
+    if(doc.userChildDateOfDelivery3!==""){
+      count = 3
+    }
+    if(doc.userChildDateOfDelivery4!==""){
+      count = 4
+    }
+    if(doc.userChildDateOfDeliver5!==""){
+      count = 5
+    }
+    if(doc.userChildDateOfDelivery6!==""){
+      count = 6
+    }
+    if(doc.userChildDateOfDelivery7!==""){
+      count = 7
+    }
+    if(doc.userChildDateOfDelivery8!==""){
+      count = 8
+    }
+    if(doc.userChildDateOfDelivery9!==""){
+      count = 9
+    }
+    if(doc.userChildDateOfDelivery10!==""){
+      count = 10
+    }
+  })
+  setNOPreg(count);
+}
+
+useEffect(()=>{
+  fetchData();
+},[])
+
+const[nChild, setNChild] = useState([]);
+
+
+
+const handleCreateAccount = async() => {
+  if(registrationForm.userFname!==""||registrationForm.userLname!==""||registrationForm.userSex!==""||registrationForm.userAge||registrationForm.userNumber!==""){
+   try{
+     await addDoc(collection(database, "userData"),{
+       userFname:registrationForm.userFname,
+       userMname:registrationForm.userMname,
+       userLname:registrationForm.userLname,
+       userSuffix:registrationForm.userSuffix,
+       userSex:registrationForm.userSex,
+       userCivilStatus:registrationForm.userCivilStatus,
+       userBloodType:registrationForm.userBloodType,
+       userReligion:registrationForm.userReligion,
+       userNumber:registrationForm.userNumber,
+       userDob:registrationForm.userDob,
+       userAge:registrationForm.userAge,
+       userNationality:registrationForm.userNationality,
+       userOccupation:registrationForm.userOccupation,
+       userPurok:registrationForm.userPurok,
+       userBarangay:registrationForm.userBarangay,
+       userTown:registrationForm.userTown,
+       userProvince:registrationForm.userProvince,
+       userPlaceOfBirth:registrationForm.userPlaceOfBirth,
+       //family details
+       userFathersName:registrationForm.userFathersName,
+       userMothersName:registrationForm.userMothersName,
+       userHusbandsName:registrationForm.userHusbandsName,
+       userHusbandsOccuupation:registrationForm.userHusbandsOccuupation,
+       userDateOfMarriage:registrationForm.userDateOfMarriage,
+       userPlaceOfMarriage:registrationForm.userPlaceOfMarriage,
+       userHusbandsNumber:registrationForm.userHusbandsNumber,
+       userCompleteAddress:registrationForm.userCompleteAddress,
+       userEmployedBy:registrationForm.userEmployedBy,
+       userSalary:registrationForm.userSalary,
+       userAddressOfEmployer:registrationForm.userAddressOfEmployer,
+       userNameOfBarangayCaptain:registrationForm.userNameOfBarangayCaptain,
+       //user pregnancy history
+         //child1
+       userChild1:registrationForm.userChild1,
+       userChildDateOfDelivery1:registrationForm.userChildDateOfDelivery1,
+       userChildTypeOfDelivery1:registrationForm.userChildTypeOfDelivery1,
+       userChildBirthOutcome1:registrationForm.userChildBirthOutcome1,
+       userChildNumberOfChildDelivered1:registrationForm.userChildNumberOfChildDelivered1,
+       userChildComplication1:registrationForm.userChildComplication1,
+         //child2
+       userChild2:registrationForm.userChild2,
+       userChildDateOfDelivery2:registrationForm.userChildDateOfDelivery2,
+       userChildTypeOfDelivery2:registrationForm.userChildTypeOfDelivery2,
+       userChildBirthOutcome2:registrationForm.userChildBirthOutcome2,
+       userChildNumberOfChildDelivered2:registrationForm.userChildNumberOfChildDelivered2,
+       userChildComplication2:registrationForm.userChildComplication2,
+       //child3
+       userChild3:registrationForm.userChild3,
+       userChildDateOfDelivery3:registrationForm.userChildDateOfDelivery3,
+       userChildTypeOfDelivery3:registrationForm.userChildTypeOfDelivery3,
+       userChildBirthOutcome3:registrationForm.userChildBirthOutcome3,
+       userChildNumberOfChildDelivered3:registrationForm.userChildDateOfDelivery3,
+       userChildComplication3:registrationForm.userChildComplication3,
+       //child4
+       userChild4:registrationForm.userChild4,
+       userChildDateOfDelivery4:registrationForm.userChildDateOfDelivery4,
+       userChildTypeOfDelivery4:registrationForm.userChildTypeOfDelivery4,
+       userChildBirthOutcome4:registrationForm.userChildBirthOutcome4,
+       userChildNumberOfChildDelivered4:registrationForm.userChildNumberOfChildDelivered4,
+       userChildComplication4 :registrationForm.userChildComplication4,    
+       //child5
+       userChild5:registrationForm.userChild5,
+       userChildDateOfDelivery5:registrationForm.userChildDateOfDelivery5,
+       userChildTypeOfDelivery5:registrationForm.userChildTypeOfDelivery5,
+       userChildBirthOutcome5:registrationForm.userChildBirthOutcome5,
+       userChildNumberOfChildDelivered5:registrationForm.userChildNumberOfChildDelivered5,
+       userChildComplication5:registrationForm.userChildComplication5,
+       //child6
+       userChild6:registrationForm.userChild6,
+       userChildDateOfDelivery6:registrationForm.userChildDateOfDelivery6,
+       userChildTypeOfDelivery6:registrationForm.userChildTypeOfDelivery6,
+       userChildBirthOutcome6:registrationForm.userChildBirthOutcome6,
+       userChildNumberOfChildDelivered6:registrationForm.userChildNumberOfChildDelivered6,
+       userChildComplication6:registrationForm.userChildComplication6,
+       //child7
+       userChild7:registrationForm.userChild7,
+       userChildDateOfDelivery7:registrationForm.userChildDateOfDelivery7,
+       userChildTypeOfDelivery7:registrationForm.userChildTypeOfDelivery7,
+       userChildBirthOutcome7:registrationForm.userChildBirthOutcome7,
+       userChildNumberOfChildDelivered7:registrationForm.userChildNumberOfChildDelivered7,
+       userChildComplication7:registrationForm.userChildComplication7,
+       //child8
+       userChild8:registrationForm.userChild8,
+       userChildDateOfDelivery8:registrationForm.userChildDateOfDelivery8,
+       userChildTypeOfDelivery8:registrationForm.userChildTypeOfDelivery8,
+       userChildBirthOutcome8:registrationForm.userChildBirthOutcome8,
+       userChildNumberOfChildDelivered8:registrationForm.userChildNumberOfChildDelivered8,
+       userChildComplication8:registrationForm.userChildComplication8,
+       //child9
+       userChild9:registrationForm.userChild9,
+       userChildDateOfDelivery9:registrationForm.userChildDateOfDelivery9,
+       userChildTypeOfDelivery9:registrationForm.userChildTypeOfDelivery9,
+       userChildBirthOutcome9:registrationForm.userChildBirthOutcome9,
+       userChildNumberOfChildDelivered9:registrationForm.userChildNumberOfChildDelivered9,
+       userChildComplication9:registrationForm.userChildComplication9,
+       //child10
+       userChild10:registrationForm.userChild10,
+       userChildDateOfDelivery10:registrationForm.userChildDateOfDelivery10,
+       userChildTypeOfDelivery10:registrationForm.userChildTypeOfDelivery10,
+       userChildBirthOutcome10:registrationForm.userChildBirthOutcome10,
+       userChildNumberOfChildDelivered10:registrationForm.userChildNumberOfChildDelivered10,
+       userChildComplication10:registrationForm.userChildComplication10,
+       //user other health conditions 
+       userTBPersonal:registrationForm.userTBPersonal,
+       userTBFamily:registrationForm.userTBFamily,
+       userHeartDiseasesPersonal:registrationForm.userHeartDiseasesPersonal,
+       userHeartDiseasesFamily:registrationForm.userHeartDiseasesFamily,
+       userDiabetesPersonal:registrationForm.userDiabetesPersonal,
+       userDiabetesFamily:registrationForm.userDiabetesFamily,
+       userHypertensionPersonal:registrationForm.userHypertensionPersonal,
+       userHypertensionFamily:registrationForm.userHypertensionFamily,
+       userBronchialAsthmaPersonal:registrationForm.userBronchialAsthmaPersonal,
+       userBronchialAsthmaFamily:registrationForm.userBronchialAsthmaFamily,
+       userUTIPersonal:registrationForm.userUTIPersonal,
+       userUTIFamily:registrationForm.userUTIFamily,
+       userParasitismPersonal:registrationForm.userParasitismPersonal,
+       userParasitismFamily:registrationForm.userParasitismFamily,
+       userGoiterPersonal:registrationForm.userGoiterPersonal,
+       userGoiterFamily:registrationForm.userGoiterFamily,
+       userAnemiaPersonal:registrationForm.userAnemiaPersonal,
+       userAnemiaFamily:registrationForm.userAnemiaFamily,
+       userGenitalTrackInfection:registrationForm.userGenitalTrackInfection,
+       userOtherInfectiousDiseases:registrationForm.userOtherInfectiousDiseases,
+       userHighRiskBehavior:registrationForm.userHighRiskBehavior,
+       dateCreated: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
+       status:"pending",
+       userLevel:"standard user",
+       userPic:"",
+     }).then(alert("Account created successfully."))
+   }catch(e){
+     alert(e); 
+   }
+   addDoc(collection(database, "adminLogs"),{
+     activity:"added a new user to the database.",
+     category:"added",
+     timestamp: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
+     day:moment(new Date()).format("DD"),
+     month:moment(new Date()).format("MM"),
+     Year:moment(new Date()).format("YYYY"),
+   })
+   setActive("newsession")
+  }else{
+   alert("Please fill all the necessary inputs to create an account.")
+=======
+>>>>>>> cb00a95334d4cd90529051e6e283ac3afca4cc67
   }
 
   useEffect(() => {
@@ -948,16 +1278,38 @@ function PatientTable({ handleSubmit, userData }) {
                                         </TableRow>
                                       </TableHead>
                                       <TableBody>
-                                        {rows3.map((row) => (
-                                          <TableRow key={row.number}>
-                                            <TableCell>{row.number}</TableCell>
-                                            <TableCell>{row.dateOfDelivery}</TableCell>
-                                            <TableCell>{row.typeOfDelivery}</TableCell>
-                                            <TableCell>{row.birthOutcome}</TableCell>
-                                            <TableCell>{row.numberOfChildDelivered}</TableCell>
-                                            <TableCell>{row.complications}</TableCell>
-                                          </TableRow>
-                                        ))}
+                                        <TableRow>
+                                            <TableCell>{selectedRow.userChild1}</TableCell>
+                                            <TableCell>{selectedRow. userChildDateOfDelivery1}</TableCell>
+                                            <TableCell>{selectedRow.userChildTypeOfDelivery1}</TableCell>
+                                            <TableCell>{selectedRow.userChildBirthOutcome1}</TableCell>
+                                            <TableCell>{selectedRow.userChildNumberOfChildDelivered1}</TableCell>
+                                            <TableCell>{selectedRow.userChildComplication1}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell>{selectedRow.userChild2}</TableCell>
+                                            <TableCell>{selectedRow. userChildDateOfDelivery2}</TableCell>
+                                            <TableCell>{selectedRow.userChildTypeOfDelivery2}</TableCell>
+                                            <TableCell>{selectedRow.userChildBirthOutcome2}</TableCell>
+                                            <TableCell>{selectedRow.userChildNumberOfChildDelivered2}</TableCell>
+                                            <TableCell>{selectedRow.userChildComplication2}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell>{selectedRow.userChild3}</TableCell>
+                                            <TableCell>{selectedRow. userChildDateOfDelivery3}</TableCell>
+                                            <TableCell>{selectedRow.userChildTypeOfDelivery3}</TableCell>
+                                            <TableCell>{selectedRow.userChildBirthOutcome3}</TableCell>
+                                            <TableCell>{selectedRow.userChildNumberOfChildDelivered3}</TableCell>
+                                            <TableCell>{selectedRow.userChildComplication3}</TableCell>
+                                        </TableRow>
+                                        <TableRow>
+                                            <TableCell>{selectedRow.userChild4}</TableCell>
+                                            <TableCell>{selectedRow. userChildDateOfDelivery4}</TableCell>
+                                            <TableCell>{selectedRow.userChildTypeOfDelivery4}</TableCell>
+                                            <TableCell>{selectedRow.userChildBirthOutcome4}</TableCell>
+                                            <TableCell>{selectedRow.userChildNumberOfChildDelivered4}</TableCell>
+                                            <TableCell>{selectedRow.userChildComplication4}</TableCell>
+                                        </TableRow>                                                                      
                                       </TableBody>
                                     </Table>
                                   </TableContainer>

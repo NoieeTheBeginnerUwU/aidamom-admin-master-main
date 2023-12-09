@@ -93,10 +93,10 @@ const Reports = () => {
       </FormControl>
       {form === 'PatientHistory' && (
         <div>
-         <PatientHistoryForm ref={ref}/>
+         <PatientHistoryForm />
         </div>
       )}
-       {form === 'ClinicalCoverSheet' && (
+       {form === 'ClinicalCoverSheet'  && (
         <div>
          <ClinicalCoverSheet/>
         </div>

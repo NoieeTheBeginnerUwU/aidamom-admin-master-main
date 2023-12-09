@@ -9,7 +9,7 @@ import Loading from "../animations/Loading";
 
 const img = require("./pic.png")
 
-const Messages = () => {
+const Messages = ({messaged}) => {
   let id = authentication.currentUser.uid
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState("");
@@ -30,6 +30,7 @@ const Messages = () => {
     });
  
   }, [user]);
+  console.log(messaged);
 
   useEffect(()=>{
     fetchData();
@@ -178,6 +179,7 @@ const Messages = () => {
       senderId: user.uid,
       receiverId: active,
       status: "unread",
+      pushNotifRead:false,
       readAt: null
     });
     await addDoc(logCollection, {

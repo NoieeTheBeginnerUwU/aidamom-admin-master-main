@@ -195,16 +195,16 @@ export default function PatientRegistrationForm() {
     userChildComplication10: "",
 
     // high risk behavior
-    userSmoking: "",
-    userAlcoholIntake: "",
-    userUsingofIllegalDrugs: "",
-    userViolencefromPartner: "",
-    userMultiplePartners: "",
-    familySmoking: "",
-    familyAlcoholIntake: "",
-    familyUsingofIllegalDrugs: "",
-    familyViolencefromPartner: "",
-    familyMultiplePartners: "",
+    userSmoking: false,
+    userAlcoholIntake: false,
+    userUsingofIllegalDrugs: false,
+    userViolencefromPartner: false,
+    userMultiplePartners: false,
+    familySmoking: false,
+    familyAlcoholIntake: false,
+    familyUsingofIllegalDrugs: false,
+    familyViolencefromPartner: false,
+    familyMultiplePartners: false,
     //user other health conditions 
     userTBPersonal: false,
     userTBFamily: false,
@@ -361,6 +361,7 @@ export default function PatientRegistrationForm() {
          userHighRiskBehavior:registrationForm.userHighRiskBehavior,
          dateCreated: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
          status:"pending",
+         activePregnacy: true,
          userLevel:"standard user",
          userPic:"",
        }).then(alert("Account created successfully."))
@@ -740,7 +741,7 @@ export default function PatientRegistrationForm() {
                     onChange={(event, selectedProvince) => {
                       setRegistrationForm({
                         ...registrationForm,
-                        userProvince: selectedProvince ? selectedProvince : "",
+                        userProvince: selectedProvince.province_name? selectedProvince.province_name : "",
                       });
                       handleProvinceChange(selectedProvince);
                     }}
@@ -769,7 +770,7 @@ export default function PatientRegistrationForm() {
                     onChange={(event, selectedCity) => {
                       setRegistrationForm({
                         ...registrationForm,
-                        userTown: selectedCity ? selectedCity : "",
+                        userTown: selectedCity.city_name ? selectedCity : "",
                       });
                       handleCityChange(selectedCity);
                     }}
@@ -798,7 +799,7 @@ export default function PatientRegistrationForm() {
                     onChange={(event, selectedBarangay) => {
                       setRegistrationForm({
                         ...registrationForm,
-                        userBarangay: selectedBarangay ? selectedBarangay : "",
+                        userBarangay: selectedBarangay.brgy_name ? selectedBarangay : "",
                       });
                       handleCityChange(selectedBarangay);
                     }}
@@ -827,11 +828,9 @@ export default function PatientRegistrationForm() {
                         label="Date of birth"
                         name='dateofbrith'
                         value={registrationForm.userDob}
-
                         style={{ width: ' 100%' }}
-
-                        renderInput={(params) => <TextField {...params} size='small' required
-                          onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDob: text.target.value } })} />}
+                        renderInput={(params) => <TextField {...params} size='small' required  onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDob: params } })}
+                        />}
                         disableFuture
                         minDate={dayjs().subtract(45, 'year')}
                         maxDate={dayjs().subtract(10, 'year')}
@@ -841,7 +840,7 @@ export default function PatientRegistrationForm() {
                 </Grid>
                 <Grid item xs={2} mt={2} direction="row" textAlign="left" justifyContent="center">
                   <Typography>
-                    Your are{' '}
+                    {moment(new Date, "YYYY/MM/DD").diff(moment(registrationForm.userDob,"YYYY/MM/DD"),"years")}
                     <Box component="span" fontSize="18px" fontWeight="bold" color={'primary.main'}>
                       <br />
                     </Box>{' '}
