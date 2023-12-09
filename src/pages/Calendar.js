@@ -7,7 +7,9 @@ import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 import CircleIcon from '@mui/icons-material/Circle';
-
+//firebase
+import { database } from '../config/firebase';
+import { onSnapshot, collection, query, where } from 'firebase/firestore';
 
 function getRandomNumber(min, max) {
   return Math.round(Math.random() * (max - min) + min);

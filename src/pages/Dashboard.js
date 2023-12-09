@@ -1355,7 +1355,7 @@ const Dashboard = ({ counter }) => {
       <CardContent>
       
       </CardContent>
-      <Calendar />
+      <Calendar/>
     </Card>
   </Grid>
                       
