@@ -256,7 +256,7 @@ function PatientTable({ handleSubmit, userData }) {
     { field: 'userFname', headerName: 'First name', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
     { field: 'userLname', headerName: 'Last name', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
     { field: 'lastPeriod', headerName: 'Last Menstrual Period', flex: 1, align: 'center', headerAlign: 'center' },
-    { field: 'aog' , headerName: 'Age of Gestation', type: 'number', width: 100, sortable: false, align: 'center', headerAlign: 'center' },
+    { field: 'aog', headerName: 'Age of Gestation', type: 'number', width: 100, sortable: false, align: 'center', headerAlign: 'center' },
     { field: 'lastVisit', headerName: 'Date of Last Visit', type: 'number', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
     { field: 'userAddress', headerName: 'Address', flex: 2, sortable: false, align: 'center', headerAlign: 'center' },
     {
@@ -448,9 +448,9 @@ function PatientTable({ handleSubmit, userData }) {
         userData.push({
           id: i++,
           docid: doc.id,
-          aog: moment(new Date(),"YYYY/MM/DD").diff(doc.data().lastPeriod,"weeks") + " weeks",
-          lastVisit: !doc.data().lastVisit?"No Data": doc.data().lastVisit,
-          lastPeriod: !doc.data().lastPeriod? "No data":doc.data().lastPeriod,
+          aog: moment(new Date(), "YYYY/MM/DD").diff(doc.data().lastPeriod, "weeks") + " weeks",
+          lastVisit: !doc.data().lastVisit ? "No Data" : doc.data().lastVisit,
+          lastPeriod: !doc.data().lastPeriod ? "No data" : doc.data().lastPeriod,
           userFname: doc.data().userFname,
           userMname: doc.data().userMname,
           userLname: doc.data().userLname,
@@ -770,21 +770,21 @@ function PatientTable({ handleSubmit, userData }) {
   const [deliveryType, setDeliveryType] = useState('');
 
 
-  const handlePlus = async() => {
-     const app = doc(database, 'dashboard', '--appointments--');
-      const vax = doc(database, 'dashboard', '--vaccinations--');
-      await updateDoc(app, {
-        no: increment(1),
+  const handlePlus = async () => {
+    const app = doc(database, 'dashboard', '--appointments--');
+    const vax = doc(database, 'dashboard', '--vaccinations--');
+    await updateDoc(app, {
+      no: increment(1),
     })
   }
 
-  const handleMinus = async() => {
+  const handleMinus = async () => {
     const app = doc(database, 'dashboard', '--appointments--');
-     const vax = doc(database, 'dashboard', '--vaccinations--');
-     await updateDoc(app, {
-       no: increment(-1),
-   })
- }
+    const vax = doc(database, 'dashboard', '--vaccinations--');
+    await updateDoc(app, {
+      no: increment(-1),
+    })
+  }
 
 
   const handleChange5 = (event) => {
@@ -864,25 +864,28 @@ function PatientTable({ handleSubmit, userData }) {
           <Button variant="contained" color="primary" size='small' sx={{ backgroundColor: 'green' }} onClick={handleOpenOnlineRequest}>
             online requests
           </Button>
+
         </Box>
       </Box>
 
 
       <Dialog open={openAddPatient} onClose={handleClose}>
-        <DialogTitle><Box fontWeight={'600'}>Register Patient</Box></DialogTitle>
+        <DialogTitle>
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Box fontWeight={'600'}>Register Patient</Box>
+            <IconButton onClick={handleCloseOnlineRequest}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+        </DialogTitle>
+
+
         <DialogContent>
           {/*-------------------------------- Add Patient Forms -------------------------------- */}
           <PatientRegistrationForm />
           {/*-------------------------------- End Add Patient Forms -------------------------------- */}
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseMinus} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={openModal1} color="primary">
-            Add
-          </Button>
-        </DialogActions>
+       
       </Dialog>
 
 
@@ -1675,7 +1678,7 @@ function PatientTable({ handleSubmit, userData }) {
 
 
                               </Grid>
-                             
+
 
 
 
