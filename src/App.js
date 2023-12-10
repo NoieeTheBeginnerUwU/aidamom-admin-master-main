@@ -20,6 +20,22 @@ import Login from './pages/Login';
 import Systemreport from './pages/Systemreport';
 import Tables from './pages/Tables';
 import Screening from './Screening';
+
+import {
+  Box,
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  IconButton,
+  InputAdornment,
+  Paper,
+  Avatar,
+  ThemeProvider
+} from '@mui/material';
+import { LockOutlined as LockOutlinedIcon, Email as EmailIcon, Lock as LockIcon } from '@mui/icons-material';
+
+
 //firebase
 import { authentication } from './config/firebase';
 import { database } from './config/firebase';
@@ -234,51 +250,219 @@ try {
                 {
                   signIN===true?
                   <>
-                    <div style={{width:'60%',height:'100%',backgroundColor:"rgba(0,0,0,.5)"}}>
-                    <div style={{}}>
-        
-                    </div>
-                  </div>
-                  <div style={{width:'40%',height:'100%',display:'flex',flexDirection:"column",alignItems:'center',justifyContent:'space-evenly'}}>
-                    <h1 style={{fontSize:25}}>Login using your admin account</h1>
-                    <div style={{width:'80%',height:'50%',border:'1px',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'space-evenly'}}>
-                      {message}
-                      <div onMouseOver={()=> setActiveIN("email")} style={{width:'100%',height:60,padding:'1%',marginTop:'5%',border:activeIN==="email"?'3px solid skyblue':'3px solid lightgrey',backgroundColor:'transparent',borderRadius:10,display:'flex',alignItems:'center',justifyContent:'space-evenly'}}>
-                        <FontAwesomeIcon icon={faUserCircle} size="2x" color='rgb(0,0,60)'/> 
-                        <input required type='email' placeholder='email' onChange={(mail)=> setEmail(mail.target.value)}  style={{width:'90%',height:40,margin:'1%',border:'none',outline:'none'}}/>
-                      </div>
-                      <div onMouseOver={()=> setActiveIN("password")} style={{width:'100%',height:60,padding:'1%',marginTop:'5%',border:activeIN==="password"?'3px solid skyblue':'3px solid lightgrey',backgroundColor:'transparent',borderRadius:10,display:'flex',alignItems:'center',justifyContent:'space-evenly'}}>
-                        <FontAwesomeIcon icon={faLock} size="2x" color='rgb(0,0,60)'/> 
-                        <input required type='password' placeholder='password' onChange={(pass)=> setPassword(pass.target.value)}  style={{width:'90%',height:40,margin:'1%',border:'none',outline:'none'}}/>
-                      </div>
-                      <input disabled={disable===true?true:false} onMouseOver={()=> setActiveIN("submit")} onClick={()=> handleSubmit()} onMouseLeave={()=> setActiveIN("")} type='submit' title='log in using your account with admin privilege.' value="send" style={{width:'100%',height:60,backgroundColor:activeIN==="submit"?'lightblue':'skyblue',color:'white',margin:'2%',border:'none',borderRadius:10,cursor:'pointer'}}/>
-                    </div>
-                    <div>
-                      <p onClick={()=> setSignIn(false)} style={{cursor:'pointer',color:'skyblue',outlineWidth:10,outlineColor:'navy' }}>Forgot password?</p>
-                    </div>
-                  </div>
+                    <Box sx={{ width: '60%', height: '100%', backgroundColor: 'white' }}>
+        {/* Additional content for the left side */}
+        <div style={{}}>{/* Add your content here */}</div>
+      </Box>
+      <Box component={Paper}
+      elevation={6}
+        sx={{
+          width: '40%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'space-evenly',
+        }}
+      >
+       
+        <Box
+          sx={{
+            width: '80%',
+            height: '50%',
+            border: '1px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+          }}
+        >   <Typography variant="h4">Login </Typography>
+        <Avatar sx={{ m: 1, bgcolor: 'primary.main', width:70, height:70 }}>
+        <LockOutlinedIcon />
+      </Avatar>
+         
+          {message}
+          <TextField
+            onMouseOver={() => setActiveIN('email')}
+            label="Email"
+            placeholder="Email"
+            type="email"
+            fullWidth
+            required
+            onChange={(mail) => setEmail(mail.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <EmailIcon />
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              width: '100%',
+              height: 60,
+              padding: '1%',
+              marginTop: '1%',
+              // border: activeIN === 'email' ? '3px solid skyblue' : '3px solid lightgrey',
+              backgroundColor: 'transparent',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-evenly',
+            }}
+          />
+          <TextField
+            onMouseOver={() => setActiveIN('password')}
+            label="Password"
+            placeholder="Password"
+            type="password"
+            fullWidth
+            required
+            onChange={(pass) => setPassword(pass.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LockIcon />
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              width: '100%',
+              height: 60,
+              padding: '1%',
+              marginTop: '1%',
+              // border: activeIN === 'password' ? '3px solid skyblue' : '3px solid lightgrey',
+              backgroundColor: 'transparent',
+             
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-evenly',
+            }}
+          />
+          <Button
+            disabled={disable === true ? true : false}
+            onMouseOver={() => setActiveIN('submit')}
+            onClick={handleSubmit}
+            onMouseLeave={() => setActiveIN('')}
+            variant="contained"
+            fullWidth
+            sx={{
+              width: '100%',
+              height: 60,
+              backgroundColor: activeIN === 'submit' ? 'skyblue' : '#1976D2',
+              color: 'white',
+              margin: 'normal',
+              cursor: 'pointer',
+            }}
+          >
+            login
+          </Button>
+        </Box>
+        <Typography
+            onClick={() => setSignIn(false)}
+            sx={{ cursor: 'pointer', color: 'skyblue', outlineWidth: 10, outlineColor: 'navy' }}
+          >
+            Forgot password?
+          </Typography>
+        <Box>
+         
+        </Box>
+      </Box>
                   </>
                   :
                   <>
-                    <div style={{width:'60%',height:'100%',backgroundColor:"rgba(0,0,0,.5)"}}>
-                    <div style={{}}>
-        
-                    </div>
-                  </div>
-                  <div style={{width:'40%',height:'100%',display:'flex',flexDirection:"column",alignItems:'center',justifyContent:'space-evenly'}}>
-                    <h1 style={{fontSize:25}}>Send a password reset email</h1>
-                    <div style={{width:'80%',height:'50%',border:'1px',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'space-evenly'}}>
-                      {message}
-                      <div onMouseOver={()=> setActiveIN("email")} style={{width:'100%',height:60,padding:'1%',marginTop:'5%',border:activeIN==="email"?'3px solid skyblue':'3px solid lightgrey',backgroundColor:'transparent',borderRadius:10,display:'flex',alignItems:'center',justifyContent:'space-evenly'}}>
-                        <FontAwesomeIcon icon={faUserCircle} size="2x" color='rgb(0,0,60)'/> 
-                        <input required type='email' placeholder='email' onChange={(mail)=> setEmail(mail.target.value)}  style={{height:40,margin:'1%',border:'none',outline:'none'}}/>
-                      </div>
-                      <input disabled={disable===true?true:false} onMouseOver={()=> setActiveIN("submit")} onClick={()=> setChangePassword()} onMouseLeave={()=> setActiveIN("")} type='submit' title='send a password change thru your email.' value="send password reset thru email" style={{width:'100%',height:60,backgroundColor:activeIN==="submit"?'lightblue':'skyblue',color:'white',margin:'2%',border:'none',borderRadius:10,cursor:'pointer'}}/>
-                    </div>
-                    <div>
-                      <p onClick={()=> setSignIn(true)} style={{cursor:'pointer',color:'skyblue',outlineWidth:10,outlineColor:'navy' }}>Sign In?</p>
-                    </div>
-                  </div>
+                   
+      <Grid container component="main" sx={{ height: '100vh' }}>
+       
+        <Grid item xs={false} sm={8} md={5} component={Paper} elevation={6} square>
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' , width:70, height:70}}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Reset your password
+            </Typography>
+            <Box
+              sx={{
+                width: '80%',
+                height: '50%',
+                border: '1px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'space-evenly',
+              }}
+            >
+              {message}
+              <Box
+                onMouseOver={() => setActiveIN('email')}
+                sx={{
+                  width: '100%',
+                  height: 60,
+                  padding: '1%',
+                  marginTop: '5%',
+                  // border: activeIN === 'email' ? '3px solid skyblue' : '3px solid lightgrey',
+                  backgroundColor: 'transparent',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-evenly',
+                }}
+              >
+            
+                <TextField
+                  required
+                  fullWidth
+                  type="email"
+                  placeholder="Email"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <EmailIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                  onChange={(mail) => setEmail(mail.target.value)}
+                  sx={{ height: 40, margin: '1%', border: 'none', outline: 'none' }}
+                />
+              </Box>
+              <Button
+                disabled={disable === true ? true : false}
+                onMouseOver={() => setActiveIN('submit')}
+                onClick={setChangePassword}
+                onMouseLeave={() => setActiveIN('')}
+                type="submit"
+                title="send a password change thru your email."
+                sx={{
+                  width: '100%',
+                  height: 60,
+                  backgroundColor: activeIN === 'submit' ? 'skyblue' : '#1976D2',
+                  color: 'white',
+                  margin: '2%',
+                  border: 'none',
+                  cursor: 'pointer',
+                }}
+              >
+                Send the new password via email
+              </Button>
+            </Box>
+            <Box>
+              <Typography
+                onClick={() => setSignIn(true)}
+                sx={{ cursor: 'pointer', color: 'skyblue', outlineWidth: 10, outlineColor: 'navy' }}
+              >
+                Sign In?
+              </Typography>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+   
                   </>
                 }
                </div>
