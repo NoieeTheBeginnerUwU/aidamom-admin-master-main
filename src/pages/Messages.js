@@ -78,7 +78,9 @@ const Messages = ({messaged}) => {
       }
     })
     setDocument(userData);
-    setDocuments(userData)
+    setDocuments(userData);
+    let m = [];
+    
   };
 
 
@@ -136,6 +138,7 @@ const Messages = ({messaged}) => {
   }
 
   const [unread, setUnread] = useState([]);
+  const [hasMessage, setHasMessage] = useState([]);
   useEffect(() => {
     const messagesCollection = query(collection(database, "messages"),orderBy("createdAt","asc"));
     async function fetchMessages() {
@@ -152,6 +155,7 @@ const Messages = ({messaged}) => {
 
     const unsubscribe = onSnapshot(messagesCollection, (snapshot) => {
       let un = [];
+      let has = [];
       let appointments = [];
       snapshot.forEach((doc)=>{
         appointments.push({id:doc.id,name:doc.data().name, dateMade:doc.data().dateMade,uid:doc.data().uid})
@@ -159,14 +163,19 @@ const Messages = ({messaged}) => {
           un.push(doc.data().uid)   
           handleRead(doc.id)       
         }
+        if(doc.data().status==="unread"){
+          has.push({id:doc.id});
+        }
       })
       setUnread(un)
       setMessages(snapshot.docs);
       scrollToBottom()
+      setHasMessage(has);
+      console.log("HAS: "+has)
     });
 
     messages.forEach((doc)=>{
-      if(doc.status==="unread"){
+      if(doc.data().status==="unread"){
         handleRead(doc.id)
       }
     })
@@ -206,18 +215,38 @@ const Messages = ({messaged}) => {
     }
   };
 
+  useEffect(()=>{
+    try{
+      messages.forEach((docs)=>{
+        if(docs.data().senderId===active){
+          updateDoc(doc(database,"messages",docs.id),{
+            status:'read'
+          })
+        }
+      })
+    }catch(e){
+      alert(e)
+    }
+  },[active])
+
   const ref = useRef(null);
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
- 
+    }, [messages]);
+    const [hasMessages, setHasMessages] = useState([]);
+
   const handleRead = async(id) => {
     try {
       let userData = [];
+      let has = [];
       const unreadDocs = await getDocs(query(collection(database,"messages"),where("senderId","==",id),where("status","==","unread")))
       unreadDocs.forEach((doc)=>{
         userData.push(doc.id)
+        if(doc.data().status==="unread"&&doc.data().senderId===active){
+          has.push(doc.id)
+        }
       })
+      setHasMessages(has)
       console.log("IDs: " + userData)
       let i;
       for(i = 1; i <userData.length;i++){
@@ -239,6 +268,17 @@ const Messages = ({messaged}) => {
     // Scroll to the bottom on component mount
     scrollToBottom();
   }, []);
+
+  
+  const messageChecker = (id) => {
+    for (let i = 0; i < messages.length; i++) {
+      if (messages[i].data().status==="unread"&&messages[i].data().senderId===id) {
+        return true;
+      }
+    }
+  return false;
+  }
+
   return (
     <>
       {
@@ -254,12 +294,16 @@ const Messages = ({messaged}) => {
           </div>
           {
             document.map((doc)=> (
-              <div key={doc.id} onClick={()=> [setActive(doc.id), setName(doc.fName+" "+doc.mName+" "+doc.lName), scrollToBottom(), handleRead(doc.id),setPicture(doc.userPic)]} style={{width:'100%',height:60,display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'start',backgroundColor:active===doc.id?"navy":"transparent",cursor:'pointer'}}>
+              <div key={doc.id} onClick={()=> [setActive(doc.id),setName(doc.fName+" "+doc.mName+" "+doc.lName), scrollToBottom(), handleRead(doc.id),setPicture(doc.userPic)]} style={{width:'100%',height:60,display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'start',backgroundColor:active===doc.id?"navy":"transparent",cursor:'pointer'}}>
                 <div style={{width:40,height:40,borderRadius:40,backgroundImage:!doc.userPic?`url(${img})`:`url(${doc.userPic})`,backgroundSize:'cover',backgroundPosition:'center',backgroundColor:'white',marginLeft:4}}/>
                 <div style={{width:'80%',height:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
                   <p style={{fontSize:12,color:'white',marginLeft:10}}>{doc.fName} {doc.mName} {doc.lName}</p>
                   <p style={{fontSize:9,color:'white',marginLeft:10}}>account status: <span style={{color:doc.status==="approved"?"greenyellow":"white"}}>{doc.status==="approved"?"activated":"pending"}</span></p>
                 </div>
+                {
+                  messageChecker(doc.id)===true&&
+                  <FontAwesomeIcon icon={faMessage} size="1x" color="white" style={{marginRight:5}}/>
+                }
               </div>
             ))
           }
@@ -286,7 +330,10 @@ const Messages = ({messaged}) => {
                             }
                             <div style={{width:'100%',height:'100%',display:'flex',flexDirection:'column'}}>
                               <li style={{width:'100%',height:'100%',textDecoration:'none',listStyleType:'none',marginBottom:'1%',padding:12,backgroundColor:doc.data().receiverId===active?'navy':"lightgrey",borderRadius:10,fontSize:12,fontWeight:700,color:doc.data().receiverId===active?'white':"black"}} key={doc.id}>{doc.data().text}</li>
-                              <p style={{color:'black',fontSize:10,color:'black',margin:0}}>{moment(doc.data().createdAt).format("MMMM DD, YYYY hh:mm a")} {doc.data().status}</p>
+                              {
+                                doc.data().receiverId===active&&
+                                <p style={{color:'black',fontSize:10,color:'black',margin:0}}>{moment(doc.data().createdAt).format("MMMM DD, YYYY hh:mm a")} {doc.data().status}</p>
+                              }
                             </div>
                           </div>
                         </div>
@@ -296,7 +343,7 @@ const Messages = ({messaged}) => {
                 ))}
             </div>
             <div style={{width:'100%',height:'8%',backgroundColor:'rgb(0,0,50)',display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-              <div style={{width:'80%',height:'80%',backgroundColor:'white',border:'1px solid grey',borderTopLeftRadius:10,borderBottomLeftRadius:10,display:'flex',flexDirection:'row',alignItems:'end',justifyContent:'center'}}>
+              <div style={{width:'80%',height:'90%',marginTop:10,backgroundColor:'white',border:'1px solid grey',borderTopLeftRadius:10,borderBottomLeftRadius:10,display:'flex',flexDirection:'row',alignItems:'end',justifyContent:'center'}}>
                 <input type="text" placeholder="Enter a message" value={message} onChange={(text)=> setMessage(text.target.value)} style={{outline:'none',height:'100%',width:'96%',border:'none',borderRadius:10}}/>
               </div>
               <button onClick={() => [sendMessage(message),scrollToBottom]} style={{width:100,height:'100%',color:'white',fontWeight:600,margin:'none',backgroundColor:'navy',cursor:'pointer'}}>Send</button>
