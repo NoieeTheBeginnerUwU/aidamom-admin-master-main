@@ -13,15 +13,10 @@ import { database } from '../config/firebase';
 import { onSnapshot, collection, query, where, getDocs } from 'firebase/firestore';
 import moment from 'moment';
 
-function getRandomNumber(min, max) {
-  return Math.round(Math.random() * (max - min) + min);
-}
-
 function fakeFetch(date, { signal }) {
   return new Promise((resolve, reject) => {
     const timeout = setTimeout(() => {
-      const daysInMonth = date.daysInMonth();
-      const daysToHighlight = [1, 2, 3].map(() => getRandomNumber(1, daysInMonth));
+      const daysToHighlight = date;
 
       resolve({ daysToHighlight });
     }, 500);
@@ -64,14 +59,20 @@ export default function Calendar({onChange}) {
 
   const fetchOnline = async (date) => {
     let arr = [];
+    let p = [];
     let d = moment(date,"YYYY/MM/DD").format("YYYY/MM/DD")
-    const querySnapshot = await getDocs(query(collection(database,"onlineAppointments"),where("status","==","approved"),where("appointmentDate","==",date)));
+    const querySnapshot = await getDocs(query(collection(database,"onlineAppointments"),where("status","==","approved")));
     querySnapshot.forEach((doc)=>{
       arr.push({id:doc.id, uid:doc.data().uid,name:doc.data().name, appointmentDate:doc.data().appointmentDate, time:doc.data().time, purpose:doc.data().purpose})
+      p.push(doc.data().appointmentDate)
     })
-    setOA(arr);
-    alert("Fetched")
+    setOA(p);
+
   }
+
+  useEffect(()=>{
+    fetchOnline(date)
+  },[])
 
   const fetchHighlightedDays = (date) => {
     const controller = new AbortController();
@@ -93,7 +94,7 @@ export default function Calendar({onChange}) {
   };
 
   React.useEffect(() => {
-    fetchHighlightedDays(initialValue);
+    fetchHighlightedDays(oA);
     // abort request on unmount
     return () => requestAbortController.current?.abort();
   }, []);
@@ -113,7 +114,6 @@ export default function Calendar({onChange}) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
     <DateCalendar
-      defaultValue={initialValue}
       loading={isLoading}
       onMonthChange={handleMonthChange}
       renderLoading={() => <DayCalendarSkeleton />}
@@ -121,10 +121,10 @@ export default function Calendar({onChange}) {
       slots={{
         day: ServerDay,
       }}
-      onChange={(s)=> fetchOnline(moment(s).format("YYYY/MM/DD"))}
+      onChange={(s)=> [fetchOnline(moment(s).format("YYYY/MM/DD")), alert(moment(s).format("YYYY/MM/DD"))]}
       slotProps={{
         day: {
-          highlightedDays,
+          oA,
         },
       }}
     />
