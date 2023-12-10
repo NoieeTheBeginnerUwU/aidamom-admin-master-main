@@ -751,14 +751,6 @@ function PatientTable({ handleSubmit, userData }) {
           online requests
         </Button>
 
-        <Button variant="contained" color="primary" onClick={handlePlus}>
-          plus
-        </Button>
-
-        <Button variant="contained" color="primary" onClick={handleMinus}>
-          minus
-        </Button>
-
         <Modal
         open={openModalOnlineRequest}
         onClose={handleCloseOnlineRequest}
