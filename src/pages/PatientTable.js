@@ -81,6 +81,53 @@ const theme = createTheme({
 function PatientTable({ handleSubmit, userData }) {
 
 
+  const [finalDiagnosis, setFinalDiagnosis] = useState('');
+  const [homeMedication, setHomeMedication] = useState('');
+
+  const handleFinalDiagnosisChange = (event) => {
+    setFinalDiagnosis(event.target.value);
+  };
+
+  const handleHomeMedicationChange = (event) => {
+    setHomeMedication(event.target.value);
+  };
+
+
+  const [value2, setValue2] = useState('');
+  const [value3, setValue3] = useState('');
+  const [selectValue2, setSelectValue2] = useState('');
+  const [selectValue3, setSelectValue3] = useState('');
+
+  const handleRadioChange = (event) => {
+    setValue2(event.target.value);
+    setSelectValue2(''); // Reset the select value when the radio button changes
+  };
+
+  const handleSelectChange = (event) => {
+    setSelectValue2(event.target.value);
+  };
+
+  const handleRadioChange3 = (event) => {
+    setValue3(event.target.value);
+    setSelectValue3(''); // Reset the select value when the radio button changes
+  };
+
+  const handleSelectChange3 = (event) => {
+    setSelectValue3(event.target.value);
+  };
+
+
+  const [openChildRegModal, setChildRegModal] = useState(false);
+
+  const handleOpenChildRegModal = () => {
+    setChildRegModal(true);
+  };
+
+  const handleCloseChildRegModal = () => {
+    setChildRegModal(false);
+  };
+
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   function openModal1() {
@@ -94,6 +141,34 @@ function PatientTable({ handleSubmit, userData }) {
 
 
   const [open, setOpen] = React.useState(false);
+
+
+  const [checked, setChecked] = useState(false);
+  const [checked1, setChecked1] = useState(false);
+  const [checked2, setChecked2] = useState(false);
+  const [checked3, setChecked3] = useState(false);
+
+  const URINEOUTPUT = (event) => {
+    setChecked(event.target.checked);
+  };
+  const STOOL = (event) => {
+    setChecked1(event.target.checked);
+  };
+
+
+
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const BCG = (event) => {
+    setChecked2(event.target.checked);
+  };
+  const HEPAB = (event) => {
+    setChecked3(event.target.checked);
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -274,7 +349,10 @@ function PatientTable({ handleSubmit, userData }) {
   }));
 
 
-
+  const handleChangeSetter = (setter) => (event) => {
+    setter(event.target.checked);
+  };
+  const [checkboxEnable, setCheckboxEnable] = useState(false);
 
 
   const handleViewDetails = (params) => {
@@ -719,6 +797,8 @@ function PatientTable({ handleSubmit, userData }) {
     setOpenModalOnlineRequest(false);
   };
 
+  const [deliveryType, setDeliveryType] = useState('');
+
 
   const handlePlus = async() => {
      const app = doc(database, 'dashboard', '--appointments--');
@@ -736,6 +816,18 @@ function PatientTable({ handleSubmit, userData }) {
    })
  }
 
+
+  const handleChange5 = (event) => {
+    setDeliveryType(event.target.value);
+  };
+
+
+  const [professionalAttended, setProfessionalAttended] = useState('');
+
+  const handleChange6 = (event) => {
+    setProfessionalAttended(event.target.value);
+  };
+
   return (
 
     <div style={{ marginTop: '2px', height: '550px', width: '95%', textAlign: 'center', justifyContent: 'center', overflow: 'hidden' }}>
@@ -746,30 +838,32 @@ function PatientTable({ handleSubmit, userData }) {
         </Typography>
 
 
- {/*---------------------- Modal for Online Request Approval ----------------------*/}
-        <Button variant="contained" color="primary" onClick={handleOpenOnlineRequest}>
-          online requests
-        </Button>
+        {/*---------------------- Modal for Online Request Approval ----------------------*/}
+
 
         <Modal
-        open={openModalOnlineRequest}
-        onClose={handleCloseOnlineRequest}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '90%',
-         bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 }}>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography id="modal-modal-title" variant="h6" component="h2" font>
-             Online Request
-            </Typography>
-            <IconButton onClick={handleCloseOnlineRequest}>
-              <CloseIcon />
-            </IconButton>
+          open={openModalOnlineRequest}
+          onClose={handleCloseOnlineRequest}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <Box sx={{
+            position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '90%',
+            bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4
+          }}>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              <Typography id="modal-modal-title" variant="h6" component="h2" font>
+                <Box fontWeight={'600'}>
+                  Online Request
+                </Box>
+              </Typography>
+              <IconButton onClick={handleCloseOnlineRequest}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
+            <Approval />
           </Box>
-         <Approval/>
-        </Box>
-      </Modal>
+        </Modal>
 
 
 
@@ -790,12 +884,17 @@ function PatientTable({ handleSubmit, userData }) {
             <SearchIcon size="large" />
           </Box>
         </Box>
+
         <Box ml={1} flex={.7} flexDirection='end '>
           <Button variant="contained" size='small' sx={{ backgroundColor: 'orange' }} onClick={handleClickAdd}>
             <AddIcon size='small' /> Register Patient
           </Button>
         </Box>
-
+        <Box ml={1} flex={.7} flexDirection='end '>
+          <Button variant="contained" color="primary" size='small' sx={{ backgroundColor: 'green' }} onClick={handleOpenOnlineRequest}>
+            online requests
+          </Button>
+        </Box>
       </Box>
 
 
@@ -984,32 +1083,32 @@ function PatientTable({ handleSubmit, userData }) {
                               <TabPanel value="2" sx={{ width: '100%', backgroundColor: '#F0F2F5' }}>
                                 <Grid xs={11} padding={1}>
                                   <Box component={Paper}>
-                                  <TableContainer >
-                                    <Table size='small'>
-                                      <TableHead>
-                                        <TableRow>
-                                          <TableCell>Pregnancy Number</TableCell>
-                                          <TableCell>Date of Delivery</TableCell>
-                                          <TableCell>Type of Delivery</TableCell>
-                                          <TableCell>Birth Outcome</TableCell>
-                                          <TableCell>Number of Child Delivered</TableCell>
-                                          <TableCell>Pregnancy Related Complications/Condition</TableCell>
-                                        </TableRow>
-                                      </TableHead>
-                                      <TableBody>
-                                        {rows3.map((row) => (
-                                          <TableRow key={row.number}>
-                                            <TableCell>{row.number}</TableCell>
-                                            <TableCell>{row.dateOfDelivery}</TableCell>
-                                            <TableCell>{row.typeOfDelivery}</TableCell>
-                                            <TableCell>{row.birthOutcome}</TableCell>
-                                            <TableCell>{row.numberOfChildDelivered}</TableCell>
-                                            <TableCell>{row.complications}</TableCell>
+                                    <TableContainer >
+                                      <Table size='small'>
+                                        <TableHead>
+                                          <TableRow>
+                                            <TableCell>Pregnancy Number</TableCell>
+                                            <TableCell>Date of Delivery</TableCell>
+                                            <TableCell>Type of Delivery</TableCell>
+                                            <TableCell>Birth Outcome</TableCell>
+                                            <TableCell>Number of Child Delivered</TableCell>
+                                            <TableCell>Pregnancy Related Complications/Condition</TableCell>
                                           </TableRow>
-                                        ))}
-                                      </TableBody>
-                                    </Table>
-                                  </TableContainer>
+                                        </TableHead>
+                                        <TableBody>
+                                          {rows3.map((row) => (
+                                            <TableRow key={row.number}>
+                                              <TableCell>{row.number}</TableCell>
+                                              <TableCell>{row.dateOfDelivery}</TableCell>
+                                              <TableCell>{row.typeOfDelivery}</TableCell>
+                                              <TableCell>{row.birthOutcome}</TableCell>
+                                              <TableCell>{row.numberOfChildDelivered}</TableCell>
+                                              <TableCell>{row.complications}</TableCell>
+                                            </TableRow>
+                                          ))}
+                                        </TableBody>
+                                      </Table>
+                                    </TableContainer>
                                   </Box>
                                 </Grid>
                               </TabPanel>
@@ -1155,8 +1254,491 @@ function PatientTable({ handleSubmit, userData }) {
 
 
                   <Tooltip title="Complete Pregnancy">
-                    <Button startIcon={<DoneIcon />} variant="contained" onClick={handleClickOpen} color="error"></Button>
+                    <Button startIcon={<DoneIcon />} variant="contained" onClick={handleOpenChildRegModal} color="error"></Button>
                   </Tooltip>
+
+
+                  {/* ---------------------Modal for Child Registration ---  Complete Pregnancy------------------------------------------------------------------------------------------ */}
+
+                  <Modal
+                    open={openChildRegModal}
+                    onClose={handleCloseChildRegModal}
+                    aria-labelledby="child-registration-title"
+                    aria-describedby="child-registration-description"
+                  >
+                    <Box sx={{ width: '85%', height: '95%', overflowY: 'auto', padding: 4, bgcolor: 'background.paper', margin: 'auto', outline: 'none' }}>
+                      <Box flexDirection={'row'} sx={{ position: 'sticky', top: 0 }}>
+                        <Typography id="child-registration-title" variant="h6" component="h2">
+                          <Box fontWeight={600} backgroundColor="primary.main" padding={2} color={'white'}>
+                            Child Registration
+                          </Box>
+                        </Typography>
+
+                      </Box>
+                      <Typography id="child-registration-description" sx={{ mt: 2 }}>
+
+
+
+                        <Grid item xs={12}>
+                          <Box>
+                            <Typography> <Box component="span" fontWeight='bold'>1. Name -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please enter your name correctly.</Box></Typography>
+                          </Box>
+                        </Grid>
+                        <Grid container flexDirection={'row'} spacing={1}>
+                          <Grid item xs={3} mt={2}>
+                            <TextField name="userChildLname"
+                              fullWidth
+                              label="Lastname (Apelyido)"
+                              variant="outlined"
+                              size='small'
+                              value={registrationForm.userChildLname}
+                              onChange={(text) => setRegistrationForm(prev => { return { ...prev, userChildLname: text.target.value } })}
+                              required
+
+                            />
+                          </Grid>
+                          <Grid item xs={3} mt={2}>
+                            <TextField name="userChildFname"
+                              fullWidth
+
+                              label="Firstname (Pangalan)"
+                              variant="outlined"
+                              size='small'
+
+                              value={registrationForm.userChildFname}
+                              onChange={(text) => setRegistrationForm(prev => { return { ...prev, userChildFname: text.target.value } })}
+                              required
+
+                            />
+                          </Grid>
+                          <Grid item xs={3} mt={2}>
+
+                            <TextField name="userChildMname"
+                              fullWidth
+
+                              label="Middlename (Gitnang Pangalan)"
+                              variant="outlined"
+                              size='small'
+                              value={registrationForm.userChildMname}
+                              onChange={(text) => setRegistrationForm(prev => { return { ...prev, userChildMname: text.target.value } })}
+
+                            />
+                          </Grid>
+                          <Grid item xs={1.5} mt={2} >
+
+                            <FormControlLabel
+                              value="top"
+                              control={<Checkbox />}
+                              onChange={handleChangeSetter(setCheckboxEnable)}
+                              checked={checkboxEnable}
+                              label="I have Extension"
+                              labelPlacement="end"
+                              inputProps={{ "aria-label": "primary checkbox" }}
+
+                            />
+                          </Grid>
+                          <Grid item xs={1.5} mt={2}>
+                            <Select
+                              fullWidth
+                              labelId="userSuffix"
+                              name="userSuffix"
+                              size='small'
+                              value={registrationForm.userSuffix}
+                              onChange={(text) => setRegistrationForm(prev => { return { ...prev, userSuffix: text.target.value } })}
+                              disabled={!checkboxEnable}
+                            >
+
+                              <MenuItem value='JR'>JR</MenuItem>
+                              <MenuItem value='SR'>SR</MenuItem>
+                              <MenuItem value='I'>I</MenuItem>
+                              <MenuItem value='II'>II</MenuItem>
+                              <MenuItem value='III'>III</MenuItem>
+                              <MenuItem value='IV'>IV</MenuItem>
+                              <MenuItem value='V'>V</MenuItem>
+                              <MenuItem value='VI'>VI</MenuItem>
+                            </Select>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Box marginBottom={4} marginTop={3}>
+                              <Typography> <Box component="span" fontWeight='bold'>2. Birth Details -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please indicate the details accurately.</Box></Typography>
+                            </Box>
+                          </Grid>
+                          <Grid xs={2}>
+
+                            <FormControl required>
+                              <LocalizationProvider dateAdapter={AdapterDayjs} required>
+                                <DatePicker
+                                  size='small'
+                                  label="Date of birth"
+                                  name='dateofbrith'
+                                  value={registrationForm.ChildDateofBirth}
+                                  style={{ width: ' 100%' }}
+                                  renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDob: params } })}
+                                  />}
+                                  disableFuture
+                                // minDate={dayjs().subtract(45, 'year')}
+                                // maxDate={dayjs().subtract(10, 'year')}
+                                />
+                              </LocalizationProvider>
+                            </FormControl>
+
+                          </Grid>
+                          <Grid xs={2} ml={2}>
+
+                            <TextField
+                              label="Weight at Birth"
+                              // onChange={(e) => setWeight(e.target.value)}
+                              fullWidth
+                              size='large'
+                              variant="standard"
+                              type="number"
+                              inputProps={{ min: 30, max: 200 }}
+                              InputProps={{
+                                endAdornment: <InputAdornment position="end">kg</InputAdornment>,
+                              }}
+                            />
+
+                          </Grid>
+                          <Grid xs={2} ml={8}>
+                            <FormControl>
+                              <FormLabel name="gender" sx={{ fontWeight: 'bold' }}>Gender</FormLabel>
+                              <RadioGroup
+                                row
+                                aria-labelledby="gender"
+                                defaultValue="female"
+                                name="gender"
+                                value={registrationForm.userSex}
+                                onChange={(text) => setRegistrationForm(prev => { return { ...prev, userSex: text.target.value } })}
+
+                              >
+                                <FormControlLabel value="female" control={<Radio />} label="Female" />
+                                <FormControlLabel value="male" control={<Radio />} label="Male" />
+                              </RadioGroup>
+                            </FormControl>
+                          </Grid>
+                          <Grid xs={2.3}>
+                            <FormControl fullWidth>
+                              <InputLabel id="delivery-type-label">Type of Delivery</InputLabel>
+                              <Select
+                                labelId="delivery-type-label"
+                                id="delivery-type"
+                                value={deliveryType}
+                                onChange={handleChange5}
+                                label="Type of Delivery"
+                              >
+                                <MenuItem value="">
+                                  <em>None</em>
+                                </MenuItem>
+                                <MenuItem value={'Normal'}>Normal</MenuItem>
+                                <MenuItem value={'Ceasarian'}>Ceasarian</MenuItem>
+                              </Select>
+                            </FormControl>
+
+                          </Grid>
+                          <Grid xs={2.5} ml={5}>
+                            <FormControl fullWidth>
+                              <InputLabel id="delivery-type-label">Health Professional Attended</InputLabel>
+                              <Select
+                                labelId="delivery-type-label"
+                                id="delivery-type"
+                                value={professionalAttended}
+                                onChange={handleChange6}
+                                label="Health Professional Attended"
+                              >
+                                <MenuItem value="">
+                                  <em>None</em>
+                                </MenuItem>
+                                <MenuItem value={'Doctor'}>Doctor</MenuItem>
+                                <MenuItem value={'Nurse'}>Nurse</MenuItem>
+                                <MenuItem value={'Midwife'}>Midwife</MenuItem>
+                              </Select>
+                            </FormControl>
+
+                          </Grid>
+                          <Grid container item xs={12} flexDirection={"row"}>
+                            <Grid xs={3}>
+                              <Box >
+                                <FormControlLabel
+                                  control={<Checkbox checked={checked} onChange={URINEOUTPUT} />}
+                                  label="URINE OUTPUT :"
+                                />
+                                {checked && <TextField label="Diagnosis" variant='standard' />}
+                              </Box>
+                            </Grid><Grid xs={3}>
+                              <Box marginLeft={4} >
+
+                                <FormControlLabel
+                                  control={<Checkbox checked={checked1} onChange={STOOL} />}
+                                  label="STOOL:"
+                                />
+                                {checked1 && <TextField label="Diagnosis" variant='standard' />}
+                              </Box>
+                            </Grid><Grid xs={3}>
+                              <Box>
+                                <FormControlLabel
+                                  control={<Checkbox checked={checked2} onChange={BCG} />}
+                                  label="BCG:"
+                                />
+                                {checked2 && <FormControl required>
+                                  <LocalizationProvider dateAdapter={AdapterDayjs} required>
+                                    <DatePicker
+                                      size='small'
+                                      label="BCG"
+                                      name='bcg'
+                                      value={registrationForm.Childbcg}
+                                      style={{ width: ' 100%' }}
+                                      renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDob: params } })}
+                                      />}
+                                      disableFuture
+                                    // minDate={dayjs().subtract(45, 'year')}
+                                    // maxDate={dayjs().subtract(10, 'year')}
+                                    />
+                                  </LocalizationProvider>
+                                </FormControl>}
+                              </Box>
+                            </Grid><Grid xs={3}>
+                              <Box>
+                                <FormControlLabel
+                                  control={<Checkbox checked={checked3} onChange={HEPAB} />}
+                                  label="HEPA-B:"
+                                />
+                                {checked3 && <FormControl required>
+                                  <LocalizationProvider dateAdapter={AdapterDayjs} required>
+                                    <DatePicker
+                                      size='small'
+                                      label="HEPA-B"
+                                      name='hepab'
+                                      value={registrationForm.ChildHepaB}
+                                      style={{ width: ' 100%' }}
+                                      renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDob: params } })}
+                                      />}
+                                      disableFuture
+                                    // minDate={dayjs().subtract(45, 'year')}
+                                    // maxDate={dayjs().subtract(10, 'year')}
+                                    />
+                                  </LocalizationProvider>
+                                </FormControl>}
+                              </Box>
+                            </Grid>
+
+                            <Grid item xs={12} >
+                              <Box marginBottom={4} marginTop={3} >
+                                <Typography> <Box component="span" fontWeight='bold' >3. InBorn Screening -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please enter the details accurately.</Box></Typography>
+                              </Box>
+                            </Grid>
+
+                            <Grid xs={6}>
+
+                              <FormControl component="fieldset">
+                                <FormLabel component="legend"><Box fontWeight={600}>Choose an option : EXPANDED NEWBORN SCREENING</Box><Box fontStyle={'italic'} display={'inline'}>(choose Yes if you want to give the permission to undergo ENBS )</Box></FormLabel>
+                                <RadioGroup name="choice" value={value2} onChange={handleRadioChange}>
+                                  <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+                                  <FormControlLabel value="no" control={<Radio />} label="Refuse" />
+                                </RadioGroup>
+                                {value2 === 'yes' && (
+                                  <FormControl fullWidth>
+                                    <InputLabel id="Results">Results</InputLabel>
+                                    <Select value={selectValue2} onChange={handleSelectChange} id='Results' label="Results">
+                                      <MenuItem value={'Negative'}>Negative</MenuItem>
+                                      <MenuItem value={'Trait'}>Trait</MenuItem>
+                                      <MenuItem value={'Borderline'}>Borderline</MenuItem>
+                                      <MenuItem value={'Positive'}>Positive</MenuItem>
+                                    </Select>
+                                  </FormControl>
+                                )}
+                                {value2 === 'no' && (
+
+                                  <FormControl fullWidth>
+                                    <InputLabel id="Reason for refusal">Reason for refusal</InputLabel>
+                                    <Select value={selectValue2} onChange={handleSelectChange} id='Reason for refusal' label="Reason for refusal">
+                                      <MenuItem value={'Religious belief'}>Religious belief</MenuItem>
+                                    </Select>
+                                  </FormControl>
+                                )}
+                              </FormControl>
+
+                            </Grid>
+
+                            <Grid xs={6}>
+
+                              <FormControl component="fieldset">
+                                <FormLabel component="legend"><Box fontWeight={600}>Choose an option :  NEWBORN HEARING SCREENING</Box><Box fontStyle={'italic'} display={'inline'}>(choose Yes if you want to give the permission to undergo ENBS )</Box></FormLabel>
+                                <RadioGroup name="choice" value={value3} onChange={handleRadioChange3}>
+                                  <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+                                  <FormControlLabel value="no" control={<Radio />} label="Refuse" />
+                                </RadioGroup>
+                                {value3 === 'yes' && (
+                                  <FormControl fullWidth>
+                                    <InputLabel id="Results">Results</InputLabel>
+                                    <Select value={selectValue3} onChange={handleSelectChange3} id='Results' label="Results">
+                                      <MenuItem value={'Bilateral Pass'}>Bilateral Pass</MenuItem>
+                                      <MenuItem value={'Unilateral Refer'}>Unilateral Refer</MenuItem>
+                                      <MenuItem value={'Bilateral Refer'}>Bilateral Refer</MenuItem>
+
+                                    </Select>
+                                  </FormControl>
+                                )}
+                                {value3 === 'no' && (
+
+                                  <FormControl fullWidth>
+                                    <InputLabel id="Reason for refusal">Reason for refusal</InputLabel>
+                                    <Select value={selectValue3} onChange={handleSelectChange3} id='Reason for refusal' label="Reason for refusal">
+                                      <MenuItem value={'Financial Constraint'}>Financial Constraint</MenuItem>
+                                    </Select>
+                                  </FormControl>
+                                )}
+                              </FormControl>
+
+                            </Grid>
+                            <Grid item xs={12} >
+                              <Box marginBottom={4} marginTop={4} >
+                                <Typography> <Box component="span" fontWeight='bold' >4. Remarks-</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please enter the details accurately.</Box></Typography>
+                              </Box>
+                            </Grid>
+                            <Grid container spacing={2}>
+                              <Grid item xs={6}>
+                                <TextField
+                                  label="Final Diagnosis"
+                                  multiline
+                                  rows={4}
+                                  value={finalDiagnosis}
+                                  onChange={handleFinalDiagnosisChange}
+                                  variant="outlined"
+                                  fullWidth
+                                />
+                              </Grid>
+                              <Grid item xs={6}>
+                                <TextField
+                                  label="Home Medication"
+                                  multiline
+                                  rows={4}
+                                  value={homeMedication}
+                                  onChange={handleHomeMedicationChange}
+                                  variant="outlined"
+                                  fullWidth
+                                />
+                              </Grid>
+                            </Grid>
+                            <Grid xs={3}>
+                              <FormControl required>
+                                <LocalizationProvider dateAdapter={AdapterDayjs} required>
+                                  <DatePicker
+                                    size='small'
+                                    label="Date of Discharge"
+                                    name='DateodDischarge'
+                                    value={registrationForm.ChildDateofDischarge}
+                                    style={{ width: ' 100%' }}
+                                    renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, ChildDateofDischarge: params } })}
+                                    />}
+
+
+                                    maxDate={dayjs().add(1, 'week')}
+                                  />
+                                </LocalizationProvider>
+                              </FormControl>
+
+
+                            </Grid>
+                            <Grid xs={3}>
+
+                              <FormControl required>
+                                <LocalizationProvider dateAdapter={AdapterDayjs} required>
+                                  <DatePicker
+                                    size='small'
+                                    label="Follow-up Check-up"
+                                    name='FollowUp'
+                                    value={registrationForm.ChildFollowUpCheckUp}
+                                    style={{ width: ' 100%' }}
+                                    renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, ChildFollowUpCheckUp: params } })}
+                                    />}
+
+                                    disablePast
+                                    maxDate={dayjs().add(1, 'year')}
+                                  />
+                                </LocalizationProvider>
+                              </FormControl>
+
+                            </Grid>
+                            <Grid xs={12} container>
+
+                              <Grid xs={3} mr={5}>
+                                <TextField
+                                  label="ATTENDING PHYSISCIAN"
+                                  fullWidth
+                                  variant='standard'
+                                ></TextField>
+
+
+                              </Grid>
+                              <Grid xs={3}>
+                                <TextField
+                                  label="NURSE ON DUTY"
+                                  fullWidth
+                                  variant='standard'
+                                ></TextField>
+
+
+                              </Grid>
+
+
+
+
+                            </Grid>
+
+                            <Grid xs={12} container>
+
+                              <Grid xs={3} mr={5}>
+                                <TextField
+                                  label="DELIVERED BY"
+                                  fullWidth
+                                  variant='standard'
+                                ></TextField>
+
+
+                              </Grid>
+                              <Grid xs={3}>
+                                <TextField
+                                  label="RECEIVED BY"
+                                  fullWidth
+                                  variant='standard'
+                                ></TextField>
+
+
+                              </Grid>
+                             
+
+
+
+                            </Grid>
+
+
+
+
+
+
+                          </Grid>
+
+
+
+
+
+
+                        </Grid>
+
+
+
+
+
+
+
+
+                      </Typography>
+                    </Box>
+                  </Modal>
+
+
+
+
 
                   {/* --------------------- Dialog for Complete Pregnancy------------------------------------------------------------------------------------------ */}
                   <Dialog
@@ -1189,7 +1771,7 @@ function PatientTable({ handleSubmit, userData }) {
                 <Grid xs={4} padding={1}>
                   <Box margin={0}>
                     <Box padding={1} textAlign={'center'} sx={{ backgroundColor: 'skyblue', color: 'white' }}><Typography fontWeight='700' >APPOINTMENTS</Typography></Box>
-                    <TableContainer component={Paper} sx={{ minHeight: '30vh', maxHeight: '50vh'  }}>
+                    <TableContainer component={Paper} sx={{ minHeight: '30vh', maxHeight: '50vh' }}>
                       <Table aria-label="simple table" size='small' sx={{ minWidth: '' }} stickyHeader>
                         <TableHead >
                           <TableRow>
@@ -1225,7 +1807,7 @@ function PatientTable({ handleSubmit, userData }) {
                 <Grid xs={8} justify="center" padding={1}>
                   <Box>
                     <Box padding={1} textAlign={'center'} sx={{ backgroundColor: 'skyblue', color: 'white' }}><Typography fontWeight='700' >PRE-NATAL VISITS</Typography></Box>
-                    <TableContainer component={Paper} sx={{ minHeight: '30vh', maxHeight: '50vh'  }} >
+                    <TableContainer component={Paper} sx={{ minHeight: '30vh', maxHeight: '50vh' }} >
                       <Table size="small" aria-label="prenatalvistisTable" stickyHeader sx={{ minWidth: '' }}>
                         <TableHead style={{ backgroundColor: 'skyblue' }} >
                           <TableRow>
