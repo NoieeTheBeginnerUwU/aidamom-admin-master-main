@@ -258,7 +258,7 @@ function PatientTable({ handleSubmit, userData }) {
     { field: 'userFname', headerName: 'First name', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
     { field: 'userLname', headerName: 'Last name', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
     { field: 'lastPeriod', headerName: 'Last Menstrual Period', flex: 1, align: 'center', headerAlign: 'center' },
-    { field: 'aog' , headerName: 'Age of Gestation', type: 'number', width: 100, sortable: false, align: 'center', headerAlign: 'center' },
+    { field: 'aog', headerName: 'Age of Gestation', type: 'number', width: 100, sortable: false, align: 'center', headerAlign: 'center' },
     { field: 'lastVisit', headerName: 'Date of Last Visit', type: 'number', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
     { field: 'userAddress', headerName: 'Address', flex: 2, sortable: false, align: 'center', headerAlign: 'center' },
     {
@@ -437,8 +437,6 @@ function PatientTable({ handleSubmit, userData }) {
   };
 
   const [users, setUsers] = useState([]);
-  const [pastAppointments, setPastAppointments] = useState([]);
-  const [onlineAppointments, setOnlineAppointments] = useState([]);
   const [row, setRow] = useState([]);
   const [userSearch, setUserSearch] = useState([]);
   async function fetchData() {
@@ -447,17 +445,14 @@ function PatientTable({ handleSubmit, userData }) {
     const pending = [];
     let i = 1;
     let r = [];
-    let o = [];
-    let a = [];
     const data = querySnapshot.forEach(doc => {
       if (doc.data().fName !== "") {
         userData.push({
           id: i++,
           docid: doc.id,
-          aog: !doc.data().lastPeriod?"No Data":moment(new Date(),"YYYY/MM/DD").diff(doc.data().lastPeriod,"weeks") + " weeks",
+          aog: moment(new Date(),"YYYY/MM/DD").diff(doc.data().lastPeriod,"weeks") + " weeks",
           lastVisit: !doc.data().lastVisit?"No Data": doc.data().lastVisit,
           lastPeriod: !doc.data().lastPeriod? "No data":doc.data().lastPeriod,
-          userAddress: doc.data().userBarangay+ ", "+ doc.data().userTown+", "+doc.data().province,
           userFname: doc.data().userFname,
           userMname: doc.data().userMname,
           userLname: doc.data().userLname,
@@ -601,15 +596,6 @@ function PatientTable({ handleSubmit, userData }) {
     fetchData();
     console.log("DATA: " + users)
   }, [])
-
-  useEffect(()=>{
-    if(selectedRow.docid!==undefined){
-      
-    }else{
-      
-    }
-  },[selectedRow.docid])
-
 
   const [nChild, setNChild] = useState([]);
 
@@ -765,28 +751,11 @@ function PatientTable({ handleSubmit, userData }) {
     }
   }
 
-  const fetchAppointments = async () => {
-    let a = [];
-    let o = [];
-    const querySnapshot1 = await getDocs(query(collection(database,"appointments"),where("uid","==",selectedRow.docid)),orderBy("appointmentDate","desc"));
-    querySnapshot1.forEach((doc)=>{
-      a.push({id:doc.id, aog:doc.data().aog, appointmentDate:doc.data().appointmentDate, bmi:doc.data().bmi, bp:doc.data().bp, bpCategory:doc.data().bpCategory,diastolic:doc.data().diastolic,dilates:doc.data().dilates,efficases:doc.data().efficases,fetalMovement:doc.data().fetalMovement,fundalHeight:doc.data().fundalHeight,height:doc.data().height,lmp:doc.data().lmp,name:doc.data().name,presentation:doc.data().presentation,remarks:doc.data().remarks,systolic:doc.data().systolic,uid:doc.data().uid,weight:doc.data().weight})
-    })
-    setPastAppointments(a);
-    const querySnapshot2 = await getDocs(query(collection(database,"onlineAppointments"),where("uid","==",selectedRow.docid)),orderBy("appointmentDate","desc"));
-    querySnapshot2.forEach((doc)=>{
-      o.push({id:doc.id, appointmentDate:doc.data().appointmentDate, status:doc.data().status, purpose:doc.data().purpose})
-    })
-    setOnlineAppointments(o);
-  }
-
   useEffect(() => {
-   
-    if(selectedRow.docid!==undefined){
-      fetchAppointments()
-    }else{
+    const fetchAppointments = async () => {
 
     }
+
   }, [selectedRow.docid])
 
 
@@ -803,21 +772,21 @@ function PatientTable({ handleSubmit, userData }) {
   const [deliveryType, setDeliveryType] = useState('');
 
 
-  const handlePlus = async() => {
-     const app = doc(database, 'dashboard', '--appointments--');
-      const vax = doc(database, 'dashboard', '--vaccinations--');
-      await updateDoc(app, {
-        no: increment(1),
+  const handlePlus = async () => {
+    const app = doc(database, 'dashboard', '--appointments--');
+    const vax = doc(database, 'dashboard', '--vaccinations--');
+    await updateDoc(app, {
+      no: increment(1),
     })
   }
 
-  const handleMinus = async() => {
+  const handleMinus = async () => {
     const app = doc(database, 'dashboard', '--appointments--');
-     const vax = doc(database, 'dashboard', '--vaccinations--');
-     await updateDoc(app, {
-       no: increment(-1),
-   })
- }
+    const vax = doc(database, 'dashboard', '--vaccinations--');
+    await updateDoc(app, {
+      no: increment(-1),
+    })
+  }
 
 
   const handleChange5 = (event) => {
@@ -1112,6 +1081,7 @@ function PatientTable({ handleSubmit, userData }) {
           <Button variant="contained" color="primary" size='small' sx={{ backgroundColor: 'green' }} onClick={handleOpenOnlineRequest}>
             online requests
           </Button>
+
         </Box>
         <Box ml={1} flex={.7} flexDirection='end '>
           <Button variant="contained" color="primary" size='small' sx={{ backgroundColor: 'skyblue' }} onClick={()=> fetchData()}>
@@ -1123,20 +1093,22 @@ function PatientTable({ handleSubmit, userData }) {
 
 
       <Dialog open={openAddPatient} onClose={handleClose}>
-        <DialogTitle><Box fontWeight={'600'}>Register Patient</Box></DialogTitle>
+        <DialogTitle>
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Box fontWeight={'600'}>Register Patient</Box>
+            <IconButton onClick={handleCloseMinus}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+        </DialogTitle>
+
+
         <DialogContent>
           {/*-------------------------------- Add Patient Forms -------------------------------- */}
           <PatientRegistrationForm />
           {/*-------------------------------- End Add Patient Forms -------------------------------- */}
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseMinus} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={openModal1} color="primary">
-            Add
-          </Button>
-        </DialogActions>
+       
       </Dialog>
 
 
@@ -1930,9 +1902,7 @@ function PatientTable({ handleSubmit, userData }) {
 
                               </Grid>
                              
-                              <Button onClick={()=> handleChildRegistration()}>
-                                Submit
-                              </Button>
+
 
 
                             </Grid>
@@ -2007,11 +1977,11 @@ function PatientTable({ handleSubmit, userData }) {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {onlineAppointments.length > 0 ? (
-                            onlineAppointments.map((row1) => (
-                              <TableRow key={row1.appointmentDate}>
+                          {rows1.length > 0 ? (
+                            rows1.map((row1) => (
+                              <TableRow key={row1.dateAndTime}>
                                 <TableCell component="th" scope="row">
-                                  {row1.appointmentDate}
+                                  {row1.dateAndTime}
                                 </TableCell>
                                 <TableCell align="right">{row1.purpose}</TableCell>
                                 <TableCell align="right">{row1.status}</TableCell>
@@ -2048,14 +2018,14 @@ function PatientTable({ handleSubmit, userData }) {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {pastAppointments.length > 0 ? (
-                            pastAppointments.map((row2) => (
-                              <TableRow key={row2.appointmentDate}>
-                                <TableCell>{row2.appointmentDate}</TableCell>
-                                <TableCell>{row2.bp}</TableCell>
+                          {rows2.length > 0 ? (
+                            rows2.map((row2) => (
+                              <TableRow key={row2.dateOfVisit}>
+                                <TableCell>{row2.dateOfVisit}</TableCell>
+                                <TableCell>{row2.bloodPressure}</TableCell>
                                 <TableCell>{row2.weight}</TableCell>
                                 <TableCell>{row2.bmi}</TableCell>
-                                <TableCell align='center'>{row2.dilates} / {row2.efficases}</TableCell>
+                                <TableCell align='center'>{row2.cervixExamination}</TableCell>
                                 <TableCell>{row2.fundalHeight}</TableCell>
                                 <TableCell>{row2.fetalMovement}</TableCell>
                                 <TableCell>{row2.presentation}</TableCell>
@@ -2084,7 +2054,7 @@ function PatientTable({ handleSubmit, userData }) {
                   left: '50%',
                   transform: 'translate(-50%, -50%)',
                   width: '85%', // Set the desired width
-                  maxHeight: '90%', // Set the maximum height
+                  maxHeight: '95%', // Set the maximum height
                   overflow: 'auto', // Make it scrollable
                   bgcolor: '#F0F2F5',
                   boxShadow: 24,

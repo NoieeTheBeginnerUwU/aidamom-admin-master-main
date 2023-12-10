@@ -13,13 +13,14 @@ import { Button } from '@mui/material';
 import './PersonaDetails.css'
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import citiesData from './city.json'
 import barangaysData from './barangay.json'
 import provincesData from './province.json'
+import dayjs from 'dayjs';
+import { addDays, differenceInDays } from 'dayjs';
 
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -56,6 +57,7 @@ const theme = createTheme({
 });
 
 
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -64,8 +66,24 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+
+const newDate = dayjs();
 export default function PatientRegistrationForm() {
 
+
+  const [lmp, setLmp] = useState(null);
+  const [edd, setEdd] = useState(null);
+  const [aog, setAog] = useState(null);
+
+  const handleDateChangePregnancyCal = (date) => {
+    setLmp(date);
+    const eddDate = dayjs(date).add(280, 'day');
+    setEdd(eddDate.format('ddd MMM DD YYYY'));
+    const aogDays = dayjs().diff(date, 'day');
+    const aogWeeks = Math.floor(aogDays / 7);
+    const aogMonths = Math.floor(aogDays / 30);
+    setAog(`${aogMonths} months and ${aogWeeks % 4} weeks`);
+  };
 
 
 
@@ -93,6 +111,7 @@ export default function PatientRegistrationForm() {
     userProvincebirth: "",
     userBarangaybirth: "",
     userTownbirth: "",
+    userLMP: "",
     //family details
     userFathersFName: "",
     userFathersLName: "",
@@ -233,154 +252,154 @@ export default function PatientRegistrationForm() {
   })
 
 
-  const handleCreateAccount = async() => {
-    if(registrationForm.userFname!==""||registrationForm.userLname!==""||registrationForm.userSex!==""||registrationForm.userAge||registrationForm.userNumber!==""){
-     try{
-       await addDoc(collection(database, "userData"),{
-         userFname:registrationForm.userFname,
-         userMname:registrationForm.userMname,
-         userLname:registrationForm.userLname,
-         userSuffix:registrationForm.userSuffix,
-         userSex:registrationForm.userSex,
-         userCivilStatus:registrationForm.userCivilStatus,
-         userBloodType:registrationForm.userBloodType,
-         userReligion:registrationForm.userReligion,
-         userNumber:registrationForm.userNumber,
-         userDob:registrationForm.userDob,
-         userAge:registrationForm.userAge,
-         userNationality:registrationForm.userNationality,
-         userOccupation:registrationForm.userOccupation,
-         userPurok:registrationForm.userPurok,
-         userBarangay:registrationForm.userBarangay,
-         userTown:registrationForm.userTown,
-         userProvince:registrationForm.userProvince,
-         userPlaceOfBirth:registrationForm.userPlaceOfBirth,
-         //family details
-         userHusbandsName:registrationForm.userHusbandsName,
-         userHusbandsOccuupation:registrationForm.userHusbandsOccuupation,
-         userDateOfMarriage:registrationForm.userDateOfMarriage,
-         userPlaceOfMarriage:registrationForm.userPlaceOfMarriage,
-         userHusbandsNumber:registrationForm.userHusbandsNumber,
-         userCompleteAddress:registrationForm.userCompleteAddress,
-         userEmployedBy:registrationForm.userEmployedBy,
-         userSalary:registrationForm.userSalary,
-         userAddressOfEmployer:registrationForm.userAddressOfEmployer,
-         userNameOfBarangayCaptain:registrationForm.userNameOfBarangayCaptain,
-         //user pregnancy history
-           //child1
-         userChild1:registrationForm.userChild1,
-         userChildDateOfDelivery1:registrationForm.userChildDateOfDelivery1,
-         userChildTypeOfDelivery1:registrationForm.userChildTypeOfDelivery1,
-         userChildBirthOutcome1:registrationForm.userChildBirthOutcome1,
-         userChildNumberOfChildDelivered1:registrationForm.userChildNumberOfChildDelivered1,
-         userChildComplication1:registrationForm.userChildComplication1,
-           //child2
-         userChild2:registrationForm.userChild2,
-         userChildDateOfDelivery2:registrationForm.userChildDateOfDelivery2,
-         userChildTypeOfDelivery2:registrationForm.userChildTypeOfDelivery2,
-         userChildBirthOutcome2:registrationForm.userChildBirthOutcome2,
-         userChildNumberOfChildDelivered2:registrationForm.userChildNumberOfChildDelivered2,
-         userChildComplication2:registrationForm.userChildComplication2,
-         //child3
-         userChild3:registrationForm.userChild3,
-         userChildDateOfDelivery3:registrationForm.userChildDateOfDelivery3,
-         userChildTypeOfDelivery3:registrationForm.userChildTypeOfDelivery3,
-         userChildBirthOutcome3:registrationForm.userChildBirthOutcome3,
-         userChildNumberOfChildDelivered3:registrationForm.userChildDateOfDelivery3,
-         userChildComplication3:registrationForm.userChildComplication3,
-         //child4
-         userChild4:registrationForm.userChild4,
-         userChildDateOfDelivery4:registrationForm.userChildDateOfDelivery4,
-         userChildTypeOfDelivery4:registrationForm.userChildTypeOfDelivery4,
-         userChildBirthOutcome4:registrationForm.userChildBirthOutcome4,
-         userChildNumberOfChildDelivered4:registrationForm.userChildNumberOfChildDelivered4,
-         userChildComplication4 :registrationForm.userChildComplication4,    
-         //child5
-         userChild5:registrationForm.userChild5,
-         userChildDateOfDelivery5:registrationForm.userChildDateOfDelivery5,
-         userChildTypeOfDelivery5:registrationForm.userChildTypeOfDelivery5,
-         userChildBirthOutcome5:registrationForm.userChildBirthOutcome5,
-         userChildNumberOfChildDelivered5:registrationForm.userChildNumberOfChildDelivered5,
-         userChildComplication5:registrationForm.userChildComplication5,
-         //child6
-         userChild6:registrationForm.userChild6,
-         userChildDateOfDelivery6:registrationForm.userChildDateOfDelivery6,
-         userChildTypeOfDelivery6:registrationForm.userChildTypeOfDelivery6,
-         userChildBirthOutcome6:registrationForm.userChildBirthOutcome6,
-         userChildNumberOfChildDelivered6:registrationForm.userChildNumberOfChildDelivered6,
-         userChildComplication6:registrationForm.userChildComplication6,
-         //child7
-         userChild7:registrationForm.userChild7,
-         userChildDateOfDelivery7:registrationForm.userChildDateOfDelivery7,
-         userChildTypeOfDelivery7:registrationForm.userChildTypeOfDelivery7,
-         userChildBirthOutcome7:registrationForm.userChildBirthOutcome7,
-         userChildNumberOfChildDelivered7:registrationForm.userChildNumberOfChildDelivered7,
-         userChildComplication7:registrationForm.userChildComplication7,
-         //child8
-         userChild8:registrationForm.userChild8,
-         userChildDateOfDelivery8:registrationForm.userChildDateOfDelivery8,
-         userChildTypeOfDelivery8:registrationForm.userChildTypeOfDelivery8,
-         userChildBirthOutcome8:registrationForm.userChildBirthOutcome8,
-         userChildNumberOfChildDelivered8:registrationForm.userChildNumberOfChildDelivered8,
-         userChildComplication8:registrationForm.userChildComplication8,
-         //child9
-         userChild9:registrationForm.userChild9,
-         userChildDateOfDelivery9:registrationForm.userChildDateOfDelivery9,
-         userChildTypeOfDelivery9:registrationForm.userChildTypeOfDelivery9,
-         userChildBirthOutcome9:registrationForm.userChildBirthOutcome9,
-         userChildNumberOfChildDelivered9:registrationForm.userChildNumberOfChildDelivered9,
-         userChildComplication9:registrationForm.userChildComplication9,
-         //child10
-         userChild10:registrationForm.userChild10,
-         userChildDateOfDelivery10:registrationForm.userChildDateOfDelivery10,
-         userChildTypeOfDelivery10:registrationForm.userChildTypeOfDelivery10,
-         userChildBirthOutcome10:registrationForm.userChildBirthOutcome10,
-         userChildNumberOfChildDelivered10:registrationForm.userChildNumberOfChildDelivered10,
-         userChildComplication10:registrationForm.userChildComplication10,
-         //user other health conditions 
-         userTBPersonal:registrationForm.userTBPersonal,
-         userTBFamily:registrationForm.userTBFamily,
-         userHeartDiseasesPersonal:registrationForm.userHeartDiseasesPersonal,
-         userHeartDiseasesFamily:registrationForm.userHeartDiseasesFamily,
-         userDiabetesPersonal:registrationForm.userDiabetesPersonal,
-         userDiabetesFamily:registrationForm.userDiabetesFamily,
-         userHypertensionPersonal:registrationForm.userHypertensionPersonal,
-         userHypertensionFamily:registrationForm.userHypertensionFamily,
-         userBronchialAsthmaPersonal:registrationForm.userBronchialAsthmaPersonal,
-         userBronchialAsthmaFamily:registrationForm.userBronchialAsthmaFamily,
-         userUTIPersonal:registrationForm.userUTIPersonal,
-         userUTIFamily:registrationForm.userUTIFamily,
-         userParasitismPersonal:registrationForm.userParasitismPersonal,
-         userParasitismFamily:registrationForm.userParasitismFamily,
-         userGoiterPersonal:registrationForm.userGoiterPersonal,
-         userGoiterFamily:registrationForm.userGoiterFamily,
-         userAnemiaPersonal:registrationForm.userAnemiaPersonal,
-         userAnemiaFamily:registrationForm.userAnemiaFamily,
-         userGenitalTrackInfection:registrationForm.userGenitalTrackInfection,
-         userOtherInfectiousDiseases:registrationForm.userOtherInfectiousDiseases,
-         userHighRiskBehavior:registrationForm.userHighRiskBehavior,
-         dateCreated: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
-         status:"pending",
-         activePregnacy: true,
-         userLevel:"standard user",
-         userPic:"",
-       }).then(alert("Account created successfully."))
-     }catch(e){
-       alert(e); 
-     }
-     addDoc(collection(database, "adminLogs"),{
-       activity:"added a new user to the database.",
-       category:"added",
-       timestamp: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
-       day:moment(new Date()).format("DD"),
-       month:moment(new Date()).format("MM"),
-       Year:moment(new Date()).format("YYYY"),
-     })
-    }else{
-     alert("Please fill all the necessary inputs to create an account.")
+  const handleCreateAccount = async () => {
+    if (registrationForm.userFname !== "" || registrationForm.userLname !== "" || registrationForm.userSex !== "" || registrationForm.userAge || registrationForm.userNumber !== "") {
+      try {
+        await addDoc(collection(database, "userData"), {
+          userFname: registrationForm.userFname,
+          userMname: registrationForm.userMname,
+          userLname: registrationForm.userLname,
+          userSuffix: registrationForm.userSuffix,
+          userSex: registrationForm.userSex,
+          userCivilStatus: registrationForm.userCivilStatus,
+          userBloodType: registrationForm.userBloodType,
+          userReligion: registrationForm.userReligion,
+          userNumber: registrationForm.userNumber,
+          userDob: registrationForm.userDob,
+          userAge: registrationForm.userAge,
+          userNationality: registrationForm.userNationality,
+          userOccupation: registrationForm.userOccupation,
+          userPurok: registrationForm.userPurok,
+          userBarangay: registrationForm.userBarangay,
+          userTown: registrationForm.userTown,
+          userProvince: registrationForm.userProvince,
+          userPlaceOfBirth: registrationForm.userPlaceOfBirth,
+          //family details
+          userHusbandsName: registrationForm.userHusbandsName,
+          userHusbandsOccuupation: registrationForm.userHusbandsOccuupation,
+          userDateOfMarriage: registrationForm.userDateOfMarriage,
+          userPlaceOfMarriage: registrationForm.userPlaceOfMarriage,
+          userHusbandsNumber: registrationForm.userHusbandsNumber,
+          userCompleteAddress: registrationForm.userCompleteAddress,
+          userEmployedBy: registrationForm.userEmployedBy,
+          userSalary: registrationForm.userSalary,
+          userAddressOfEmployer: registrationForm.userAddressOfEmployer,
+          userNameOfBarangayCaptain: registrationForm.userNameOfBarangayCaptain,
+          //user pregnancy history
+          //child1
+          userChild1: registrationForm.userChild1,
+          userChildDateOfDelivery1: registrationForm.userChildDateOfDelivery1,
+          userChildTypeOfDelivery1: registrationForm.userChildTypeOfDelivery1,
+          userChildBirthOutcome1: registrationForm.userChildBirthOutcome1,
+          userChildNumberOfChildDelivered1: registrationForm.userChildNumberOfChildDelivered1,
+          userChildComplication1: registrationForm.userChildComplication1,
+          //child2
+          userChild2: registrationForm.userChild2,
+          userChildDateOfDelivery2: registrationForm.userChildDateOfDelivery2,
+          userChildTypeOfDelivery2: registrationForm.userChildTypeOfDelivery2,
+          userChildBirthOutcome2: registrationForm.userChildBirthOutcome2,
+          userChildNumberOfChildDelivered2: registrationForm.userChildNumberOfChildDelivered2,
+          userChildComplication2: registrationForm.userChildComplication2,
+          //child3
+          userChild3: registrationForm.userChild3,
+          userChildDateOfDelivery3: registrationForm.userChildDateOfDelivery3,
+          userChildTypeOfDelivery3: registrationForm.userChildTypeOfDelivery3,
+          userChildBirthOutcome3: registrationForm.userChildBirthOutcome3,
+          userChildNumberOfChildDelivered3: registrationForm.userChildDateOfDelivery3,
+          userChildComplication3: registrationForm.userChildComplication3,
+          //child4
+          userChild4: registrationForm.userChild4,
+          userChildDateOfDelivery4: registrationForm.userChildDateOfDelivery4,
+          userChildTypeOfDelivery4: registrationForm.userChildTypeOfDelivery4,
+          userChildBirthOutcome4: registrationForm.userChildBirthOutcome4,
+          userChildNumberOfChildDelivered4: registrationForm.userChildNumberOfChildDelivered4,
+          userChildComplication4: registrationForm.userChildComplication4,
+          //child5
+          userChild5: registrationForm.userChild5,
+          userChildDateOfDelivery5: registrationForm.userChildDateOfDelivery5,
+          userChildTypeOfDelivery5: registrationForm.userChildTypeOfDelivery5,
+          userChildBirthOutcome5: registrationForm.userChildBirthOutcome5,
+          userChildNumberOfChildDelivered5: registrationForm.userChildNumberOfChildDelivered5,
+          userChildComplication5: registrationForm.userChildComplication5,
+          //child6
+          userChild6: registrationForm.userChild6,
+          userChildDateOfDelivery6: registrationForm.userChildDateOfDelivery6,
+          userChildTypeOfDelivery6: registrationForm.userChildTypeOfDelivery6,
+          userChildBirthOutcome6: registrationForm.userChildBirthOutcome6,
+          userChildNumberOfChildDelivered6: registrationForm.userChildNumberOfChildDelivered6,
+          userChildComplication6: registrationForm.userChildComplication6,
+          //child7
+          userChild7: registrationForm.userChild7,
+          userChildDateOfDelivery7: registrationForm.userChildDateOfDelivery7,
+          userChildTypeOfDelivery7: registrationForm.userChildTypeOfDelivery7,
+          userChildBirthOutcome7: registrationForm.userChildBirthOutcome7,
+          userChildNumberOfChildDelivered7: registrationForm.userChildNumberOfChildDelivered7,
+          userChildComplication7: registrationForm.userChildComplication7,
+          //child8
+          userChild8: registrationForm.userChild8,
+          userChildDateOfDelivery8: registrationForm.userChildDateOfDelivery8,
+          userChildTypeOfDelivery8: registrationForm.userChildTypeOfDelivery8,
+          userChildBirthOutcome8: registrationForm.userChildBirthOutcome8,
+          userChildNumberOfChildDelivered8: registrationForm.userChildNumberOfChildDelivered8,
+          userChildComplication8: registrationForm.userChildComplication8,
+          //child9
+          userChild9: registrationForm.userChild9,
+          userChildDateOfDelivery9: registrationForm.userChildDateOfDelivery9,
+          userChildTypeOfDelivery9: registrationForm.userChildTypeOfDelivery9,
+          userChildBirthOutcome9: registrationForm.userChildBirthOutcome9,
+          userChildNumberOfChildDelivered9: registrationForm.userChildNumberOfChildDelivered9,
+          userChildComplication9: registrationForm.userChildComplication9,
+          //child10
+          userChild10: registrationForm.userChild10,
+          userChildDateOfDelivery10: registrationForm.userChildDateOfDelivery10,
+          userChildTypeOfDelivery10: registrationForm.userChildTypeOfDelivery10,
+          userChildBirthOutcome10: registrationForm.userChildBirthOutcome10,
+          userChildNumberOfChildDelivered10: registrationForm.userChildNumberOfChildDelivered10,
+          userChildComplication10: registrationForm.userChildComplication10,
+          //user other health conditions 
+          userTBPersonal: registrationForm.userTBPersonal,
+          userTBFamily: registrationForm.userTBFamily,
+          userHeartDiseasesPersonal: registrationForm.userHeartDiseasesPersonal,
+          userHeartDiseasesFamily: registrationForm.userHeartDiseasesFamily,
+          userDiabetesPersonal: registrationForm.userDiabetesPersonal,
+          userDiabetesFamily: registrationForm.userDiabetesFamily,
+          userHypertensionPersonal: registrationForm.userHypertensionPersonal,
+          userHypertensionFamily: registrationForm.userHypertensionFamily,
+          userBronchialAsthmaPersonal: registrationForm.userBronchialAsthmaPersonal,
+          userBronchialAsthmaFamily: registrationForm.userBronchialAsthmaFamily,
+          userUTIPersonal: registrationForm.userUTIPersonal,
+          userUTIFamily: registrationForm.userUTIFamily,
+          userParasitismPersonal: registrationForm.userParasitismPersonal,
+          userParasitismFamily: registrationForm.userParasitismFamily,
+          userGoiterPersonal: registrationForm.userGoiterPersonal,
+          userGoiterFamily: registrationForm.userGoiterFamily,
+          userAnemiaPersonal: registrationForm.userAnemiaPersonal,
+          userAnemiaFamily: registrationForm.userAnemiaFamily,
+          userGenitalTrackInfection: registrationForm.userGenitalTrackInfection,
+          userOtherInfectiousDiseases: registrationForm.userOtherInfectiousDiseases,
+          userHighRiskBehavior: registrationForm.userHighRiskBehavior,
+          dateCreated: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
+          status: "pending",
+          activePregnacy: true,
+          userLevel: "standard user",
+          userPic: "",
+        }).then(alert("Account created successfully."))
+      } catch (e) {
+        alert(e);
+      }
+      addDoc(collection(database, "adminLogs"), {
+        activity: "added a new user to the database.",
+        category: "added",
+        timestamp: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
+        day: moment(new Date()).format("DD"),
+        month: moment(new Date()).format("MM"),
+        Year: moment(new Date()).format("YYYY"),
+      })
+    } else {
+      alert("Please fill all the necessary inputs to create an account.")
     }
   }
-  
+
 
 
   console.log(registrationForm);
@@ -390,9 +409,9 @@ export default function PatientRegistrationForm() {
   };
 
 
-  useEffect(()=>{
-    
-  },[])
+  useEffect(() => {
+
+  }, [])
 
   const validateForm = () => {
     const errors = {};
@@ -741,7 +760,7 @@ export default function PatientRegistrationForm() {
                     onChange={(event, selectedProvince) => {
                       setRegistrationForm({
                         ...registrationForm,
-                        userProvince: selectedProvince.province_name? selectedProvince.province_name : "",
+                        userProvince: selectedProvince.province_name ? selectedProvince.province_name : "",
                       });
                       handleProvinceChange(selectedProvince);
                     }}
@@ -826,12 +845,18 @@ export default function PatientRegistrationForm() {
                     <LocalizationProvider dateAdapter={AdapterDayjs} required>
                       <DatePicker
                         label="Date of birth"
-                        name='dateofbrith'
-                        
+                        name='dateofbrith'                  
                         value={registrationForm.userDob}
                         style={{ width: ' 100%' }}
                         renderInput={(params) => <TextField {...params} size='small' onChange={(text) => [setRegistrationForm(prev => { return { ...prev, userDob: moment(text)} })]} />}
                         disableFuture
+                        value={registrationForm.userDob}
+                        style={{ width: ' 100%' }}
+                        renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDob: params } })}
+                        />}
+                        disableFuture
+                        minDate={dayjs().subtract(45, 'year')}
+                        maxDate={dayjs().subtract(10, 'year')}
                       />
                     </LocalizationProvider>
                   </FormControl>
@@ -839,6 +864,7 @@ export default function PatientRegistrationForm() {
                 <Grid item xs={2} mt={2} direction="row" textAlign="left" justifyContent="center">
                   <Typography>
                     {0}
+                    {moment(new Date, "YYYY/MM/DD").diff(moment(registrationForm.userDob, "YYYY/MM/DD"), "years")}
                     <Box component="span" fontSize="18px" fontWeight="bold" color={'primary.main'}>
                       <br />
                     </Box>{' '}
@@ -1514,113 +1540,113 @@ export default function PatientRegistrationForm() {
         </Grid>
         <Grid item xs={12}>
 
-        <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Box sx={{ padding: 2, backgroundColor: 'primary.main' }}>
-            <Typography variant="h6" color="white">
-              III. PREGNANCY HISTORY
-            </Typography>
-          </Box>
-        </Grid>
-        <Grid item xs={12} mt={2}>
-          <Box>
-            <Typography>
-              <Box component="span" fontWeight="bold">
-                16. Pregnancy history-
-              </Box>
-              <Box component="span" fontWeight="light" fontStyle={'italic'}>
-                {' '}
-               Add row and then fill up the field.
-              </Box>
-            </Typography>
-          </Box>
-        </Grid>
+          <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Box sx={{ padding: 2, backgroundColor: 'primary.main' }}>
+                  <Typography variant="h6" color="white">
+                    III. PREGNANCY HISTORY
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={12} mt={2}>
+                <Box>
+                  <Typography>
+                    <Box component="span" fontWeight="bold">
+                      16. Pregnancy history-
+                    </Box>
+                    <Box component="span" fontWeight="light" fontStyle={'italic'}>
+                      {' '}
+                      Add row and then fill up the field.
+                    </Box>
+                  </Typography>
+                </Box>
+              </Grid>
 
-        <Grid item xs={12}>
+              <Grid item xs={12}>
 
-        <Button variant="contained" color="primary" margin={5} onClick={addRow} >
-            Add Row
-          </Button>
-        <Box sx={{ border: '1px solid grey' }}>
-          
-          <TableContainer>
-            <Table sx={{ border: '1px solid grey' }}  size="small" >
-              <TableHead>
-                <TableRow>
-                  <TableCell>Pregnancy Number</TableCell>
-                  <TableCell>Date of Delivery</TableCell>
-                  <TableCell>Type of Delivery</TableCell>
-                  <TableCell>Birth Outcome</TableCell>
-                  <TableCell>Name of Child Delivered</TableCell>
-                  <TableCell>Pregnancy Related Conditions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{row.pregnancyNumber}</TableCell>
-                    <TableCell>
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                          disableToolbar
-                          variant="standard"
-                          margin="normal"
-                          size="small" 
-                          id={`dateofdelivery${index}`}
-                          label="Date of Delivery"
-                          value={row.dateOfDelivery}
-                          onChange={handleDateChange(index)}
-                          renderInput={(params) => <TextField {...params} />}
-                        />
-                      </LocalizationProvider>
-                    </TableCell>
-                    <TableCell>
-                    <FormControl fullWidth>
-                     <InputLabel id="typeofdelivery"></InputLabel>
-                      <Select
-                      variant='standard'
-                        value={row.typeOfDelivery}
-                        onChange={handleChange(index, 'typeOfDelivery')}
-                        label=""
-                      >
-                        <MenuItem value={'Normal'}>Normal</MenuItem>
-                        <MenuItem value={'Cesarean'}>Cesarean</MenuItem>
-                      </Select>
-                      </FormControl>
-                    </TableCell>
-                    <TableCell>
-                      <TextField
-                      variant='standard'
-                        value={row.birthOutcome}
-                        onChange={handleChange(index, 'birthOutcome')}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <TextField
-                      variant='standard'
-                        value={row.nameOfChildDelivered}
-                        onChange={handleChange(index, 'nameOfChildDelivered')}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <TextField
-                      variant='standard'
-                        value={row.pregnancyRelatedConditions}
-                        onChange={handleChange(index, 'pregnancyRelatedConditions')}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                <Button variant="contained" color="primary" margin={5} onClick={addRow} >
+                  Add Row
+                </Button>
+                <Box sx={{ border: '1px solid grey' }}>
+
+                  <TableContainer>
+                    <Table sx={{ border: '1px solid grey' }} size="small" >
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Pregnancy Number</TableCell>
+                          <TableCell>Date of Delivery</TableCell>
+                          <TableCell>Type of Delivery</TableCell>
+                          <TableCell>Birth Outcome</TableCell>
+                          <TableCell>Name of Child Delivered</TableCell>
+                          <TableCell>Pregnancy Related Conditions</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {rows.map((row, index) => (
+                          <TableRow key={index}>
+                            <TableCell>{row.pregnancyNumber}</TableCell>
+                            <TableCell>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                  disableToolbar
+                                  variant="standard"
+                                  margin="normal"
+                                  size="small"
+                                  id={`dateofdelivery${index}`}
+                                  label="Date of Delivery"
+                                  value={row.dateOfDelivery}
+                                  onChange={handleDateChange(index)}
+                                  renderInput={(params) => <TextField {...params} />}
+                                />
+                              </LocalizationProvider>
+                            </TableCell>
+                            <TableCell>
+                              <FormControl fullWidth>
+                                <InputLabel id="typeofdelivery"></InputLabel>
+                                <Select
+                                  variant='standard'
+                                  value={row.typeOfDelivery}
+                                  onChange={handleChange(index, 'typeOfDelivery')}
+                                  label=""
+                                >
+                                  <MenuItem value={'Normal'}>Normal</MenuItem>
+                                  <MenuItem value={'Cesarean'}>Cesarean</MenuItem>
+                                </Select>
+                              </FormControl>
+                            </TableCell>
+                            <TableCell>
+                              <TextField
+                                variant='standard'
+                                value={row.birthOutcome}
+                                onChange={handleChange(index, 'birthOutcome')}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <TextField
+                                variant='standard'
+                                value={row.nameOfChildDelivered}
+                                onChange={handleChange(index, 'nameOfChildDelivered')}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <TextField
+                                variant='standard'
+                                value={row.pregnancyRelatedConditions}
+                                onChange={handleChange(index, 'pregnancyRelatedConditions')}
+                              />
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Box>
+
+              </Grid>
+
+            </Grid>
           </Box>
-
-        </Grid>
-        
-      </Grid>
-    </Box>
 
         </Grid>
         <Grid item xs={12}>
@@ -1708,13 +1734,77 @@ export default function PatientRegistrationForm() {
                   </TableContainer>
                 </Box>
               </Grid>
+
+
             </Grid>
-            <Button variant="contained" color="primary" onClick={()=> handleCreateAccount()}>
-              Submit
-            </Button>
+            <Grid item xs={12} mb={2}>
+              <Box>
+                <Typography> <Box component="span" fontWeight='bold'>18. LMP-</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please pick the correct date for LMP</Box></Typography>
+              </Box>
+            </Grid>
+
+            <Grid container xs={12} direction="row">
+              <FormControl required>
+                <Grid container direction="row">
+                  <LocalizationProvider dateAdapter={AdapterDayjs} required>
+                    <Grid item xs={4}>
+                      <DatePicker
+                        size='small'
+                        label="Last Menstrual Period"
+                        name='LMP'
+                        value={lmp}
+                        style={{ width: ' 100%' }}
+                        onChange={(date) => handleDateChangePregnancyCal(date)}
+                        renderInput={(params) => <TextField {...params} />}
+                        disableFuture
+                        maxDate={dayjs().subtract(1, 'week')}
+                      />
+                    </Grid>
+                    <Grid item xs={3.5}>
+                      <TextField
+                        label="Estimated Date of Delivery"
+                        value={edd || ''}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={3.5}>
+                      <TextField
+                        label="Age of Gestation (days)"
+                        value={aog || ''}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                    </Grid>
+                   
+                  
+                  </LocalizationProvider>
+
+
+                  <Grid xs={12}>
+                      <Grid xs={6}> <Box></Box></Grid>
+                    <Grid xs={3} flexDirection={'space-between'}>
+                      <Button variant="contained" color="primary" onClick={() => handleCreateAccount()}>
+                        Submit
+                      </Button>
+                    </Grid>
+                    </Grid>
+                </Grid>
+              </FormControl>
+            </Grid>
+
+
+
+
           </Box>
 
         </Grid>
+
+
+
+
       </Grid>
     </Box>
 
