@@ -37,7 +37,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import PatientRegistrationForm from './patientRegistration';
 import SearchIcon from '@mui/icons-material/Search';
 //firebase
-import { getDocs, query, collection, where, orderBy } from 'firebase/firestore';
+import { getDocs, query, collection, where, orderBy, doc, increment, updateDoc } from 'firebase/firestore';
 import Appoinment from './Approval';
 import Approval from './Approval';
 
@@ -179,10 +179,10 @@ function PatientTable({ handleSubmit, userData }) {
   const columns = [
     { field: 'id', headerName: 'ID', width: 50, align: 'center', headerAlign: 'center' },
     { field: 'userFname', headerName: 'First name', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
-    { field: 'userMname', headerName: 'Middle name', flex: 1, align: 'center', headerAlign: 'center' },
     { field: 'userLname', headerName: 'Last name', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
-    { field: 'userDob', headerName: 'Date of Birth', type: 'number', width: 100, sortable: false, align: 'center', headerAlign: 'center' },
-    { field: 'userNumber', headerName: 'Cellphone Number', type: 'number', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
+    { field: 'lastPeriod', headerName: 'Last Menstrual Period', flex: 1, align: 'center', headerAlign: 'center' },
+    { field: 'aog' , headerName: 'Age of Gestation', type: 'number', width: 100, sortable: false, align: 'center', headerAlign: 'center' },
+    { field: 'lastVisit', headerName: 'Date of Last Visit', type: 'number', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
     { field: 'userAddress', headerName: 'Address', flex: 2, sortable: false, align: 'center', headerAlign: 'center' },
     {
       field: 'action',
@@ -374,7 +374,9 @@ function PatientTable({ handleSubmit, userData }) {
         userData.push({
           id: i++,
           docid: doc.id,
-          lastPeriod: doc.data().lastPeriod,
+          aog: moment(new Date(),"YYYY/MM/DD").diff(doc.data().lastPeriod,"weeks") + " weeks",
+          lastVisit: !doc.data().lastVisit?"No Data": doc.data().lastVisit,
+          lastPeriod: !doc.data().lastPeriod? "No data":doc.data().lastPeriod,
           userFname: doc.data().userFname,
           userMname: doc.data().userMname,
           userLname: doc.data().userLname,
@@ -718,6 +720,22 @@ function PatientTable({ handleSubmit, userData }) {
   };
 
 
+  const handlePlus = async() => {
+     const app = doc(database, 'dashboard', '--appointments--');
+      const vax = doc(database, 'dashboard', '--vaccinations--');
+      await updateDoc(app, {
+        no: increment(1),
+    })
+  }
+
+  const handleMinus = async() => {
+    const app = doc(database, 'dashboard', '--appointments--');
+     const vax = doc(database, 'dashboard', '--vaccinations--');
+     await updateDoc(app, {
+       no: increment(-1),
+   })
+ }
+
   return (
 
     <div style={{ marginTop: '2px', height: '550px', width: '95%', textAlign: 'center', justifyContent: 'center', overflow: 'hidden' }}>
@@ -731,6 +749,14 @@ function PatientTable({ handleSubmit, userData }) {
  {/*---------------------- Modal for Online Request Approval ----------------------*/}
         <Button variant="contained" color="primary" onClick={handleOpenOnlineRequest}>
           online requests
+        </Button>
+
+        <Button variant="contained" color="primary" onClick={handlePlus}>
+          plus
+        </Button>
+
+        <Button variant="contained" color="primary" onClick={handleMinus}>
+          minus
         </Button>
 
         <Modal

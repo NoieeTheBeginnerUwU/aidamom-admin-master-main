@@ -19,7 +19,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 //firebase
 import { database } from '../config/firebase';
-import { addDoc, updateDoc, query, collection, where, getDocs } from 'firebase/firestore';
+import { addDoc, updateDoc, query, collection, where, getDocs, doc } from 'firebase/firestore';
+import { increment, decrement } from 'firebase/firestore';
 
 const useStyles = makeStyles((theme) => ({
     textarea: {
@@ -160,13 +161,20 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
     const submitVisit = async() =>{
         let arr = [];
         const querySnapshot = await getDocs(query(collection(database,"onlineAppointments"),where("appointmentDate","==",moment(new Date()).format("YYYY/MM/DD")),where("uid","==",selectedPatient.docid)))
-           
+        const app = doc(database, 'dashboard', '--appointments--');
+        const vax = doc(database, 'dashboard', '--vaccinations--');
         try{
             addDoc(collection(database,"onlineAppointments"),{
                 uid: selectedPatient.docid,
                 appointmentDate: moment(new Date(),"YYYY/MM/DD").add(30,"days").format("YYYY/MM/DD"),
                 purpose: "prenatal",
                 status: "assigned by RHU",
+            })
+            await updateDoc(app, {
+                no: increment(1),
+            })
+            updateDoc(doc(database,"userData",selectedPatient.docid),{
+                lastVisit: moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY")
             })
                 addDoc(collection(database,"appointments"),{
                     name:selectedPatient.userFname + selectedPatient.userLname,

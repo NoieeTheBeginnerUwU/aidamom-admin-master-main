@@ -827,10 +827,10 @@ export default function PatientRegistrationForm() {
                       <DatePicker
                         label="Date of birth"
                         name='dateofbrith'
+                        onChange={(text) => [setRegistrationForm(prev => { return { ...prev, userDob: moment(text,"YYYY/MM/DD").add(1,"day") } }), alert(text)]}
                         value={registrationForm.userDob}
                         style={{ width: ' 100%' }}
-                        renderInput={(params) => <TextField {...params} size='small' required  onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDob: params } })}
-                        />}
+                        renderInput={(params) => <TextField {...params} size='small' />}
                         disableFuture
                         minDate={dayjs().subtract(45, 'year')}
                         maxDate={dayjs().subtract(10, 'year')}
