@@ -818,7 +818,7 @@ export default function PatientRegistrationForm() {
                     onChange={(event, selectedBarangay) => {
                       setRegistrationForm({
                         ...registrationForm,
-                        userBarangay: selectedBarangay.brgy_name ? selectedBarangay : "",
+                        userBarangay: selectedBarangay.brgy_name ? selectedBarangay.brgy_name : "",
                       });
                       handleCityChange(selectedBarangay);
                     }}
@@ -845,7 +845,11 @@ export default function PatientRegistrationForm() {
                     <LocalizationProvider dateAdapter={AdapterDayjs} required>
                       <DatePicker
                         label="Date of birth"
-                        name='dateofbrith'
+                        name='dateofbrith'                  
+                        value={registrationForm.userDob}
+                        style={{ width: ' 100%' }}
+                        renderInput={(params) => <TextField {...params} size='small' onChange={(text) => [setRegistrationForm(prev => { return { ...prev, userDob: moment(text)} })]} />}
+                        disableFuture
                         value={registrationForm.userDob}
                         style={{ width: ' 100%' }}
                         renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDob: params } })}
@@ -859,6 +863,7 @@ export default function PatientRegistrationForm() {
                 </Grid>
                 <Grid item xs={2} mt={2} direction="row" textAlign="left" justifyContent="center">
                   <Typography>
+                    {0}
                     {moment(new Date, "YYYY/MM/DD").diff(moment(registrationForm.userDob, "YYYY/MM/DD"), "years")}
                     <Box component="span" fontSize="18px" fontWeight="bold" color={'primary.main'}>
                       <br />
@@ -1064,7 +1069,7 @@ export default function PatientRegistrationForm() {
                     onChange={(event, selectedProvince) => {
                       setRegistrationForm({
                         ...registrationForm,
-                        userProvincebirth: selectedProvince ? selectedProvince : null,
+                        userProvincebirth: selectedProvince ? selectedProvince.province_name : null,
                       });
                       handleProvinceChange(selectedProvince);
                     }}

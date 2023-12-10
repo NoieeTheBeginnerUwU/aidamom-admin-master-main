@@ -37,9 +37,11 @@ import TabPanel from '@mui/lab/TabPanel';
 import PatientRegistrationForm from './patientRegistration';
 import SearchIcon from '@mui/icons-material/Search';
 //firebase
-import { getDocs, query, collection, where, orderBy, doc, increment, updateDoc } from 'firebase/firestore';
+import { getDocs, query, collection, where, orderBy, doc, increment, updateDoc, addDoc } from 'firebase/firestore';
 import Appoinment from './Approval';
 import Approval from './Approval';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 
 
 const useStyles = makeStyles({
@@ -448,9 +450,9 @@ function PatientTable({ handleSubmit, userData }) {
         userData.push({
           id: i++,
           docid: doc.id,
-          aog: moment(new Date(), "YYYY/MM/DD").diff(doc.data().lastPeriod, "weeks") + " weeks",
-          lastVisit: !doc.data().lastVisit ? "No Data" : doc.data().lastVisit,
-          lastPeriod: !doc.data().lastPeriod ? "No data" : doc.data().lastPeriod,
+          aog: moment(new Date(),"YYYY/MM/DD").diff(doc.data().lastPeriod,"weeks") + " weeks",
+          lastVisit: !doc.data().lastVisit?"No Data": doc.data().lastVisit,
+          lastPeriod: !doc.data().lastPeriod? "No data":doc.data().lastPeriod,
           userFname: doc.data().userFname,
           userMname: doc.data().userMname,
           userLname: doc.data().userLname,
@@ -798,6 +800,220 @@ function PatientTable({ handleSubmit, userData }) {
     setProfessionalAttended(event.target.value);
   };
 
+  const handleChildRegistration = () => {
+    try {
+      addDoc(collection(database,"dischargeSummary_child"),{
+        data: "data"
+      })
+      addDoc(collection(database,"dischargeSummary_mother"),{
+        data: "data"
+      })
+      updateDoc(doc(database,"userData",selectedRow.docid),{
+        lastPeriod:"",
+        dateOfDischarge: moment(new Date(),"YYYY/MM/DD").format("YYYY/MM/DD")
+      })
+    } catch (e) {
+      alert(e)
+    }
+  }
+
+  const [summary, setSummary] = useState({
+    parentUID: selectedRow.docid,
+    dateOfDischarge: moment(new Date()).format("MMMM DD, YYYY"),
+    childFname: "",
+    childMname: "",
+    childLname:"",
+    childExtension: "",
+    childDob: "",
+    childWeight:"",
+    childGender: "",
+    childTypeOfDelivery:"",
+    childUrine:"",
+    childStool:"",
+    childBCG:"",
+    childHepa:"",
+    childScreening:"",
+    childScreeningResults:"",
+    childScreeningRefusalReason:"",
+    childNewBornHearing:"",
+    childNewBornHearingScreeningResults:"",
+    childDateofDischarge:"",
+    childFollowUpCheckUp:"",
+    attendingPhysician:"",
+    nurseOnDuty:"",
+    deliveredBy:"",
+    receivedBy:""
+  })
+
+
+  async function searchUsers(vals){
+    let ins = [];
+      let docs = users;
+      try{
+        let fun = docs.map((doc)=>{
+          if(vals!==""){
+           let val = vals.toLowerCase();
+           if(doc.userFname.toLowerCase().includes(val)||doc.userMname.toLowerCase().includes(val)||doc.userLname.toLowerCase().includes(val)){
+            ins.push({
+              id: doc.id,
+              docid: doc.docid,
+              aog: doc.aog,
+              userAddress:doc.userAddress,
+              lastVisit: doc.lastVisit,
+              lastPeriod: doc.lastPeriod,
+              userFname:doc.userFname,
+              userMname:doc.userMname,
+              userLname:doc.userLname,
+              userSuffix:doc.userSuffix,
+              userSex:doc.userSex,
+              userCivilStatus:doc.userCivilStatus,
+              userBloodType:doc.userBloodType,
+              userReligion:doc.userReligion,
+              userNumber:doc.userNumber,
+              userDob:doc.userDob,
+              userAge:doc.userAge,
+              userNationality:doc.userNationality,
+              userOccupation:doc.userOccupation,
+              userPurok:doc.userPurok,
+              userBarangay:doc.userBarangay,
+              userTown:doc.userTown,
+              userProvince:doc.userProvince,
+              userPlaceOfBirth:doc.userPlaceOfBirth,
+              //family details
+              userFathersName:doc.userFathersName,
+              userMothersName:doc.userMothersName,
+              userHusbandsName:doc.userHusbandsName,
+              userHusbandsOccuupation:doc.userHusbandsOccuupation,
+              userDateOfMarriage:doc.userDateOfMarriage,
+              userPlaceOfMarriage:doc.userPlaceOfMarriage,
+              userHusbandsNumber:doc.userHusbandsNumber,
+              userCompleteAddress:doc.userCompleteAddress,
+              userEmployedBy:doc.userEmployedBy,
+              userSalary:doc.userSalary,
+              userAddressOfEmployer:doc.userAddressOfEmployer,
+              userNameOfBarangayCaptain:doc.userNameOfBarangayCaptain,
+              //user pregnancy history
+                //child1
+              userChild1:doc.userChild1,
+              userChildDateOfDelivery1:doc.userChildDateOfDelivery1,
+              userChildTypeOfDelivery1:doc.userChildTypeOfDelivery1,
+              userChildBirthOutcome1:doc.userChildBirthOutcome1,
+              userChildNumberOfChildDelivered1:doc.userChildNumberOfChildDelivered1,
+              userChildComplication1:doc.userChildComplication1,
+                //child2
+              userChild2:doc.userChild2,
+              userChildDateOfDelivery2:doc.userChildDateOfDelivery2,
+              userChildTypeOfDelivery2:doc.userChildTypeOfDelivery2,
+              userChildBirthOutcome2:doc.userChildBirthOutcome2,
+              userChildNumberOfChildDelivered2:doc.userChildNumberOfChildDelivered2,
+              userChildComplication2:doc.userChildComplication2,
+              //child3
+              userChild3:doc.userChild3,
+              userChildDateOfDelivery3:doc.userChildDateOfDelivery3,
+              userChildTypeOfDelivery3:doc.userChildTypeOfDelivery3,
+              userChildBirthOutcome3:doc.userChildBirthOutcome3,
+              userChildNumberOfChildDelivered3:doc.userChildDateOfDelivery3,
+              userChildComplication3:doc.userChildComplication3,
+              //child4
+              userChild4:doc.userChild4,
+              userChildDateOfDelivery4:doc.userChildDateOfDelivery4,
+              userChildTypeOfDelivery4:doc.userChildTypeOfDelivery4,
+              userChildBirthOutcome4:doc.userChildBirthOutcome4,
+              userChildNumberOfChildDelivered4:doc.userChildNumberOfChildDelivered4,
+              userChildComplication4 :doc.userChildComplication4,    
+              //child5
+              userChild5:doc.userChild5,
+              userChildDateOfDelivery5:doc.userChildDateOfDelivery5,
+              userChildTypeOfDelivery5:doc.userChildTypeOfDelivery5,
+              userChildBirthOutcome5:doc.userChildBirthOutcome5,
+              userChildNumberOfChildDelivered5:doc.userChildNumberOfChildDelivered5,
+              userChildComplication5:doc.userChildComplication5,
+              //child6
+              userChild6:doc.userChild6,
+              userChildDateOfDelivery6:doc.userChildDateOfDelivery6,
+              userChildTypeOfDelivery6:doc.userChildTypeOfDelivery6,
+              userChildBirthOutcome6:doc.userChildBirthOutcome6,
+              userChildNumberOfChildDelivered6:doc.userChildNumberOfChildDelivered6,
+              userChildComplication6:doc.userChildComplication6,
+              //child7
+              userChild7:doc.userChild7,
+              userChildDateOfDelivery7:doc.userChildDateOfDelivery7,
+              userChildTypeOfDelivery7:doc.userChildTypeOfDelivery7,
+              userChildBirthOutcome7:doc.userChildBirthOutcome7,
+              userChildNumberOfChildDelivered7:doc.userChildNumberOfChildDelivered7,
+              userChildComplication7:doc.userChildComplication7,
+              //child8
+              userChild8:doc.userChild8,
+              userChildDateOfDelivery8:doc.userChildDateOfDelivery8,
+              userChildTypeOfDelivery8:doc.userChildTypeOfDelivery8,
+              userChildBirthOutcome8:doc.userChildBirthOutcome8,
+              userChildNumberOfChildDelivered8:doc.userChildNumberOfChildDelivered8,
+              userChildComplication8:doc.userChildComplication8,
+              //child9
+              userChild9:doc.userChild9,
+              userChildDateOfDelivery9:doc.userChildDateOfDelivery9,
+              userChildTypeOfDelivery9:doc.userChildTypeOfDelivery9,
+              userChildBirthOutcome9:doc.userChildBirthOutcome9,
+              userChildNumberOfChildDelivered9:doc.userChildNumberOfChildDelivered9,
+              userChildComplication9:doc.userChildComplication9,
+              //child10
+              userChild10:doc.userChild10,
+              userChildDateOfDelivery10:doc.userChildDateOfDelivery10,
+              userChildTypeOfDelivery10:doc.userChildTypeOfDelivery10,
+              userChildBirthOutcome10:doc.userChildBirthOutcome10,
+              userChildNumberOfChildDelivered10:doc.userChildNumberOfChildDelivered10,
+              userChildComplication10:doc.userChildComplication10,
+              //user other health conditions 
+              userTBPersonal:doc.userTBPersonal,
+              userTBFamily:doc.userTBFamily,
+              userHeartDiseasesPersonal:doc.userHeartDiseasesPersonal,
+              userHeartDiseasesFamily:doc.userHeartDiseasesFamily,
+              userDiabetesPersonal:doc.userDiabetesPersonal,
+              userDiabetesFamily:doc.userDiabetesFamily,
+              userHypertensionPersonal:doc.userHypertensionPersonal,
+              userHypertensionFamily:doc.userHypertensionFamily,
+              userBronchialAsthmaPersonal:doc.userBronchialAsthmaPersonal,
+              userBronchialAsthmaFamily:doc.userBronchialAsthmaFamily,
+              userUTIPersonal:doc.userUTIPersonal,
+              userUTIFamily:doc.userUTIFamily,
+              userParasitismPersonal:doc.userParasitismPersonal,
+              userParasitismFamily:doc.userParasitismFamily,
+              userGoiterPersonal:doc.userGoiterPersonal,
+              userGoiterFamily:doc.userGoiterFamily,
+              userAnemiaPersonal:doc.userAnemiaPersonal,
+              userAnemiaFamily:doc.userAnemiaFamily,
+              userGenitalTrackInfection:doc.userGenitalTrackInfection,
+              userOtherInfectiousDiseases:doc.userOtherInfectiousDiseases,
+              userHighRiskBehavior:doc.userHighRiskBehavior,
+              dateCreated: doc.dateCreated,
+              status:doc.status,
+              userLevel:doc.userLevel,
+              userPic:doc.userPic
+            })
+           }
+           if(vals===""){
+            setUserSearch(docs)
+           }
+           else{
+            setUserSearch(ins)
+           }
+          }else{
+            setUserSearch(docs)
+          }
+         })
+          setUserSearch(docs)
+      }catch(e){
+        setUserSearch(docs)
+      }
+      if(vals===""){
+        setUserSearch(docs)
+      }else{
+        setUserSearch(ins)
+      }
+      console.log("USERS"+userSearch)
+  }
+
+
   return (
 
     <div style={{ marginTop: '2px', height: '550px', width: '95%', textAlign: 'center', justifyContent: 'center', overflow: 'hidden' }}>
@@ -842,13 +1058,14 @@ function PatientTable({ handleSubmit, userData }) {
       </Box>
       <Divider sx={{ marginBottom: 2 }}></Divider>
       <Box display="flex" justifyContent="center">
-        <Box display="flex" alignItems="center" ml={'40%'} mb={3}>
+        <Box display="flex" alignItems="center" ml={'30%'} mb={3}>
           <Box display="flex" alignItems="center" width="100%" flex={1}>
             <TextField
               size='small'
               variant='outlined'
               placeholder="Search..."
               fullWidth
+              onChange={(text)=> searchUsers(text.target.value)}
               InputProps={{ style: { width: 400 } }}
             />
             <SearchIcon size="large" />
@@ -865,6 +1082,12 @@ function PatientTable({ handleSubmit, userData }) {
             online requests
           </Button>
 
+        </Box>
+        <Box ml={1} flex={.7} flexDirection='end '>
+          <Button variant="contained" color="primary" size='small' sx={{ backgroundColor: 'skyblue' }} onClick={()=> fetchData()}>
+            <FontAwesomeIcon icon={faRefresh} color='white'/>
+            refresh table
+          </Button>
         </Box>
       </Box>
 
@@ -892,7 +1115,7 @@ function PatientTable({ handleSubmit, userData }) {
 
       <div style={{ height: 600, width: '100%', marginTop: '10px' }}>
         <DataGrid
-          rows={users}
+          rows={userSearch}
           columns={columns}
           pageSize={5}
           initialState={{
@@ -1678,7 +1901,7 @@ function PatientTable({ handleSubmit, userData }) {
 
 
                               </Grid>
-
+                             
 
 
 
@@ -1694,14 +1917,14 @@ function PatientTable({ handleSubmit, userData }) {
 
 
 
+                          
 
 
                         </Grid>
 
 
 
-
-
+                        
 
 
 

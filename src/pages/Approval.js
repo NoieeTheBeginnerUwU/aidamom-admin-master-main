@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -13,27 +13,30 @@ import SearchIcon from '@mui/icons-material/Search';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { Paper, Grid, Divider, Typography , Box} from '@mui/material';
-
+//firebase
+import { database } from '../config/firebase';
+import { updateDoc, doc, query, where, collection, getDocs, orderBy, increment } from 'firebase/firestore';
+import moment from 'moment';
 
 export default function Approval() {
 
 
 // Dummy data for Appoinment table
   const columns = [
-    { field: 'date', headerName: 'DATE AND TIME', flex:.5},
-    { field: 'patient', headerName: 'PATIENT', flex:.5 },
+    { field: 'appointmentDate', headerName: 'DATE', flex:.5},
+    { field: 'time', headerName: 'TIME', flex:.5},
+    { field: 'name', headerName: 'PATIENT', flex:.5 },
     { field: 'purpose', headerName: 'PURPOSE', flex:.5 },
-    { field: 'address', headerName: 'ADDRESS', flex:1},
     {
       field: 'status',
       headerName: 'STATUS', flex:.5,
       renderCell: (params) => {
-        if (params.value === 'Pending') {
+        if (params.value === 'pending') {
           return <div><PendingActionsIcon color="action" /> {params.value}</div>;
-        } else if (params.value === 'Denied') {
+        } else if (params.value === 'denied') {
           return <div><CancelIcon color="error" /> {params.value}</div>;
         } else {
-          return <div><CheckCircleIcon color="success" /> {params.value}</div>;
+          return <div><CheckCircleIcon color="approved" /> {params.value}</div>;
         }
       },
     },
@@ -41,10 +44,10 @@ export default function Approval() {
       field: 'action',
       headerName: 'ACTION', flex:.7,
       renderCell: (params) => (
-        params.row.status === 'Pending' ? (
+        params.row.status === 'pending' ? (
           <div>
-            <Button variant="contained" color="primary" onClick={() => handleApprove(params.row.id)}>Approve</Button>
-            <Button variant="contained" color="error" onClick={() => handleReject(params.row.id)}>Reject</Button>
+            <Button variant="contained" color="primary" onClick={() => handleApproveAppointment(params.row.id)}>Approve</Button>
+            <Button variant="contained" color="error" onClick={() => handleRejectAppointment(params.row.id)}>Reject</Button>
           </div>
         ) : null
       ),
@@ -101,6 +104,52 @@ export default function Approval() {
     setSnackbarSeverity('error');
     setSnackbarOpen(true);
   };
+
+  const [onlineAppointments, setOnlineAppointments] = useState([]);
+  const fetchOnlineAppointments = async() => {
+    let arr = [];
+    let q = query(collection(database,"onlineAppointments"),where("status","==","pending"))
+    const querySnapshot = await getDocs(q, orderBy("appointmentDate","desc"))
+    querySnapshot.forEach((doc)=>{
+      arr.push({id:doc.id, uid:doc.data().uid, name: doc.data().name, purpose:doc.data().purpose, status:doc.data().status,appointmentDate: moment(doc.data().appointmentDate,"YYYY/MM/DD").format("MMMM DD, YYYY"), time:doc.data().time})
+    })
+    setOnlineAppointments(arr);
+  }
+
+  useEffect(()=>{
+    fetchOnlineAppointments()
+    console.log(onlineAppointments)
+  },[])
+
+  const handleApproveAppointment = async(id, name, purpose) => {
+    try{
+      updateDoc(doc(database,"onlineAppointments",id),{
+        status:"approved"
+      })
+      alert(name +"'s request for " + purpose + " has been approved.")
+      setSnackbarMessage('Appointment Approved');
+      setSnackbarSeverity('success');
+      setSnackbarOpen(true);
+      fetchOnlineAppointments()
+    }catch(e){
+      alert(e)
+    }
+  }
+
+  const handleRejectAppointment = async(id, name, purpose) => {
+    try{
+      updateDoc(doc(database,"onlineAppointments",id),{
+        status:"denied"
+      })
+      alert(name +"'s request for " + purpose + " has been rejected.")
+      setSnackbarMessage('Appointment Rejected');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
+      fetchOnlineAppointments()
+    }catch(e){
+      alert(e)
+    }
+  }
 
   return (
     <div style={{width:'100%',height:'80%',backgroundColor:'white',display:'flex',flexDirection:'column',alignItems:'start',justifyContent:'start'}} marginTop={1}>
@@ -166,7 +215,7 @@ export default function Approval() {
   <Box sx={{ height: 460, width: '100%' }}>
       <DataGrid autoHeight={false}
       rowsPerPageOptions={[]} 
-        rows={filteredRows}
+        rows={onlineAppointments}
         columns={columns}
         pageSize={5}
         density="compact"

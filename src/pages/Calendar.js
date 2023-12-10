@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import dayjs from 'dayjs';
 import Badge from '@mui/material/Badge';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -7,9 +7,11 @@ import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 import CircleIcon from '@mui/icons-material/Circle';
+import { forwardRef } from 'react';
 //firebase
 import { database } from '../config/firebase';
-import { onSnapshot, collection, query, where } from 'firebase/firestore';
+import { onSnapshot, collection, query, where, getDocs } from 'firebase/firestore';
+import moment from 'moment';
 
 function getRandomNumber(min, max) {
   return Math.round(Math.random() * (max - min) + min);
@@ -53,11 +55,23 @@ function ServerDay(props) {
 
 
 
-export default function Calendar() {
-
+export default function Calendar({onChange}) {
+  const [date, setDate] = React.useState("");
   const requestAbortController = React.useRef(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [highlightedDays, setHighlightedDays] = React.useState([1, 2, 15]);
+  const [oA, setOA] = React.useState([]);
+
+  const fetchOnline = async (date) => {
+    let arr = [];
+    let d = moment(date,"YYYY/MM/DD").format("YYYY/MM/DD")
+    const querySnapshot = await getDocs(query(collection(database,"onlineAppointments"),where("status","==","approved"),where("appointmentDate","==",date)));
+    querySnapshot.forEach((doc)=>{
+      arr.push({id:doc.id, uid:doc.data().uid,name:doc.data().name, appointmentDate:doc.data().appointmentDate, time:doc.data().time, purpose:doc.data().purpose})
+    })
+    setOA(arr);
+    alert("Fetched")
+  }
 
   const fetchHighlightedDays = (date) => {
     const controller = new AbortController();
@@ -103,15 +117,26 @@ export default function Calendar() {
       loading={isLoading}
       onMonthChange={handleMonthChange}
       renderLoading={() => <DayCalendarSkeleton />}
+     
       slots={{
         day: ServerDay,
       }}
+      onChange={(s)=> fetchOnline(moment(s).format("YYYY/MM/DD"))}
       slotProps={{
         day: {
           highlightedDays,
         },
       }}
     />
+    <div style={{width:'100%',height:'50%',backgroundColor:'white',}}>
+      {
+        oA.map((doc)=>{
+          <div style={{width:'100%',height:50,border:'1px solid black'}}>
+            {doc.id}
+          </div>
+        })
+      }
+    </div>
   </LocalizationProvider>
   )
 }

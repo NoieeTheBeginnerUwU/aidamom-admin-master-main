@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { faAngleLeft, faAngleRight, faBell, faBellConcierge, faCalendar, faCalendarAlt, faCalendarDays, faChild, faCircle, faDoorOpen, faExclamationCircle, faList, faList12, faMobile, faMobileAndroid, faPersonPregnant, faPhone, faSuitcase, faSyringe, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 //import moment js
-import Calendar from './Calendar';
+import Calendar_ from './Calendar';
 import TopNav from './messages/TopNav';
 import NoData from '../animations/NoData';
 import PatientRegistrationForm from './patientRegistration';
@@ -248,37 +248,29 @@ const Dashboard = ({ counter }) => {
   const [userData, setUserData] = useState(0);
   let [completed, setCompleted] = useState(0);
   let [pendings_, setPendings_] = useState(0);
+
   async function fetchUser() {
     let user1 = [];
     let user2 = [];
     let thismonth1 = [];
     let thismonth2 = [];
     let pend = [];
-    
-    const querySnapshot1 = await getDocs(query(collection(database, 'appointments')));
     const querySnapshot2 = await getDocs(query(collection(database, 'onlineAppointments')));
-    querySnapshot1.forEach((doc) => {
-      user1.push({ id: doc.id, appointmentDate: doc.data().appointmentDate, dateMade: doc.data().dateMade, purpose: doc.data().purpose, status: doc.data().status, time: doc.data().time });
-      if (doc.data().month === monthNow && doc.data().year === yearNow) {
-        thismonth1.push({ id: doc.id })
-      }
-    })
     querySnapshot2.forEach((doc) => {
       user1.push({ id: doc.id, appointmentDate: doc.data().appointmentDate, dateMade: doc.data().dateMade, purpose: doc.data().purpose, status: doc.data().status, time: doc.data().time });
       if (moment(doc.data().appointmentDate).format("MM") === monthNow && moment(doc.data().appointmentDate).format("YYYY" === yearNow && doc.data().status === "approved")) {
         thismonth2.push({ id: doc.id })
       }
-      if (doc.data().status === "pending") {
+      if (doc.data().status === "approved"&&moment(new Date, "YYYY/MM/DD").diff(doc.data().appointmentDate,"YYYY/MM/DD")<0) {
         pend.push(doc.id)
       }
     })
-    setCompleted(thismonth1.length + thismonth2.length);
-    setUserData(user1.length + user2.length);
     setPendings_(pend.length)
   }
 
   useEffect(() => {
     fetchUsers();
+    fetchUser();
   }, [])
 
   ///////////////////////////
@@ -474,7 +466,7 @@ const Dashboard = ({ counter }) => {
         if (moment(d.data().dateRegistered).format("MM") === "12") {
           december++;
         }
-        console.log(moment(d.data().appointmentDate).format("MM"))
+        console.log("MONTH"+moment(d.data().appointmentDate).format("MM"))
         setJan2(january);
         setFeb2(february);
         setMar2(march);
@@ -490,7 +482,7 @@ const Dashboard = ({ counter }) => {
       setPendings(doc.docs);
       setHasNotif(true)
     });
-  }, [pendings])
+  }, [])
   //    alert(oct2)
 
   useEffect(() => {
@@ -693,6 +685,9 @@ const Dashboard = ({ counter }) => {
     nov: "November",
     dec: "December"
   }
+
+
+  const [date_, setDate_] = useState("")
 
   return (
 //     <div style={{ width: '100%', height: '100%', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'start', overflow: 'hidden', justifyContent: 'start' }}>
@@ -1043,7 +1038,7 @@ const Dashboard = ({ counter }) => {
 //         </div>
 //       </div>
 //     </div>
-<Box  sx={{ height: '100%', width: '100%', overflowY: 'auto', overflowX: 'hidden' }}>
+<Box container sx={{ height: '100%', width: '100%', overflowY: 'auto', overflowX: 'hidden' }}>
   <Box textAlign={'left'} ml={2}>
 <Typography variant='h2' fontWeight='600' fontSize={28} mt={2}>
   Dashboard
@@ -1073,7 +1068,7 @@ const Dashboard = ({ counter }) => {
     {/*------------------------------- Grid 2 Registered Patient------------------------------- */}
     <Grid container item xs={3.5} ml={.5} mb={3} padding={2} sx={{ minHeight: '7vh', minWidth: '8%', }} component={Paper}>
       <Grid xs={3} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#00BA88' }}><PregnantWomanIcon fontSize='72' /></Box></Grid>
-      <Grid xs={9} >
+      <Grid xs={8} >
         <Grid xs={12}> <Box fontSize={'medium '} ml={1} fontWeight='500'>Registered Patients</Box></Grid>
         <Grid xs={12}> <Box fontSize='2em' ml={1} fontWeight='700' color={'#4E4B66'}>{allUsers.length}</Box></Grid>
       </Grid>
@@ -1359,12 +1354,11 @@ const Dashboard = ({ counter }) => {
     </Grid>
     {/*------------------------------- End Grid------------------------------ */}
   </Grid>
-  <Grid item xs={3} sx={{ height: 60 }}>
-    <Card sx={{ height: 85 + 'vh', justifyContent: 'center' }} m={1} padding={2}>
+  <Grid item xs={3} sx={{ height:'120vh',}}>
+    <Card elevation={4} sx={{ height: 100 + '%', justifyContent: 'center' }} m={1} padding={2}>
       <CardContent>
-      
-      </CardContent>
-      <Calendar/>
+      </CardContent >
+      <Calendar_/>
     </Card>
   </Grid>
                       
