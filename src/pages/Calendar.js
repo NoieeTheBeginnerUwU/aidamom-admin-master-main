@@ -12,6 +12,8 @@ import { forwardRef } from 'react';
 import { database } from '../config/firebase';
 import { onSnapshot, collection, query, where, getDocs } from 'firebase/firestore';
 import moment from 'moment';
+import NoData from '../animations/NoData';
+import { Box, Button } from '@mui/material';
 
 function fakeFetch(date, { signal }) {
   return new Promise((resolve, reject) => {
@@ -61,13 +63,13 @@ export default function Calendar({onChange}) {
     let arr = [];
     let p = [];
     let d = moment(date,"YYYY/MM/DD").format("YYYY/MM/DD")
-    const querySnapshot = await getDocs(query(collection(database,"onlineAppointments"),where("status","==","approved")));
+    const querySnapshot = await getDocs(query(collection(database,"onlineAppointments"),where("status","==","approved"),where("appointmentDate","==",moment(new Date()).format("YYYY/MM/DD"))));
     querySnapshot.forEach((doc)=>{
       arr.push({id:doc.id, uid:doc.data().uid,name:doc.data().name, appointmentDate:doc.data().appointmentDate, time:doc.data().time, purpose:doc.data().purpose})
       p.push(doc.data().appointmentDate)
     })
     setOA(p);
-
+    fetchHighlightedDays(p)
   }
 
   useEffect(()=>{
@@ -111,30 +113,32 @@ export default function Calendar({onChange}) {
     fetchHighlightedDays(date);
   };
 
+  const [dateNow, setDateNow] = React.useState();
+
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <DateCalendar
-      loading={isLoading}
-      onMonthChange={handleMonthChange}
-      renderLoading={() => <DayCalendarSkeleton />}
-     
-      slots={{
-        day: ServerDay,
-      }}
-      onChange={(s)=> [fetchOnline(moment(s).format("YYYY/MM/DD")), alert(moment(s).format("YYYY/MM/DD"))]}
-      slotProps={{
-        day: {
-          oA,
-        },
-      }}
-    />
+    <Box>
+      <p>your appointments today</p>
+    </Box>
     <div style={{width:'100%',height:'50%',backgroundColor:'white',}}>
       {
-        oA.map((doc)=>{
-          <div style={{width:'100%',height:50,border:'1px solid black'}}>
-            {doc.id}
-          </div>
-        })
+        oA.length>0?
+          <Box>
+            {
+              oA.map((doc)=>{
+                <div style={{width:'100%',height:50,border:'1px solid black',backgroundColor:'black'}}>
+                  {doc.id}
+                </div>
+              })
+            }
+          </Box>
+        :
+        <Box>
+          <NoData/>
+          <p>NO APPOINTMENTS ON THIS DAY</p>
+        </Box>
+     
       }
     </div>
   </LocalizationProvider>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Paper, TextField, Grid, Box, InputAdornment, Typography, Avatar, } from '@mui/material';
 import { FormControl, InputLabel, Select } from '@mui/material';
@@ -21,6 +21,7 @@ import moment from 'moment';
 import { database } from '../config/firebase';
 import { addDoc, updateDoc, query, collection, where, getDocs, doc } from 'firebase/firestore';
 import { increment, decrement } from 'firebase/firestore';
+import ReactToPrint from 'react-to-print';
 
 const useStyles = makeStyles((theme) => ({
     textarea: {
@@ -158,6 +159,14 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
         setOpen(false);
     };
 
+    const generateSummary = async () => {
+        try{
+            
+        }catch(e){
+            alert(e)
+        }
+    }
+
     const submitVisit = async() =>{
         let arr = [];
         const querySnapshot = await getDocs(query(collection(database,"onlineAppointments"),where("appointmentDate","==",moment(new Date()).format("YYYY/MM/DD")),where("uid","==",selectedPatient.docid)))
@@ -175,6 +184,12 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
             })
             updateDoc(doc(database,"userData",selectedPatient.docid),{
                 lastVisit: moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY")
+            })
+            addDoc(collection(database,"notifications"),{
+                uid: selectedPatient.docid,
+                body: "Your checkup today was saved successfully.",
+                dateCreated:  moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY"),
+                dateMade:  moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY")
             })
                 addDoc(collection(database,"appointments"),{
                     name:selectedPatient.userFname + selectedPatient.userLname,
@@ -211,6 +226,8 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
             alert(e)
         }
     }
+    const [lmp, setLMP] = useState("");
+    const ref = useRef(null)
 
     return (
         <div>
@@ -278,9 +295,9 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                         <Divider textAlign="left" sx={{ marginTop: '1%', marginBottom: '2%' }}>
                             <Chip label="Blood Pressure and BMI" color="primary"/>
                         </Divider>
-<Paper>
+                        <Paper>
                         <Grid container justifyContent="center" spacing={2} padding={4}>
-                            <Grid item xs={12}>
+                            <Grid item xs={selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"?6:12}>
                                 <DatePicker
                                     label="Date of visit"
                                     size='small'
@@ -292,6 +309,22 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                     maxDate={dayjs()} // Restrict date selection to today and past dates
                                 />
                             </Grid>
+                            
+                            {
+                                selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"&&
+                                <Grid item xs={6}>
+                                    <DatePicker
+                                        label="Date Last Menstrual Period"
+                                        size='small'
+                                        onChange={(newValue) => {
+                                            [setLMP(moment(newValue).format("YYYY/MM/DD")),alert(moment(newValue).format("YYYY/MM/DD"))]
+                                        }}
+                                        renderInput={(params) => <TextField {...params} variant="standard" fullWidth />}
+                                        maxDate={dayjs()} // Restrict date selection to today and past dates
+                                    />
+                                </Grid>
+                            }
+                            
                             <Grid item xs={3}>
                                 <TextField
                                     label="Height"
