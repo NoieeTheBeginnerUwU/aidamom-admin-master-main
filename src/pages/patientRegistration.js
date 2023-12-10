@@ -799,7 +799,7 @@ export default function PatientRegistrationForm() {
                     onChange={(event, selectedBarangay) => {
                       setRegistrationForm({
                         ...registrationForm,
-                        userBarangay: selectedBarangay.brgy_name ? selectedBarangay : "",
+                        userBarangay: selectedBarangay.brgy_name ? selectedBarangay.brgy_name : "",
                       });
                       handleCityChange(selectedBarangay);
                     }}
@@ -827,19 +827,18 @@ export default function PatientRegistrationForm() {
                       <DatePicker
                         label="Date of birth"
                         name='dateofbrith'
-                        onChange={(text) => [setRegistrationForm(prev => { return { ...prev, userDob: moment(text)} })]}
+                        
                         value={registrationForm.userDob}
                         style={{ width: ' 100%' }}
-                        renderInput={(params) => <TextField {...params} size='small' />}
+                        renderInput={(params) => <TextField {...params} size='small' onChange={(text) => [setRegistrationForm(prev => { return { ...prev, userDob: moment(text)} })]} />}
                         disableFuture
-            
                       />
                     </LocalizationProvider>
                   </FormControl>
                 </Grid>
                 <Grid item xs={2} mt={2} direction="row" textAlign="left" justifyContent="center">
                   <Typography>
-                    {moment(new Date()).diff(moment(registrationForm.userDob),"years")}
+                    {0}
                     <Box component="span" fontSize="18px" fontWeight="bold" color={'primary.main'}>
                       <br />
                     </Box>{' '}
@@ -1044,7 +1043,7 @@ export default function PatientRegistrationForm() {
                     onChange={(event, selectedProvince) => {
                       setRegistrationForm({
                         ...registrationForm,
-                        userProvincebirth: selectedProvince ? selectedProvince : null,
+                        userProvincebirth: selectedProvince ? selectedProvince.province_name : null,
                       });
                       handleProvinceChange(selectedProvince);
                     }}

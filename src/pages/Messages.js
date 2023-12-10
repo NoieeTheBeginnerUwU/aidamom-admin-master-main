@@ -295,11 +295,11 @@ const Messages = ({messaged}) => {
                   </>
                 ))}
             </div>
-            <div style={{width:'100%',height:'8%',backgroundColor:'black',display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-              <div style={{width:'80%',height:'60%',backgroundColor:'white',border:'1px solid grey',borderTopLeftRadius:10,borderBottomLeftRadius:10,display:'flex',flexDirection:'row',alignItems:'end',justifyContent:'center'}}>
+            <div style={{width:'100%',height:'8%',backgroundColor:'rgb(0,0,50)',display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+              <div style={{width:'80%',height:'80%',backgroundColor:'white',border:'1px solid grey',borderTopLeftRadius:10,borderBottomLeftRadius:10,display:'flex',flexDirection:'row',alignItems:'end',justifyContent:'center'}}>
                 <input type="text" placeholder="Enter a message" value={message} onChange={(text)=> setMessage(text.target.value)} style={{outline:'none',height:'100%',width:'96%',border:'none',borderRadius:10}}/>
               </div>
-              <button onClick={() => [sendMessage(message),scrollToBottom]} style={{width:100,height:'70%',color:'white',fontWeight:600,margin:'none',backgroundColor:'navy',cursor:'pointer'}}>Send</button>
+              <button onClick={() => [sendMessage(message),scrollToBottom]} style={{width:100,height:'100%',color:'white',fontWeight:600,margin:'none',backgroundColor:'navy',cursor:'pointer'}}>Send</button>
             </div>
           </>
           :
