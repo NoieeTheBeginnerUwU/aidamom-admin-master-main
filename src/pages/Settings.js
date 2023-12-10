@@ -17,6 +17,7 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { authentication, database } from '../config/firebase';
 import { getDocs, query,collection,where, setDoc,doc, addDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import moment from 'moment';
 
 //code for asterisk to be red
 const theme = createTheme({
@@ -133,7 +134,11 @@ export default function Settings() {
       setSeverity('error');
     } else {
       // Here you can handle the save logic
-
+      try{
+        createUserWithEmailAndPassword(authentication,email,password)
+      }catch(e){
+        alert(e)
+      }
       // Reset the TextField values
       setFname('');
       setLname('');
@@ -174,6 +179,16 @@ export default function Settings() {
   const handleCloseSnackbar1 = () => {
     setOpenSnackbar1(false);
   };
+  
+  const [addMin, setAddMin] = useState({
+    email:"",
+    password:"",
+    firstName:"",
+    lastName:"",
+    middleInitial:"",
+    userLevel:"admin",
+    dateCreated:moment(new Date()).format("YYYY/MM/DD hh:mm a")
+  })
 
   const body = (
     <Box sx={{
@@ -213,13 +228,13 @@ export default function Settings() {
             </Grid>
             <Grid xs={6} padding={5}>
               <Box marginBottom={1} fontWeight={600}>Create Account</Box>
-              <TextField label="Email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={disableFields} fullWidth />
+              <TextField label="Email" value={email} onChange={(e) => setEmail(e.target.value)} fullWidth />
               <Box margin={2}></Box>
-              <TextField label="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} disabled={disableFields} fullWidth />
+              <TextField label="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} fullWidth />
               <Box margin={2}></Box>
-              <TextField label="Confirm Password" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} disabled={disableFields} fullWidth />
+              <TextField label="Confirm Password" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} fullWidth />
               <Box margin={2}> </Box>
-              <Button onClick={handleSaveClick} disabled={disableFields} variant='contained'>Save</Button>
+              <Button onClick={handleSaveClick} variant='contained'>Save</Button>
             </Grid>
 
 
@@ -257,13 +272,8 @@ export default function Settings() {
   })
 
   const createAdmin =  () => {
-    try{
-      createUserWithEmailAndPassword(authentication,acc.email,acc.pass).then(alert("Admin account created successfully."))
-    }catch(e){
-      alert(e)
-    }
+    
   }
-  console.log("EMAIL:"+acc.email+ " " + "PASS: "+acc.pass)
 
   return (
 

@@ -32,8 +32,6 @@ import {
 const Log = () => {
 
   const [documents, setDocuments] = useState([]);
-  // const id = authentication.currentUser.uid;
-  const [documentId, setDocumentId] = useState();
   const [active, setActive] = useState("");
 
   let date = new Date();

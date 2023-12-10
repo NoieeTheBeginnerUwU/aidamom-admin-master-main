@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -19,7 +18,12 @@ import dayjs from 'dayjs';
 import { Button } from '@mui/material';
 import { Box, Typography } from '@mui/material';
 import {Divider} from '@mui/material';
-
+//firebase
+import { database } from '../config/firebase';
+import { getDocs, collection, setDoc, doc, updateDoc, query, addDoc } from 'firebase/firestore';
+import { orderBy, where } from 'firebase/firestore';
+//moment
+import moment from 'moment';
 
 
 const useStyles = makeStyles({
@@ -88,6 +92,40 @@ export default function Activitylog() {
     setRows(initialRows);
   };
 
+  const [documents, setDocuments] = useState([]);
+  const [active, setActive] = useState("");
+
+  let date = new Date();
+  const today1 = moment(date, "YYYY/MM/DD");
+
+  useEffect(() => {
+    if (active === "") {
+      setActive("session")
+    }
+    fetchData();
+  }, [])
+
+
+  async function fetchData() {
+    let yearNow = moment(new Date()).format("YYYY");
+    const querySnapshot = await getDocs(query(collection(database, 'adminLogs'), orderBy("timestamp", "desc")));
+    const userData = [];
+    let i = 1;
+    querySnapshot.forEach(doc => {
+      userData.push({count:i++, id: doc.id, timestamp: moment(doc.data().timestamp).format("MMMM DD, YYYY hh:mm a"), activity: doc.data().activity });
+      if (moment(doc.data().timestamp).format("MM") === 1 && moment(doc.data().timestamp).format("YYYY") === yearNow) {
+
+      }
+    })
+    setDocuments(userData);
+    //var i = 1;
+    //alert("running "+i++ +" times")
+  };
+  const now = new Date();
+  var time = moment().utcOffset('+08:00').format('hh:mm a');
+  const dateNow = moment(now).format("YYYY/MM/DD");
+
+
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Box textAlign={'left'}>
@@ -114,19 +152,19 @@ export default function Activitylog() {
             <Table className={classes.table} aria-label="activity log table" stickyHeader sx={{minWidth:'100%', minHeight:'90%'}}>
               <TableHead>
                 <TableRow>
-                  <TableCell>Date and Time</TableCell>
-                  <TableCell align="right">User</TableCell>
-                  <TableCell align="right">Description</TableCell>
+                  <TableCell>No</TableCell>
+                  <TableCell align="right">Action</TableCell>
+                  <TableCell align="right">Timestamp</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => (
-                  <TableRow key={row.dateAndTime}>
+                {documents.map((row) => (
+                  <TableRow key={row.timestamp}>
                     <TableCell component="th" scope="row">
-                      {row.dateAndTime}
+                      {row.count}
                     </TableCell>
-                    <TableCell align="right">{row.user}</TableCell>
-                    <TableCell align="right">{row.description}</TableCell>
+                    <TableCell align="right">{row.activity}</TableCell>
+                    <TableCell align="right">{row.timestamp}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
