@@ -827,20 +827,19 @@ export default function PatientRegistrationForm() {
                       <DatePicker
                         label="Date of birth"
                         name='dateofbrith'
+                        onChange={(text) => [setRegistrationForm(prev => { return { ...prev, userDob: moment(text)} })]}
                         value={registrationForm.userDob}
                         style={{ width: ' 100%' }}
-                        renderInput={(params) => <TextField {...params} size='small' required  onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDob: params } })}
-                        />}
+                        renderInput={(params) => <TextField {...params} size='small' />}
                         disableFuture
-                        minDate={dayjs().subtract(45, 'year')}
-                        maxDate={dayjs().subtract(10, 'year')}
+            
                       />
                     </LocalizationProvider>
                   </FormControl>
                 </Grid>
                 <Grid item xs={2} mt={2} direction="row" textAlign="left" justifyContent="center">
                   <Typography>
-                    {moment(new Date, "YYYY/MM/DD").diff(moment(registrationForm.userDob,"YYYY/MM/DD"),"years")}
+                    {moment(new Date()).diff(moment(registrationForm.userDob),"years")}
                     <Box component="span" fontSize="18px" fontWeight="bold" color={'primary.main'}>
                       <br />
                     </Box>{' '}

@@ -5,7 +5,7 @@ import { Typography, Divider, Box } from '@mui/material';
 //moment
 import moment from 'moment';
 //firebase
-import { onSnapshot, collection, query, where, orderBy, limit, getDocs } from 'firebase/firestore';
+import { onSnapshot, collection, query, where, getDoc, doc, orderBy, limit, getDocs } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 //import fontawesomeicon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -193,13 +193,18 @@ const Dashboard = ({ counter }) => {
   const yearNow = moment(new Date()).format("YYYY");
   var currentDate = moment(new Date(), "YYYY/MM/DD");
   const [allUsers, setAllUsers] = useState([]);
-
+  let [_appointments, _setAppointments] = useState("");
   const fetchUsers = async () => {
     let usersSnap = query(collection(database, "userData"));
     let user = [];
     let clients = 0;
     let newUsers = [];
     let i = 1;
+
+    onSnapshot(doc(database,"dashboard","--appointments--"),(count)=>{
+      _setAppointments(count.data().no)
+    })
+
     onSnapshot(usersSnap, (snapshot) => {
       snapshot.forEach((doc) => {
         newUsers.push({ id: doc.id, count: i++, userFname: doc.data().userFname, userLname: doc.data().userLname, status: doc.data().status, userPic: doc.data().userPic, weeksPregnant: doc.data(), dateCreated: moment(doc.data().dateCreated).format("MMMM DD, YYYY"), birthday: moment(doc.data().userDob).format("MMMM DD, YYYY"), userPic: doc.data().userPic, lastPeriod: doc.data().lastPeriod, weeksPregnant: moment(currentDate, "YYYY/MM/DD").diff(doc.data().lastPeriod, "weeks"), });
@@ -243,13 +248,13 @@ const Dashboard = ({ counter }) => {
   const [userData, setUserData] = useState(0);
   let [completed, setCompleted] = useState(0);
   let [pendings_, setPendings_] = useState(0);
-
   async function fetchUser() {
     let user1 = [];
     let user2 = [];
     let thismonth1 = [];
     let thismonth2 = [];
     let pend = [];
+    
     const querySnapshot1 = await getDocs(query(collection(database, 'appointments')));
     const querySnapshot2 = await getDocs(query(collection(database, 'onlineAppointments')));
     querySnapshot1.forEach((doc) => {
@@ -1052,7 +1057,7 @@ const Dashboard = ({ counter }) => {
       <Grid xs={3} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#486DF1' }}><EventNoteIcon fontSize='72' color="white" /></Box></Grid>
       <Grid xs={4.5} >
         <Grid xs={12} > <Box fontSize={'medium'} ml={1}fontWeight='500'>Appointments</Box></Grid>
-        <Grid xs={12}> <Box fontSize='2em' ml={1} fontWeight='700' color={'#4E4B66'}>{completed}</Box></Grid>
+        <Grid xs={12}> <Box fontSize='2em' ml={1} fontWeight='700' color={'#4E4B66'}>{_appointments}</Box></Grid>
       </Grid>
      
       <Divider  orientation="vertical" flexItem  sx={{ mx: 2 }}/>
@@ -1069,7 +1074,7 @@ const Dashboard = ({ counter }) => {
     <Grid container item xs={3.5} ml={.5} mb={3} padding={2} sx={{ minHeight: '7vh', minWidth: '8%', }} component={Paper}>
       <Grid xs={3} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#00BA88' }}><PregnantWomanIcon fontSize='72' /></Box></Grid>
       <Grid xs={9} >
-        <Grid xs={12}> <Box fontSize={'medium '} ml={1} fontWeight='500'>Registered User</Box></Grid>
+        <Grid xs={12}> <Box fontSize={'medium '} ml={1} fontWeight='500'>Registered Patients</Box></Grid>
         <Grid xs={12}> <Box fontSize='2em' ml={1} fontWeight='700' color={'#4E4B66'}>{allUsers.length}</Box></Grid>
       </Grid>
 
