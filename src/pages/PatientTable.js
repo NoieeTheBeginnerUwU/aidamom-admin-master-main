@@ -873,7 +873,7 @@ function PatientTable({ handleSubmit, userData }) {
         <DialogTitle>
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Box fontWeight={'600'}>Register Patient</Box>
-            <IconButton onClick={handleCloseOnlineRequest}>
+            <IconButton onClick={handleCloseMinus}>
               <CloseIcon />
             </IconButton>
           </Box>
@@ -1831,7 +1831,7 @@ function PatientTable({ handleSubmit, userData }) {
                   left: '50%',
                   transform: 'translate(-50%, -50%)',
                   width: '85%', // Set the desired width
-                  maxHeight: '90%', // Set the maximum height
+                  maxHeight: '95%', // Set the maximum height
                   overflow: 'auto', // Make it scrollable
                   bgcolor: '#F0F2F5',
                   boxShadow: 24,

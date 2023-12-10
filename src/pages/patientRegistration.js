@@ -1777,6 +1777,7 @@ export default function PatientRegistrationForm() {
                   
                   </LocalizationProvider>
 
+
                   <Grid xs={12}>
                       <Grid xs={6}> <Box></Box></Grid>
                     <Grid xs={3} flexDirection={'space-between'}>
