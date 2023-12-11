@@ -20,8 +20,6 @@ import PatientRegistrationForm from './patientRegistration';
 
 
 
-
-
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
@@ -36,6 +34,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+import {Button} from '@mui/material';
 import DatePicker from '@mui/lab/DatePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -43,6 +42,7 @@ import { TextField } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { FormControl } from '@mui/material';
 import dayjs from 'dayjs';
+import { faMinus, faAdd } from '@fortawesome/free-solid-svg-icons';
 
 const useStyles = makeStyles({
   table: {
@@ -1038,6 +1038,8 @@ const Dashboard = ({ counter }) => {
 <Divider sx={{ marginBottom: 3 }}></Divider>
 <Grid container spacing={.5} >
   <Grid container ml={.5} xs={8.9} direction='row' columnGap={.5}>
+
+    
     {/*------------------------------- Grid 1 Appoinment------------------------------- */}
     <Grid container item xs={4.5} ml={.5} mb={3} padding={2} sx={{ minHeight: '7vh', minWidth: '8%', }} component={Paper}>
       <Grid xs={3} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#486DF1' }}><EventNoteIcon fontSize='72' color="white" /></Box></Grid>
@@ -1080,14 +1082,6 @@ const Dashboard = ({ counter }) => {
     </Grid>
     {/*------------------------------- Start of Table and Charts------------------------------ */}
 <Grid container xs={12}>
-
-  <Grid xs={9}></Grid>
-  <Grid xs={3}>
-
-    <Box ml={2}> <Typography> Datepicker</Typography></Box>                                                                                                                                                                                             
-  </Grid>
-
-  
 
 
 </Grid>

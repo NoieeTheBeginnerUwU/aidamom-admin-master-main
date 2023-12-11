@@ -571,6 +571,16 @@ export default function PatientRegistrationForm() {
   };
 
 
+
+  const handleDateChangeLMP = (date) => {
+    const formattedDate = date.format("YYYY-MM-DD");
+    setRegistrationForm((prevForm) => ({
+      ...prevForm,
+      userLMP: formattedDate,
+    }));
+  };
+
+
   ///// ---------------- End of Handle Date Pickers---------------------------------------------------------
 
 
@@ -1718,6 +1728,19 @@ export default function PatientRegistrationForm() {
             <Grid container xs={12} direction="row">
               <FormControl required>
                 <Grid container direction="row">
+                <LocalizationProvider dateAdapter={AdapterDayjs} required>
+                      <DatePicker
+                      label="Date of Birth"
+                      value={dayjs(registrationForm.userDob)} // Convert back to dayjs object for DatePicker
+                      onChange={handleDateChangeBirth}
+                      renderInput={(params) => <TextField {...params} />}
+                      disableFuture
+                      minDate={dayjs().subtract(39, 'year')}
+                      maxDate={dayjs().subtract(18, 'year')}
+                      />
+                    </LocalizationProvider>
+
+
                   <LocalizationProvider dateAdapter={AdapterDayjs} required>
                     <Grid item xs={4}>
                       <DatePicker
