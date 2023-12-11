@@ -81,6 +81,7 @@ label.indented {
   }
   .centered-input {
     text-align: center;
-    font-weight: 600;
+    font-weight: 520;
     font-style: italic;
+    font-size: 12px;
   }

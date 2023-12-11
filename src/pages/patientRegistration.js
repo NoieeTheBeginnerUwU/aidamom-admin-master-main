@@ -1236,7 +1236,7 @@ export default function PatientRegistrationForm() {
                       value={registrationForm.userSalary}
                       onChange={(text) => setRegistrationForm(prev => { return { ...prev, userSalary: text.target.value } })}
                     />
-                    <FormHelperText id="salaryhelper">Salary</FormHelperText>
+                    <FormHelperText id="salaryhelper">Annual Salary</FormHelperText>
                   </FormControl>
                 </Box>
               </Grid>

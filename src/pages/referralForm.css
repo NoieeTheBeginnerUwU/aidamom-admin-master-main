@@ -7,9 +7,9 @@ body{
 .container{
     width: 21cm;
     height: 29.7cm;
-    margin: 1cm auto;
-    padding: 1cm;
-    border: 1px solid #ccc;
+    margin: 1cm .5cm;
+    padding: .5cm;
+ 
     
 }
 table, th, td{  
