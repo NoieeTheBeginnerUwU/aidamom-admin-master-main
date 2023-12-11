@@ -1854,7 +1854,6 @@ dischargeMedication:"",
                             </Box>
                           </Grid>
                           <Grid xs={2}>
-
                             <FormControl required>
                               <LocalizationProvider dateAdapter={AdapterDayjs} required>
                                 <DatePicker
