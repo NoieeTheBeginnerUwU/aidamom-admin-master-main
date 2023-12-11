@@ -217,6 +217,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                     presentation: presentation,
                     remarks: text
                 }).then(alert("ADDED"))
+                    setLmp("");
                     setHeight("");
                     setWeight("");
                     setSystolic("");
@@ -483,6 +484,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                             <TextField
                                                 label="Dilates"
                                                 type="number"
+                                                value={dilates}
                                                 onChange={(text)=> setDilates(text.target.value)}
                                                 inputProps={{ min: 0, max: 10 }}
                                                 InputProps={{
@@ -494,6 +496,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                             <TextField
                                                 label="Effaces"
                                                 type="number"
+                                                value={efficases}
                                                 onChange={(text)=> setEfficaces(text.target.value)}
                                                 inputProps={{ min: 0, max: 100 }}
                                                 InputProps={{
@@ -507,6 +510,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                             <TextField
                                                 label="Fundal height"
                                                 type="number"
+                                                value={fundalHeight}
                                                 onChange={(text)=> setFundalHeight(text.target.value)}
                                                 inputProps={{ min: 0, max: 100 }}
                                                 InputProps={{
@@ -518,6 +522,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                             <TextField
                                                 label="Fetal movement"
                                                 type="number"
+                                                value={fetalMovement}
                                                 onChange={(text)=> setFetalMovement(text.target.value)}
                                                 inputProps={{ min: 0, max: 10 }}
                                                 InputProps={{

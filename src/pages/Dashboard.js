@@ -40,12 +40,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { FormControl } from '@mui/material';
 import dayjs from 'dayjs';
 
-
-
-
-
-
-
 const useStyles = makeStyles({
   table: {
     minWidth: 200,
@@ -684,11 +678,7 @@ const Dashboard = ({ counter }) => {
 
   const [date_, setDate_] = useState("")
   const [month, setMonth] = useState("January");
-  const [year_, setYear_] = useState(2023);
-
-  useEffect(()=>{
-    alert("Month: " + month +" Year: "+ year_  )
-  },[month,year_])
+  const [year_, setYear_] = useState(2023)
 
   return (
 //     <div style={{ width: '100%', height: '100%', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'start', overflow: 'hidden', justifyContent: 'start' }}>
@@ -1040,11 +1030,6 @@ const Dashboard = ({ counter }) => {
 //       </div>
 //     </div>
 <Box container sx={{ height: '100%', width: '100%', overflowY: 'auto', overflowX: 'hidden' }}>
-  <Box textAlign={'left'} ml={2}>
-<Typography variant='h2' fontWeight='600' fontSize={28} mt={2}>
-  Dashboard
-</Typography>
-</Box>
 <Divider sx={{ marginBottom: 3 }}></Divider>
 <Grid container spacing={.5} >
   <Grid container ml={.5} xs={8.9} direction='row' columnGap={.5}>
@@ -1081,7 +1066,7 @@ const Dashboard = ({ counter }) => {
     <Grid container item xs={3.5} ml={.5} padding={2} mb={3} sx={{ minHeight: '7vh', minWidth: '8%', }} component={Paper}>
       <Grid xs={3} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#F4B740' }}><PhoneIphoneIcon fontSize='72' color="white" /></Box></Grid>
       <Grid xs={9} >
-        <Grid xs={12}> <Box fontSize={'medium '} ml={1} fontWeight='500'>App User</Box></Grid>
+        <Grid xs={12}> <Box fontSize={'medium '} ml={1} fontWeight='500'>MCare App User</Box></Grid>
         <Grid xs={12}> <Box fontSize='2em' ml={1} fontWeight='700' color={'#4E4B66'}>{appUsers}</Box></Grid>
       </Grid>
 
@@ -1093,9 +1078,9 @@ const Dashboard = ({ counter }) => {
     <Grid container xs={12} padding={2} m={.5} mr={2} spacing={2} >
 
       {/*-------------------------------NUMBER OF TOTAL DELIVERIES------------------------------ */}
-      <Grid xs={12} sx={{ minHeight: '10vh', minWidth: '8%', }} mb={1} >
-        <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'black'} color='white' padding={1.4} >
-          Sort data by month/year
+      <Grid xs={12} sx={{ minHeight: '5vh', minWidth: '8%', }} mb={1} >
+        <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'orange'} color='white' padding={1.4} >
+          filter data by month/year
           <select onChange={(text)=> [setMonth(text.target.value)]} style={{height:'100%',padding:10,marginLeft:40,textAlign:'center',width:200}}>
             <option value={"January"}>January</option>
             <option value={"February"}>February</option>
@@ -1378,7 +1363,7 @@ const Dashboard = ({ counter }) => {
     </Grid>
     {/*------------------------------- End Grid------------------------------ */}
   </Grid>
-  <Grid item xs={3} sx={{ height:'120vh',}}>
+  <Grid item xs={3} sx={{ height:'100vh',}}>
     <Card elevation={4} sx={{ height: 100 + '%', justifyContent: 'center' }} m={1} padding={2}>
       <CardContent>
       </CardContent >

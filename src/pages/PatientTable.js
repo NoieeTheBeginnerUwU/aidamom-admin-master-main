@@ -1024,23 +1024,6 @@ dischargeMedication:"",
   const [deliveryType, setDeliveryType] = useState('');
 
 
-  const handlePlus = async () => {
-    const app = doc(database, 'dashboard', '--appointments--');
-    const vax = doc(database, 'dashboard', '--vaccinations--');
-    await updateDoc(app, {
-      no: increment(1),
-    })
-  }
-
-  const handleMinus = async () => {
-    const app = doc(database, 'dashboard', '--appointments--');
-    const vax = doc(database, 'dashboard', '--vaccinations--');
-    await updateDoc(app, {
-      no: increment(-1),
-    })
-  }
-
-
   const handleChange5 = (event) => {
     setDeliveryType(event.target.value);
   };
@@ -1068,35 +1051,6 @@ dischargeMedication:"",
       alert(e)
     }
   }
-
-  const [summary, setSummary] = useState({
-    parentUID: selectedRow.docid,
-    dateOfDischarge: moment(new Date()).format("MMMM DD, YYYY"),
-    childFname: "",
-    childMname: "",
-    childLname:"",
-    childExtension: "",
-    childDob: "",
-    childWeight:"",
-    childGender: "",
-    childTypeOfDelivery:"",
-    childUrine:"",
-    childStool:"",
-    childBCG:"",
-    childHepa:"",
-    childScreening:"",
-    childScreeningResults:"",
-    childScreeningRefusalReason:"",
-    childNewBornHearing:"",
-    childNewBornHearingScreeningResults:"",
-    childDateofDischarge:"",
-    childFollowUpCheckUp:"",
-    attendingPhysician:"",
-    nurseOnDuty:"",
-    deliveredBy:"",
-    receivedBy:""
-  })
-
 
   async function searchUsers(vals){
     let ins = [];
@@ -1341,6 +1295,7 @@ dischargeMedication:"",
       alert(e)
     }
   }
+  console.log(discharge);
 
   return (
 
@@ -1906,9 +1861,9 @@ dischargeMedication:"",
                                   size='small'
                                   label="Date of birth"
                                   name='dateofbrith'
-                                  value={registrationForm.ChildDateofBirth}
+                                  value={dayjs(registrationForm.ChildDateofBirth)}
                                   style={{ width: ' 100%' }}
-                                  renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setDischarge(prev => { return { ...prev, childDob: params } })}
+                                  renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setDischarge(prev => { return { ...prev, childDob: dayjs(params).format("YYYY/MM/DD") } })}
                                   />}
                                   disableFuture
                                 // minDate={dayjs().subtract(45, 'year')}

@@ -45,7 +45,7 @@ const Messages = ({messaged}) => {
   },[])
 
   async function fetchData(){
-    const querySnapshot = await getDocs(query(collection(database, 'userData')));
+    const querySnapshot = await getDocs(query(collection(database, 'userData'),orderBy("lastMessage","desc")));
     const userData = [];
     const pending = [];
     let i = 1;
@@ -80,7 +80,6 @@ const Messages = ({messaged}) => {
     setDocument(userData);
     setDocuments(userData);
     let m = [];
-    
   };
 
 

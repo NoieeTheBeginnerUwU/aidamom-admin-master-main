@@ -31,9 +31,10 @@ import {
   InputAdornment,
   Paper,
   Avatar,
-  ThemeProvider
+  ThemeProvider,
+  Badge,
 } from '@mui/material';
-import { LockOutlined as LockOutlinedIcon, Email as EmailIcon, Lock as LockIcon } from '@mui/icons-material';
+import { LockOutlined as LockOutlinedIcon, Email as EmailIcon, Lock as LockIcon, MailOutlineSharp, DashboardCustomize, MedicalInformation, PregnantWoman, ArticleSharp, ArticleTwoTone, FileCopySharp, SettingsAccessibility, BookOnline } from '@mui/icons-material';
 
 
 //firebase
@@ -46,6 +47,8 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Loading from './animations/Loading';
 import { collection, getDocs, onSnapshot, query, where } from 'firebase/firestore';
 import { faUserCircle, faLock } from '@fortawesome/free-solid-svg-icons';
+import { GraphicEqOutlined, PostAddOutlined, PregnantWomanRounded, Report, SettingsApplications } from '@material-ui/icons';
+import { FormControl, List } from '@material-ui/core';
 
 function App() {
   let pic = "../blue_abstract_lines_2.jpg"
@@ -252,7 +255,7 @@ try {
       <header>
       {
                isSignedIn===false?
-               <div style={{width:'100%',height:'100vh',backgroundColor:'white',display:'flex',flexDirection:'row',fontFamily:'verdana'}}>
+               <div style={{width:'100%',height:'100vh',backgroundColor:'white',display:'flex',flexDirection:'row',fontFamily:'verdana',overflow:'hidden'}}>
                 {
                   signIN===true?
                   <>
@@ -474,7 +477,7 @@ try {
                </div>
         :
         <div className='main'>
-        <div className='sideNav' style={{width:hide===true?"3%":"20%",height:'100%',transition:'ease-in-out',transitionDuration:'1s',backgroundColor:'white',display:'flex',flexDirection:'column',textDecoration:'none',justifyContent:'start',alignItems:'center',backgroundColor:'white',color:'black',boxShadow:'1px 1px 7px 1px black',zIndex:10}}>
+        <div className='sideNav' style={{width:hide===true?"3%":"20%",height:'100%',transition:'ease-in-out',transitionDuration:'1s',backgroundColor:'white',display:'flex',flexDirection:'column',textDecoration:'none',justifyContent:'start',alignItems:'center',backgroundColor:'white',color:'black',boxShadow:'1px 1px 4px 1px black',zIndex:10}}>
           {
             hide===false?
             <div style={{width:'100%',height:50,display:'flex',alignItems:'center',justifyContent:'end'}}>
@@ -500,57 +503,72 @@ try {
             </div>
             <div style={{width:'100%',height:400,backgroundColor:'transparent',marginBottom:10,alignSelf:'start',textDecoration:'none',alignItems:'center',justifyContent:'space-evenly',}}>                
             <Link to="/" style={{textDecoration:'none'}}>
-                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Overview"?"rgb(30,30,255)":"white"}} onClick={()=> setActive("Overview")} >
-                  <FontAwesomeIcon icon={faClock} className='icons' style={{marginLeft:'10%',fontSize:20,color:active==="Overview"||""?"white":"rgb(0,0,40)"}}/>
+                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Overview"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Overview")} >
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Overview"?"white":"rgb(0,0,40)"}}  color="primary">
+                    <DashboardCustomize fontSize="large" color="" />
+                  </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Overview"|""?"none":"none",color:active==="Overview"?"white":"rgb(0,0,40)"}}>Dashboard</h3>
                 </div>
               </Link>
               <Link to="Appointments"  style={{textDecoration:'none'}}>
-                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Appointments"?"rgb(100,100,255)":"white"}} onClick={()=> setActive("Appointments")}>
-                  <FontAwesomeIcon icon={faCalendar} className='icons' style={{marginLeft:'10%',fontSize:20,color:active==="Appointments"?"white":"rgb(0,0,40)"}}/>
+                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Appointments"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Appointments")}>
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Appointments"?"white":"rgb(0,0,40)"}}  color="primary">
+                    <PregnantWomanRounded fontSize="large" color="" />
+                  </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Appointments"?"none":"none",color:active==="Appointments"?"white":"rgb(0,0,40)"}}>Patients</h3>
                 </div>
               </Link>
               <Link to="Content" style={{textDecoration:'none'}}>
-                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Content"?"rgb(100,100,255)":"white"}} onClick={()=> setActive("Content")}>
-                  <FontAwesomeIcon icon={faFileSignature} className='icons' style={{marginLeft:'10%',fontSize:20,color:active==="Content"?"white":"rgb(0,0,40)"}}/>
+                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Content"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Content")}>
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Content"?"white":"rgb(0,0,40)"}}  color="primary">
+                    <PostAddOutlined fontSize="large" color="" />
+                  </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Content"?"none":"none",color:active==="Content"?"white":"rgb(0,0,40)"}}>Create Content</h3>
                 </div>
               </Link>
               <Link to="Messages" style={{textDecoration:'none'}}>
-                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Messages"?"rgb(100,100,255)":"white"}} onClick={()=> setActive("Messages")}>
-                  <FontAwesomeIcon icon={faMessage} className='icons' style={{marginLeft:'10%',fontSize:20,color:active==="Messages"?"white":"rgb(0,0,40)"}}/>
+                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Messages"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Messages")}>
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Messages"?"white":"rgb(0,0,40)"}} badgeContent={counter} color="primary">
+                    <MailOutlineSharp fontSize="large" color="" />
+                  </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Messages"?"none":"none",color:active==="Messages"?"white":"rgb(0,0,40)"}}>Messages</h3>
-                  <p style={{fontSize:12,color:active==="Messages"?"white":'grey',fontWeight:700}}>| {counter} <span style={{color:'white',fontSize:10}}>unread</span></p>
                 </div>
               </Link>
               <Link to="Systemreport" style={{textDecoration:'none'}}>
-                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Systemreport"?"rgb(100,100,255)":"white"}} onClick={()=> setActive("Systemreport")}>
-                  <FontAwesomeIcon icon={faChartBar} className='icons' style={{marginLeft:'10%',fontSize:20,color:active==="Systemreport"?"white":"rgb(0,0,40)"}}/>
+                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Systemreport"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Systemreport")}>
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Systemreport"?"white":"rgb(0,0,40)"}}  color="primary">
+                    <GraphicEqOutlined fontSize="large" color="" />
+                  </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Systemreport"?"none":"none",color:active==="Systemreport"?"white":"rgb(0,0,40)"}}>Reports</h3>
                 </div>
               </Link>
               <Link to="Forms" style={{textDecoration:'none'}}>
-                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Forms"?"rgb(100,100,255)":"white"}} onClick={()=> setActive("Forms")}>
-                  <FontAwesomeIcon icon={faFileAlt} className='icons' style={{marginLeft:'10%',fontSize:20,color:active==="Forms"?"white":"rgb(0,0,40)"}}/>
+                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Forms"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Forms")}>
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Forms"?"white":"rgb(0,0,40)"}}  color="primary">
+                    <FileCopySharp fontSize="large" color="" />
+                  </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Forms"?"none":"none",color:active==="Forms"?"white":"rgb(0,0,40)"}}>Forms</h3>
                 </div>
               </Link>
               <Link to="Log" style={{textDecoration:'none'}}>
-                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Log"?"rgb(100,100,255)":"white"}} onClick={()=> setActive("Log")}>
-                  <FontAwesomeIcon icon={faList} className='icons' style={{marginLeft:'10%',fontSize:20,color:active==="Log"?"white":"rgb(0,0,40)"}}/>
+                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Log"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Log")}>
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Log"?"white":"rgb(0,0,40)"}}  color="primary">
+                    <BookOnline fontSize="large" color="" />
+                  </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Log"?"none":"none",color:active==="Log"?"white":"rgb(0,0,40)"}}>Activity Log</h3>
                 </div>
               </Link>
               <Link to="settings" style={{textDecoration:'none'}}>
-                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="settings"?"rgb(100,100,255)":"white"}} onClick={()=> setActive("settings")}>
-                  <FontAwesomeIcon icon={faCog} className='icons' style={{marginLeft:'10%',fontSize:20,color:active==="settings"?"white":"rgb(0,0,40)"}}/>
+                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="settings"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("settings")}>
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="settings"?"white":"rgb(0,0,40)"}}  color="primary">
+                    <SettingsApplications fontSize="large" color="" />
+                  </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="settings"?"none":"none",color:active==="settings"?"white":"rgb(0,0,40)"}}>Account Settings</h3>
                 </div>
               </Link>
             </div>
         </div>
-        <div style={{width:hide===true?'97%':'80%',height:'100%',backgroundColor:'ghostwhite',transition:'ease-in-out',transitionDuration:'1s'}}>
+        <div style={{width:hide===true?'97%':'80%',height:'100%',backgroundColor:'ghostwhite',transition:'ease-in-out',transitionDuration:'1s',overflow:'hidden'}}>
           <Routes>
               {
                 user?
