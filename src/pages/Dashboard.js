@@ -103,9 +103,9 @@ function createData(ageGroup, pregnantWomen) {
 }
 
 const rows = [
-  createData('Age 10-14', 70),
-  createData('Age 15-19', 600),
-  createData('Age 20-29', 1000),
+  createData('Age 10-14', 0),
+  createData('Age 15-19', 0),
+  createData('Age 20-29', 0),
 ];
 // Calculate the total number of pregnant women
 const totalPregnantWomen = rows.reduce((total, row) => total + row.pregnantWomen, 0);
@@ -683,7 +683,7 @@ const Dashboard = ({ counter }) => {
   }
 
   const [date_, setDate_] = useState("")
-  const [month, setMonth] = useState("");
+  const [month, setMonth] = useState("January");
   const [year_, setYear_] = useState(2023);
 
   return (
@@ -1093,18 +1093,18 @@ const Dashboard = ({ counter }) => {
         <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'black'} color='white' padding={1.4} >
           Sort data by month/year
           <select onChange={(text)=> [setMonth(text.target.value)]} style={{height:'100%',padding:10,marginLeft:40,textAlign:'center',width:200}}>
-            <option value={1}>January</option>
-            <option value={2}>February</option>
-            <option value={3}>March</option>
-            <option value={4}>April</option>
-            <option value={5}>May</option>
-            <option value={6}>June</option>
-            <option value={7}>July</option>
-            <option value={8}>August</option>
-            <option value={9}>September</option>
-            <option value={10}>October</option>
-            <option value={11}>November</option>
-            <option value={12}>December</option>
+            <option value={"January"}>January</option>
+            <option value={"February"}>February</option>
+            <option value={"March"}>March</option>
+            <option value={"April"}>April</option>
+            <option value={"May"}>May</option>
+            <option value={"June"}>June</option>
+            <option value={"July"}>July</option>
+            <option value={"August"}>August</option>
+            <option value={"September"}>September</option>
+            <option value={"October"}>October</option>
+            <option value={"November"}>November</option>
+            <option value={"December"}>December</option>
             </select> 
               <Button onClick={()=> setYear_(year_-1)} style={{fontSize:20}}>
                 <FontAwesomeIcon icon={faMinus} size="1x" color='white'/>
@@ -1117,11 +1117,11 @@ const Dashboard = ({ counter }) => {
         <Grid xs={12} sx={{ minHeight: flipped ? '10vh' : '10vh', minWidth: flipped ? '8%' : '8%', cursor: 'pointer' }} onClick={handleFlip}>
           {flipped ? (
             <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'#486DF1'} color='white' padding={1} >
-              NUMBER OF TOTAL DELIVERIES
+              NUMBER OF TOTAL DELIVERIES FOR {month} {year_}
             </Box>
           ) : (
             <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'#486DF1'} color='white' padding={1} >
-              NUMBER OF TOTAL DELIVERIES
+              NUMBER OF TOTAL DELIVERIES FOR {month} {year_}
             </Box>
           )}
           <Box component={Paper}>
@@ -1132,7 +1132,7 @@ const Dashboard = ({ counter }) => {
 
 
                 <Grid container item xs={12} padding={1} sx={{ minHeight: '10vh', minWidth: '8%', }}>
-                  <Grid xs={3} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '3em', fontWeight: '750', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#486DF1' }}>1688</Box></Grid>
+                  <Grid xs={3} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '3em', fontWeight: '750', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#486DF1' }}>0</Box></Grid>
                   <Divider orientation="vertical" flexItem />
                   <Grid container padding={1} xs={2}>
                     <Grid xs={12} mb={1} ml={1} > <Box fontSize={'medium'} ml={1} fontWeight='600' sx={{ justifyContent: 'center', alignItems: 'center' }}></Box> <Box fontSize={'14px'} fontWeight={600}> Type of Delivery</Box></Grid>
@@ -1222,7 +1222,7 @@ const Dashboard = ({ counter }) => {
               <Box sx={{ height: '100%', width: '100%' }}>
                 {/* Your flipped content goes here */}
                 <Grid container component={Paper} item xs={12} padding={1} sx={{ minHeight: '20vh', minWidth: '8%', }}>
-                  <Grid xs={3.9} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '3em', fontWeight: '750', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#00BA88' }}>1670</Box></Grid>
+                  <Grid xs={3.9} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '3em', fontWeight: '750', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#00BA88' }}>0</Box></Grid>
                   <Divider orientation="vertical" flexItem />
 
                   <Divider orientation="vertical" flexItem />
@@ -1292,7 +1292,7 @@ const Dashboard = ({ counter }) => {
                     <Grid xs={12}> <Box fontSize='1.5em' ml={1} fontWeight='700' color={'#4E4B66'}>0</Box> <Box>Female</Box></Grid>
                   </Grid>
                   <Divider orientation="vertical" flexItem />
-                  <Grid xs={5} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '3em', fontWeight: '750', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#F4B740' }}>1688</Box></Grid>
+                  <Grid xs={5} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '3em', fontWeight: '750', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#F4B740' }}>0</Box></Grid>
                   <Divider orientation="vertical" flexItem />
 
                   <Grid container xs={12} sx={{ flexDirection: 'row' }} padding={1}>
@@ -1301,7 +1301,7 @@ const Dashboard = ({ counter }) => {
                     <Divider orientation="vertical" flexItem />
                     <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#486DF1'}>0</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }}>Low</Box></Grid>
                     <Divider orientation="vertical" flexItem />
-                    <Grid item xs={3}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#D32F2F'}>0</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }}>Unknown</Box></Grid>
+                    <Grid item xs={3}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#D32F2F'}>0</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }}>Overweight</Box></Grid>
                   </Grid>
                 </Grid>
 

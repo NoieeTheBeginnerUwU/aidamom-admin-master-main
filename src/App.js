@@ -234,6 +234,12 @@ try {
     setPassword("");
   },[signIN])
 
+  useEffect(()=>{
+    if(!active){
+      setActive("Dashboard")
+    }
+  },[active])
+
   const [hide, setHide] = useState(false); 
 
 
@@ -492,7 +498,8 @@ try {
               </div>
             </div>
             </div>
-            <div style={{width:'100%',height:400,backgroundColor:'transparent',marginBottom:10,alignSelf:'start',textDecoration:'none',alignItems:'center',justifyContent:'space-evenly',}}>                <Link to="/" style={{textDecoration:'none'}}>
+            <div style={{width:'100%',height:400,backgroundColor:'transparent',marginBottom:10,alignSelf:'start',textDecoration:'none',alignItems:'center',justifyContent:'space-evenly',}}>                
+            <Link to="/" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Overview"?"rgb(30,30,255)":"white"}} onClick={()=> setActive("Overview")} >
                   <FontAwesomeIcon icon={faClock} className='icons' style={{marginLeft:'10%',fontSize:20,color:active==="Overview"||""?"white":"rgb(0,0,40)"}}/>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Overview"|""?"none":"none",color:active==="Overview"?"white":"rgb(0,0,40)"}}>Dashboard</h3>

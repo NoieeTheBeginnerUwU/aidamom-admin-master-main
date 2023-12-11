@@ -4,7 +4,7 @@ import { database } from "../config/firebase";
 import { collection, getDocs, onSnapshot, addDoc, query, orderBy, doc, updateDoc, where } from "firebase/firestore";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMessage, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlus, faMessage, faSearch } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../animations/Loading";
 
 const img = require("./pic.png")
@@ -302,7 +302,7 @@ const Messages = ({messaged}) => {
                 </div>
                 {
                   messageChecker(doc.id)===true&&
-                  <FontAwesomeIcon icon={faMessage} size="1x" color="white" style={{marginRight:5}}/>
+                  <FontAwesomeIcon icon={faMessage} size="1x" color="white" style={{marginRight:8}}/>
                 }
               </div>
             ))
