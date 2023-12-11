@@ -15,9 +15,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 //firebase
 import { authentication, database } from '../config/firebase';
-import { getDocs, query,collection,where, setDoc,doc, addDoc } from 'firebase/firestore';
+import { getDocs, query, collection, where, setDoc, doc, addDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import moment from 'moment';
+
+import citiesData from './city.json'
+import barangaysData from './barangay.json'
+import provincesData from './province.json'
 
 //code for asterisk to be red
 const theme = createTheme({
@@ -78,7 +82,7 @@ export default function Settings() {
         alert("logging out");
       })
       .catch(function (error) {
-        setTimeout(alert(error),3000)
+        setTimeout(alert(error), 3000)
       })
   }
 
@@ -129,14 +133,14 @@ export default function Settings() {
     } else if (password !== confirmPassword) {
       setSnackbarMessage('Password and confirm password fields do not match.');
       setSeverity('error');
-    }else if (password.length < 8 || !/[0-9]/.test(password) || !/[A-Z]/.test(password)) {
+    } else if (password.length < 8 || !/[0-9]/.test(password) || !/[A-Z]/.test(password)) {
       setSnackbarMessage('Password must be at least 8 characters long and contain at least 2 numbers and 1 capital letter.');
       setSeverity('error');
     } else {
       // Here you can handle the save logic
-      try{
-        createUserWithEmailAndPassword(authentication,email,password)
-      }catch(e){
+      try {
+        createUserWithEmailAndPassword(authentication, email, password)
+      } catch (e) {
         alert(e)
       }
       // Reset the TextField values
@@ -179,15 +183,15 @@ export default function Settings() {
   const handleCloseSnackbar1 = () => {
     setOpenSnackbar1(false);
   };
-  
+
   const [addMin, setAddMin] = useState({
-    email:"",
-    password:"",
-    firstName:"",
-    lastName:"",
-    middleInitial:"",
-    userLevel:"admin",
-    dateCreated:moment(new Date()).format("YYYY/MM/DD hh:mm a")
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    middleInitial: "",
+    userLevel: "admin",
+    dateCreated: moment(new Date()).format("YYYY/MM/DD hh:mm a")
   })
 
   const body = (
@@ -267,19 +271,19 @@ export default function Settings() {
   };
 
   const [acc, setAcc] = useState({
-    email:"",
-    pass:""
+    email: "",
+    pass: ""
   })
 
-  const createAdmin =  () => {
-    
+  const createAdmin = () => {
+
   }
 
   return (
 
     <Box textAlign={'left'} ml={4}>
       <Typography variant='h2' fontWeight='600' fontSize={28} mb={1}>
-       ACCOUNT SETTINGS
+        ACCOUNT SETTINGS
       </Typography>
       <Divider sx={{ marginBottom: 5 }}></Divider>
       <Box>
@@ -330,18 +334,18 @@ export default function Settings() {
         </Grid>
 
         <Divider sx={{ marginBottom: 5 }}></Divider>
-        
+
       </Box>
       <Box display="flex" flexDirection="row" alignItems="center" ml={2}>
-  <Typography fontWeight={'600'}>
-    Change Account name :
-  </Typography>
-  <Box ml={2}>
-    <TextField label="Name" size='small' value={name1} onChange={(e) => setName(e.target.value)} />
-  </Box>
-</Box>
+        <Typography fontWeight={'600'}>
+          Change Account name :
+        </Typography>
+        <Box ml={2}>
+          <TextField label="Name" size='small' value={name1} onChange={(e) => setName(e.target.value)} />
+        </Box>
+      </Box>
 
-{/**
+      {/**
  * <Box mt={2} ml={2} textAlign={'left'}>
   <Typography fontWeight={'600'}>
     Change Password :
@@ -400,7 +404,7 @@ export default function Settings() {
 
       <Divider sx={{ marginBottom: 3 }}></Divider>
 
-      <Button variant="contained" color="primary" onClick={()=> [logout(), refreshPage()]}>
+      <Button variant="contained" color="primary" onClick={() => [logout(), refreshPage()]}>
         Logout
       </Button>
       <Box margin={2}></Box>

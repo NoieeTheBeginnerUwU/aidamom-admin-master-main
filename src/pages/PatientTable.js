@@ -81,7 +81,7 @@ const theme = createTheme({
 });
 
 
-function PatientTable({ handleSubmit, userData }) {
+function  PatientTable({ handleSubmit, userData }) {
 
 
   const [finalDiagnosis, setFinalDiagnosis] = useState('');
@@ -1378,7 +1378,7 @@ dischargeMedication:"",
       <Dialog open={openAddPatient} onClose={handleClose}>
         <DialogTitle>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Box fontWeight={'600'}>Register Patient</Box>
+            <Box fontWeight={'600'} >Register Patient</Box>
             <IconButton onClick={handleCloseMinus}>
               <CloseIcon />
             </IconButton>

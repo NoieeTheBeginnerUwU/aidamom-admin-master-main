@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { database, authentication } from '../config/firebase';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Typography, Divider, Box, Button } from '@mui/material';
+import { Typography, Divider, Box } from '@mui/material';
 //moment
 import moment from 'moment';
 //firebase
@@ -11,12 +11,14 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //import axios
 import axios from 'axios';
-import { faAd, faAdd, faAngleLeft, faAngleRight, faBell, faBellConcierge, faCalendar, faCalendarAlt, faCalendarDays, faChild, faCircle, faDoorOpen, faExclamationCircle, faList, faList12, faMinus, faMobile, faMobileAndroid, faPersonPregnant, faPhone, faSuitcase, faSyringe, faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAngleRight, faBell, faBellConcierge, faCalendar, faCalendarAlt, faCalendarDays, faChild, faCircle, faDoorOpen, faExclamationCircle, faList, faList12, faMobile, faMobileAndroid, faPersonPregnant, faPhone, faSuitcase, faSyringe, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 //import moment js
 import Calendar_ from './Calendar';
 import TopNav from './messages/TopNav';
 import NoData from '../animations/NoData';
 import PatientRegistrationForm from './patientRegistration';
+
+
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -32,6 +34,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+import {Button} from '@mui/material';
 import DatePicker from '@mui/lab/DatePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -39,6 +42,7 @@ import { TextField } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { FormControl } from '@mui/material';
 import dayjs from 'dayjs';
+import { faMinus, faAdd } from '@fortawesome/free-solid-svg-icons';
 
 const useStyles = makeStyles({
   table: {
@@ -141,24 +145,24 @@ const Dashboard = ({ counter }) => {
 
   const classes = useStyles();
 
-  const [flipped, setFlipped] = useState(true);
+  const [flipped, setFlipped] = useState(false);
 
   const handleFlip = () => {
-    setFlipped(true);
+    setFlipped(!flipped);
   };
 
 
-  const [flipped1, setFlipped1] = useState(true);
+  const [flipped1, setFlipped1] = useState(false);
 
   const handleFlip1 = () => {
-    setFlipped1(true);
+    setFlipped1(!flipped1);
   };
 
 
-  const [flipped2, setFlipped2] = useState(true);
+  const [flipped2, setFlipped2] = useState(false);
 
   const handleFlip2 = () => {
-    setFlipped2(true);
+    setFlipped2(!flipped2);
   };
 
 
@@ -676,9 +680,10 @@ const Dashboard = ({ counter }) => {
     dec: "December"
   }
 
+
   const [date_, setDate_] = useState("")
-  const [month, setMonth] = useState("January");
-  const [year_, setYear_] = useState(2023)
+  const [month, setMonth] = useState("");
+  const [year_, setYear_] = useState(2023);
 
   return (
 //     <div style={{ width: '100%', height: '100%', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'start', overflow: 'hidden', justifyContent: 'start' }}>
@@ -1033,6 +1038,8 @@ const Dashboard = ({ counter }) => {
 <Divider sx={{ marginBottom: 3 }}></Divider>
 <Grid container spacing={.5} >
   <Grid container ml={.5} xs={8.9} direction='row' columnGap={.5}>
+
+    
     {/*------------------------------- Grid 1 Appoinment------------------------------- */}
     <Grid container item xs={4.5} ml={.5} mb={3} padding={2} sx={{ minHeight: '7vh', minWidth: '8%', }} component={Paper}>
       <Grid xs={3} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#486DF1' }}><EventNoteIcon fontSize='72' color="white" /></Box></Grid>
@@ -1041,7 +1048,7 @@ const Dashboard = ({ counter }) => {
         <Grid xs={12}> <Box fontSize='2em' ml={1} fontWeight='700' color={'#4E4B66'}>{_appointments}</Box></Grid>
       </Grid>
      
-      <Divider  orientation="vertical" flexItem  sx={{ mx: 2 }}/>
+      <Divider  orientation="vertical" flexItem  sx={{ mx: 1 }}/>
       
       <Grid xs={3} >
         <Grid xs={12}> <Box fontSize={'medium '} ml={1} fontWeight='600' color={'#F4B740'}>Upcoming</Box></Grid>
@@ -1074,26 +1081,29 @@ const Dashboard = ({ counter }) => {
 
     </Grid>
     {/*------------------------------- Start of Table and Charts------------------------------ */}
+<Grid container xs={12}>
 
+
+</Grid>
     <Grid container xs={12} padding={2} m={.5} mr={2} spacing={2} >
 
       {/*-------------------------------NUMBER OF TOTAL DELIVERIES------------------------------ */}
-      <Grid xs={12} sx={{ minHeight: '5vh', minWidth: '8%', }} mb={1} >
-        <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'orange'} color='white' padding={1.4} >
-          filter data by month/year
+      <Grid xs={12} sx={{ minHeight: '10vh', minWidth: '8%', }} mb={1} >
+        <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'black'} color='white' padding={1.4} >
+          Sort data by month/year
           <select onChange={(text)=> [setMonth(text.target.value)]} style={{height:'100%',padding:10,marginLeft:40,textAlign:'center',width:200}}>
-            <option value={"January"}>January</option>
-            <option value={"February"}>February</option>
-            <option value={"March"}>March</option>
-            <option value={"April"}>April</option>
-            <option value={"May"}>May</option>
-            <option value={"June"}>June</option>
-            <option value={"July"}>July</option>
-            <option value={"August"}>August</option>
-            <option value={"September"}>September</option>
-            <option value={"October"}>October</option>
-            <option value={"November"}>November</option>
-            <option value={"December"}>December</option>
+            <option value={1}>January</option>
+            <option value={2}>February</option>
+            <option value={3}>March</option>
+            <option value={4}>April</option>
+            <option value={5}>May</option>
+            <option value={6}>June</option>
+            <option value={7}>July</option>
+            <option value={8}>August</option>
+            <option value={9}>September</option>
+            <option value={10}>October</option>
+            <option value={11}>November</option>
+            <option value={12}>December</option>
             </select> 
               <Button onClick={()=> setYear_(year_-1)} style={{fontSize:20}}>
                 <FontAwesomeIcon icon={faMinus} size="1x" color='white'/>
@@ -1114,7 +1124,7 @@ const Dashboard = ({ counter }) => {
             </Box>
           )}
           <Box component={Paper}>
-            {flipped===true ? (
+            {flipped ? (
               /* Content for the flipped state */
               <Box sx={{ height: '50%', width: '100%' }}>
                 {/* Your flipped content goes here */}
@@ -1125,24 +1135,24 @@ const Dashboard = ({ counter }) => {
                   <Divider orientation="vertical" flexItem />
                   <Grid container padding={1} xs={2}>
                     <Grid xs={12} mb={1} ml={1} > <Box fontSize={'medium'} ml={1} fontWeight='600' sx={{ justifyContent: 'center', alignItems: 'center' }}></Box> <Box fontSize={'14px'} fontWeight={600}> Type of Delivery</Box></Grid>
-                    <Grid xs={12}> <Box fontSize='1.5em' ml={1} fontWeight='750' color={'#00BA88'}>0</Box><Box ml={1}fontSize={'12px'}>Normal</Box></Grid>
-                    <Grid xs={12}> <Box fontSize='1.5em' ml={1} fontWeight='750' color={'#F4B740'}>0</Box><Box ml={1}fontSize={'12px'}>Ceasarian</Box></Grid>
+                    <Grid xs={12}> <Box fontSize='1.5em' ml={1} fontWeight='750' color={'#00BA88'}>300</Box><Box ml={1}fontSize={'12px'}>Normal</Box></Grid>
+                    <Grid xs={12}> <Box fontSize='1.5em' ml={1} fontWeight='750' color={'#F4B740'}>300</Box><Box ml={1}fontSize={'12px'}>Ceasarian</Box></Grid>
                   </Grid>
                   <Divider orientation="vertical" flexItem />
                   <Grid container xs={2.5} padding={1} >
                     <Grid item xs={12} mb={1}> <Box fontSize={'medium'} ml={1} fontWeight='600' sx={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}></Box><Box fontSize={'14px'} fontWeight={600}>Delivery Outcome </Box> </Grid>
-                    <Grid item xs={6}> <Box fontSize='1.5em' ml={1} fontWeight='750' color={'#00BA88'} >0</Box><Box ml={1} fontSize={'12px'}>Alive</Box></Grid>
-                    <Grid item xs={6}> <Box fontSize='1.5em' ml={1} fontWeight='750' color={'#F4B740'}>0</Box><Box fontSize={'12px'}>Stillbirth</Box></Grid>
-                    <Grid item xs={12} mt={1}> <Box fontSize='1.5em' ml={1} fontWeight='700' color={'#D32F2F'}>0</Box><Box ml={1} fontSize={'12px'}>Miscarriage</Box></Grid>
+                    <Grid item xs={6}> <Box fontSize='1.5em' ml={1} fontWeight='750' color={'#00BA88'} >143</Box><Box ml={1} fontSize={'12px'}>Alive</Box></Grid>
+                    <Grid item xs={6}> <Box fontSize='1.5em' ml={1} fontWeight='750' color={'#F4B740'}>300</Box><Box fontSize={'12px'}>Stillbirth</Box></Grid>
+                    <Grid item xs={12} mt={1}> <Box fontSize='1.5em' ml={1} fontWeight='700' color={'#D32F2F'}>300</Box><Box ml={1} fontSize={'12px'}>Miscarriage</Box></Grid>
                   </Grid>
                   <Divider orientation="vertical" flexItem />
                   <Grid container xs={4.4} sx={{ flexDirection: 'row' }} padding={1}>
                     <Grid item xs={12}> <Box fontSize={'medium'} ml={1} fontWeight='600' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#F4B740'}></Box><Box fontSize={'14px'} fontWeight={600}>Number of Deliveries Attended by Health Professionals</Box></Grid>
-                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='750' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#00BA88'}>0</Box><Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Doctor</Box></Grid>
+                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='750' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#00BA88'}>143</Box><Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Doctor</Box></Grid>
                     <Divider orientation="vertical" flexItem />
-                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='750' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#F4B740'}>0</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Nurse</Box></Grid>
+                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='750' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#F4B740'}>300</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Nurse</Box></Grid>
                     <Divider orientation="vertical" flexItem />
-                    <Grid item xs={3}> <Box fontSize='1.5em' ml={1} fontWeight='750' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#D32F2F'}>0</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Midwife</Box></Grid>
+                    <Grid item xs={3}> <Box fontSize='1.5em' ml={1} fontWeight='750' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#D32F2F'}>300</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Midwife</Box></Grid>
                   </Grid>
                 </Grid>
               </Box>
@@ -1217,11 +1227,11 @@ const Dashboard = ({ counter }) => {
                   <Divider orientation="vertical" flexItem />
                   <Grid container xs={8} sx={{ flexDirection: 'row' }} padding={1}>
                     <Grid item xs={12}> <Box fontSize={'medium'} ml={1} fontWeight='600' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} ></Box> <Box fontSize={'14px' } fontWeight={600}>Age Group</Box></Grid>
-                    <Grid item xs={3.9}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#F4B740'}>0</Box><Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Age 10-14</Box></Grid>
+                    <Grid item xs={3.9}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#F4B740'}>143</Box><Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Age 10-14</Box></Grid>
                     <Divider orientation="vertical" flexItem />
-                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#486DF1'}>0</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Age 15-19 </Box></Grid>
+                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#486DF1'}>300</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Age 15-19 </Box></Grid>
                     <Divider orientation="vertical" flexItem />
-                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#D32F2F'}>0</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Age 20-29</Box></Grid>
+                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#D32F2F'}>300</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Age 20-29</Box></Grid>
                   </Grid>
                 </Grid>
 
@@ -1277,8 +1287,8 @@ const Dashboard = ({ counter }) => {
                 <Grid container component={Paper} item xs={12}  padding={1} sx={{ minHeight: '15vh', minWidth: '8%', }}>
                   <Grid containercomponent={Paper} xs={6}>
                     <Grid xs={12} ml={1} > <Box fontSize={'medium'} ml={1} fontWeight='600' sx={{ justifyContent: 'center', alignItems: 'center' }}></Box> <Box >Gender</Box></Grid>
-                    <Grid xs={12}> <Box fontSize='1.5em' ml={1} fontWeight='700' color={'#4E4B66'}>0</Box> <Box >Male</Box></Grid>
-                    <Grid xs={12}> <Box fontSize='1.5em' ml={1} fontWeight='700' color={'#4E4B66'}>0</Box> <Box>Female</Box></Grid>
+                    <Grid xs={12}> <Box fontSize='1.5em' ml={1} fontWeight='700' color={'#4E4B66'}>300</Box> <Box >Male</Box></Grid>
+                    <Grid xs={12}> <Box fontSize='1.5em' ml={1} fontWeight='700' color={'#4E4B66'}>300</Box> <Box>Female</Box></Grid>
                   </Grid>
                   <Divider orientation="vertical" flexItem />
                   <Grid xs={5} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '3em', fontWeight: '750', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#F4B740' }}>0</Box></Grid>
@@ -1286,11 +1296,11 @@ const Dashboard = ({ counter }) => {
 
                   <Grid container xs={12} sx={{ flexDirection: 'row' }} padding={1}>
                     <Grid item xs={12}> <Box fontSize={'medium'} ml={1} fontWeight='600' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#F4B740'}></Box><Box >Weight at Birth</Box></Grid>
-                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#00BA88'}>0</Box><Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }}>Normal</Box></Grid>
+                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#00BA88'}>143</Box><Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }}>Normal</Box></Grid>
                     <Divider orientation="vertical" flexItem />
-                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#486DF1'}>0</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }}>Low</Box></Grid>
+                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#486DF1'}>300</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }}>Low</Box></Grid>
                     <Divider orientation="vertical" flexItem />
-                    <Grid item xs={3}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#D32F2F'}>0</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }}>Overweight</Box></Grid>
+                    <Grid item xs={3}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#D32F2F'}>0</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }}>Unknown</Box></Grid>
                   </Grid>
                 </Grid>
 
