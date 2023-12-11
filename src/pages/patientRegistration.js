@@ -1784,7 +1784,7 @@ export default function PatientRegistrationForm() {
                   </Grid>
                   <Grid xs={12} flexDirection={'space-between'}>
                       <Box>
-                      <Button variant="contained" size="large" backgroundColor="primary.main" onClick={() => handleCreateAccount()} padding={4}>
+                      <Button variant="contained" size="large" backgroundColor="primary.main" onClick={() => handleCreateAccount()} padding={4} >
                         Submit
                       </Button>
                       </Box>
