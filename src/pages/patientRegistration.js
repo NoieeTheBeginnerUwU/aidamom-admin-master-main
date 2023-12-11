@@ -19,6 +19,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import citiesData from './city.json';
 import barangaysData from './barangay.json';
 import provincesData from './province.json';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 import dayjs from 'dayjs';
 import { addDays, differenceInDays } from 'dayjs';
@@ -96,7 +98,7 @@ export default function PatientRegistrationForm() {
     userMname: "",
     userLname: "",
     userSuffix: "",
-    userSex: "",
+    userSex: "female",
     userCivilStatus: "",
     userBloodType: "",
     userReligion: "Roman Catholic",
@@ -121,13 +123,16 @@ export default function PatientRegistrationForm() {
     userMothersFName: "",
     userMothersLName: "",
     userMothersMName: "",
-    userHusbandsName: "",
+    userHusbandsLName: "",
+    userHusbandSuffix: "",
+    userHusbandsFName: "",
+    userHusbandsMName: "",
     userFathersSuffix: "",
     userMothersSuffix: "",
     userHusbandsOccuupation: "",
-    userDateOfMarriage: "",
+    userDateOfMarriage: dayjs().format("YYYY-MM-DD"),
     userPlaceOfMarriage: "",
-    userProvinceMarrigae: "",
+    userProvinceMarriage: "",
     userBarangayMarriage: "",
     userTownMarriage: "",
     userHusbandsNumber: "",
@@ -139,81 +144,25 @@ export default function PatientRegistrationForm() {
     //user pregnancy history
     //child1
     userChild1: "",
-    userChildDateOfDelivery1: "",
-    userChildTypeOfDelivery1: "",
-    userChildBirthOutcome1: "",
-    userChildNumberOfChildDelivered1: "",
-    userChildComplication1: "",
+    userChild1DateOfDelivery1: "",
+    userChild1TypeOfDelivery1: "",
+    userChild1BirthOutcome1: "",
+    userChild1NumberOfChildDelivered1: "",
+    userChild1Complication1: "",
     //child2
     userChild2: "",
-    userChildDateOfDelivery2: "",
-    userChildTypeOfDelivery2: "",
-    userChildBirthOutcome2: "",
-    userChildNumberOfChildDelivered2: "",
-    userChildComplication2: "",
+    userChild1DateOfDelivery2: "",
+    userChild1TypeOfDelivery2: "",
+    userChild1BirthOutcome2: "",
+    userChild1NumberOfChildDelivered2: "",
+    userChild1Complication2: "",
     //child3
     userChild3: "",
-    userChildDateOfDelivery3: "",
-    userChildTypeOfDelivery3: "",
-    userChildBirthOutcome3: "",
-    userChildNumberOfChildDelivered3: "",
-    userChildComplication3: "",
-    //child3
-    userChild3: "",
-    userChildDateOfDelivery3: "",
-    userChildTypeOfDelivery3: "",
-    userChildBirthOutcome3: "",
-    userChildNumberOfChildDelivered3: "",
-    userChildComplication3: "",
-    //child4
-    userChild4: "",
-    userChildDateOfDelivery4: "",
-    userChildTypeOfDelivery4: "",
-    userChildBirthOutcome4: "",
-    userChildNumberOfChildDelivered4: "",
-    userChildComplication4: "",
-    //child5
-    userChild5: "",
-    userChildDateOfDelivery5: "",
-    userChildTypeOfDelivery5: "",
-    userChildBirthOutcome5: "",
-    userChildNumberOfChildDelivered5: "",
-    userChildComplication5: "",
-    //child6
-    userChild6: "",
-    userChildDateOfDelivery6: "",
-    userChildTypeOfDelivery6: "",
-    userChildBirthOutcome6: "",
-    userChildNumberOfChildDelivered6: "",
-    userChildComplication6: "",
-    //child7
-    userChild7: "",
-    userChildDateOfDelivery7: "",
-    userChildTypeOfDelivery7: "",
-    userChildBirthOutcome7: "",
-    userChildNumberOfChildDelivered7: "",
-    userChildComplication7: "",
-    //child8
-    userChild8: "",
-    userChildDateOfDelivery8: "",
-    userChildTypeOfDelivery8: "",
-    userChildBirthOutcome8: "",
-    userChildNumberOfChildDelivered8: "",
-    userChildComplication8: "",
-    //child9
-    userChild9: "",
-    userChildDateOfDelivery9: "",
-    userChildTypeOfDelivery9: "",
-    userChildBirthOutcome9: "",
-    userChildNumberOfChildDelivered9: "",
-    userChildComplication9: "",
-    //child10
-    userChild10: "",
-    userChildDateOfDelivery10: "",
-    userChildTypeOfDelivery10: "",
-    userChildBirthOutcome10: "",
-    userChildNumberOfChildDelivered10: "",
-    userChildComplication10: "",
+    userChild1DateOfDelivery3: "",
+    userChild1TypeOfDelivery3: "",
+    userChild1BirthOutcome3: "",
+    userChild1NumberOfChildDelivered3: "",
+    userChild1Complication3: "",
 
     // high risk behavior
     userSmoking: false,
@@ -227,8 +176,8 @@ export default function PatientRegistrationForm() {
     familyViolencefromPartner: false,
     familyMultiplePartners: false,
     //user other health conditions 
-    userTBPersonal: false,
-    userTBFamily: false,
+    userTuberculosisPersonal: false,
+    userTuberculosisFamily: false,
     userHeartDiseasesPersonal: false,
     userHeartDiseasesFamily: false,
     userDiabetesPersonal: false,
@@ -237,16 +186,15 @@ export default function PatientRegistrationForm() {
     userHypertensionFamily: false,
     userBronchialAsthmaPersonal: false,
     userBronchialAsthmaFamily: false,
-    userUTIPersonal: false,
-    userUTIFamily: false,
+    userUrinaryTractInfactionPersonal: false,
+    userUrinaryTractInfactionFamily: false,
     userParasitismPersonal: false,
     userParasitismFamily: false,
     userGoiterPersonal: false,
     userGoiterFamily: false,
     userAnemiaPersonal: false,
     userAnemiaFamily: false,
-    userGenitalTrackInfection: false,
-    userOtherInfectiousDiseases: false,
+  
     userHighRiskBehavior: false,
     dateCreated: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
     status: "pending",
@@ -278,10 +226,16 @@ export default function PatientRegistrationForm() {
           userProvince: registrationForm.userProvince,
           userPlaceOfBirth: registrationForm.userPlaceOfBirth,
           //family details
-          userHusbandsName: registrationForm.userHusbandsName,
+          userHusbandsLName: registrationForm.userHusbandsLName,
+          userHusbandsFName: registrationForm.userHusbandsFName,
+          userHusbandsMName: registrationForm.userHusbandsMName,
+          userHusbandSuffix: registrationForm.userHusbandSuffix,
           userHusbandsOccuupation: registrationForm.userHusbandsOccuupation,
           userDateOfMarriage: registrationForm.userDateOfMarriage,
           userPlaceOfMarriage: registrationForm.userPlaceOfMarriage,
+          userProvinceMarriage: registrationForm.userProvinceMarriage,
+          userTownMarriage: registrationForm.userTownMarriage,
+          userBarangayMarriage: registrationForm.userBarangayMarriage,
           userHusbandsNumber: registrationForm.userHusbandsNumber,
           userCompleteAddress: registrationForm.userCompleteAddress,
           userEmployedBy: registrationForm.userEmployedBy,
@@ -291,77 +245,29 @@ export default function PatientRegistrationForm() {
           //user pregnancy history
           //child1
           userChild1: registrationForm.userChild1,
-          userChildDateOfDelivery1: registrationForm.userChildDateOfDelivery1,
-          userChildTypeOfDelivery1: registrationForm.userChildTypeOfDelivery1,
-          userChildBirthOutcome1: registrationForm.userChildBirthOutcome1,
-          userChildNumberOfChildDelivered1: registrationForm.userChildNumberOfChildDelivered1,
-          userChildComplication1: registrationForm.userChildComplication1,
+          userChildDateOfDelivery1: registrationForm.userChild1DateOfDelivery1,
+          userChildTypeOfDelivery1: registrationForm.userChild1TypeOfDelivery1,
+          userChildBirthOutcome1: registrationForm.userChild1BirthOutcome1,
+          userChildNumberOfChildDelivered1: registrationForm.userChild1NumberOfChildDelivered1,
+          userChildComplication1: registrationForm.userChild1Complication1,
           //child2
           userChild2: registrationForm.userChild2,
-          userChildDateOfDelivery2: registrationForm.userChildDateOfDelivery2,
-          userChildTypeOfDelivery2: registrationForm.userChildTypeOfDelivery2,
-          userChildBirthOutcome2: registrationForm.userChildBirthOutcome2,
-          userChildNumberOfChildDelivered2: registrationForm.userChildNumberOfChildDelivered2,
-          userChildComplication2: registrationForm.userChildComplication2,
+          userChildDateOfDelivery2: registrationForm.userChild1DateOfDelivery2,
+          userChildTypeOfDelivery2: registrationForm.userChild1TypeOfDelivery2,
+          userChildBirthOutcome2: registrationForm.userChild1BirthOutcome2,
+          userChildNumberOfChildDelivered2: registrationForm.userChild1NumberOfChildDelivered2,
+          userChildComplication2: registrationForm.userChild1Complication2,
           //child3
           userChild3: registrationForm.userChild3,
-          userChildDateOfDelivery3: registrationForm.userChildDateOfDelivery3,
-          userChildTypeOfDelivery3: registrationForm.userChildTypeOfDelivery3,
-          userChildBirthOutcome3: registrationForm.userChildBirthOutcome3,
-          userChildNumberOfChildDelivered3: registrationForm.userChildDateOfDelivery3,
-          userChildComplication3: registrationForm.userChildComplication3,
-          //child4
-          userChild4: registrationForm.userChild4,
-          userChildDateOfDelivery4: registrationForm.userChildDateOfDelivery4,
-          userChildTypeOfDelivery4: registrationForm.userChildTypeOfDelivery4,
-          userChildBirthOutcome4: registrationForm.userChildBirthOutcome4,
-          userChildNumberOfChildDelivered4: registrationForm.userChildNumberOfChildDelivered4,
-          userChildComplication4: registrationForm.userChildComplication4,
-          //child5
-          userChild5: registrationForm.userChild5,
-          userChildDateOfDelivery5: registrationForm.userChildDateOfDelivery5,
-          userChildTypeOfDelivery5: registrationForm.userChildTypeOfDelivery5,
-          userChildBirthOutcome5: registrationForm.userChildBirthOutcome5,
-          userChildNumberOfChildDelivered5: registrationForm.userChildNumberOfChildDelivered5,
-          userChildComplication5: registrationForm.userChildComplication5,
-          //child6
-          userChild6: registrationForm.userChild6,
-          userChildDateOfDelivery6: registrationForm.userChildDateOfDelivery6,
-          userChildTypeOfDelivery6: registrationForm.userChildTypeOfDelivery6,
-          userChildBirthOutcome6: registrationForm.userChildBirthOutcome6,
-          userChildNumberOfChildDelivered6: registrationForm.userChildNumberOfChildDelivered6,
-          userChildComplication6: registrationForm.userChildComplication6,
-          //child7
-          userChild7: registrationForm.userChild7,
-          userChildDateOfDelivery7: registrationForm.userChildDateOfDelivery7,
-          userChildTypeOfDelivery7: registrationForm.userChildTypeOfDelivery7,
-          userChildBirthOutcome7: registrationForm.userChildBirthOutcome7,
-          userChildNumberOfChildDelivered7: registrationForm.userChildNumberOfChildDelivered7,
-          userChildComplication7: registrationForm.userChildComplication7,
-          //child8
-          userChild8: registrationForm.userChild8,
-          userChildDateOfDelivery8: registrationForm.userChildDateOfDelivery8,
-          userChildTypeOfDelivery8: registrationForm.userChildTypeOfDelivery8,
-          userChildBirthOutcome8: registrationForm.userChildBirthOutcome8,
-          userChildNumberOfChildDelivered8: registrationForm.userChildNumberOfChildDelivered8,
-          userChildComplication8: registrationForm.userChildComplication8,
-          //child9
-          userChild9: registrationForm.userChild9,
-          userChildDateOfDelivery9: registrationForm.userChildDateOfDelivery9,
-          userChildTypeOfDelivery9: registrationForm.userChildTypeOfDelivery9,
-          userChildBirthOutcome9: registrationForm.userChildBirthOutcome9,
-          userChildNumberOfChildDelivered9: registrationForm.userChildNumberOfChildDelivered9,
-          userChildComplication9: registrationForm.userChildComplication9,
-          //child10
-          userChild10: registrationForm.userChild10,
-          userChildDateOfDelivery10: registrationForm.userChildDateOfDelivery10,
-          userChildTypeOfDelivery10: registrationForm.userChildTypeOfDelivery10,
-          userChildBirthOutcome10: registrationForm.userChildBirthOutcome10,
-          userChildNumberOfChildDelivered10: registrationForm.userChildNumberOfChildDelivered10,
-          userChildComplication10: registrationForm.userChildComplication10,
+          userChildDateOfDelivery3: registrationForm.userChild1DateOfDelivery3,
+          userChildTypeOfDelivery3: registrationForm.userChild1TypeOfDelivery3,
+          userChildBirthOutcome3: registrationForm.userChild1BirthOutcome3,
+          userChildNumberOfChildDelivered3: registrationForm.userChild1DateOfDelivery3,
+          userChildComplication3: registrationForm.userChild1Complication3,
+
           //user other health conditions 
-          userTBPersonal: registrationForm.userTBPersonal,
-          userTBFamily: registrationForm.userTBFamily,
+          userTuberculosisPersonal: registrationForm.userTuberculosisPersonal,
+          userTuberculosisFamily: registrationForm.userTuberculosisFamily,
           userHeartDiseasesPersonal: registrationForm.userHeartDiseasesPersonal,
           userHeartDiseasesFamily: registrationForm.userHeartDiseasesFamily,
           userDiabetesPersonal: registrationForm.userDiabetesPersonal,
@@ -370,8 +276,8 @@ export default function PatientRegistrationForm() {
           userHypertensionFamily: registrationForm.userHypertensionFamily,
           userBronchialAsthmaPersonal: registrationForm.userBronchialAsthmaPersonal,
           userBronchialAsthmaFamily: registrationForm.userBronchialAsthmaFamily,
-          userUTIPersonal: registrationForm.userUTIPersonal,
-          userUTIFamily: registrationForm.userUTIFamily,
+          userUrinaryTractInfactionPersonal: registrationForm.userUrinaryTractInfactionPersonal,
+          userUrinaryTractInfactionFamily: registrationForm.userUrinaryTractInfactionFamily,
           userParasitismPersonal: registrationForm.userParasitismPersonal,
           userParasitismFamily: registrationForm.userParasitismFamily,
           userGoiterPersonal: registrationForm.userGoiterPersonal,
@@ -477,6 +383,8 @@ export default function PatientRegistrationForm() {
   };
 
   const [checkboxEnable, setCheckboxEnable] = useState(false);
+  const [checkboxEnable1, setCheckboxEnable1] = useState(false);
+  const [checkboxEnable2, setCheckboxEnable2] = useState(false);
 
 
   const [filteredCities, setFilteredCities] = useState([]);
@@ -527,13 +435,126 @@ export default function PatientRegistrationForm() {
     }));
   };
 
+  ////-----------------------Handle Place of Marriage------------------------------------
+
+  const handleProvinceChangeMarriage = (event, newValue) => {
+    setRegistrationForm((prevForm) => ({
+      ...prevForm,
+      userProvinceMarriage: newValue ? newValue.province_name : "", // Set province_name or an empty string if newValue is falsy
+    }));
+
+    if (newValue) {
+      const filteredCities = citiesData.filter((city) => city.province_code === newValue.province_code);
+      setFilteredCities(filteredCities);
+      setRegistrationForm((prevForm) => ({
+        ...prevForm,
+        userTownMarriage: "",
+        userBarangayMarriage: "",
+      }));
+      setFilteredBarangays([]);
+    } else {
+      setFilteredCities([]);
+    }
+  };
+
+  const handleCityChangeMarriage = (event, newValue) => {
+    setRegistrationForm((prevForm) => ({
+      ...prevForm,
+      userTownMarriage: newValue ? newValue.city_name : "", // Set city_name or an empty string if newValue is falsy
+    }));
+
+    if (newValue) {
+      const filteredBarangays = barangaysData.filter((barangay) => barangay.city_code === newValue.city_code);
+      setFilteredBarangays(filteredBarangays);
+      setRegistrationForm((prevForm) => ({
+        ...prevForm,
+        userBarangayMarriage: "",
+      }));
+    } else {
+      setFilteredBarangays([]);
+    }
+  };
+
+  const handleBarangayChangeMarriage = (event, newValue) => {
+    setRegistrationForm((prevForm) => ({
+      ...prevForm,
+      userBarangayMarriage: newValue ? newValue.brgy_name : "", // Set brgy_name or an empty string if newValue is falsy
+    }));
+  };
+
+
+
+
   console.log("Registration form:", registrationForm);
+
+
+  ////-----------------------Handle Place of Birth----------------------------------------------
+
+  const handleProvinceChangeBirth = (event, newValue) => {
+    setRegistrationForm((prevForm) => ({
+      ...prevForm,
+      userProvincebirth: newValue ? newValue.province_name : "", // Set province_name or an empty string if newValue is falsy
+    }));
+
+    if (newValue) {
+      const filteredCities = citiesData.filter((city) => city.province_code === newValue.province_code);
+      setFilteredCities(filteredCities);
+      setRegistrationForm((prevForm) => ({
+        ...prevForm,
+        userTownbirth: "",
+        userBarangaybirth: "",
+      }));
+      setFilteredBarangays([]);
+    } else {
+      setFilteredCities([]);
+    }
+  };
+
+  const handleCityChangeBirth = (event, newValue) => {
+    setRegistrationForm((prevForm) => ({
+      ...prevForm,
+      userTownbirth: newValue ? newValue.city_name : "", // Set city_name or an empty string if newValue is falsy
+    }));
+
+    if (newValue) {
+      const filteredBarangays = barangaysData.filter((barangay) => barangay.city_code === newValue.city_code);
+      setFilteredBarangays(filteredBarangays);
+      setRegistrationForm((prevForm) => ({
+        ...prevForm,
+        userBarangaybirth: "",
+      }));
+    } else {
+      setFilteredBarangays([]);
+    }
+  };
+
+  const handleBarangayChangeBirth = (event, newValue) => {
+    setRegistrationForm((prevForm) => ({
+      ...prevForm,
+      userBarangaybirth: newValue ? newValue.brgy_name : "", // Set brgy_name or an empty string if newValue is falsy
+    }));
+  };
+
+
+
+
+  console.log("Registration form:", registrationForm);
+
+
+
+
+
+
+
+
+
+
 
 
   //-------------------------------------Adresss Ennnd--------------------------------------
 
 
-  const handleDateChangeBirth= (date) => {
+  const handleDateChangeBirth = (date) => {
     const formattedDate = date.format("YYYY-MM-DD");
     setRegistrationForm((prevForm) => ({
       ...prevForm,
@@ -541,17 +562,63 @@ export default function PatientRegistrationForm() {
     }));
   };
 
+  const handleDateChangeMarriage = (date) => {
+    const formattedDate = date.format("YYYY-MM-DD");
+    setRegistrationForm((prevForm) => ({
+      ...prevForm,
+      userDateOfMarriage: formattedDate,
+    }));
+  };
 
-  ///// ---------------- End user Date of Birth---------------------------------------------------------
+
+  ///// ---------------- End of Handle Date Pickers---------------------------------------------------------
 
 
   const [rows, setRows] = useState([]);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleChange = (index, field) => (event) => {
     setRows((prevRows) =>
       prevRows.map((row, i) => (i === index ? { ...row, [field]: event.target.value } : row))
     );
+
+    setRegistrationForm((prevForm) => {
+      const updatedForm = { ...prevForm };
+      const childIndex = Math.floor(index / 6) + 1; // Each child has 6 fields in the table
+
+      const fieldPrefix = `userChild${childIndex}`;
+
+      switch (field) {
+        case 'dateOfDelivery':
+          updatedForm[`${fieldPrefix}DateOfDelivery${index % 6 + 1}`] = event.target.value;
+          break;
+        case 'typeOfDelivery':
+          updatedForm[`${fieldPrefix}TypeOfDelivery${index % 6 + 1}`] = event.target.value;
+          break;
+        case 'birthOutcome':
+          updatedForm[`${fieldPrefix}BirthOutcome${index % 6 + 1}`] = event.target.value;
+          break;
+        case 'numberOfChildDelivered':
+          updatedForm[`${fieldPrefix}NumberOfChildDelivered${index % 6 + 1}`] = event.target.value;
+          break;
+        case 'pregnancyRelatedConditions':
+          updatedForm[`${fieldPrefix}Complication${index % 6 + 1}`] = event.target.value;
+          break;
+        default:
+          break;
+      }
+
+      return updatedForm;
+    });
   };
+
+
+
+  // const handleChange = (index, field) => (event) => {
+  //   setRows((prevRows) =>
+  //     prevRows.map((row, i) => (i === index ? { ...row, [field]: event.target.value } : row))
+  //   );
+  // };
 
   const handleDateChange = (index) => (date) => {
     setRows((prevRows) =>
@@ -560,12 +627,31 @@ export default function PatientRegistrationForm() {
   };
 
   const addRow = () => {
-    setRows((prevRows) => [...prevRows, { pregnancyNumber: prevRows.length + 1 }]);
+    if (rows.length < 3) {
+      setRows((prevRows) => [...prevRows, { pregnancyNumber: prevRows.length + 1 }]);
+    }
+    else {
+      // If trying to add more than 3 rows, show a Snackbar message
+      setOpenSnackbar(true);
+    }
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
   };
 
 
   /////---------------------Diseases Table 4 Family and Personal--------------------
-  const diseases = ['Tuberculosis', 'Heart Diseases', 'Hypertension', 'Bronchial Asthma', 'Urinary Tract Infection', 'Parasitism', 'Goiter', 'Anemia (pallor)'];
+  const diseases = ['Tuberculosis', 'HeartDiseases', 'Hypertension', 'BronchialAsthma', 'UrinaryTractInfection', 'Parasitism', 'Goiter', 'Anemia', 'Diabetes'];
+
+
+  const handleCheckboxChangeDiseases = (disease, category) => (event) => {
+    setRegistrationForm((prevForm) => ({
+      ...prevForm,
+      [`user${disease}${category}`]: event.target.checked,
+    }));
+  };
+
 
 
   //---------Triggering Checkbox for Specified Diseases-----------
@@ -581,6 +667,17 @@ export default function PatientRegistrationForm() {
 
 
   const behaviors = ['Smoking', 'Alcohol Intake', 'Using of Illegal Drugs', 'Violence from Partner or Spouse', 'Multiple Partners'];
+
+  const handleCheckboxChangeBehaviors = (behavior, category) => (event) => {
+    setRegistrationForm((prevForm) => ({
+      ...prevForm,
+      [`${category.toLowerCase()}${behavior.replace(/\s+/g, '')}`]: event.target.checked,
+    }));
+  };
+
+
+
+
 
 
   return (
@@ -717,6 +814,10 @@ export default function PatientRegistrationForm() {
                     <Typography> <Box component="span" fontWeight='bold'>3. Birth Date -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Indicate your birth date correctly</Box></Typography>
                   </Box>
                 </Grid>
+
+
+
+                {/*--------------------------- Commmmmmeeeentssssssssss--------------------------- */}
                 <Grid item xs={3} mt={2} direction='row'>
                   <FormControl required>
                     <LocalizationProvider dateAdapter={AdapterDayjs} required>
@@ -735,13 +836,15 @@ export default function PatientRegistrationForm() {
                 <Grid item xs={2} mt={2} direction="row" textAlign="left" justifyContent="center">
                   <Typography >
                     <Typography fontWeight={600} color={'blue'}>
-                    {moment(new Date, "YYYY/MM/DD").diff(moment(registrationForm.userDob, "YYYY/MM/DD"), "years")}
+                      {moment(new Date, "YYYY/MM/DD").diff(moment(registrationForm.userDob, "YYYY/MM/DD"), "years")}
                     </Typography>
                     <Box component="span" fontSize="18px" fontWeight="bold" color={'primary.main'}>
                     </Box>{' '}
                     years old
                   </Typography>
                 </Grid>
+                {/*--------------------------- Commmmmmeeeentssssssssss--------------------------- */}
+
                 <Grid item xs={3} mt={2} direction='row' textAlign='left' justifyContent='center'>
 
                   <FormControl>
@@ -926,17 +1029,34 @@ export default function PatientRegistrationForm() {
                   </Box>
                 </Grid>
 
-
-
                 <Grid item xs={4} mt={2} >
-
+                  <Autocomplete
+                    options={provincesData}
+                    getOptionLabel={(option) => option.province_name}
+                    value={provincesData.find((province) => province.province_name === registrationForm.userProvincebirth) || null}
+                    onChange={handleProvinceChangeBirth}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Province" required />
+                    )}
+                  />
                 </Grid>
                 <Grid item xs={4} mt={2} >
-
+                  <Autocomplete
+                    options={filteredCities}
+                    getOptionLabel={(option) => option.city_name}
+                    value={filteredCities.find((city) => city.city_name === registrationForm.userTownbirth) || null}
+                    onChange={handleCityChangeBirth}
+                    renderInput={(params) => <TextField {...params} label="City" required />}
+                  />
                 </Grid>
                 <Grid item xs={4} mt={2}>
-
-
+                  <Autocomplete
+                    options={filteredBarangays}
+                    getOptionLabel={(option) => option.brgy_name}
+                    value={filteredBarangays.find((barangay) => barangay.brgy_name === registrationForm.userBarangaybirth) || null}
+                    onChange={handleBarangayChangeBirth}
+                    renderInput={(params) => <TextField {...params} label="Barangay" required />}
+                  />
                 </Grid>
 
               </Grid>
@@ -961,20 +1081,85 @@ export default function PatientRegistrationForm() {
                   <Typography> <Box component="span" fontWeight='bold'>12. Name of your spouse -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please indicate the name of your spouse correclty.</Box></Typography>
                 </Box>
               </Grid>
-              <Grid item xs={12} mt={2}>
+              <Grid item xs={3} mt={2}>
                 <TextField name="spouseLname"
                   fullWidth
                   size='small'
                   label="Lastname (Apelyido)"
                   variant="outlined"
-                  value={registrationForm.userHusbandsName}
-                  onChange={(text) => setRegistrationForm(prev => { return { ...prev, userHusbandsName: text.target.value } })}
+                  value={registrationForm.userHusbandsLName}
+                  onChange={(text) => setRegistrationForm(prev => { return { ...prev, userHusbandsLName: text.target.value } })}
 
 
                   required
 
                 />
               </Grid>
+              <Grid item xs={3} mt={2}>
+                <TextField name="spouseFname"
+                  fullWidth
+
+                  label="Firstname (Pangalan)"
+                  variant="outlined"
+                  size='small'
+
+                  value={registrationForm.userHusbandsFName}
+                  onChange={(text) => setRegistrationForm(prev => { return { ...prev, userHusbandsFName: text.target.value } })}
+                  required
+
+                />
+              </Grid>
+              <Grid item xs={3} mt={2}>
+
+                <TextField name="spouseMname"
+                  fullWidth
+
+                  label="Middlename (Gitnang Pangalan)"
+                  variant="outlined"
+                  size='small'
+                  value={registrationForm.userHusbandsMName}
+                  onChange={(text) => setRegistrationForm(prev => { return { ...prev, userHusbandsMName: text.target.value } })}
+
+                />
+              </Grid>
+              <Grid item xs={1.5} mt={2} >
+
+                <FormControlLabel
+                  value="top"
+                  control={<Checkbox />}
+                  onChange={handleChangeSetter(setCheckboxEnable1)}
+                  checked={checkboxEnable1}
+                  label="I have Extension"
+                  labelPlacement="end"
+                  inputProps={{ "aria-label": "primary checkbox" }}
+
+                />
+              </Grid>
+              <Grid item xs={1.5} mt={2}>
+                <Select
+                  fullWidth
+                  labelId="husbandSuffix"
+                  name="husbandSuffix"
+                  size='small'
+                  value={registrationForm.userHusbandSuffix}
+                  onChange={(text) => setRegistrationForm(prev => { return { ...prev, userHusbandSuffix: text.target.value } })}
+                  disabled={!checkboxEnable1}
+                >
+
+                  <MenuItem value='JR'>JR</MenuItem>
+                  <MenuItem value='SR'>SR</MenuItem>
+                  <MenuItem value='I'>I</MenuItem>
+                  <MenuItem value='II'>II</MenuItem>
+                  <MenuItem value='III'>III</MenuItem>
+                  <MenuItem value='IV'>IV</MenuItem>
+                  <MenuItem value='V'>V</MenuItem>
+                  <MenuItem value='VI'>VI</MenuItem>
+                </Select>
+              </Grid>
+
+
+
+
 
               <Grid item xs={3} mt={2} direction='row' textAlign='left' justifyContent='center'>
                 <Box >
@@ -1043,24 +1228,51 @@ export default function PatientRegistrationForm() {
                 </Box>
               </Grid>
 
-              <Grid item xs={12} mt={2} direction='row'>
-                <FormControl required>
-                  <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                    <DatePicker
-                      label="Date of Marriage"
-                      name='dateofmarriage'
-                      size='small'
-                      value={registrationForm.userDateOfMarriage}
-                      onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDateOfMarriage: text.target.value } })}
-                      style={{ width: ' 100%' }}
-                      maxDate={dayjs()}
+              <Grid container item xs={12} mt={2} direction='row' spacing={1}>
+                <Grid xs={12} marginLeft={2}>
+                  <FormControl required>
+                    <LocalizationProvider dateAdapter={AdapterDayjs} required>
+                      <DatePicker
+                        label="Date of Marriage"
+                        value={dayjs(registrationForm.userDateOfMarriage)} // Convert back to dayjs object for DatePicker
+                        onChange={handleDateChangeMarriage}
+                        renderInput={(params) => <TextField {...params} />}
+                        disableFuture
 
-                      renderInput={(params) =>
-                        <TextField  {...params} required fullWidth size='small'
-                        />}
-                    />
-                  </LocalizationProvider>
-                </FormControl>
+                      />
+                    </LocalizationProvider>
+                  </FormControl>
+                </Grid>
+
+                <Grid item xs={4} mt={2} >
+                  <Autocomplete
+                    options={provincesData}
+                    getOptionLabel={(option) => option.province_name}
+                    value={provincesData.find((province) => province.province_name === registrationForm.userProvinceMarriage) || null}
+                    onChange={handleProvinceChangeMarriage}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Province" required />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={4} mt={2} >
+                  <Autocomplete
+                    options={filteredCities}
+                    getOptionLabel={(option) => option.city_name}
+                    value={filteredCities.find((city) => city.city_name === registrationForm.userTownMarriage) || null}
+                    onChange={handleCityChangeMarriage}
+                    renderInput={(params) => <TextField {...params} label="City" required />}
+                  />
+                </Grid>
+                <Grid item xs={4} mt={2}>
+                  <Autocomplete
+                    options={filteredBarangays}
+                    getOptionLabel={(option) => option.brgy_name}
+                    value={filteredBarangays.find((barangay) => barangay.brgy_name === registrationForm.userBarangayMarriage) || null}
+                    onChange={handleBarangayChangeMarriage}
+                    renderInput={(params) => <TextField {...params} label="Barangay" required />}
+                  />
+                </Grid>
               </Grid>
 
               <Grid item xs={4} mt={2} >
@@ -1127,8 +1339,8 @@ export default function PatientRegistrationForm() {
                 <FormControlLabel
                   value="top"
                   control={<Checkbox />}
-
-                  onChange={handleChangeSetter(setCheckboxEnable)}
+                  checked={checkboxEnable2}
+                  onChange={handleChangeSetter(setCheckboxEnable2)}
                   size='small'
                   label="I have Extension"
                   labelPlacement="end"
@@ -1143,7 +1355,7 @@ export default function PatientRegistrationForm() {
                   size='small'
                   value={registrationForm.userFathersSuffix}
                   onChange={(text) => setRegistrationForm(prev => { return { ...prev, userFathersSuffix: text.target.value } })}
-                  disabled={!checkboxEnable}
+                  disabled={!checkboxEnable2}
                 >
 
                   <MenuItem value='JR'>JR</MenuItem>
@@ -1275,7 +1487,7 @@ export default function PatientRegistrationForm() {
                           <TableCell>Date of Delivery</TableCell>
                           <TableCell>Type of Delivery</TableCell>
                           <TableCell>Birth Outcome</TableCell>
-                          <TableCell>Name of Child Delivered</TableCell>
+                          <TableCell>Number of Child Delivered</TableCell>
                           <TableCell>Pregnancy Related Conditions</TableCell>
                         </TableRow>
                       </TableHead>
@@ -1287,6 +1499,7 @@ export default function PatientRegistrationForm() {
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
                                   disableToolbar
+                                  disableFuture
                                   variant="standard"
                                   margin="normal"
                                   size="small"
@@ -1307,37 +1520,79 @@ export default function PatientRegistrationForm() {
                                   onChange={handleChange(index, 'typeOfDelivery')}
                                   label=""
                                 >
-                                  <MenuItem value={'Normal'}>Normal</MenuItem>
-                                  <MenuItem value={'Cesarean'}>Cesarean</MenuItem>
+                                  <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value={'Normal'}>Normal</MenuItem>
+                                  <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value={'Cesarean'}>Cesarean</MenuItem>
                                 </Select>
                               </FormControl>
                             </TableCell>
                             <TableCell>
-                              <TextField
-                                variant='standard'
-                                value={row.birthOutcome}
-                                onChange={handleChange(index, 'birthOutcome')}
-                              />
+                              <FormControl fullWidth>
+                                <InputLabel id="birthoutcome"></InputLabel>
+                                <Select
+                                  variant='standard'
+                                  value={row.birthOutcome}
+                                  onChange={handleChange(index, 'birthOutcome')}
+                                  label=""
+                                >
+                                  <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value={'Alive'}>Alive</MenuItem>
+                                  <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value={'Stillbirth'}>Stillbirth</MenuItem>
+                                  <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value={'Miscarriage'}>Miscarriage</MenuItem>
+                                </Select>
+                              </FormControl>
+
                             </TableCell>
                             <TableCell>
-                              <TextField
-                                variant='standard'
-                                value={row.nameOfChildDelivered}
-                                onChange={handleChange(index, 'nameOfChildDelivered')}
-                              />
+
+                              <FormControl fullWidth>
+                                <InputLabel id="noofChildDelivered"></InputLabel>
+                                <Select
+                                  variant='standard'
+                                  value={row.numberOfChildDelivered}
+                                  onChange={handleChange(index, 'numberOfChildDelivered')}
+                                  label=""
+                                >
+                                  <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value={'single'}>single</MenuItem>
+                                  <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value={'Twins'}>Twins</MenuItem>
+                                  <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value={'triplets'}>triplets</MenuItem>
+                                  <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value={'quadruplets'}>quadruplets</MenuItem>
+                                </Select>
+                              </FormControl>
+
                             </TableCell>
                             <TableCell>
-                              <TextField
-                                variant='standard'
-                                value={row.pregnancyRelatedConditions}
-                                onChange={handleChange(index, 'pregnancyRelatedConditions')}
-                              />
+
+                              <FormControl fullWidth>
+                                <InputLabel id="noofChildDelivered"></InputLabel>
+                                <Select
+                                  variant='standard'
+                                  value={row.pregnancyRelatedConditions}
+                                  onChange={handleChange(index, 'pregnancyRelatedConditions')}
+                                  label=""
+                                >
+                                  <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value={'None'}>None</MenuItem>
+                                  <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value={'Pregnancy Induced Hypertension'}>Pregnancy Induced Hypertension</MenuItem>
+                                  <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value={'Preeclampsia/Eclampsia'}>Preeclampsia/Eclampsia</MenuItem>
+                                  <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value={'Bleeding during/after Delivery'}>Bleeding during/after Delivery</MenuItem>
+
+                                </Select>
+                              </FormControl>
+
                             </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
                     </Table>
                   </TableContainer>
+
+                  <Snackbar
+                    open={openSnackbar}
+                    autoHideDuration={3000} // Adjust the duration as needed
+                    onClose={handleCloseSnackbar}
+                  >
+                    <Alert onClose={handleCloseSnackbar} severity="error" color='error'>
+                      You can only add a maximum of 3 pregnancy.
+                    </Alert>
+                  </Snackbar>
                 </Box>
 
               </Grid>
@@ -1366,7 +1621,7 @@ export default function PatientRegistrationForm() {
               <Grid item xs={12}>
                 <Box sx={{ border: '1px solid grey' }}>
                   <TableContainer>
-                    <Table size="small" >
+                    <Table size="small">
                       <TableHead sx={{ '& .MuiTableCell-head': { color: 'white' }, backgroundColor: 'primary.main' }}>
                         <TableRow>
                           <TableCell>Diseases</TableCell>
@@ -1378,8 +1633,18 @@ export default function PatientRegistrationForm() {
                         {diseases.map((disease, index) => (
                           <TableRow key={index}>
                             <TableCell>{disease}</TableCell>
-                            <TableCell><Checkbox /></TableCell>
-                            <TableCell><Checkbox /></TableCell>
+                            <TableCell>
+                              <Checkbox
+                                checked={registrationForm[`user${disease}Personal`]}
+                                onChange={handleCheckboxChangeDiseases(disease, 'Personal')}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <Checkbox
+                                checked={registrationForm[`user${disease}Family`]}
+                                onChange={handleCheckboxChangeDiseases(disease, 'Family')}
+                              />
+                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -1392,14 +1657,14 @@ export default function PatientRegistrationForm() {
                   control={<Checkbox checked={checked} onChange={handleTriggerGTI} />}
                   label="Genetical Track Infections :"
                 />
-                {checked && <TextField label="Specify" variant='standard' />}
+                {checked && <TextField label="Specify" variant='standard' value={registrationForm.userGenitalTrackInfection}   onChange={(text) => setRegistrationForm(prev => { return { ...prev, userGenitalTrackInfection: text.target.value } })}/>}
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox checked={checked1} onChange={handleTriggerOID} />}
                   label="Other Infectious Diseases :"
                 />
-                {checked1 && <TextField label="Specify" variant='standard' />}
+                {checked1 && <TextField label="Specify" variant='standard' value={registrationForm.userOtherInfectiousDiseases}   onChange={(text) => setRegistrationForm(prev => { return { ...prev, userOtherInfectiousDiseases: text.target.value } })}/>}
               </Grid>
 
               <Grid item xs={12}>
@@ -1410,7 +1675,7 @@ export default function PatientRegistrationForm() {
               <Grid item xs={12}>
                 <Box sx={{ border: '1px solid grey' }}>
                   <TableContainer>
-                    <Table size='small'>
+                    <Table size="small">
                       <TableHead sx={{ '& .MuiTableCell-head': { color: 'white' }, backgroundColor: 'primary.main' }}>
                         <TableRow>
                           <TableCell>High Risk Behavior</TableCell>
@@ -1422,8 +1687,18 @@ export default function PatientRegistrationForm() {
                         {behaviors.map((behavior, index) => (
                           <TableRow key={index}>
                             <TableCell>{behavior}</TableCell>
-                            <TableCell><Checkbox /></TableCell>
-                            <TableCell><Checkbox /></TableCell>
+                            <TableCell>
+                              <Checkbox
+                                checked={registrationForm[`user${behavior.replace(/\s+/g, '')}`]}
+                                onChange={handleCheckboxChangeBehaviors(behavior, 'user')}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <Checkbox
+                                checked={registrationForm[`family${behavior.replace(/\s+/g, '')}`]}
+                                onChange={handleCheckboxChangeBehaviors(behavior, 'family')}
+                              />
+                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -1482,12 +1757,15 @@ export default function PatientRegistrationForm() {
 
                   <Grid xs={12}>
                     <Grid xs={6}> <Box></Box></Grid>
-                    <Grid xs={3} flexDirection={'space-between'}>
-                      <Button variant="contained" color="primary" onClick={() => handleCreateAccount()}>
+                   
+                  </Grid>
+                  <Grid xs={12} flexDirection={'space-between'}>
+                      <Box>
+                      <Button variant="contained" size="large" backgroundColor="primary.main" onClick={() => handleCreateAccount()} padding={4}>
                         Submit
                       </Button>
+                      </Box>
                     </Grid>
-                  </Grid>
                 </Grid>
               </FormControl>
             </Grid>
