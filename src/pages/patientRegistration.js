@@ -16,9 +16,10 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import citiesData from './city.json'
-import barangaysData from './barangay.json'
-import provincesData from './province.json'
+import citiesData from './city.json';
+import barangaysData from './barangay.json';
+import provincesData from './province.json';
+
 import dayjs from 'dayjs';
 import { addDays, differenceInDays } from 'dayjs';
 
@@ -41,6 +42,7 @@ import moment from 'moment';
 //firebase
 import { database } from '../config/firebase';
 import { addDoc, collection } from 'firebase/firestore';
+import { blue } from '@mui/material/colors';
 
 
 
@@ -99,7 +101,7 @@ export default function PatientRegistrationForm() {
     userBloodType: "",
     userReligion: "Roman Catholic",
     userNumber: "",
-    userDob: "",
+    userDob: dayjs().format("YYYY-MM-DD"),
     userAge: "",
     userNationality: "Filipino",
     userOccupation: "Housewife",
@@ -248,7 +250,8 @@ export default function PatientRegistrationForm() {
     userHighRiskBehavior: false,
     dateCreated: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
     status: "pending",
-    userPic: false,
+    userPic: "",
+    pregnant: true,
   })
 
 
@@ -476,140 +479,72 @@ export default function PatientRegistrationForm() {
   const [checkboxEnable, setCheckboxEnable] = useState(false);
 
 
-  const [province, setProvince] = useState('');
-  const [city, setCity] = useState('');
-  const [barangay, setBarangay] = useState('');
-
-  useEffect(() => {
-    // Reset city and barangay when province changes
-    setCity('');
-    setBarangay('');
-  }, [province]);
-
-  useEffect(() => {
-    // Reset barangay when city changes
-    setBarangay('');
-  }, [city]);
-
-
-
-
-  //filter province to equal in barangays and cities
   const [filteredCities, setFilteredCities] = useState([]);
   const [filteredBarangays, setFilteredBarangays] = useState([]);
 
-  const [cityError, setCityError] = useState(false);
-  const [barangayError, setBarangayError] = useState(false);
+  const handleProvinceChange = (event, newValue) => {
+    setRegistrationForm((prevForm) => ({
+      ...prevForm,
+      userProvince: newValue ? newValue.province_name : "", // Set province_name or an empty string if newValue is falsy
+    }));
 
-  const handleProvinceChange = (selectedProvince) => {
-    if (!selectedProvince) {
-      // Handle the case where selectedProvince is null (reset)
-      setFilteredCities([]);
-      setFilteredBarangays([]);
-      setCityError(false);
-      setBarangayError(false);
-
-      // Use a callback to ensure the state is updated before further actions
-      setRegistrationForm((prevForm) => ({
-        ...prevForm,
-        province: null, // Set to null when province changes
-        city: 'null',
-        barangay: 'null',
-      }));
-    } else {
-      const filteredCities = citiesData.filter(
-        (city) => city.province_code === selectedProvince.province_code
-      );
+    if (newValue) {
+      const filteredCities = citiesData.filter((city) => city.province_code === newValue.province_code);
       setFilteredCities(filteredCities);
-
-      // Use a callback to ensure the state is updated before further actions
       setRegistrationForm((prevForm) => ({
         ...prevForm,
-        province: selectedProvince, // Assuming selectedProvince is an object
-        city: '',
-        barangay: '',
+        userTown: "",
+        userBarangay: "",
       }));
-      setCityError(false);
-      setBarangayError(false);
-    }
-  };
-
-  const handleCityChange = (selectedCity) => {
-    if (!selectedCity) {
-      // Handle the case where selectedCity is null (reset)
       setFilteredBarangays([]);
-      // Also, reset the barangay in the form
-      setRegistrationForm((prevForm) => ({
-        ...prevForm,
-        city: '',
-        barangay: '',
-      }));
-      setCityError(false);
-      setBarangayError(false);
     } else {
-      const isCityInProvince =
-        selectedCity.province_code === registrationForm.province.province_code;
+      setFilteredCities([]);
+    }
+  };
 
-      setCityError(!isCityInProvince);
+  const handleCityChange = (event, newValue) => {
+    setRegistrationForm((prevForm) => ({
+      ...prevForm,
+      userTown: newValue ? newValue.city_name : "", // Set city_name or an empty string if newValue is falsy
+    }));
 
-      // Filter barangays based on the selected city code
-      const filteredBarangays = barangaysData.filter(
-        (barangay) => barangay.city_code === selectedCity.city_code
-      );
-
-      // Use a callback to ensure the state is updated before further actions
+    if (newValue) {
+      const filteredBarangays = barangaysData.filter((barangay) => barangay.city_code === newValue.city_code);
       setFilteredBarangays(filteredBarangays);
-
-      // Use a callback to ensure the state is updated before further actions
       setRegistrationForm((prevForm) => ({
         ...prevForm,
-        city: selectedCity, // Set the entire city object in the form
-        barangay: '',
+        userBarangay: "",
       }));
-      setBarangayError(false);
-    }
-  };
-  const handleSubmit = () => {
-    // Validate if text fields have input
-    const isFormValid =
-      registrationForm.province && registrationForm.city && registrationForm.barangay;
-
-    // Validate if the selected city and barangay share the same province
-    const isSameProvince =
-      registrationForm.city &&
-      registrationForm.barangay &&
-      registrationForm.city.province_code === registrationForm.province.province_code &&
-      registrationForm.barangay.city_code === registrationForm.city.city_code;
-
-    console.log('isFormValid:', isFormValid);
-    console.log('isSameProvince:', isSameProvince);
-
-    if (isFormValid && isSameProvince) {
-      // Add your submit logic here
-      console.log('Form is valid and ready for submission:', registrationForm);
-      // Clear the form after successful submission
-      setRegistrationForm({
-        province: null,
-        city: null,
-        barangay: null,
-      });
-      // Clear any existing errors
-      setCityError(false);
-      setBarangayError(false);
     } else {
-      console.log('Form is invalid. Please check your input.');
-      // Display error messages in helperText and clear text fields
-      setCityError(!isSameProvince);
-      setBarangayError(!isSameProvince);
-      setRegistrationForm((prevForm) => ({
-        ...prevForm,
-        city: null,
-        barangay: null,
-      }));
+      setFilteredBarangays([]);
     }
   };
+
+  const handleBarangayChange = (event, newValue) => {
+    setRegistrationForm((prevForm) => ({
+      ...prevForm,
+      userBarangay: newValue ? newValue.brgy_name : "", // Set brgy_name or an empty string if newValue is falsy
+    }));
+  };
+
+  console.log("Registration form:", registrationForm);
+
 
   //-------------------------------------Adresss Ennnd--------------------------------------
+
+
+  const handleDateChangeBirth= (date) => {
+    const formattedDate = date.format("YYYY-MM-DD");
+    setRegistrationForm((prevForm) => ({
+      ...prevForm,
+      userDob: formattedDate,
+    }));
+  };
+
+
+  ///// ---------------- End user Date of Birth---------------------------------------------------------
+
+
   const [rows, setRows] = useState([]);
 
   const handleChange = (index, field) => (event) => {
@@ -752,87 +687,29 @@ export default function PatientRegistrationForm() {
                   <Autocomplete
                     options={provincesData}
                     getOptionLabel={(option) => option.province_name}
-                    getOptionSelected={(option, value) => option.province_code === value.province_code}
-                    name="province"
-                    size="small"
-                    style={{ width: '100%' }}
-                    value={registrationForm.userProvince}
-                    onChange={(event, selectedProvince) => {
-                      setRegistrationForm({
-                        ...registrationForm,
-                        userProvince: selectedProvince.province_name ? selectedProvince.province_name : "",
-                      });
-                      handleProvinceChange(selectedProvince);
-                    }}
+                    value={provincesData.find((province) => province.province_name === registrationForm.userProvince) || null}
+                    onChange={handleProvinceChange}
                     renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Province"
-                        required
-                        variant="outlined"
-                        helperText={null}
-                      />
+                      <TextField {...params} label="Province" required />
                     )}
-                    clearOnBlur
-                    clearOnEscape
                   />
                 </Grid>
                 <Grid item xs={4} mt={2} >
                   <Autocomplete
                     options={filteredCities}
                     getOptionLabel={(option) => option.city_name}
-                    getOptionSelected={(option, value) => option.city_code === value.city_code}
-                    name="city"
-                    size="small"
-                    style={{ width: '100%' }}
-                    value={registrationForm.userTown}
-                    onChange={(event, selectedCity) => {
-                      setRegistrationForm({
-                        ...registrationForm,
-                        userTown: selectedCity.city_name ? selectedCity : "",
-                      });
-                      handleCityChange(selectedCity);
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="City"
-                        required
-                        variant="outlined"
-                        helperText={null}
-                      />
-                    )}
-                    clearOnBlur
-                    clearOnEscape
+                    value={filteredCities.find((city) => city.city_name === registrationForm.userTown) || null}
+                    onChange={handleCityChange}
+                    renderInput={(params) => <TextField {...params} label="City" required />}
                   />
                 </Grid>
                 <Grid item xs={4} mt={2}>
                   <Autocomplete
                     options={filteredBarangays}
                     getOptionLabel={(option) => option.brgy_name}
-                    getOptionSelected={(option, value) => option.brgy_code === value.brgy_code}
-                    name="barangay"
-                    size="small"
-                    style={{ width: '100%' }}
-                    value={registrationForm.userBarangay}
-                    onChange={(event, selectedBarangay) => {
-                      setRegistrationForm({
-                        ...registrationForm,
-                        userBarangay: selectedBarangay.brgy_name ? selectedBarangay.brgy_name : "",
-                      });
-                      handleCityChange(selectedBarangay);
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Barangay"
-                        required
-                        variant="outlined"
-                        helperText={null}
-                      />
-                    )}
-                    clearOnBlur
-                    clearOnEscape
+                    value={filteredBarangays.find((barangay) => barangay.brgy_name === registrationForm.userBarangay) || null}
+                    onChange={handleBarangayChange}
+                    renderInput={(params) => <TextField {...params} label="Barangay" required />}
                   />
                 </Grid>
                 <Grid item xs={12} mt={2}>
@@ -844,29 +721,23 @@ export default function PatientRegistrationForm() {
                   <FormControl required>
                     <LocalizationProvider dateAdapter={AdapterDayjs} required>
                       <DatePicker
-                        label="Date of birth"
-                        name='dateofbrith'                  
-                        value={registrationForm.userDob}
-                        style={{ width: ' 100%' }}
-                        renderInput={(params) => <TextField {...params} size='small' onChange={(text) => [setRegistrationForm(prev => { return { ...prev, userDob: moment(text)} })]} />}
+                        label="Date of Birth"
+                        value={dayjs(registrationForm.userDob)} // Convert back to dayjs object for DatePicker
+                        onChange={handleDateChangeBirth}
+                        renderInput={(params) => <TextField {...params} />}
                         disableFuture
-                        value={registrationForm.userDob}
-                        style={{ width: ' 100%' }}
-                        renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDob: params } })}
-                        />}
-                        disableFuture
-                        minDate={dayjs().subtract(45, 'year')}
-                        maxDate={dayjs().subtract(10, 'year')}
+                        minDate={dayjs().subtract(39, 'year')}
+                        maxDate={dayjs().subtract(18, 'year')}
                       />
                     </LocalizationProvider>
                   </FormControl>
                 </Grid>
                 <Grid item xs={2} mt={2} direction="row" textAlign="left" justifyContent="center">
-                  <Typography>
-                    {0}
+                  <Typography >
+                    <Typography fontWeight={600} color={'blue'}>
                     {moment(new Date, "YYYY/MM/DD").diff(moment(registrationForm.userDob, "YYYY/MM/DD"), "years")}
+                    </Typography>
                     <Box component="span" fontSize="18px" fontWeight="bold" color={'primary.main'}>
-                      <br />
                     </Box>{' '}
                     years old
                   </Typography>
@@ -1058,100 +929,13 @@ export default function PatientRegistrationForm() {
 
 
                 <Grid item xs={4} mt={2} >
-                  <Autocomplete
-                    options={provincesData}
-                    getOptionLabel={(option) => option.province_name}
-                    getOptionSelected={(option, value) => option.province_code === value.province_code}
-                    name="userProvince"
-                    size="small"
-                    style={{ width: '100%' }}
-                    value={registrationForm.userProvincebirth === undefined ? null : registrationForm.userProvincebirth}
-                    onChange={(event, selectedProvince) => {
-                      setRegistrationForm({
-                        ...registrationForm,
-                        userProvincebirth: selectedProvince ? selectedProvince.province_name : null,
-                      });
-                      handleProvinceChange(selectedProvince);
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Province"
-                        required
-                        variant="outlined"
-                        helperText={null}
-                      />
-                    )}
-                    clearOnBlur
-                    clearOnEscape
-                  />
+
                 </Grid>
                 <Grid item xs={4} mt={2} >
-                  <Autocomplete
-                    options={filteredCities}
-                    getOptionLabel={(option) => option.city_name}
-                    getOptionSelected={(option, value) => option.city_code === value.city_code}
-                    name="city"
-                    size="small"
-                    style={{ width: '100%' }}
-                    value={registrationForm.userTownbirth === undefined ? null : registrationForm.userTownbirth}
-                    onChange={(event, selectedCity) => {
-                      setRegistrationForm({
-                        ...registrationForm,
-                        userTownbirth: selectedCity ? selectedCity : null,
-                      });
-                      handleCityChange(selectedCity);
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="City"
-                        required
-                        variant="outlined"
-                        error={cityError}
-                        helperText={
-                          cityError
-                            ? 'City does not belong to the selected province'
-                            : null
-                        }
-                      />
-                    )}
-                    clearOnBlur
-                    clearOnEscape
-                  />
+
                 </Grid>
                 <Grid item xs={4} mt={2}>
-                  <Autocomplete
-                    options={filteredBarangays}
-                    getOptionLabel={(option) => option.brgy_name}
-                    getOptionSelected={(option, value) => option.brgy_code === value.brgy_code}
-                    name="barangay"
-                    size="small"
-                    style={{ width: '100%' }}
-                    value={registrationForm.userBarangaybirth === undefined ? null : registrationForm.userBarangaybirth}
-                    onChange={(event, selectedBarangay) => {
-                      setRegistrationForm({
-                        ...registrationForm,
-                        userBarangaybirth: selectedBarangay ? selectedBarangay : null,
-                      });
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Barangay"
-                        required
-                        variant="outlined"
-                        error={barangayError}
-                        helperText={
-                          barangayError
-                            ? 'Barangay does not belong to the selected province'
-                            : null
-                        }
-                      />
-                    )}
-                    clearOnBlur
-                    clearOnEscape
-                  />
+
 
                 </Grid>
 
@@ -1280,100 +1064,13 @@ export default function PatientRegistrationForm() {
               </Grid>
 
               <Grid item xs={4} mt={2} >
-                <Autocomplete
-                  options={provincesData}
-                  getOptionLabel={(option) => option.province_name}
-                  getOptionSelected={(option, value) => option.province_code === value.province_code}
-                  name="province"
-                  size="small"
-                  style={{ width: '100%' }}
-                  value={registrationForm.userProvinceMarrigae === undefined ? null : registrationForm.userProvinceMarrigae}
-                  onChange={(event, selectedProvince) => {
-                    setRegistrationForm({
-                      ...registrationForm,
-                      userProvinceMarrigae: selectedProvince ? selectedProvince : undefined,
-                    });
-                    handleProvinceChange(selectedProvince);
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Province"
-                      required
-                      variant="outlined"
-                      helperText={null}
-                    />
-                  )}
-                  clearOnBlur
-                  clearOnEscape
-                />
+
               </Grid>
               <Grid item xs={4} mt={2} >
-                <Autocomplete
-                  options={filteredCities}
-                  getOptionLabel={(option) => option.city_name}
-                  getOptionSelected={(option, value) => option.city_code === value.city_code}
-                  name="city"
-                  size="small"
-                  style={{ width: '100%' }}
-                  value={registrationForm.userTownMarriage === undefined ? null : registrationForm.userTownMarriage}
-                  onChange={(event, selectedCity) => {
-                    setRegistrationForm({
-                      ...registrationForm,
-                      userTownMarriage: selectedCity ? selectedCity : undefined,
-                    });
-                    handleCityChange(selectedCity);
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="City"
-                      required
-                      variant="outlined"
-                      error={cityError}
-                      helperText={
-                        cityError
-                          ? 'City does not belong to the selected province'
-                          : null
-                      }
-                    />
-                  )}
-                  clearOnBlur
-                  clearOnEscape
-                />
+
               </Grid>
               <Grid item xs={4} mt={2}>
-                <Autocomplete
-                  options={filteredBarangays}
-                  getOptionLabel={(option) => option.brgy_name}
-                  getOptionSelected={(option, value) => option.brgy_code === value.brgy_code}
-                  name="barangay"
-                  size="small"
-                  style={{ width: '100%' }}
-                  value={registrationForm.userBarangayMarriage === undefined ? null : registrationForm.userBarangayMarriage}
-                  onChange={(event, selectedBarangay) => {
-                    setRegistrationForm({
-                      ...registrationForm,
-                      userBarangayMarriage: selectedBarangay ? selectedBarangay : undefined,
-                    });
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Barangay"
-                      required
-                      variant="outlined"
-                      error={barangayError}
-                      helperText={
-                        barangayError
-                          ? 'Barangay does not belong to the selected province'
-                          : null
-                      }
-                    />
-                  )}
-                  clearOnBlur
-                  clearOnEscape
-                />
+
 
               </Grid>
 
@@ -1778,19 +1475,19 @@ export default function PatientRegistrationForm() {
                         }}
                       />
                     </Grid>
-                   
-                  
+
+
                   </LocalizationProvider>
 
 
                   <Grid xs={12}>
-                      <Grid xs={6}> <Box></Box></Grid>
+                    <Grid xs={6}> <Box></Box></Grid>
                     <Grid xs={3} flexDirection={'space-between'}>
                       <Button variant="contained" color="primary" onClick={() => handleCreateAccount()}>
                         Submit
                       </Button>
                     </Grid>
-                    </Grid>
+                  </Grid>
                 </Grid>
               </FormControl>
             </Grid>
