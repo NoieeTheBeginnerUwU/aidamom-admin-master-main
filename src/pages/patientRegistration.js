@@ -75,19 +75,19 @@ const newDate = dayjs();
 export default function PatientRegistrationForm() {
 
 
-  const [lmp, setLmp] = useState(null);
-  const [edd, setEdd] = useState(null);
-  const [aog, setAog] = useState(null);
+  // const [lmp, setLmp] = useState(null);
+  // const [edd, setEdd] = useState(null);
+  // const [aog, setAog] = useState(null);
 
-  const handleDateChangePregnancyCal = (date) => {
-    setLmp(date);
-    const eddDate = dayjs(date).add(280, 'day');
-    setEdd(eddDate.format('ddd MMM DD YYYY'));
-    const aogDays = dayjs().diff(date, 'day');
-    const aogWeeks = Math.floor(aogDays / 7);
-    const aogMonths = Math.floor(aogDays / 30);
-    setAog(`${aogMonths} months and ${aogWeeks % 4} weeks`);
-  };
+  // const handleDateChangePregnancyCal = (date) => {
+  //   setLmp(date);
+  //   const eddDate = dayjs(date).add(280, 'day');
+  //   setEdd(eddDate.format('ddd MMM DD YYYY'));
+  //   const aogDays = dayjs().diff(date, 'day');
+  //   const aogWeeks = Math.floor(aogDays / 7);
+  //   const aogMonths = Math.floor(aogDays / 30);
+  //   setAog(`${aogMonths} months and ${aogWeeks % 4} weeks`);
+  // };
 
 
 
@@ -115,7 +115,7 @@ export default function PatientRegistrationForm() {
     userProvincebirth: "",
     userBarangaybirth: "",
     userTownbirth: "",
-    userLMP: "",
+    userLMP: dayjs().format("YYYY-MM-DD"),
     //family details
     userFathersFName: "",
     userFathersLName: "",
@@ -573,13 +573,25 @@ export default function PatientRegistrationForm() {
 
 
   const handleDateChangeLMP = (date) => {
-    const formattedDate = date.format("YYYY-MM-DD");
+    const formattedDate = date.format('YYYY-MM-DD');
     setRegistrationForm((prevForm) => ({
       ...prevForm,
       userLMP: formattedDate,
     }));
   };
+  const lmp = registrationForm.userLMP;
 
+  // Calculate AOG and EDD
+  const calculateAOGandEDD = (lmpDate) => {
+    if (lmpDate) {
+      const edd = dayjs(lmpDate).add(280, 'days'); // Assuming 280 days for pregnancy
+      const aog = dayjs().diff(lmpDate, 'days');
+      return { edd, aog };
+    }
+    return { edd: null, aog: null };
+  };
+
+  const { edd, aog } = calculateAOGandEDD(lmp);
 
   ///// ---------------- End of Handle Date Pickers---------------------------------------------------------
 
@@ -684,9 +696,6 @@ export default function PatientRegistrationForm() {
       [`${category.toLowerCase()}${behavior.replace(/\s+/g, '')}`]: event.target.checked,
     }));
   };
-
-
-
 
 
 
@@ -1665,7 +1674,7 @@ export default function PatientRegistrationForm() {
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox checked={checked} onChange={handleTriggerGTI} />}
-                  label="Genetical Track Infections :"
+                  label="Genetal Track Infections :"
                 />
                 {checked && <TextField label="Specify" variant='standard' value={registrationForm.userGenitalTrackInfection}   onChange={(text) => setRegistrationForm(prev => { return { ...prev, userGenitalTrackInfection: text.target.value } })}/>}
               </Grid>
@@ -1719,78 +1728,21 @@ export default function PatientRegistrationForm() {
 
 
             </Grid>
-            <Grid item xs={12} mb={2}>
-              <Box>
-                <Typography> <Box component="span" fontWeight='bold'>18. LMP-</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please pick the correct date for LMP</Box></Typography>
-              </Box>
-            </Grid>
-
             <Grid container xs={12} direction="row">
-              <FormControl required>
-                <Grid container direction="row">
-                <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                      <DatePicker
-                      label="Date of Birth"
-                      value={dayjs(registrationForm.userDob)} // Convert back to dayjs object for DatePicker
-                      onChange={handleDateChangeBirth}
-                      renderInput={(params) => <TextField {...params} />}
-                      disableFuture
-                      minDate={dayjs().subtract(39, 'year')}
-                      maxDate={dayjs().subtract(18, 'year')}
-                      />
-                    </LocalizationProvider>
-
-
-                  <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                    <Grid item xs={4}>
-                      <DatePicker
-                        size='small'
-                        label="Last Menstrual Period"
-                        name='LMP'
-                        value={lmp}
-                        style={{ width: ' 100%' }}
-                        onChange={(date) => handleDateChangePregnancyCal(date)}
-                        renderInput={(params) => <TextField {...params} />}
-                        disableFuture
-                        maxDate={dayjs().subtract(1, 'week')}
-                      />
-                    </Grid>
-                    <Grid item xs={3.5}>
-                      <TextField
-                        label="Estimated Date of Delivery"
-                        value={edd || ''}
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={3.5}>
-                      <TextField
-                        label="Age of Gestation (days)"
-                        value={aog || ''}
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                      />
-                    </Grid>
-
-
-                  </LocalizationProvider>
-
-
-                  <Grid xs={12}>
-                    <Grid xs={6}> <Box></Box></Grid>
+             
+  
+                  <Grid xs={11}>
+                    
                    
                   </Grid>
-                  <Grid xs={12} flexDirection={'space-between'}>
+                  <Grid xs={1} flexDirection={'space-between'}>
                       <Box>
                       <Button variant="contained" size="large" backgroundColor="primary.main" onClick={() => handleCreateAccount()} padding={4} >
                         Submit
                       </Button>
                       </Box>
                     </Grid>
-                </Grid>
-              </FormControl>
+
             </Grid>
 
 
