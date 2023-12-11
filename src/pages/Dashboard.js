@@ -686,6 +686,10 @@ const Dashboard = ({ counter }) => {
   const [month, setMonth] = useState("January");
   const [year_, setYear_] = useState(2023);
 
+  useEffect(()=>{
+    alert("Month: " + month +" Year: "+ year_  )
+  },[month,year_])
+
   return (
 //     <div style={{ width: '100%', height: '100%', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'start', overflow: 'hidden', justifyContent: 'start' }}>
 //       <div style={{ width: '100%', height: '94vh', backgroundColor: 'white', overflowX: 'hidden', overflowY: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start' }}>

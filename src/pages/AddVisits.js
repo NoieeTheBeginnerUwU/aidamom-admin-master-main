@@ -167,6 +167,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
         }
     }
 
+    const [lmp_, setLmp] = useState("");
     const submitVisit = async() =>{
         let arr = [];
         const querySnapshot = await getDocs(query(collection(database,"onlineAppointments"),where("appointmentDate","==",moment(new Date()).format("YYYY/MM/DD")),where("uid","==",selectedPatient.docid)))
@@ -185,6 +186,11 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
             updateDoc(doc(database,"userData",selectedPatient.docid),{
                 lastVisit: moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY")
             })
+            if(selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"){
+                updateDoc(doc(database,"userData",selectedPatient.docid),{
+                    lastPeriod: lmp_
+                })
+            }
             addDoc(collection(database,"notifications"),{
                 uid: selectedPatient.docid,
                 body: "Your checkup today was saved successfully.",
@@ -303,26 +309,19 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                     size='small'
                                     value={selectedDate}
                                     onChange={(newValue) => {
-                                        handleDateChange(newValue);
+                                        [handleDateChange(newValue),alert(newValue)];
                                     }}
                                     renderInput={(params) => <TextField {...params} variant="standard" fullWidth />}
-                                    maxDate={dayjs()} // Restrict date selection to today and past dates
+                                 // Restrict date selection to today and past dates
                                 />
                             </Grid>
                             
                             {
                                 selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"&&
-                                <Grid item xs={6}>
-                                    <DatePicker
-                                        label="Date Last Menstrual Period"
-                                        size='small'
-                                        onChange={(newValue) => {
-                                            [setLMP(moment(newValue).format("YYYY/MM/DD")),alert(moment(newValue).format("YYYY/MM/DD"))]
-                                        }}
-                                        renderInput={(params) => <TextField {...params} variant="standard" fullWidth />}
-                                        maxDate={dayjs()} // Restrict date selection to today and past dates
-                                    />
+                                <Grid item xs={selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"?6:12}>
+                                    <input type='date' onChange={(e)=> setLmp(e.target.value)} style={{width:'50%',height:40}}/>
                                 </Grid>
+                                
                             }
                             
                             <Grid item xs={3}>
