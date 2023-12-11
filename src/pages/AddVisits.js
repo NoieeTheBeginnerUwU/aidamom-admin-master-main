@@ -221,10 +221,10 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                     setWeight("");
                     setSystolic("");
                     setDiastolic("");
-                    setDilates("");
-                    setEfficaces("");
-                    setFetalMovement("");
-                    setFundalHeight("");
+                    setDilates(0);
+                    setEfficaces(0);
+                    setFetalMovement(0);
+                    setFundalHeight(0);
                     setPresentation("");
                     setText("");
                     

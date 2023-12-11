@@ -443,7 +443,7 @@ dischargeMedication:"",
   };
 
 
-  const [registrationForm, setRegistrationForm] = useState({
+  const [registrationForm, setDischarge] = useState({
     //basic personal details
     userFname: "",
     userMname: "",
@@ -1265,7 +1265,82 @@ dischargeMedication:"",
       console.log("USERS"+userSearch)
   }
 
+  const [discharge, setDischarger] = useState({
+    childFname:"",
+    childLname:"",
+    childMname:"",
+    childSuffix:"",
+    childDob:"",
+    childWeight:"",
+    childGender:"",
+    typeOfDelivery:"",
+    healthProfessionalAttended:"",
+    urineOutputDiagnosis:"",
+    stoolDiagnosis:"",
+    bcgDate:"",
+    hepaBDate:"",
+    expandedNewBornScreeningResult:"",
+    expandedNewBornScreeningRefusal:"",
+    newbornHearingResult:"",
+    newbornHearingRefusal:"",
+    finalDiagnosis:"",
+    homeMedication:"",
+    dateOfDischarge:"",
+    followUpCheckup:"",
+    attendingPhysician:"",
+    nurseOnDuty:"",
+    deliveredBy:"",
+    receivedBy:"",
+    dateCreated: moment(new Date()).format("YYYY/MM/DD"),
+    day:moment(new Date()).format("DD"),
+    month:moment(new Date()).format("MM"),
+    year:moment(new Date()).format("YYYY"),
+  })
   
+  const handleDischarge = async() => {
+    try{
+      updateDoc(doc(database,"userData",selectedRow.docid),{
+        lastPeriod:""
+      })
+      addDoc(collection(database,"discharge_child"),{
+        motherId:selectedRow.docid,
+        motherName: selectedRow.userFname + " " + selectedRow.userLname,
+        motherAge: moment(new Date(),"YYYY/MM/DD").diff(moment(selectedRow.userDob,"YYYY/MM/DD"),"years"),
+        deliveredVia:"Vaginal",
+        childFame:discharge.childFname,
+        childLname:discharge.childLname,
+        childMname:discharge.childMname,
+        childSuffix:discharge.childSuffix,
+        childDob:discharge.childDob,
+        childWeight:discharge.childWeight,
+        childGender:discharge.childGender,
+        typeOfDelivery:discharge.typeOfDelivery,
+        healthProfessionalAttended:discharge.healthProfessionalAttended,
+        urineOutputDiagnosis:discharge.urineOutputDiagnosis,
+        stoolDiagnosis:discharge.stoolDiagnosis,
+        bcgDate:discharge.bcgDate,
+        hepaBDate:discharge.hepaBDate,
+        expandedNewBornScreeningResult:discharge.expandedNewBornScreeningResult,
+        expandedNewBornScreeningRefusal:discharge.expandedNewBornScreeningRefusal,
+        newbornHearingResult:discharge.newbornHearingResult,
+        newbornHearingRefusal:discharge.newbornHearingRefusal,
+        finalDiagnosis:discharge.finalDiagnosis,
+        homeMedication:discharge.homeMedication,
+        dateOfDischarge:discharge.dateOfDischarge,
+        followUpCheckup:discharge.followUpCheckup,
+        attendingPhysician:discharge.attendingPhysician,
+        nurseOnDuty:discharge.nurseOnDuty,
+        deliveredBy:discharge.deliveredBy,
+        receivedBy:discharge.receivedBy,
+        dateCreated: moment(new Date()).format("YYYY/MM/DD"),
+        day:moment(new Date()).format("DD"),
+        month:moment(new Date()).format("MM"),
+        year:moment(new Date()).format("YYYY")
+      })
+    }catch(e){
+      alert(e)
+    }
+  }
 
   return (
 
@@ -1752,7 +1827,7 @@ dischargeMedication:"",
                               variant="outlined"
                               size='small'
                               value={registrationForm.userChildLname}
-                              onChange={(text) => setRegistrationForm(prev => { return { ...prev, userChildLname: text.target.value } })}
+                              onChange={(text) => setDischarge(prev => { return { ...prev, childLname: text.target.value } })}
                               required
 
                             />
@@ -1766,7 +1841,7 @@ dischargeMedication:"",
                               size='small'
 
                               value={registrationForm.userChildFname}
-                              onChange={(text) => setRegistrationForm(prev => { return { ...prev, userChildFname: text.target.value } })}
+                              onChange={(text) => setDischarge(prev => { return { ...prev, childFname: text.target.value } })}
                               required
 
                             />
@@ -1780,7 +1855,7 @@ dischargeMedication:"",
                               variant="outlined"
                               size='small'
                               value={registrationForm.userChildMname}
-                              onChange={(text) => setRegistrationForm(prev => { return { ...prev, userChildMname: text.target.value } })}
+                              onChange={(text) => setDischarge(prev => { return { ...prev, childMname: text.target.value } })}
 
                             />
                           </Grid>
@@ -1804,7 +1879,7 @@ dischargeMedication:"",
                               name="userSuffix"
                               size='small'
                               value={registrationForm.userSuffix}
-                              onChange={(text) => setRegistrationForm(prev => { return { ...prev, userSuffix: text.target.value } })}
+                              onChange={(text) => setDischarge(prev => { return { ...prev, childuffix: text.target.value } })}
                               disabled={!checkboxEnable}
                             >
 
@@ -1833,7 +1908,7 @@ dischargeMedication:"",
                                   name='dateofbrith'
                                   value={registrationForm.ChildDateofBirth}
                                   style={{ width: ' 100%' }}
-                                  renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDob: params } })}
+                                  renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setDischarge(prev => { return { ...prev, childDob: params } })}
                                   />}
                                   disableFuture
                                 // minDate={dayjs().subtract(45, 'year')}
@@ -1868,11 +1943,11 @@ dischargeMedication:"",
                                 defaultValue="female"
                                 name="gender"
                                 value={registrationForm.userSex}
-                                onChange={(text) => setRegistrationForm(prev => { return { ...prev, userSex: text.target.value } })}
+                                
 
                               >
-                                <FormControlLabel value="female" control={<Radio />} label="Female" />
-                                <FormControlLabel value="male" control={<Radio />} label="Male" />
+                                <FormControlLabel value="female" onChange={(text) => setDischarge(prev => { return { ...prev, childGender: text.target.value } })} control={<Radio />} label="Female" />
+                                <FormControlLabel value="male" onChange={(text) => setDischarge(prev => { return { ...prev, childGender: text.target.value } })} control={<Radio />} label="Male" />
                               </RadioGroup>
                             </FormControl>
                           </Grid>
@@ -1883,7 +1958,7 @@ dischargeMedication:"",
                                 labelId="delivery-type-label"
                                 id="delivery-type"
                                 value={deliveryType}
-                                onChange={handleChange5}
+                                onChange={(text) => setDischarge(prev => { return { ...prev, typeOfDelivery: text.target.value } })}
                                 label="Type of Delivery"
                               >
                                 <MenuItem value="">
@@ -1902,7 +1977,7 @@ dischargeMedication:"",
                                 labelId="delivery-type-label"
                                 id="delivery-type"
                                 value={professionalAttended}
-                                onChange={handleChange6}
+                                onChange={(text) => setDischarge(prev => { return { ...prev, healthProfessionalAttended: text.target.value } })}
                                 label="Health Professional Attended"
                               >
                                 <MenuItem value="">
@@ -1922,7 +1997,7 @@ dischargeMedication:"",
                                   control={<Checkbox checked={checked} onChange={URINEOUTPUT} />}
                                   label="URINE OUTPUT :"
                                 />
-                                {checked && <TextField label="Diagnosis" variant='standard' />}
+                                {checked && <TextField label="Diagnosis" variant='standard'onChange={(text) => setDischarge(prev => { return { ...prev, urineOutputDiagnosis: text.target.value } })} />}
                               </Box>
                             </Grid><Grid xs={3}>
                               <Box marginLeft={4} >
@@ -1931,7 +2006,7 @@ dischargeMedication:"",
                                   control={<Checkbox checked={checked1} onChange={STOOL} />}
                                   label="STOOL:"
                                 />
-                                {checked1 && <TextField label="Diagnosis" variant='standard' />}
+                                {checked1 && <TextField label="Diagnosis" variant='standard' onChange={(text) => setDischarge(prev => { return { ...prev, stoolDiagnosis: text.target.value } })} />}
                               </Box>
                             </Grid><Grid xs={3}>
                               <Box>
@@ -1941,18 +2016,7 @@ dischargeMedication:"",
                                 />
                                 {checked2 && <FormControl required>
                                   <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                    <DatePicker
-                                      size='small'
-                                      label="BCG"
-                                      name='bcg'
-                                      value={registrationForm.Childbcg}
-                                      style={{ width: ' 100%' }}
-                                      renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDob: params } })}
-                                      />}
-                                      disableFuture
-                                    // minDate={dayjs().subtract(45, 'year')}
-                                    // maxDate={dayjs().subtract(10, 'year')}
-                                    />
+                                    <input type='date' onChange={(text) => setDischarge(prev => { return { ...prev, bcgDate: text.target.value } })}/>
                                   </LocalizationProvider>
                                 </FormControl>}
                               </Box>
@@ -1964,18 +2028,7 @@ dischargeMedication:"",
                                 />
                                 {checked3 && <FormControl required>
                                   <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                    <DatePicker
-                                      size='small'
-                                      label="HEPA-B"
-                                      name='hepab'
-                                      value={registrationForm.ChildHepaB}
-                                      style={{ width: ' 100%' }}
-                                      renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDob: params } })}
-                                      />}
-                                      disableFuture
-                                    // minDate={dayjs().subtract(45, 'year')}
-                                    // maxDate={dayjs().subtract(10, 'year')}
-                                    />
+                                    <input type='date' onChange={(text) => setDischarge(prev => { return { ...prev, hepaBDate: text.target.value } })}/>
                                   </LocalizationProvider>
                                 </FormControl>}
                               </Box>
@@ -1998,7 +2051,7 @@ dischargeMedication:"",
                                 {value2 === 'yes' && (
                                   <FormControl fullWidth>
                                     <InputLabel id="Results">Results</InputLabel>
-                                    <Select value={selectValue2} onChange={handleSelectChange} id='Results' label="Results">
+                                    <Select value={selectValue2} onChange={(text) => setDischarge(prev => { return { ...prev, expandedNewBornScreeningResult: text.target.value } })} id='Results' label="Results">
                                       <MenuItem value={'Negative'}>Negative</MenuItem>
                                       <MenuItem value={'Trait'}>Trait</MenuItem>
                                       <MenuItem value={'Borderline'}>Borderline</MenuItem>
@@ -2010,7 +2063,7 @@ dischargeMedication:"",
 
                                   <FormControl fullWidth>
                                     <InputLabel id="Reason for refusal">Reason for refusal</InputLabel>
-                                    <Select value={selectValue2} onChange={handleSelectChange} id='Reason for refusal' label="Reason for refusal">
+                                    <Select value={selectValue2} onChange={(text) => setDischarge(prev => { return { ...prev, expandedNewBornScreeningRefusal: text.target.value } })} id='Reason for refusal' label="Reason for refusal">
                                       <MenuItem value={'Religious belief'}>Religious belief</MenuItem>
                                     </Select>
                                   </FormControl>
@@ -2030,7 +2083,7 @@ dischargeMedication:"",
                                 {value3 === 'yes' && (
                                   <FormControl fullWidth>
                                     <InputLabel id="Results">Results</InputLabel>
-                                    <Select value={selectValue3} onChange={handleSelectChange3} id='Results' label="Results">
+                                    <Select value={selectValue3} onChange={(text) => setDischarge(prev => { return { ...prev, newbornHearingResult: text.target.value } })} id='Results' label="Results">
                                       <MenuItem value={'Bilateral Pass'}>Bilateral Pass</MenuItem>
                                       <MenuItem value={'Unilateral Refer'}>Unilateral Refer</MenuItem>
                                       <MenuItem value={'Bilateral Refer'}>Bilateral Refer</MenuItem>
@@ -2042,7 +2095,7 @@ dischargeMedication:"",
 
                                   <FormControl fullWidth>
                                     <InputLabel id="Reason for refusal">Reason for refusal</InputLabel>
-                                    <Select value={selectValue3} onChange={handleSelectChange3} id='Reason for refusal' label="Reason for refusal">
+                                    <Select value={selectValue3} onChange={(text) => setDischarge(prev => { return { ...prev, newbornHearingRefusal: text.target.value } })} id='Reason for refusal' label="Reason for refusal">
                                       <MenuItem value={'Financial Constraint'}>Financial Constraint</MenuItem>
                                     </Select>
                                   </FormControl>
@@ -2062,7 +2115,7 @@ dischargeMedication:"",
                                   multiline
                                   rows={4}
                                   value={finalDiagnosis}
-                                  onChange={handleFinalDiagnosisChange}
+                                  onChange={(text) => setDischarge(prev => { return { ...prev, finalDiagnosis: text.target.value } })}
                                   variant="outlined"
                                   fullWidth
                                 />
@@ -2073,7 +2126,7 @@ dischargeMedication:"",
                                   multiline
                                   rows={4}
                                   value={homeMedication}
-                                  onChange={handleHomeMedicationChange}
+                                  onChange={(text) => setDischarge(prev => { return { ...prev, homeMedication: text.target.value } })}
                                   variant="outlined"
                                   fullWidth
                                 />
@@ -2082,18 +2135,7 @@ dischargeMedication:"",
                             <Grid xs={3}>
                               <FormControl required>
                                 <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                  <DatePicker
-                                    size='small'
-                                    label="Date of Discharge"
-                                    name='DateodDischarge'
-                                    value={registrationForm.ChildDateofDischarge}
-                                    style={{ width: ' 100%' }}
-                                    renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, ChildDateofDischarge: params } })}
-                                    />}
-
-
-                                    maxDate={dayjs().add(1, 'week')}
-                                  />
+                                  <input type='date' onChange={(text) => setDischarge(prev => { return { ...prev, dateOfDischarge: text.target.value } })}/>
                                 </LocalizationProvider>
                               </FormControl>
 
@@ -2103,18 +2145,7 @@ dischargeMedication:"",
 
                               <FormControl required>
                                 <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                  <DatePicker
-                                    size='small'
-                                    label="Follow-up Check-up"
-                                    name='FollowUp'
-                                    value={registrationForm.ChildFollowUpCheckUp}
-                                    style={{ width: ' 100%' }}
-                                    renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, ChildFollowUpCheckUp: params } })}
-                                    />}
-
-                                    disablePast
-                                    maxDate={dayjs().add(1, 'year')}
-                                  />
+                                  <input type='date' onChange={(text) => setDischarge(prev => { return { ...prev, followUpCheckup: text.target.value } })}/>
                                 </LocalizationProvider>
                               </FormControl>
 
@@ -2126,6 +2157,7 @@ dischargeMedication:"",
                                   label="ATTENDING PHYSISCIAN"
                                   fullWidth
                                   variant='standard'
+                                  onChange={(text) => setDischarge(prev => { return { ...prev, attendingPhysician: text.target.value } })}
                                 ></TextField>
 
 
@@ -2135,6 +2167,7 @@ dischargeMedication:"",
                                   label="NURSE ON DUTY"
                                   fullWidth
                                   variant='standard'
+                                  onChange={(text) => setDischarge(prev => { return { ...prev, nurseOnDuty: text.target.value } })}
                                 ></TextField>
 
 
@@ -2152,6 +2185,7 @@ dischargeMedication:"",
                                   label="DELIVERED BY"
                                   fullWidth
                                   variant='standard'
+                                  onChange={(text) => setDischarge(prev => { return { ...prev, deliveredBy: text.target.value } })}
                                 ></TextField>
 
 
@@ -2161,6 +2195,7 @@ dischargeMedication:"",
                                   label="RECEIVED BY"
                                   fullWidth
                                   variant='standard'
+                                  onChange={(text) => setDischarge(prev => { return { ...prev, receivedBy: text.target.value } })}
                                 ></TextField>
 
 
@@ -2182,7 +2217,9 @@ dischargeMedication:"",
 
 
                           
-
+                                  <Button onClick={()=> handleDischarge()} >
+                                    handle discharge
+                                  </Button>
 
                         </Grid>
 
