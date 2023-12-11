@@ -129,12 +129,12 @@ const DischargeSummary = () => {
             <td style={{ width: '55%' }}>
               <div>
                 <label>DATE DISCHARGE : </label>
-                <input type="date" id="datedischarge" className="long"class="centered-input"  style={{ width: '2  0%' }}/>
+                <input type="date" id="datedischarge" className="long"class="centered-input"  style={{ width: '40%' }}/>
                 <br />
                 <br />
                 <label>FINAL DIAGNOSIS</label>
                 <br />
-                <textarea cols="55" rows="5"></textarea>
+                <textarea cols="55" rows="5" class='centered-input'></textarea>
               </div>
             </td>
             <td>
@@ -187,7 +187,7 @@ const DischargeSummary = () => {
         <div align="right">
           <h4 align="right">RECEIVED BY:</h4>
           <br />
-          <input type="text" id="province" className="long" class="centered-input" />
+          <input type="text" id="province" className="long" class="centered-input"  style={{width:'30%'}}/>
         </div>
       </div>
     </div>

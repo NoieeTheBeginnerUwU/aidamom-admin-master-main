@@ -42,6 +42,7 @@ const Consent = () => {
     </Box>
     <br/>
          <div class="center-div" alignItems='center' textAlign='center' style={{width:'15%'}}>
+          <br/>
         <h4 ><strong>CONSENT FORM</strong></h4>
         <br />
           <br />
@@ -60,8 +61,8 @@ const Consent = () => {
             <input type="number" id="age" style={{ width: '5%' }}  class="centered-input" /> taong
             gulang,<input type="text" id="civilstatus" style={{ width: '23%' }} class="centered-input"  />
             <br />
-            <i style={{ margin: '24%' }}>(pangalan) </i>{' '}
-            <i style={{ marginRight: '20%' }}>(edad)</i>{' '}
+            <i style={{ margin: '20%' }}>(pangalan) </i>{' '}
+            <i style={{ marginRight: '18%' }}>(edad)</i>{' '}
             <i>(civil status)</i>
             <br /> <br /> nakatira sa
             <input style={{ width: '55%' }} class="centered-input"  />, ay pinahihintulutan ang nurse,
@@ -95,11 +96,11 @@ const Consent = () => {
           />
           <input type="text" id="kliyente" style={{ width: '35%' }} class="centered-input"  />
           <p>
-            <b style={{ margin: '10%', marginRight: '60%' }}>SAKSI</b>{' '}
-            <b>KLIYENTE</b>
+            <b style={{ margin: '10%', marginRight: '45%' }}>SAKSI</b>{' '}
+            <b style={{marginLeft:'10%'}}>KLIYENTE</b>
           </p>
           <Box display="flex" flexDirection="row" justifyContent="space-between" alignItems="center">
-            <Box ml={5}>
+            <Box ml={10}>
            (Pangalan atLagda) 
            </Box>
             <Box mr={11}>

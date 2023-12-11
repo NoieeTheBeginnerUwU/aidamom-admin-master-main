@@ -1318,7 +1318,7 @@ dischargeMedication:"",
           aria-describedby="simple-modal-description"
         >
           <Box sx={{
-            position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '90%',
+            position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '90%', height: '95%',
             bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4
           }}>
             <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -1397,7 +1397,7 @@ dischargeMedication:"",
 
 
 
-      <div style={{ height: 600, width: '100%', marginTop: '10px' }}>
+      <div style={{ height: '90%', width: '100%', marginTop: '5px' }}>
         <DataGrid
           rows={userSearch}
           columns={columns}
@@ -1411,7 +1411,7 @@ dischargeMedication:"",
           disableSelectionOnClick
           componentsProps={{
             columnMenu: {
-              style: { padding: '20px' },
+              style: { padding: '5px' },
             },
           }}
         />
@@ -1424,12 +1424,12 @@ dischargeMedication:"",
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: '85%', // Set the desired width
+          width: '90%', // Set the desired width
           maxHeight: '95%', // Set the maximum height
           overflow: 'auto', // Make it scrollable
           bgcolor: 'background.paper',
           boxShadow: 24,
-          p: 4,
+          p: 5,
         }}>
 
           <Box sx={{ flexGrow: 1 }}>
@@ -1467,7 +1467,7 @@ dischargeMedication:"",
                 </Grid>
               </Grid>
               {/* --------------------------------------Taaaaaaab ----------------------------------------------------------------------------------------------------------------- */}
-              <Grid item xs={10}>
+              <Grid item xs={9}>
 
                 <Box padding={.3} sx={{ width: '100%', height: '100%' }} marginTop={0} mb={0}>
 
@@ -1777,27 +1777,27 @@ dischargeMedication:"",
                         </Grid>
                         <Grid container flexDirection={'row'} spacing={1}>
                           <Grid item xs={3} mt={2}>
-                            <TextField name="userChildLname"
+                            <TextField name="ChildLname"
                               fullWidth
                               label="Lastname (Apelyido)"
                               variant="outlined"
                               size='small'
-                              value={registrationForm.userChildLname}
-                              onChange={(text) => setDischarge(prev => { return { ...prev, childLname: text.target.value } })}
+                              value={discharge.childLname}
+                              onChange={(text) => setDischarger(prev => { return { ...prev, childLname: text.target.value } })}
                               required
 
                             />
                           </Grid>
                           <Grid item xs={3} mt={2}>
-                            <TextField name="userChildFname"
+                            <TextField name="ChildFname"
                               fullWidth
 
                               label="Firstname (Pangalan)"
                               variant="outlined"
                               size='small'
 
-                              value={registrationForm.userChildFname}
-                              onChange={(text) => setDischarge(prev => { return { ...prev, childFname: text.target.value } })}
+                              value={discharge.childFname}
+                              onChange={(text) => setDischarger(prev => { return { ...prev, childFname: text.target.value } })}
                               required
 
                             />
@@ -1810,8 +1810,8 @@ dischargeMedication:"",
                               label="Middlename (Gitnang Pangalan)"
                               variant="outlined"
                               size='small'
-                              value={registrationForm.userChildMname}
-                              onChange={(text) => setDischarge(prev => { return { ...prev, childMname: text.target.value } })}
+                              value={discharge.childMname}
+                              onChange={(text) => setDischarger(prev => { return { ...prev, childMname: text.target.value } })}
 
                             />
                           </Grid>
@@ -1834,8 +1834,8 @@ dischargeMedication:"",
                               labelId="userSuffix"
                               name="userSuffix"
                               size='small'
-                              value={registrationForm.userSuffix}
-                              onChange={(text) => setDischarge(prev => { return { ...prev, childuffix: text.target.value } })}
+                              value={discharge.childSuffix}
+                              onChange={(text) => setDischarger(prev => { return { ...prev, childSuffix: text.target.value } })}
                               disabled={!checkboxEnable}
                             >
 
@@ -1850,25 +1850,17 @@ dischargeMedication:"",
                             </Select>
                           </Grid>
                           <Grid item xs={12}>
-                            <Box marginBottom={4} marginTop={3}>
+                            <Box marginBottom={5} marginTop={5}  backgroundColor="#F0F2F5" padding={1}>
                               <Typography> <Box component="span" fontWeight='bold'>2. Birth Details -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please indicate the details accurately.</Box></Typography>
                             </Box>
                           </Grid>
                           <Grid xs={2}>
                             <FormControl required>
                               <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                <DatePicker
-                                  size='small'
-                                  label="Date of birth"
-                                  name='dateofbrith'
-                                  value={dayjs(registrationForm.ChildDateofBirth)}
-                                  style={{ width: ' 100%' }}
-                                  renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setDischarge(prev => { return { ...prev, childDob: dayjs(params).format("YYYY/MM/DD") } })}
-                                  />}
-                                  disableFuture
-                                // minDate={dayjs().subtract(45, 'year')}
-                                // maxDate={dayjs().subtract(10, 'year')}
-                                />
+
+                              <TextField variant='standard' fullWidth type='date' label="Date of birth"  value={discharge.childDob} onChange={(text) => setDischarger(prev => { return { ...prev, childDob: text.target.value } })}/>
+
+                        
                               </LocalizationProvider>
                             </FormControl>
 
@@ -1882,6 +1874,8 @@ dischargeMedication:"",
                               size='large'
                               variant="standard"
                               type="number"
+                              value={discharge.childWeight}
+                              onChange={(text) => setDischarger(prev => { return { ...prev, childWeight: text.target.value } })}
                               inputProps={{ min: 30, max: 200 }}
                               InputProps={{
                                 endAdornment: <InputAdornment position="end">kg</InputAdornment>,
@@ -1897,12 +1891,12 @@ dischargeMedication:"",
                                 aria-labelledby="gender"
                                 defaultValue="female"
                                 name="gender"
-                                value={registrationForm.userSex}
+                                value={discharge.childGender}
                                 
 
                               >
-                                <FormControlLabel value="female" onChange={(text) => setDischarge(prev => { return { ...prev, childGender: text.target.value } })} control={<Radio />} label="Female" />
-                                <FormControlLabel value="male" onChange={(text) => setDischarge(prev => { return { ...prev, childGender: text.target.value } })} control={<Radio />} label="Male" />
+                                <FormControlLabel value="female" onChange={(text) => setDischarger(prev => { return { ...prev, childGender: text.target.value } })} control={<Radio />} label="Female" />
+                                <FormControlLabel value="male" onChange={(text) => setDischarger(prev => { return { ...prev, childGender: text.target.value } })} control={<Radio />} label="Male" />
                               </RadioGroup>
                             </FormControl>
                           </Grid>
@@ -1912,8 +1906,8 @@ dischargeMedication:"",
                               <Select
                                 labelId="delivery-type-label"
                                 id="delivery-type"
-                                value={deliveryType}
-                                onChange={(text) => setDischarge(prev => { return { ...prev, typeOfDelivery: text.target.value } })}
+                                value={discharge.typeOfDelivery}
+                                onChange={(text) => setDischarger(prev => { return { ...prev, typeOfDelivery: text.target.value } })}
                                 label="Type of Delivery"
                               >
                                 <MenuItem value="">
@@ -1931,8 +1925,8 @@ dischargeMedication:"",
                               <Select
                                 labelId="delivery-type-label"
                                 id="delivery-type"
-                                value={professionalAttended}
-                                onChange={(text) => setDischarge(prev => { return { ...prev, healthProfessionalAttended: text.target.value } })}
+                                value={discharge.healthProfessionalAttended}
+                                onChange={(text) => setDischarger(prev => { return { ...prev, healthProfessionalAttended: text.target.value } })}
                                 label="Health Professional Attended"
                               >
                                 <MenuItem value="">
@@ -1945,6 +1939,12 @@ dischargeMedication:"",
                             </FormControl>
 
                           </Grid>
+
+                          <Grid item xs={12}>
+                            <Box marginBottom={5} marginTop={5}  backgroundColor="#F0F2F5" padding={1}>
+                              <Typography> <Box component="span" fontWeight='bold'>3. Vaccine and Test -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please indicate the Diagnosis and date accurately.</Box></Typography>
+                            </Box>
+                          </Grid>
                           <Grid container item xs={12} flexDirection={"row"}>
                             <Grid xs={3}>
                               <Box >
@@ -1952,7 +1952,7 @@ dischargeMedication:"",
                                   control={<Checkbox checked={checked} onChange={URINEOUTPUT} />}
                                   label="URINE OUTPUT :"
                                 />
-                                {checked && <TextField label="Diagnosis" variant='standard'onChange={(text) => setDischarge(prev => { return { ...prev, urineOutputDiagnosis: text.target.value } })} />}
+                                {checked && <TextField label="Diagnosis" value={discharge.urineOutputDiagnosis} variant='standard'onChange={(text) => setDischarger(prev => { return { ...prev, urineOutputDiagnosis: text.target.value } })} />}
                               </Box>
                             </Grid><Grid xs={3}>
                               <Box marginLeft={4} >
@@ -1961,17 +1961,17 @@ dischargeMedication:"",
                                   control={<Checkbox checked={checked1} onChange={STOOL} />}
                                   label="STOOL:"
                                 />
-                                {checked1 && <TextField label="Diagnosis" variant='standard' onChange={(text) => setDischarge(prev => { return { ...prev, stoolDiagnosis: text.target.value } })} />}
+                                {checked1 && <TextField label="Diagnosis" value={discharge.stoolDiagnosis} variant='standard' onChange={(text) => setDischarger(prev => { return { ...prev, stoolDiagnosis: text.target.value } })} />}
                               </Box>
-                            </Grid><Grid xs={3}>
-                              <Box>
+                            </Grid><Grid xs={3}  container direction="column">
+                              <Box display={'block'}>
                                 <FormControlLabel
-                                  control={<Checkbox checked={checked2} onChange={BCG} />}
+                                  control={<Checkbox checked={checked2} onChange={BCG}  fullWidth/>}
                                   label="BCG:"
                                 />
                                 {checked2 && <FormControl required>
                                   <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                    <input type='date' onChange={(text) => setDischarge(prev => { return { ...prev, bcgDate: text.target.value } })}/>
+                                    <TextField variant='standard'  fullWidth type='date' value={discharge.bcgDate} onChange={(text) => setDischarger(prev => { return { ...prev, bcgDate: text.target.value } })}/>
                                   </LocalizationProvider>
                                 </FormControl>}
                               </Box>
@@ -1983,15 +1983,15 @@ dischargeMedication:"",
                                 />
                                 {checked3 && <FormControl required>
                                   <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                    <input type='date' onChange={(text) => setDischarge(prev => { return { ...prev, hepaBDate: text.target.value } })}/>
+                                    <TextField type='date' variant='standard'  fullWidth  value={discharge.hepaBDate} onChange={(text) => setDischarger(prev => { return { ...prev, hepaBDate: text.target.value } })}/>
                                   </LocalizationProvider>
                                 </FormControl>}
                               </Box>
                             </Grid>
 
-                            <Grid item xs={12} >
-                              <Box marginBottom={4} marginTop={3} >
-                                <Typography> <Box component="span" fontWeight='bold' >3. InBorn Screening -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please enter the details accurately.</Box></Typography>
+                            <Grid item xs={12}>
+                              <Box marginBottom={5} marginTop={5}  backgroundColor="#F0F2F5" padding={1}>
+                                <Typography> <Box component="span" fontWeight='bold' >4. InBorn Screening -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please enter the details accurately.</Box></Typography>
                               </Box>
                             </Grid>
 
@@ -2006,7 +2006,7 @@ dischargeMedication:"",
                                 {value2 === 'yes' && (
                                   <FormControl fullWidth>
                                     <InputLabel id="Results">Results</InputLabel>
-                                    <Select value={selectValue2} onChange={(text) => setDischarge(prev => { return { ...prev, expandedNewBornScreeningResult: text.target.value } })} id='Results' label="Results">
+                                    <Select  value={discharge.expandedNewBornScreeningResult} onChange={(text) => setDischarger(prev => { return { ...prev, expandedNewBornScreeningResult: text.target.value } })} id='Results' label="Results">
                                       <MenuItem value={'Negative'}>Negative</MenuItem>
                                       <MenuItem value={'Trait'}>Trait</MenuItem>
                                       <MenuItem value={'Borderline'}>Borderline</MenuItem>
@@ -2018,7 +2018,7 @@ dischargeMedication:"",
 
                                   <FormControl fullWidth>
                                     <InputLabel id="Reason for refusal">Reason for refusal</InputLabel>
-                                    <Select value={selectValue2} onChange={(text) => setDischarge(prev => { return { ...prev, expandedNewBornScreeningRefusal: text.target.value } })} id='Reason for refusal' label="Reason for refusal">
+                                    <Select value={discharge.expandedNewBornScreeningRefusal} onChange={(text) => setDischarger(prev => { return { ...prev, expandedNewBornScreeningRefusal: text.target.value } })} id='Reason for refusal' label="Reason for refusal">
                                       <MenuItem value={'Religious belief'}>Religious belief</MenuItem>
                                     </Select>
                                   </FormControl>
@@ -2038,7 +2038,7 @@ dischargeMedication:"",
                                 {value3 === 'yes' && (
                                   <FormControl fullWidth>
                                     <InputLabel id="Results">Results</InputLabel>
-                                    <Select value={selectValue3} onChange={(text) => setDischarge(prev => { return { ...prev, newbornHearingResult: text.target.value } })} id='Results' label="Results">
+                                    <Select value={discharge.newbornHearingResult} onChange={(text) => setDischarger(prev => { return { ...prev, newbornHearingResult: text.target.value } })} id='Results' label="Results">
                                       <MenuItem value={'Bilateral Pass'}>Bilateral Pass</MenuItem>
                                       <MenuItem value={'Unilateral Refer'}>Unilateral Refer</MenuItem>
                                       <MenuItem value={'Bilateral Refer'}>Bilateral Refer</MenuItem>
@@ -2050,7 +2050,7 @@ dischargeMedication:"",
 
                                   <FormControl fullWidth>
                                     <InputLabel id="Reason for refusal">Reason for refusal</InputLabel>
-                                    <Select value={selectValue3} onChange={(text) => setDischarge(prev => { return { ...prev, newbornHearingRefusal: text.target.value } })} id='Reason for refusal' label="Reason for refusal">
+                                    <Select value={discharge.newbornHearingRefusal} onChange={(text) => setDischarger(prev => { return { ...prev, newbornHearingRefusal: text.target.value } })} id='Reason for refusal' label="Reason for refusal">
                                       <MenuItem value={'Financial Constraint'}>Financial Constraint</MenuItem>
                                     </Select>
                                   </FormControl>
@@ -2059,7 +2059,7 @@ dischargeMedication:"",
 
                             </Grid>
                             <Grid item xs={12} >
-                              <Box marginBottom={4} marginTop={4} >
+                              <Box marginBottom={5} marginTop={5}  backgroundColor="#F0F2F5" padding={1}>
                                 <Typography> <Box component="span" fontWeight='bold' >4. Remarks-</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please enter the details accurately.</Box></Typography>
                               </Box>
                             </Grid>
@@ -2069,8 +2069,8 @@ dischargeMedication:"",
                                   label="Final Diagnosis"
                                   multiline
                                   rows={4}
-                                  value={finalDiagnosis}
-                                  onChange={(text) => setDischarge(prev => { return { ...prev, finalDiagnosis: text.target.value } })}
+                                  value={discharge.finalDiagnosis}
+                                  onChange={(text) => setDischarger(prev => { return { ...prev, finalDiagnosis: text.target.value } })}
                                   variant="outlined"
                                   fullWidth
                                 />
@@ -2080,8 +2080,8 @@ dischargeMedication:"",
                                   label="Home Medication"
                                   multiline
                                   rows={4}
-                                  value={homeMedication}
-                                  onChange={(text) => setDischarge(prev => { return { ...prev, homeMedication: text.target.value } })}
+                                  value={discharge.homeMedication}
+                                  onChange={(text) => setDischarger(prev => { return { ...prev, homeMedication: text.target.value } })}
                                   variant="outlined"
                                   fullWidth
                                 />
@@ -2090,7 +2090,7 @@ dischargeMedication:"",
                             <Grid xs={3}>
                               <FormControl required>
                                 <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                  <input type='date' onChange={(text) => setDischarge(prev => { return { ...prev, dateOfDischarge: text.target.value } })}/>
+                                  <TextField   type='date' helperText={'Date of Discharge'} fullWidth variant='outlined' value={discharge.dateOfDischarge} onChange={(text) => setDischarger(prev => { return { ...prev, dateOfDischarge: text.target.value } })}/>
                                 </LocalizationProvider>
                               </FormControl>
 
@@ -2098,31 +2098,33 @@ dischargeMedication:"",
                             </Grid>
                             <Grid xs={3}>
 
-                              <FormControl required>
+                              <FormControl required  width={'100%'} >
                                 <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                  <input type='date' onChange={(text) => setDischarge(prev => { return { ...prev, followUpCheckup: text.target.value } })}/>
+                                  <TextField type='date' helperText={'Follow-Up Check-up'}  fullWidth value={discharge.followUpCheckup}  onChange={(text) => setDischarger(prev => { return { ...prev, followUpCheckup: text.target.value } })}/>
                                 </LocalizationProvider>
                               </FormControl>
 
                             </Grid>
                             <Grid xs={12} container>
 
-                              <Grid xs={3} mr={5}>
+                              <Grid xs={4} mr={5}>
                                 <TextField
                                   label="ATTENDING PHYSISCIAN"
                                   fullWidth
                                   variant='standard'
-                                  onChange={(text) => setDischarge(prev => { return { ...prev, attendingPhysician: text.target.value } })}
+                                  value={discharge.attendingPhysician}
+                                  onChange={(text) => setDischarger(prev => { return { ...prev, attendingPhysician: text.target.value } })}
                                 ></TextField>
 
 
                               </Grid>
-                              <Grid xs={3}>
+                              <Grid xs={4}>
                                 <TextField
                                   label="NURSE ON DUTY"
                                   fullWidth
                                   variant='standard'
-                                  onChange={(text) => setDischarge(prev => { return { ...prev, nurseOnDuty: text.target.value } })}
+                                  value={discharge.nurseOnDuty}
+                                  onChange={(text) => setDischarger(prev => { return { ...prev, nurseOnDuty: text.target.value } })}
                                 ></TextField>
 
 
@@ -2135,55 +2137,44 @@ dischargeMedication:"",
 
                             <Grid xs={12} container>
 
-                              <Grid xs={3} mr={5}>
+                              <Grid xs={4} mr={5}>
                                 <TextField
                                   label="DELIVERED BY"
                                   fullWidth
                                   variant='standard'
-                                  onChange={(text) => setDischarge(prev => { return { ...prev, deliveredBy: text.target.value } })}
+                                  value={discharge.deliveredBy}
+                                  onChange={(text) => setDischarger(prev => { return { ...prev, deliveredBy: text.target.value } })}
                                 ></TextField>
 
 
                               </Grid>
-                              <Grid xs={3}>
+                              <Grid xs={4}>
                                 <TextField
                                   label="RECEIVED BY"
                                   fullWidth
                                   variant='standard'
-                                  onChange={(text) => setDischarge(prev => { return { ...prev, receivedBy: text.target.value } })}
+                                  value={discharge.receivedBy}
+                                  onChange={(text) => setDischarger(prev => { return { ...prev, receivedBy: text.target.value } })}
                                 ></TextField>
 
 
                               </Grid>
-                             
+                              <Grid xs={1}>
 
-
+                              </Grid>
+                              <Grid xs={1}>
+                              <Button onClick={()=> handleDischarger()} variant='contained' >
+                                   Submit
+                                  </Button>
+                              </Grid>
 
                             </Grid>
-
-
-
-
-
+                          
+                        
 
                           </Grid>
 
-
-
-
-                          
-                                  <Button onClick={()=> handleDischarge()} >
-                                    handle discharge
-                                  </Button>
-
                         </Grid>
-
-
-
-                        
-
-
-
                       </Typography>
                     </Box>
                   </Modal>

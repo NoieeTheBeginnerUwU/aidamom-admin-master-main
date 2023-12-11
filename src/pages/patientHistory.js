@@ -19,7 +19,7 @@ const theme = createTheme({
 
     const containerStyle = {
         fontSize: '12px',
-        lineHeight: '1.5',
+        lineHeight: '1',
       };
 
   return (
@@ -48,19 +48,19 @@ const theme = createTheme({
         </div>
 
         <div align="right">
-        <label>DATE:</label>
+        <label >DATE:</label>
         <input
           type="date"
           id="province"
-          className="dual1"
-          style={{ border: 'NONE', borderBottom: '1px solid black' }}
+          className="centered-input"
+          style={{ border: 'NONE', borderBottom: '1px solid black' , width:'20%', marginLeft:'5px'}}
         />
       </div>
       <br />
       <br />
       <div>
         <label>HISTORY OF PRESENT CONDITION:</label>
-        <input type="text" className="history" id="history" style={{ border: 'none', width:'70%' }} />
+        <input type="text" className="centered-input" id="history" style={{ border: 'none', width:'70%' }} />
       </div>
       <br />
       <div>
@@ -75,19 +75,19 @@ const theme = createTheme({
       <br />
 
       <div>
-        <label>BP:</label> <input type="text" className="vitals" id="bp" style={{width:'11%'}}/>
-        <label>WT:</label> <input type="text" className="vitals" id="wt" style={{width:'10%'}} />
-        <label>RR:</label> <input type="text" className="vitals" id="rr" style={{width:'10%'}}/>
-        <label>CR:</label> <input type="text" className="vitals" id="cr" style={{width:'10%'}}/>
-        <label>TEMP:</label> <input type="text" className="vitals" id="temp" style={{width:'10%'}}/>
-        <label>ABDOMEN:</label> <input type="text" className="vitals" id="abdomen" style={{width:'20%'}} />
+        <label>BP:</label> <input type="text"  class="centered-input"  className="vitals" id="bp" style={{width:'11%'}}/>
+        <label>WT:</label> <input type="text"  class="centered-input" className="vitals" id="wt" style={{width:'10%'}} />
+        <label>RR:</label> <input type="text"  class="centered-input" className="vitals" id="rr" style={{width:'10%'}}/>
+        <label>CR:</label> <input type="text"  class="centered-input" className="vitals" id="cr" style={{width:'10%'}}/>
+        <label>TEMP:</label> <input type="text" class="centered-input"  className="vitals" id="temp" style={{width:'10%'}}/>
+        <label>ABDOMEN:</label> <input type="text" class="centered-input"  className="vitals" id="abdomen" style={{width:'20%'}} />
         <br />
         <br />
-        <label>HEENT:</label> <input type="text" className="longline" id="bp" style={{width:'14%'}}  />
-        <label>SKIN EXTREMITIES:</label> <input type="text" className="shortline" id="wt" style={{width:'15%'}}  />
+        <label>HEENT:</label> <input type="text" class="centered-input" className="longline" id="bp" style={{width:'14%'}}  />
+        <label>SKIN EXTREMITIES:</label> <input class="centered-input" type="text" className="shortline" id="wt" style={{width:'15%'}}  />
       
-        <label>CHEST/LUNGS:</label> <input type="text" className="longline1" id="bp" style={{width:'14%'}} />
-        <label>CVS:</label> <input type="text" className="shortline1" id="wt" style={{width:'15%'}} />
+        <label>CHEST/LUNGS:</label> <input type="text" class="centered-input" className="longline1" id="bp" style={{width:'14%'}} />
+        <label>CVS:</label> <input type="text" class="centered-input" className="shortline1" id="wt" style={{width:'15%'}} />
    
       </div>
 <br/>
@@ -99,13 +99,14 @@ const theme = createTheme({
           cols="95"
           rows="2"
           id="obsterical"
+          class="centered-input"
         ></textarea>
         <br />
         <label>PRESENT PREGNANCY: </label>
         <label style={{ marginLeft: '7%' }}>G</label>
-        <input style={{ width: '30px' }} className="preggy" id="g"></input>
+        <input style={{ width: '30px', marginRight:'5px' }} class="centered-input" className="preggy" id="g"></input>
         <label>P</label>
-        <input style={{ width: '30px', marginRight: '1%'  }} className="preggy" id="p"></input>
+        <input style={{ width: '30px', marginRight: '1%'  }} class="centered-input" className="preggy" id="p"></input>
         <label>(</label>
         <input className="preggy" id="pregnancy"  style={{ width: '7%',marginRight:'5px' }}></input>,
         <input className="preggy" id="pregnancy2" style={{ width: '7%',marginRight:'5px' }}></input>,
@@ -113,39 +114,40 @@ const theme = createTheme({
         <label style={{ marginLeft: '7%' }}>AOG</label>
         <input
           type="text"
+          class="centered-input"
           id="aog"
-          style={{ border: 'none', borderBottom: '1px solid black' }}
+          style={{ border: 'none', borderBottom: '1px solid black' , width:'20%'}}
         />
       </div>
 <br/>
       <div>
         <label>LAST MENSTRUAL PERIOD (LMP):</label>
-        <input type="text" className="longline" id="lmp" style={{ width: '30%' }}></input>
+        <input type="text" class="centered-input" className="longline" id="lmp" style={{ width: '30%' }}></input>
         <br/>
         <br/>
         <label>EXPECTED DATE OF CONFINEMENT (EDC):</label>
-        <input type="text" className="longline" id="edc" style={{ width: '22%' }}></input>
+        <input type="text"  class="centered-input" className="longline" id="edc" style={{ width: '22%' }}></input>
         <br />
       </div>
       <br />
       <div>
         <label>FUNDIC HEIGHT :</label>
-        <input type="text" className="dual" id="fundicheight"  style={{ width: '20%' }}></input>
+        <input type="text" className="dual" id="fundicheight" class="centered-input" style={{ width: '20%' }}></input>
         <label style={{ marginLeft: '2%' }}>FETAL HEART TONES:</label>
-        <input type="text" className="dual" id="fetalheart"  style={{ width: '20%' }}></input>
+        <input type="text" className="dual" id="fetalheart" class="centered-input" style={{ width: '20%' }}></input>
         <br/>
         <br/>
         <label>PRESENTATION :</label>
-        <input type="text" className="dual" id="presentation"  style={{ width: '20%' }}></input>
+        <input type="text" className="dual"  class="centered-input" id="presentation"  style={{ width: '20%' }}></input>
         <label style={{ marginLeft: '2%' }}>IE :</label>
-        <input type="text" className="dual" id="ie"  style={{ width: '20%' }}></input>
+        <input type="text" className="dual" class="centered-input" id="ie"  style={{ width: '20%' }}></input>
         <br />
         <br />
         
         <label>EFFACEMENT :</label>
-        <input type="text" className="dual" id="effacement"style={{ width: '20%' }}></input>
+        <input type="text" className="dual" class="centered-input" id="effacement"style={{ width: '20%' }}></input>
         <label style={{ marginLeft: '4%' }}>ENGAGEMENT :</label>
-        <input type="text" className="dual" id="engagement"style={{ width: '20%' }}></input>
+        <input type="text" className="dual" class="centered-input" id="engagement"style={{ width: '20%' }}></input>
         <br />
         <br />
       </div>
@@ -153,24 +155,24 @@ const theme = createTheme({
       <div>
         <label>BOW:</label>
         <label>INTACT:</label>
-        <input type="text" className="triple" id="intact" style={{ width: '20%' }} />
+        <input type="text" class="centered-input" className="triple" id="intact" style={{ width: '20%' }} />
         <label>BOW:</label>
         <label>RUPTURED:</label>
-        <input type="text" className="triple" id="ruptured" style={{ width: '20%' }} />
+        <input type="text" class="centered-input" className="triple" id="ruptured" style={{ width: '20%' }} />
         <label>BOW:</label>
         <label>OTHERS:</label>
-        <input type="text" className="triple" id="others"  style={{ width: '20%' }} />
+        <input type="text" class="centered-input" className="triple" id="others"  style={{ width: '20%' }} />
         <br />
         <br />
         <br />
         
 
-        <label>CLINICAL LABORATORY REPORT:</label>
+        <label style={{marginBottom:'2%'}}>CLINICAL LABORATORY REPORT:</label>
         <textarea
-          cols="95"
+          cols="100"
           rows="10"
           id="clinicalrep"
-        
+          class="centered-input"
         ></textarea>
 
 
