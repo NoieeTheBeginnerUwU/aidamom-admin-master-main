@@ -822,13 +822,13 @@ export default function PatientRegistrationForm() {
                   <FormControl required>
                     <LocalizationProvider dateAdapter={AdapterDayjs} required>
                       <DatePicker
-                        label="Date of Birth"
-                        value={dayjs(registrationForm.userDob)} // Convert back to dayjs object for DatePicker
-                        onChange={handleDateChangeBirth}
-                        renderInput={(params) => <TextField {...params} />}
-                        disableFuture
-                        minDate={dayjs().subtract(39, 'year')}
-                        maxDate={dayjs().subtract(18, 'year')}
+                      label="Date of Birth"
+                      value={dayjs(registrationForm.userDob)} // Convert back to dayjs object for DatePicker
+                      onChange={handleDateChangeBirth}
+                      renderInput={(params) => <TextField {...params} />}
+                      disableFuture
+                      minDate={dayjs().subtract(39, 'year')}
+                      maxDate={dayjs().subtract(18, 'year')}
                       />
                     </LocalizationProvider>
                   </FormControl>

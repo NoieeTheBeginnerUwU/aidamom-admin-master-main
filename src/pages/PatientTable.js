@@ -42,6 +42,7 @@ import Appoinment from './Approval';
 import Approval from './Approval';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
+import ReferralForm from './refferalForm';
 
 
 const useStyles = makeStyles({
@@ -140,6 +141,221 @@ function  PatientTable({ handleSubmit, userData }) {
     setModalIsOpen(false);
   }
 
+  
+
+
+    
+  const [referralForm, setreferralForm]=useState(
+    {
+        to:"",
+        dateandtime:"",
+        A1:"",
+        A2:"",
+        B1:"",
+        B2:"",
+        C1:"",
+        C2:"",
+        Unclassified:"",
+        facultyname:"",
+
+//ReferringDetails
+facultyEmail:"",
+facultymess:"",
+facultyAddress:"",
+facultyNo:"",
+
+//Patient Details
+patientname:"",
+patientAge:"",
+patientsex:"",
+civilstatus:"",
+patientDOB:"",
+patientadress:"",
+Patientno:"",
+contactperson:"",
+bloodType:"",
+G:"",
+P:"",
+blank:"",
+lmp:"",
+edd:"",
+aog:"",
+Yesprenatal:"",
+Noprenatal:"",
+whereClinicName : "",
+
+
+//VitalSigns
+bp:"",
+hr:"",
+rr:"",
+temp:"",
+weight:"",
+fh:"",
+fht:"",
+ie:"",
+
+
+//DangerSigns
+Unconcious:"",
+Convulsing:"",
+Looksvery:"",
+Others:"",
+PreTermLabor:"",
+SevereDifficultyBreathing:"",
+Headache:"",
+VaginalBleeding:"",
+Fever:"",
+SevereVisualdisturbance:"",
+SevereAbdominalpain:"",
+SevereVomiting:"",
+Prom:"",
+OthersDangersign:"",
+
+//MedicalHistory
+medhistory:"",
+labresults:"",
+Methergin:"",
+methergindose:"",
+methergindate:"",
+MsS04:"",
+mss04dose:"",
+mss04date:"",
+Oxytocin:"",
+oxytocindose:"",
+oxytocindate:"",
+Hydralazine:"",
+hydralazinedose:"",
+hydralazinedate:"",
+Dexamethasone:"",
+dexamethasonedose:"",
+dexamethasonedate:"",
+OthersMedhistory:"",
+othersdate:"",
+medimpression:"",
+Consultation:"",
+TransferofService:"",
+DiagnosticTest:"",
+Othersreferral:"",
+Yesreferral:"",
+Noreferral:"",
+
+//Methods
+IUD:"",
+PSI:"",
+Pills:"",
+Condom:"",
+BTL:"",
+Vasectomy:"",
+Injectable:"",
+SDM:"",
+LAM:"",
+
+//Counseled
+
+Yescounseled:"",
+Nocounseled:"",
+consentNameandSign:"",
+
+//NEWBORN REFERRAL
+Yesnewborn:"",
+Nonewborn:"",
+nameofnewborn:"",
+sexnewborn:"",
+typeofdelivery:"",
+accompanying:"",
+dateandtimeofbirth:"",
+typepresentation:"",
+babyweight:"",
+apgarscore:"",
+babyclassification:"",
+
+hc:"",
+AC:"",
+CC:"",
+BL:"",
+
+vitk:"",
+bcg:"",
+hepbVac:"",
+erythromycin:"",
+nbs:"",
+
+//babyVitals
+BP:"",
+CR:"",
+TEMP:"",
+RR:"",
+Sat:"",
+
+
+//Condition at Birth
+
+meconiumstained:"",
+poorcry:"",
+convulsion:"",
+cbg:"",
+poorsuck:"",
+juandice:"",
+cyanosis:"",
+Congenitalanomalies:"",
+respiratorydistress:"",
+Bleeding:"",
+cordcoil:"",
+othersCondition:"",
+
+newbornimpression:"",
+babydiagnostic:"",
+management:"",
+
+//modeoftransportation
+Ambulance:"",
+Aircraft:"",
+Privatecars:"",
+Boat:"",
+Otherstransport:"",
+
+nameAccompanying:"",
+
+Yesconfinement:"",
+Noconfinement:"",
+confinement:"",
+prevdiagnosis:"",
+NameandDesignation:"",
+
+
+referringTelephoneCPNo:"",
+referringNameandDesignation:"",
+receivingTelephoneCPNo:"",
+referringFacility:"",
+addressreferringFacility:"",
+dateandTimereceived:"",
+cpno:"",
+
+patientName:"",
+patientAge:"",
+patientSex:"",
+Cs:"",
+Admitted:"",
+Observation:"",
+
+ReferredtoAnotherFacility:"",
+ReturnBacktoReferringFacility:"",
+Managedanddischarged:"",
+Othersdispo:"",
+
+Printednameandsign:"",
+CPnoreceiving:"",
+referringFacility:"",
+
+finalDiag:"",
+dateadmission:"",
+dischargeMedication:"",
+
+        
+    }
+)
+
 
 
   const [open, setOpen] = React.useState(false);
@@ -227,7 +443,7 @@ function  PatientTable({ handleSubmit, userData }) {
   };
 
 
-  const [registrationForm, setRegistrationForm] = useState({
+  const [registrationForm, setDischarge] = useState({
     //basic personal details
     userFname: "",
     userMname: "",
@@ -439,6 +655,7 @@ function  PatientTable({ handleSubmit, userData }) {
   const [users, setUsers] = useState([]);
   const [row, setRow] = useState([]);
   const [userSearch, setUserSearch] = useState([]);
+  const [appointments, setAppoitments] =useState([]);
   async function fetchData() {
     const querySnapshot = await getDocs(query(collection(database, 'userData')));
     const userData = [];
@@ -587,6 +804,7 @@ function  PatientTable({ handleSubmit, userData }) {
     })
     setUsers(userData);
     setUserSearch(userData);
+   
     //var i = 1;
     //alert("running "+i++ +" times")
   };
@@ -598,6 +816,40 @@ function  PatientTable({ handleSubmit, userData }) {
   }, [])
 
   const [nChild, setNChild] = useState([]);
+
+/**
+ *  let arrs = [];
+    const queryAppointments = await getDocs(query(collection(database,"appointments"),where("uid","==",selectedRow.docid)));
+    queryAppointments.forEach((doc)=>{
+      arrs.push({id:doc.id,aog:doc.data().aog,appointmentDate:doc.data().appointmentDate,bmi:doc.data().bmi,bp:doc.data().bp,bpCategory:doc.data().bpCategory,diastolic:doc.data().diastolic,dilates:doc.data().dilates,efficases:doc.data().efficases,fetalMovement:doc.data().fetalMovement,fundalHeight:doc.data().fundalHeight,height:doc.data().height,lmp:doc.data().lmp,name:doc.data().name,presentation:doc.data().presentation,remarks:doc.data().remarks,systolic:doc.data().systolic,uid:doc.data().uid,weight:doc.data().weight})
+    })
+    setAppoitments(arrs)
+ */
+
+  const [onlineAppointments, setOnlineAppointments] = useState([])
+  useEffect(()=>{
+    let arrs = [];
+    if(selectedRow.docid!==undefined){
+      const fetchApps = async() => {
+        const queryAppointments = await getDocs(query(collection(database,"appointments"),where("uid","==",selectedRow.docid)));
+      queryAppointments.forEach((doc)=>{
+        arrs.push({id:doc.id,aog:doc.data().aog,appointmentDate:doc.data().appointmentDate,bmi:doc.data().bmi,bp:doc.data().bp,bpCategory:doc.data().bpCategory,diastolic:doc.data().diastolic,dilates:doc.data().dilates,efficases:doc.data().efficases,fetalMovement:doc.data().fetalMovement,fundalHeight:doc.data().fundalHeight,height:doc.data().height,lmp:doc.data().lmp,name:doc.data().name,presentation:doc.data().presentation,remarks:doc.data().remarks,systolic:doc.data().systolic,uid:doc.data().uid,weight:doc.data().weight})
+      })
+      }
+      const fetchOnlineApps = async () => {
+        let a = [];
+        const queryAppointments = await getDocs(query(collection(database,"onlineAppointments"),where("uid","==",selectedRow.docid)));
+        queryAppointments.forEach((doc)=> {
+          a.push({id:doc.id, appointmentDate:doc.data().appointmentDate, purpose:doc.data().purpose, status:doc.data().status, time:doc.data().time})
+        })
+        setOnlineAppointments(a)
+      }
+      fetchApps()
+      fetchOnlineApps()
+    }
+    setAppoitments(arrs)
+    console.log("ASS "+arrs)
+  },[selectedRow.docid])
 
 
 
@@ -772,23 +1024,6 @@ function  PatientTable({ handleSubmit, userData }) {
   const [deliveryType, setDeliveryType] = useState('');
 
 
-  const handlePlus = async () => {
-    const app = doc(database, 'dashboard', '--appointments--');
-    const vax = doc(database, 'dashboard', '--vaccinations--');
-    await updateDoc(app, {
-      no: increment(1),
-    })
-  }
-
-  const handleMinus = async () => {
-    const app = doc(database, 'dashboard', '--appointments--');
-    const vax = doc(database, 'dashboard', '--vaccinations--');
-    await updateDoc(app, {
-      no: increment(-1),
-    })
-  }
-
-
   const handleChange5 = (event) => {
     setDeliveryType(event.target.value);
   };
@@ -816,35 +1051,6 @@ function  PatientTable({ handleSubmit, userData }) {
       alert(e)
     }
   }
-
-  const [summary, setSummary] = useState({
-    parentUID: selectedRow.docid,
-    dateOfDischarge: moment(new Date()).format("MMMM DD, YYYY"),
-    childFname: "",
-    childMname: "",
-    childLname:"",
-    childExtension: "",
-    childDob: "",
-    childWeight:"",
-    childGender: "",
-    childTypeOfDelivery:"",
-    childUrine:"",
-    childStool:"",
-    childBCG:"",
-    childHepa:"",
-    childScreening:"",
-    childScreeningResults:"",
-    childScreeningRefusalReason:"",
-    childNewBornHearing:"",
-    childNewBornHearingScreeningResults:"",
-    childDateofDischarge:"",
-    childFollowUpCheckUp:"",
-    attendingPhysician:"",
-    nurseOnDuty:"",
-    deliveredBy:"",
-    receivedBy:""
-  })
-
 
   async function searchUsers(vals){
     let ins = [];
@@ -1013,7 +1219,83 @@ function  PatientTable({ handleSubmit, userData }) {
       console.log("USERS"+userSearch)
   }
 
+  const [discharge, setDischarger] = useState({
+    childFname:"",
+    childLname:"",
+    childMname:"",
+    childSuffix:"",
+    childDob:"",
+    childWeight:"",
+    childGender:"",
+    typeOfDelivery:"",
+    healthProfessionalAttended:"",
+    urineOutputDiagnosis:"",
+    stoolDiagnosis:"",
+    bcgDate:"",
+    hepaBDate:"",
+    expandedNewBornScreeningResult:"",
+    expandedNewBornScreeningRefusal:"",
+    newbornHearingResult:"",
+    newbornHearingRefusal:"",
+    finalDiagnosis:"",
+    homeMedication:"",
+    dateOfDischarge:"",
+    followUpCheckup:"",
+    attendingPhysician:"",
+    nurseOnDuty:"",
+    deliveredBy:"",
+    receivedBy:"",
+    dateCreated: moment(new Date()).format("YYYY/MM/DD"),
+    day:moment(new Date()).format("DD"),
+    month:moment(new Date()).format("MM"),
+    year:moment(new Date()).format("YYYY"),
+  })
   
+  const handleDischarge = async() => {
+    try{
+      updateDoc(doc(database,"userData",selectedRow.docid),{
+        lastPeriod:""
+      })
+      addDoc(collection(database,"discharge_child"),{
+        motherId:selectedRow.docid,
+        motherName: selectedRow.userFname + " " + selectedRow.userLname,
+        motherAge: moment(new Date(),"YYYY/MM/DD").diff(moment(selectedRow.userDob,"YYYY/MM/DD"),"years"),
+        deliveredVia:"Vaginal",
+        childFame:discharge.childFname,
+        childLname:discharge.childLname,
+        childMname:discharge.childMname,
+        childSuffix:discharge.childSuffix,
+        childDob:discharge.childDob,
+        childWeight:discharge.childWeight,
+        childGender:discharge.childGender,
+        typeOfDelivery:discharge.typeOfDelivery,
+        healthProfessionalAttended:discharge.healthProfessionalAttended,
+        urineOutputDiagnosis:discharge.urineOutputDiagnosis,
+        stoolDiagnosis:discharge.stoolDiagnosis,
+        bcgDate:discharge.bcgDate,
+        hepaBDate:discharge.hepaBDate,
+        expandedNewBornScreeningResult:discharge.expandedNewBornScreeningResult,
+        expandedNewBornScreeningRefusal:discharge.expandedNewBornScreeningRefusal,
+        newbornHearingResult:discharge.newbornHearingResult,
+        newbornHearingRefusal:discharge.newbornHearingRefusal,
+        finalDiagnosis:discharge.finalDiagnosis,
+        homeMedication:discharge.homeMedication,
+        dateOfDischarge:discharge.dateOfDischarge,
+        followUpCheckup:discharge.followUpCheckup,
+        attendingPhysician:discharge.attendingPhysician,
+        nurseOnDuty:discharge.nurseOnDuty,
+        deliveredBy:discharge.deliveredBy,
+        receivedBy:discharge.receivedBy,
+        dateCreated: moment(new Date()).format("YYYY/MM/DD"),
+        day:moment(new Date()).format("DD"),
+        month:moment(new Date()).format("MM"),
+        year:moment(new Date()).format("YYYY")
+      })
+    }catch(e){
+      alert(e)
+    }
+  }
+  console.log(discharge);
 
   return (
 
@@ -1313,7 +1595,7 @@ function  PatientTable({ handleSubmit, userData }) {
                             {/* --------------------------------------------------------3rd tab ----------------------------------------------------------------------------------------------------------------- */}
                             <TabPanel value="3" sx={{ width: '100%', backgroundColor: '#F0F2F5' }}>
                               <Grid container >
-                                <Grid xs={6}>
+                                <Grid xs={12}>
                                   <Paper>
                                     <Box padding={2} textAlign={'center'} sx={{ backgroundColor: 'primary.main', color: 'white' }}><Typography fontWeight='700' >HEALTH CONDITIONS AND COMPLICATIONS</Typography></Box>
                                     <TableContainer component={Paper}>
@@ -1326,82 +1608,93 @@ function  PatientTable({ handleSubmit, userData }) {
                                           </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                          {rows4.map((row) => (
                                             <TableRow key={row.disease}>
-                                              <TableCell >{row.disease}</TableCell>
-                                              <TableCell style={{ backgroundColor: row.personal ? '#2E7D32' : '#D32F2F' }}>
-                                                {row.personal ? <CheckIcon /> : <CloseIcon />}
-                                                {row.personal ? 'YES' : 'NO'}
+                                              <TableCell >Tubercolosis</TableCell>
+                                              <TableCell style={{ backgroundColor: "white"}}>
+                                                <TableCell>{selectedRow.userTBPersonal}</TableCell>
                                               </TableCell>
-                                              <TableCell style={{ backgroundColor: row.family ? '#2E7D32' : '#D32F2F' }}>
-                                                {row.family ? <CheckIcon /> : <CloseIcon />}
-                                                {row.family ? 'YES' : 'NO'}
+                                              <TableCell style={{ backgroundColor:"white"}}>
+                                                <TableCell>{selectedRow.userTBFamily}</TableCell>
                                               </TableCell>
                                             </TableRow>
-                                          ))}
+                                            <TableRow key={row.disease}>
+                                              <TableCell >Heart Diseases</TableCell>
+                                              <TableCell style={{ backgroundColor: "white"}}>
+                                                <TableCell>{selectedRow.userHeartDiseasesPersonal}</TableCell>
+                                              </TableCell>
+                                              <TableCell style={{ backgroundColor:"white"}}>
+                                                <TableCell>{selectedRow.userHeartDiseasesFamily}</TableCell>
+                                              </TableCell>
+                                            </TableRow>
+                                            <TableRow key={row.disease}>
+                                              <TableCell >Diabetes</TableCell>
+                                              <TableCell style={{ backgroundColor: "white"}}>
+                                                <TableCell>{selectedRow.userDiabetesPersonal}</TableCell>
+                                              </TableCell>
+                                              <TableCell style={{ backgroundColor:"white"}}>
+                                                <TableCell>{selectedRow.userDiabetesFamily}</TableCell>
+                                              </TableCell>
+                                            </TableRow>
+                                            <TableRow key={row.disease}>
+                                              <TableCell >Hypertension</TableCell>
+                                              <TableCell style={{ backgroundColor: "white"}}>
+                                                <TableCell>{selectedRow.userHypertensionPersonal}</TableCell>
+                                              </TableCell>
+                                              <TableCell style={{ backgroundColor:"white"}}>
+                                                <TableCell>{selectedRow.userTBFamily}</TableCell>
+                                              </TableCell>
+                                            </TableRow>
+                                            <TableRow key={row.disease}>
+                                              <TableCell >Bronchial Asthma</TableCell>
+                                              <TableCell style={{ backgroundColor: "white"}}>
+                                                <TableCell>{selectedRow.userBronchialAsthmaPersonal}</TableCell>
+                                              </TableCell>
+                                              <TableCell style={{ backgroundColor:"white"}}>
+                                                <TableCell>{selectedRow.userBronchialAsthmaPersonal}</TableCell>
+                                              </TableCell>
+                                            </TableRow>
+                                            <TableRow key={row.disease}>
+                                              <TableCell >Urinary Tract Infection</TableCell>
+                                              <TableCell style={{ backgroundColor: "white"}}>
+                                                <TableCell>{selectedRow.userUTIPersonal}</TableCell>
+                                              </TableCell>
+                                              <TableCell style={{ backgroundColor:"white"}}>
+                                                <TableCell>{selectedRow.userUTIFamily}</TableCell>
+                                              </TableCell>
+                                            </TableRow>
+                                            <TableRow key={row.disease}>
+                                              <TableCell >Parasitism</TableCell>
+                                              <TableCell style={{ backgroundColor: "white"}}>
+                                                <TableCell>{selectedRow.userParasitismPersonal}</TableCell>
+                                              </TableCell>
+                                              <TableCell style={{ backgroundColor:"white"}}>
+                                                <TableCell>{selectedRow.userParasitismFamily}</TableCell>
+                                              </TableCell>
+                                            </TableRow>
+                                            <TableRow key={row.disease}>
+                                              <TableCell >Goiter</TableCell>
+                                              <TableCell style={{ backgroundColor: "white"}}>
+                                                <TableCell>{selectedRow.userGoiterPersonal}</TableCell>
+                                              </TableCell>
+                                              <TableCell style={{ backgroundColor:"white"}}>
+                                                <TableCell>{selectedRow.userGoiterFamily}</TableCell>
+                                              </TableCell>
+                                            </TableRow>
+                                            <TableRow key={row.disease}>
+                                              <TableCell >Anemia</TableCell>
+                                              <TableCell style={{ backgroundColor: "white"}}>
+                                                <TableCell>{selectedRow.userAnemiaPersonal}</TableCell>
+                                              </TableCell>
+                                              <TableCell style={{ backgroundColor:"white"}}>
+                                                <TableCell>{selectedRow.userAnemiaFamily}</TableCell>
+                                              </TableCell>
+                                            </TableRow>
                                         </TableBody>
                                       </Table>
                                     </TableContainer>
                                   </Paper>
                                 </Grid>
-                                <Grid xs={5} ml={2}>
-                                  <Grid xs={12}>
-
-                                    {/*-------------------------------------------------------- for Displaying Specified Diseases --------------------------------------------------------*/}
-                                    <Paper >
-                                      <Box mb={1} padding={1}>
-                                        <Typography fontSize="large" fontWeight={'600'} >Genital Tract Infections Diseases:</Typography>
-                                        {genitalTractInfections.map((disease, index) => (
-                                          <Typography key={index}>{disease}</Typography>
-                                        ))}
-                                      </Box>
-                                      <Box mb={1} padding={1}>
-                                        <Typography fontSize="large" fontWeight={'600'} >Other Infectious Diseases:</Typography>
-                                        {otherInfectiousDiseases.map((disease, index) => (
-                                          <Typography key={index}>{disease}</Typography>
-                                        ))}
-                                      </Box>
-                                    </Paper>
-                                  </Grid>
-
-
-                                  {/*-------------------------------------------------------- Table for High-risk Behavior-------------------------------------------------------- */}
-                                  <Grid xs={12}>
-                                    <Paper>
-                                      <Box padding={1} textAlign={'center'} sx={{ backgroundColor: 'primary.main', color: 'white' }}><Typography fontWeight='700' >HIGH-RISK BEHAVIOR</Typography></Box>
-
-
-                                      <TableContainer component={Paper}>
-                                        <Table size='small'>
-                                          <TableHead>
-                                            <TableRow>
-                                              <TableCell>High-risk Behavior</TableCell>
-                                              <TableCell>Personal</TableCell>
-                                              <TableCell>Family</TableCell>
-                                            </TableRow>
-                                          </TableHead>
-                                          <TableBody>
-                                            {rows5.map((row, index) => (
-                                              <TableRow key={row.behavior}>
-                                                <TableCell>{row.behavior}</TableCell>
-                                                <TableCell style={{ backgroundColor: row.personal ? '#2E7D32' : '#D32F2F' }}>
-                                                  {row.personal ? <CheckIcon /> : <CloseIcon />}
-                                                  {row.personal ? 'YES' : 'NO'}
-                                                </TableCell>
-                                                <TableCell style={{ backgroundColor: row.family ? '#2E7D32' : '#D32F2F' }}>
-                                                  {row.family ? <CheckIcon /> : <CloseIcon />}
-                                                  {row.family ? 'YES' : 'NO'}
-                                                </TableCell>
-                                              </TableRow>
-                                            ))}
-                                          </TableBody>
-                                        </Table>
-                                      </TableContainer>
-
-                                    </Paper>
-                                  </Grid>
-                                </Grid>
-
+            
 
                               </Grid>
                             </TabPanel>
@@ -1489,7 +1782,7 @@ function  PatientTable({ handleSubmit, userData }) {
                               variant="outlined"
                               size='small'
                               value={registrationForm.userChildLname}
-                              onChange={(text) => setRegistrationForm(prev => { return { ...prev, userChildLname: text.target.value } })}
+                              onChange={(text) => setDischarge(prev => { return { ...prev, childLname: text.target.value } })}
                               required
 
                             />
@@ -1503,7 +1796,7 @@ function  PatientTable({ handleSubmit, userData }) {
                               size='small'
 
                               value={registrationForm.userChildFname}
-                              onChange={(text) => setRegistrationForm(prev => { return { ...prev, userChildFname: text.target.value } })}
+                              onChange={(text) => setDischarge(prev => { return { ...prev, childFname: text.target.value } })}
                               required
 
                             />
@@ -1517,7 +1810,7 @@ function  PatientTable({ handleSubmit, userData }) {
                               variant="outlined"
                               size='small'
                               value={registrationForm.userChildMname}
-                              onChange={(text) => setRegistrationForm(prev => { return { ...prev, userChildMname: text.target.value } })}
+                              onChange={(text) => setDischarge(prev => { return { ...prev, childMname: text.target.value } })}
 
                             />
                           </Grid>
@@ -1541,7 +1834,7 @@ function  PatientTable({ handleSubmit, userData }) {
                               name="userSuffix"
                               size='small'
                               value={registrationForm.userSuffix}
-                              onChange={(text) => setRegistrationForm(prev => { return { ...prev, userSuffix: text.target.value } })}
+                              onChange={(text) => setDischarge(prev => { return { ...prev, childuffix: text.target.value } })}
                               disabled={!checkboxEnable}
                             >
 
@@ -1568,9 +1861,9 @@ function  PatientTable({ handleSubmit, userData }) {
                                   size='small'
                                   label="Date of birth"
                                   name='dateofbrith'
-                                  value={registrationForm.ChildDateofBirth}
+                                  value={dayjs(registrationForm.ChildDateofBirth)}
                                   style={{ width: ' 100%' }}
-                                  renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDob: params } })}
+                                  renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setDischarge(prev => { return { ...prev, childDob: dayjs(params).format("YYYY/MM/DD") } })}
                                   />}
                                   disableFuture
                                 // minDate={dayjs().subtract(45, 'year')}
@@ -1605,11 +1898,11 @@ function  PatientTable({ handleSubmit, userData }) {
                                 defaultValue="female"
                                 name="gender"
                                 value={registrationForm.userSex}
-                                onChange={(text) => setRegistrationForm(prev => { return { ...prev, userSex: text.target.value } })}
+                                
 
                               >
-                                <FormControlLabel value="female" control={<Radio />} label="Female" />
-                                <FormControlLabel value="male" control={<Radio />} label="Male" />
+                                <FormControlLabel value="female" onChange={(text) => setDischarge(prev => { return { ...prev, childGender: text.target.value } })} control={<Radio />} label="Female" />
+                                <FormControlLabel value="male" onChange={(text) => setDischarge(prev => { return { ...prev, childGender: text.target.value } })} control={<Radio />} label="Male" />
                               </RadioGroup>
                             </FormControl>
                           </Grid>
@@ -1620,7 +1913,7 @@ function  PatientTable({ handleSubmit, userData }) {
                                 labelId="delivery-type-label"
                                 id="delivery-type"
                                 value={deliveryType}
-                                onChange={handleChange5}
+                                onChange={(text) => setDischarge(prev => { return { ...prev, typeOfDelivery: text.target.value } })}
                                 label="Type of Delivery"
                               >
                                 <MenuItem value="">
@@ -1639,7 +1932,7 @@ function  PatientTable({ handleSubmit, userData }) {
                                 labelId="delivery-type-label"
                                 id="delivery-type"
                                 value={professionalAttended}
-                                onChange={handleChange6}
+                                onChange={(text) => setDischarge(prev => { return { ...prev, healthProfessionalAttended: text.target.value } })}
                                 label="Health Professional Attended"
                               >
                                 <MenuItem value="">
@@ -1659,7 +1952,7 @@ function  PatientTable({ handleSubmit, userData }) {
                                   control={<Checkbox checked={checked} onChange={URINEOUTPUT} />}
                                   label="URINE OUTPUT :"
                                 />
-                                {checked && <TextField label="Diagnosis" variant='standard' />}
+                                {checked && <TextField label="Diagnosis" variant='standard'onChange={(text) => setDischarge(prev => { return { ...prev, urineOutputDiagnosis: text.target.value } })} />}
                               </Box>
                             </Grid><Grid xs={3}>
                               <Box marginLeft={4} >
@@ -1668,7 +1961,7 @@ function  PatientTable({ handleSubmit, userData }) {
                                   control={<Checkbox checked={checked1} onChange={STOOL} />}
                                   label="STOOL:"
                                 />
-                                {checked1 && <TextField label="Diagnosis" variant='standard' />}
+                                {checked1 && <TextField label="Diagnosis" variant='standard' onChange={(text) => setDischarge(prev => { return { ...prev, stoolDiagnosis: text.target.value } })} />}
                               </Box>
                             </Grid><Grid xs={3}>
                               <Box>
@@ -1678,18 +1971,7 @@ function  PatientTable({ handleSubmit, userData }) {
                                 />
                                 {checked2 && <FormControl required>
                                   <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                    <DatePicker
-                                      size='small'
-                                      label="BCG"
-                                      name='bcg'
-                                      value={registrationForm.Childbcg}
-                                      style={{ width: ' 100%' }}
-                                      renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDob: params } })}
-                                      />}
-                                      disableFuture
-                                    // minDate={dayjs().subtract(45, 'year')}
-                                    // maxDate={dayjs().subtract(10, 'year')}
-                                    />
+                                    <input type='date' onChange={(text) => setDischarge(prev => { return { ...prev, bcgDate: text.target.value } })}/>
                                   </LocalizationProvider>
                                 </FormControl>}
                               </Box>
@@ -1701,18 +1983,7 @@ function  PatientTable({ handleSubmit, userData }) {
                                 />
                                 {checked3 && <FormControl required>
                                   <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                    <DatePicker
-                                      size='small'
-                                      label="HEPA-B"
-                                      name='hepab'
-                                      value={registrationForm.ChildHepaB}
-                                      style={{ width: ' 100%' }}
-                                      renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, userDob: params } })}
-                                      />}
-                                      disableFuture
-                                    // minDate={dayjs().subtract(45, 'year')}
-                                    // maxDate={dayjs().subtract(10, 'year')}
-                                    />
+                                    <input type='date' onChange={(text) => setDischarge(prev => { return { ...prev, hepaBDate: text.target.value } })}/>
                                   </LocalizationProvider>
                                 </FormControl>}
                               </Box>
@@ -1735,7 +2006,7 @@ function  PatientTable({ handleSubmit, userData }) {
                                 {value2 === 'yes' && (
                                   <FormControl fullWidth>
                                     <InputLabel id="Results">Results</InputLabel>
-                                    <Select value={selectValue2} onChange={handleSelectChange} id='Results' label="Results">
+                                    <Select value={selectValue2} onChange={(text) => setDischarge(prev => { return { ...prev, expandedNewBornScreeningResult: text.target.value } })} id='Results' label="Results">
                                       <MenuItem value={'Negative'}>Negative</MenuItem>
                                       <MenuItem value={'Trait'}>Trait</MenuItem>
                                       <MenuItem value={'Borderline'}>Borderline</MenuItem>
@@ -1747,7 +2018,7 @@ function  PatientTable({ handleSubmit, userData }) {
 
                                   <FormControl fullWidth>
                                     <InputLabel id="Reason for refusal">Reason for refusal</InputLabel>
-                                    <Select value={selectValue2} onChange={handleSelectChange} id='Reason for refusal' label="Reason for refusal">
+                                    <Select value={selectValue2} onChange={(text) => setDischarge(prev => { return { ...prev, expandedNewBornScreeningRefusal: text.target.value } })} id='Reason for refusal' label="Reason for refusal">
                                       <MenuItem value={'Religious belief'}>Religious belief</MenuItem>
                                     </Select>
                                   </FormControl>
@@ -1767,7 +2038,7 @@ function  PatientTable({ handleSubmit, userData }) {
                                 {value3 === 'yes' && (
                                   <FormControl fullWidth>
                                     <InputLabel id="Results">Results</InputLabel>
-                                    <Select value={selectValue3} onChange={handleSelectChange3} id='Results' label="Results">
+                                    <Select value={selectValue3} onChange={(text) => setDischarge(prev => { return { ...prev, newbornHearingResult: text.target.value } })} id='Results' label="Results">
                                       <MenuItem value={'Bilateral Pass'}>Bilateral Pass</MenuItem>
                                       <MenuItem value={'Unilateral Refer'}>Unilateral Refer</MenuItem>
                                       <MenuItem value={'Bilateral Refer'}>Bilateral Refer</MenuItem>
@@ -1779,7 +2050,7 @@ function  PatientTable({ handleSubmit, userData }) {
 
                                   <FormControl fullWidth>
                                     <InputLabel id="Reason for refusal">Reason for refusal</InputLabel>
-                                    <Select value={selectValue3} onChange={handleSelectChange3} id='Reason for refusal' label="Reason for refusal">
+                                    <Select value={selectValue3} onChange={(text) => setDischarge(prev => { return { ...prev, newbornHearingRefusal: text.target.value } })} id='Reason for refusal' label="Reason for refusal">
                                       <MenuItem value={'Financial Constraint'}>Financial Constraint</MenuItem>
                                     </Select>
                                   </FormControl>
@@ -1799,7 +2070,7 @@ function  PatientTable({ handleSubmit, userData }) {
                                   multiline
                                   rows={4}
                                   value={finalDiagnosis}
-                                  onChange={handleFinalDiagnosisChange}
+                                  onChange={(text) => setDischarge(prev => { return { ...prev, finalDiagnosis: text.target.value } })}
                                   variant="outlined"
                                   fullWidth
                                 />
@@ -1810,7 +2081,7 @@ function  PatientTable({ handleSubmit, userData }) {
                                   multiline
                                   rows={4}
                                   value={homeMedication}
-                                  onChange={handleHomeMedicationChange}
+                                  onChange={(text) => setDischarge(prev => { return { ...prev, homeMedication: text.target.value } })}
                                   variant="outlined"
                                   fullWidth
                                 />
@@ -1819,18 +2090,7 @@ function  PatientTable({ handleSubmit, userData }) {
                             <Grid xs={3}>
                               <FormControl required>
                                 <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                  <DatePicker
-                                    size='small'
-                                    label="Date of Discharge"
-                                    name='DateodDischarge'
-                                    value={registrationForm.ChildDateofDischarge}
-                                    style={{ width: ' 100%' }}
-                                    renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, ChildDateofDischarge: params } })}
-                                    />}
-
-
-                                    maxDate={dayjs().add(1, 'week')}
-                                  />
+                                  <input type='date' onChange={(text) => setDischarge(prev => { return { ...prev, dateOfDischarge: text.target.value } })}/>
                                 </LocalizationProvider>
                               </FormControl>
 
@@ -1840,18 +2100,7 @@ function  PatientTable({ handleSubmit, userData }) {
 
                               <FormControl required>
                                 <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                  <DatePicker
-                                    size='small'
-                                    label="Follow-up Check-up"
-                                    name='FollowUp'
-                                    value={registrationForm.ChildFollowUpCheckUp}
-                                    style={{ width: ' 100%' }}
-                                    renderInput={(params) => <TextField {...params} size='small' required onChange={(text) => setRegistrationForm(prev => { return { ...prev, ChildFollowUpCheckUp: params } })}
-                                    />}
-
-                                    disablePast
-                                    maxDate={dayjs().add(1, 'year')}
-                                  />
+                                  <input type='date' onChange={(text) => setDischarge(prev => { return { ...prev, followUpCheckup: text.target.value } })}/>
                                 </LocalizationProvider>
                               </FormControl>
 
@@ -1863,6 +2112,7 @@ function  PatientTable({ handleSubmit, userData }) {
                                   label="ATTENDING PHYSISCIAN"
                                   fullWidth
                                   variant='standard'
+                                  onChange={(text) => setDischarge(prev => { return { ...prev, attendingPhysician: text.target.value } })}
                                 ></TextField>
 
 
@@ -1872,6 +2122,7 @@ function  PatientTable({ handleSubmit, userData }) {
                                   label="NURSE ON DUTY"
                                   fullWidth
                                   variant='standard'
+                                  onChange={(text) => setDischarge(prev => { return { ...prev, nurseOnDuty: text.target.value } })}
                                 ></TextField>
 
 
@@ -1889,6 +2140,7 @@ function  PatientTable({ handleSubmit, userData }) {
                                   label="DELIVERED BY"
                                   fullWidth
                                   variant='standard'
+                                  onChange={(text) => setDischarge(prev => { return { ...prev, deliveredBy: text.target.value } })}
                                 ></TextField>
 
 
@@ -1898,6 +2150,7 @@ function  PatientTable({ handleSubmit, userData }) {
                                   label="RECEIVED BY"
                                   fullWidth
                                   variant='standard'
+                                  onChange={(text) => setDischarge(prev => { return { ...prev, receivedBy: text.target.value } })}
                                 ></TextField>
 
 
@@ -1919,7 +2172,9 @@ function  PatientTable({ handleSubmit, userData }) {
 
 
                           
-
+                                  <Button onClick={()=> handleDischarge()} >
+                                    handle discharge
+                                  </Button>
 
                         </Grid>
 
@@ -1978,11 +2233,11 @@ function  PatientTable({ handleSubmit, userData }) {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {rows1.length > 0 ? (
-                            rows1.map((row1) => (
-                              <TableRow key={row1.dateAndTime}>
+                          {onlineAppointments.length > 0 ? (
+                            onlineAppointments.map((row1) => (
+                              <TableRow key={row1.appointmentDate}>
                                 <TableCell component="th" scope="row">
-                                  {row1.dateAndTime}
+                                  {row1.appointmentDate}
                                 </TableCell>
                                 <TableCell align="right">{row1.purpose}</TableCell>
                                 <TableCell align="right">{row1.status}</TableCell>
@@ -2012,21 +2267,21 @@ function  PatientTable({ handleSubmit, userData }) {
                             <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Blood Pressure</TableCell>
                             <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Weight</TableCell>
                             <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>BMI</TableCell>
-                            <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Cervix(dill/eff)</TableCell>
+                            <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Age of Gestation</TableCell>
                             <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Fundal Height</TableCell>
                             <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Fetal Movement</TableCell>
                             <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Presentation</TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {rows2.length > 0 ? (
-                            rows2.map((row2) => (
-                              <TableRow key={row2.dateOfVisit}>
-                                <TableCell>{row2.dateOfVisit}</TableCell>
-                                <TableCell>{row2.bloodPressure}</TableCell>
+                          {appointments.length > 0 ? (
+                            appointments.map((row2) => (
+                              <TableRow key={row2.appointmentDate}>
+                                <TableCell>{row2.appointmentDate}</TableCell>
+                                <TableCell>{row2.diastolic}/{row2.systolic}</TableCell>
                                 <TableCell>{row2.weight}</TableCell>
                                 <TableCell>{row2.bmi}</TableCell>
-                                <TableCell align='center'>{row2.cervixExamination}</TableCell>
+                                <TableCell align='center'>{row2.aog}</TableCell>
                                 <TableCell>{row2.fundalHeight}</TableCell>
                                 <TableCell>{row2.fetalMovement}</TableCell>
                                 <TableCell>{row2.presentation}</TableCell>
@@ -2081,13 +2336,13 @@ function  PatientTable({ handleSubmit, userData }) {
               </Modal>
               {/* -----------------------------------------------------------------------------------------------------Modal for Refferal----------------------------------------------------------------------------------------------------- */}
               <Modal open={openCreateRefferal} onClose={handleCloseCreateRefferal}>
-
-                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '100%',height:'100%',overflowY:'scroll', bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
                   {/* Your content goes here */}
                   <Typography variant="h6" component="div">
                     Create Refferal
                   </Typography>
                   {/* Add your form or other components here */}
+                  <referralForm/>
                 </Box>
               </Modal>
               {/*----------------------------------------------------------------------------------------------- Modal for Complete Pregnancy -----------------------------------------------------------------------------------------------*/}

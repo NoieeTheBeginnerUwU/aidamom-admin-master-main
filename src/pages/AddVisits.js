@@ -167,6 +167,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
         }
     }
 
+    const [lmp_, setLmp] = useState("");
     const submitVisit = async() =>{
         let arr = [];
         const querySnapshot = await getDocs(query(collection(database,"onlineAppointments"),where("appointmentDate","==",moment(new Date()).format("YYYY/MM/DD")),where("uid","==",selectedPatient.docid)))
@@ -185,6 +186,11 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
             updateDoc(doc(database,"userData",selectedPatient.docid),{
                 lastVisit: moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY")
             })
+            if(selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"){
+                updateDoc(doc(database,"userData",selectedPatient.docid),{
+                    lastPeriod: lmp_
+                })
+            }
             addDoc(collection(database,"notifications"),{
                 uid: selectedPatient.docid,
                 body: "Your checkup today was saved successfully.",
@@ -211,14 +217,15 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                     presentation: presentation,
                     remarks: text
                 }).then(alert("ADDED"))
+                    setLmp("");
                     setHeight("");
                     setWeight("");
                     setSystolic("");
                     setDiastolic("");
-                    setDilates("");
-                    setEfficaces("");
-                    setFetalMovement("");
-                    setFundalHeight("");
+                    setDilates(0);
+                    setEfficaces(0);
+                    setFetalMovement(0);
+                    setFundalHeight(0);
                     setPresentation("");
                     setText("");
                     
@@ -303,26 +310,19 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                     size='small'
                                     value={selectedDate}
                                     onChange={(newValue) => {
-                                        handleDateChange(newValue);
+                                        [handleDateChange(newValue),alert(newValue)];
                                     }}
                                     renderInput={(params) => <TextField {...params} variant="standard" fullWidth />}
-                                    maxDate={dayjs()} // Restrict date selection to today and past dates
+                                 // Restrict date selection to today and past dates
                                 />
                             </Grid>
                             
                             {
                                 selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"&&
-                                <Grid item xs={6}>
-                                    <DatePicker
-                                        label="Date Last Menstrual Period"
-                                        size='small'
-                                        onChange={(newValue) => {
-                                            [setLMP(moment(newValue).format("YYYY/MM/DD")),alert(moment(newValue).format("YYYY/MM/DD"))]
-                                        }}
-                                        renderInput={(params) => <TextField {...params} variant="standard" fullWidth />}
-                                        maxDate={dayjs()} // Restrict date selection to today and past dates
-                                    />
+                                <Grid item xs={selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"?6:12}>
+                                    <input type='date' onChange={(e)=> setLmp(e.target.value)} style={{width:'50%',height:40}}/>
                                 </Grid>
+                                
                             }
                             
                             <Grid item xs={3}>
@@ -484,6 +484,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                             <TextField
                                                 label="Dilates"
                                                 type="number"
+                                                value={dilates}
                                                 onChange={(text)=> setDilates(text.target.value)}
                                                 inputProps={{ min: 0, max: 10 }}
                                                 InputProps={{
@@ -495,6 +496,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                             <TextField
                                                 label="Effaces"
                                                 type="number"
+                                                value={efficases}
                                                 onChange={(text)=> setEfficaces(text.target.value)}
                                                 inputProps={{ min: 0, max: 100 }}
                                                 InputProps={{
@@ -508,6 +510,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                             <TextField
                                                 label="Fundal height"
                                                 type="number"
+                                                value={fundalHeight}
                                                 onChange={(text)=> setFundalHeight(text.target.value)}
                                                 inputProps={{ min: 0, max: 100 }}
                                                 InputProps={{
@@ -519,6 +522,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                             <TextField
                                                 label="Fetal movement"
                                                 type="number"
+                                                value={fetalMovement}
                                                 onChange={(text)=> setFetalMovement(text.target.value)}
                                                 inputProps={{ min: 0, max: 10 }}
                                                 InputProps={{
