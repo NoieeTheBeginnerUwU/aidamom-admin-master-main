@@ -657,7 +657,7 @@ dischargeMedication:"",
   const [userSearch, setUserSearch] = useState([]);
   const [appointments, setAppoitments] =useState([]);
   async function fetchData() {
-    const querySnapshot = await getDocs(query(collection(database, 'userData')));
+    const querySnapshot = await getDocs(query(collection(database, 'userData')),orderBy("dateCreated","asc"));
     const userData = [];
     const pending = [];
     let i = 1;
@@ -702,6 +702,7 @@ dischargeMedication:"",
           userSalary: doc.data().userSalary,
           userAddressOfEmployer: doc.data().userAddressOfEmployer,
           userNameOfBarangayCaptain: doc.data().userNameOfBarangayCaptain,
+          userProvincebirth:doc.data().userProvincebirth,
           //user pregnancy history
           //child1
           userChild1: doc.data().userChild1,
