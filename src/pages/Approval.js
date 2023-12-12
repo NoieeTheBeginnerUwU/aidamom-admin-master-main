@@ -35,6 +35,9 @@ const theme = createTheme({
       styleOverrides: {
         paper: {
           backgroundColor: '#fff', // White background
+          fontWeight:'bolder',
+          minWidth:'35vw',
+          minHeight:'30vh',
           color: '#000', // Black text
         },
       },
@@ -96,8 +99,8 @@ export default function Approval() {
             <Button variant="contained" color="error" backgroundColor = "#FF0000" onClick={handleClickDialogMessReject}>Reject</Button>
 
             <Dialog open={openDialogMessage} onClose={handleCloseDialogMess}  minWidth="xs">
-              <DialogTitle>Confirmation</DialogTitle>
-              <DialogContent>
+              <DialogTitle >Confirmation</DialogTitle>
+              <DialogContent style={{ display: 'flex', alignItems: 'center' }}>
                 <DialogContentText>
                   Are you sure you want to approve the appointment?
                 </DialogContentText>
@@ -113,9 +116,9 @@ export default function Approval() {
             </Dialog>
 
             <Dialog open={openDialogMessageReject} onClose={handleCloseDialogMessReject}  maxWidth="xs">
-              <DialogTitle>Confirmation</DialogTitle>
-              <DialogContent>
-                <DialogContentText>
+              <DialogTitle style={{color:"error", backgroundColor:"#FF0000"}}>Confirmation</DialogTitle>
+              <DialogContent style={{ display: 'flex', alignItems: 'center' }}>
+                <DialogContentText >
                   Are you sure you want to reject the appointment?
                 </DialogContentText>
               </DialogContent>
