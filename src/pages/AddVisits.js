@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Paper, TextField, Grid, Box, InputAdornment, Typography, Avatar, } from '@mui/material';
 import { FormControl, InputLabel, Select } from '@mui/material';
@@ -78,7 +78,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
         setPresentation(event.target.value);
     };
 
-    const [selectedDate, handleDateChange] = React.useState(null);
+    const [selectedDate, handleDateChange] = React.useState("");
     const [height, setHeight] = React.useState('');
     const [weight, setWeight] = React.useState('');
     const [systolic, setSystolic] = React.useState('');
@@ -236,6 +236,10 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
     const [lmp, setLMP] = useState("");
     const ref = useRef(null)
 
+    useEffect(()=>{
+        //console.log(selectedDate)
+    },[selectedDate])
+
     return (
         <div>
 
@@ -243,11 +247,11 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <Box mb={2}>
 
-                        <Grid container spacing={2} margin={1}>
+                        <Grid container spacing={2} margin={1} style={{backgroundColor:'navy',color:'white'}}>
                              <Grid container   component={Paper} padding={2}>
                             
                             <Grid xs={1}>
-                                <Avatar sx={{ width: 56, height: 56 }}>
+                                <Avatar sx={{ width: 200, height: 200 }}>
                                     {initials}
                                 </Avatar>
 
@@ -266,9 +270,9 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                             <Grid xs={2} marginRight={3}>
                                 <Box>
                                     <Typography fontSize={'medium'}>
-                                        LMP
+                                        LAST MENSTRUAL PERIOD
                                         <Box fontSize={'medium'} fontWeight={'650'} color={'black'}>
-                                            {moment(selectedPatient.lastPeriod,"YYYY/MM/DD").format("MMMM DD, YYYY")}
+                                            {!selectedPatient.lastPeriod||selectedPatient.lastPeriod==="No data"?"No data":moment(selectedPatient.lastPeriod,"YYYY/MM/DD").format("MMMM DD, YYYY")}
                                         </Box>
                                     </Typography>
                                 </Box>
@@ -278,9 +282,9 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                             <Grid xs={2} marginRight={3}>
                                 <Box>
                                     <Typography fontSize={'medium'}>
-                                        EDD
+                                        ESTIMATED DUE DATE
                                         <Box fontSize={'medium'} fontWeight={'650'} color={'black'}>
-                                        {moment(selectedPatient.lastPeriod,"YYYY/MM/DD").format("MMMM DD, YYYY")}
+                                        {!selectedPatient.lastPeriod||selectedPatient.lastPeriod==="No data"?"No data":moment(selectedPatient.lastPeriod,"YYYY/MM/DD").format("MMMM DD, YYYY")}
                                         </Box>
                                     </Typography>
                                 </Box>
@@ -288,9 +292,9 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                             <Grid xs={2} marginRight={3}>
                                 <Box>
                                     <Typography fontSize={'medium'}>
-                                        AOG
+                                        AGE OF GESTATION
                                         <Box fontSize={'medium'} fontWeight={'650'} color={'black'}>
-                                        {moment(new Date(),"YYYY/MM/DD").diff(selectedPatient.lastPeriod,"weeks")} weeks
+                                        {!selectedPatient.lastPeriod||selectedPatient.lastPeriod==="No data"?"No data":moment(new Date(),"YYYY/MM/DD").diff(selectedPatient.lastPeriod,"weeks")+ "weeks"} 
                                         </Box>
                                     </Typography>
                                 </Box>
@@ -310,9 +314,9 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                     size='small'
                                     value={selectedDate}
                                     onChange={(newValue) => {
-                                        [handleDateChange(newValue),alert(newValue)];
+                                        [handleDateChange(newValue)];
                                     }}
-                                    renderInput={(params) => <TextField {...params} variant="standard" fullWidth />}
+                                    renderInput={(params) => <TextField onChange={(text)=> alert(text.target.value)} {...params} variant="standard" fullWidth />}
                                  // Restrict date selection to today and past dates
                                 />
                             </Grid>
@@ -320,7 +324,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                             {
                                 selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"&&
                                 <Grid item xs={selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"?6:12}>
-                                    <input type='date' onChange={(e)=> setLmp(e.target.value)} style={{width:'50%',height:40}}/>
+                                    <input type='date' onChange={(e)=> [setLmp(e.target.value),alert(e.target.value)]} style={{width:'50%',height:40}}/>
                                 </Grid>
                                 
                             }

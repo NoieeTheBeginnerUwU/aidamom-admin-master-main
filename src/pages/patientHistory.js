@@ -15,7 +15,7 @@ const theme = createTheme({
     }
   });
 
-  const PatientHistoryForm = ({ref}) => {
+  const PatientHistoryForm = (props) => {
 
     const containerStyle = {
         fontSize: '12px',
@@ -24,7 +24,7 @@ const theme = createTheme({
 
   return (
     <ThemeProvider theme={theme}>
-    <div className="container" ref={ref} style={containerStyle}>
+    <div className="container" ref={props.ref} style={containerStyle}>
       
       <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
       <Box mr={6}><img src={daetlogo} alt="Daet Logo"  width='85px'/></Box>

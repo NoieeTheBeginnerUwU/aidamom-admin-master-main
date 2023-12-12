@@ -6,12 +6,13 @@ import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import Badge from '@mui/material/Badge';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import CheckIcon from '@mui/icons-material/Check';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChain } from '@fortawesome/free-solid-svg-icons';
+//import firebase
+import { database } from '../config/firebase';
+import { getDocs, query, collection, where, orderBy } from 'firebase/firestore';
 
 const Calendar = () => {
   const [value, setValue] = useState(new Date());
-  const [highlightedDays, setHighlightedDays] = useState([1,2,3,4,5,6,7,8,9,13]);
+  const [highlightedDays, setHighlightedDays] = useState([1, 2, 13]);
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <StaticDatePicker
@@ -32,13 +33,16 @@ const Calendar = () => {
             <Badge
               key={day.toString()}
               overlap='circular'
-              badgeContent={isSelected ? <FontAwesomeIcon icon={faChain}/> : undefined}
+              badgeContent={isSelected ? <CheckIcon color='red' /> : undefined}
             >
               <PickersDay {...DayComponentProps} />
             </Badge>
           );
         }}
       />
+      <div style={{width:'100%',height:'50%',backgroundColor:'navy'}}>
+        <p>date selected </p>
+      </div>
     </LocalizationProvider>
   );
 };

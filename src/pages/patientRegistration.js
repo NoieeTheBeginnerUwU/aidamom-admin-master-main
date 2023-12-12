@@ -89,8 +89,6 @@ export default function PatientRegistrationForm() {
   //   setAog(`${aogMonths} months and ${aogWeeks % 4} weeks`);
   // };
 
-
-
   const [registrationForm, setRegistrationForm] = useState({
     //basic personal details
     userEmail: "",
@@ -194,8 +192,18 @@ export default function PatientRegistrationForm() {
     userGoiterFamily: false,
     userAnemiaPersonal: false,
     userAnemiaFamily: false,
-  
-    userHighRiskBehavior: false,
+    userGenitalTrackInfection: "None",
+    userOtherInfectiousDiseases: "None",
+    userSmokingPersonal:false,
+    userSmokingFamily:false,
+    userAlcoholPersonal:false,
+    userAlcoholFamily:false,
+    userIllegalDrugsPersonal:false,
+    userIllegalDrugsFamily:false,
+    userSpouseViolencePersonal:false,
+    userSpouseViolenceFamily:false,
+    userMultiplePartnersPersonal:false,
+    userMultiplePartnersFamily:false,
     dateCreated: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
     status: "pending",
     userPic: "",
@@ -204,6 +212,10 @@ export default function PatientRegistrationForm() {
 
 
   const handleCreateAccount = async () => {
+    let str = registrationForm.userNumber;
+    let ph = "+639";
+    str = str.substring(2)
+    let complete = ph.concat(str) 
     if (registrationForm.userFname !== "" || registrationForm.userLname !== "" || registrationForm.userSex !== "" || registrationForm.userAge || registrationForm.userNumber !== "") {
       try {
         await addDoc(collection(database, "userData"), {
@@ -215,7 +227,7 @@ export default function PatientRegistrationForm() {
           userCivilStatus: registrationForm.userCivilStatus,
           userBloodType: registrationForm.userBloodType,
           userReligion: registrationForm.userReligion,
-          userNumber: registrationForm.userNumber,
+          userNumber: complete,
           userDob: registrationForm.userDob,
           userAge: registrationForm.userAge,
           userNationality: registrationForm.userNationality,
@@ -287,6 +299,16 @@ export default function PatientRegistrationForm() {
           userGenitalTrackInfection: registrationForm.userGenitalTrackInfection,
           userOtherInfectiousDiseases: registrationForm.userOtherInfectiousDiseases,
           userHighRiskBehavior: registrationForm.userHighRiskBehavior,
+          userSmokingPersonal:registrationForm.userSmokingPersonal,
+          userSmokingFamily:registrationForm.userSmokingFamily,
+          userAlcoholPersonal:registrationForm.userAlcoholPersonal,
+          userAlcoholFamily:registrationForm.userAlcoholFamily,
+          userIllegalDrugsPersonal:registrationForm.userIllegalDrugsPersonal,
+          userIllegalDrugsFamily:registrationForm.userIllegalDrugsFamily,
+          userSpouseViolencePersonal:registrationForm.userSpouseViolencePersonal,
+          userSpouseViolenceFamily:registrationForm.userSpouseViolenceFamily,
+          userMultiplePartnersPersonal:registrationForm.userMultiplePartnersPersonal,
+          userMultiplePartnersFamily:registrationForm.userMultiplePartnersFamily,
           dateCreated: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
           status: "pending",
           activePregnacy: true,
@@ -674,7 +696,12 @@ export default function PatientRegistrationForm() {
     }));
   };
 
-
+  const handleCheckboxChangeHighrisk = (risk, category) => (event) => {
+    setRegistrationForm((prevForm) => ({
+      ...prevForm,
+      [`user${risk}${category}`]: event.target.checked,
+    }));
+  };
 
   //---------Triggering Checkbox for Specified Diseases-----------
   const [checked, setChecked] = useState(false);
@@ -1022,6 +1049,11 @@ export default function PatientRegistrationForm() {
                       labelId="cpnumber"
                       fullWidth
                       size='small'
+                      InputProps={{
+                        inputProps: { 
+                            max: 11, min: 11 
+                        }
+                    }}
                       type='number'
                       value={registrationForm.userNumber}
                       onChange={(text) => setRegistrationForm(prev => { return { ...prev, userNumber: text.target.value } })}

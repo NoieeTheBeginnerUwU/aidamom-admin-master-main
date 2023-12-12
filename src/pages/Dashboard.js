@@ -803,7 +803,7 @@ const Dashboard = ({ counter }) => {
 
   useEffect(()=>{
     if(month!==""&&year_!==""){
-      fetchdischarge(month,year)
+      fetchdischarge(month,year_.toString())
     }
   },[month,year_])
 
@@ -1254,7 +1254,7 @@ const totalWeight = weightRows.reduce((total, row) => total + row.count, 0);
       {/*-------------------------------NUMBER OF TOTAL DELIVERIES------------------------------ */}
       <Grid xs={12} sx={{ minHeight: '10vh', minWidth: '8%', }} mb={1} >
         <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'black'} color='white' padding={1.4} >
-          Sort data by month/year
+          filter data by month/year
           <select defaultValue={"12"} onChange={(text)=> [setMonth(text.target.value)]} style={{height:'100%',padding:10,marginLeft:40,textAlign:'center',width:200}}>
             <option value={"1"}>January</option>
             <option value={"2"}>February</option>

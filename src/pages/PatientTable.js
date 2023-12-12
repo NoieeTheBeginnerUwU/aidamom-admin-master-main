@@ -1334,11 +1334,6 @@ dischargeMedication:"",
             <Approval />
           </Box>
         </Modal>
-
-
-
-
-
       </Box>
       <Divider sx={{ marginBottom: 2 }}></Divider>
       <Box display="flex" justifyContent="center">
@@ -1574,16 +1569,41 @@ dischargeMedication:"",
                                           </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                          {rows3.map((row) => (
-                                            <TableRow key={row.number}>
-                                              <TableCell>{row.number}</TableCell>
-                                              <TableCell>{row.dateOfDelivery}</TableCell>
-                                              <TableCell>{row.typeOfDelivery}</TableCell>
-                                              <TableCell>{row.birthOutcome}</TableCell>
-                                              <TableCell>{row.numberOfChildDelivered}</TableCell>
-                                              <TableCell>{row.complications}</TableCell>
-                                            </TableRow>
-                                          ))}
+                                          {
+                                            selectedRow.userChildDateOfDelivery1!==""&&
+                                            <TableRow key={selectedRow.userChildDateOfDelivery1}>
+                                            <TableCell>{selectedRow.userChildDateOfDelivery1!==""?1:""}</TableCell>
+                                            <TableCell>{selectedRow.userChildDateOfDelivery1}</TableCell>
+                                            <TableCell>{selectedRow.userChildTypeOfDelivery1}</TableCell>
+                                            <TableCell>{selectedRow.userChildBirthOutcome1}</TableCell>
+                                            <TableCell>{selectedRow.userChildNumberOfChildDelivered1}</TableCell>
+                                            <TableCell>{selectedRow.userChildComplication1}</TableCell>
+                                          </TableRow>
+                                          }
+                                          {
+                                            selectedRow.userChildDateOfDelivery2!==""&&
+                                            <TableRow key={selectedRow.userChildDateOfDelivery2}>
+                                            <TableCell>{selectedRow.userChildDateOfDelivery2!==""?2:""}</TableCell>
+                                            <TableCell>{selectedRow.userChildDateOfDelivery2}</TableCell>
+                                            <TableCell>{selectedRow.userChildTypeOfDelivery2}</TableCell>
+                                            <TableCell>{selectedRow.userChildBirthOutcome2}</TableCell>
+                                            <TableCell>{selectedRow.userChildNumberOfChildDelivered2}</TableCell>
+                                            <TableCell>{selectedRow.userChildComplication2}</TableCell>
+                                          </TableRow>
+                                          }
+                                          {
+                                            selectedRow.userChildDateOfDelivery3!==""&&
+                                            <TableRow key={selectedRow.userChildDateOfDelivery3}>
+                                            <TableCell>{selectedRow.userChildDateOfDelivery3!==""?3:""}</TableCell>
+                                            <TableCell>{selectedRow.userChildDateOfDelivery3}</TableCell>
+                                            <TableCell>{selectedRow.userChildTypeOfDelivery3}</TableCell>
+                                            <TableCell>{selectedRow.userChildBirthOutcome3}</TableCell>
+                                            <TableCell>{selectedRow.userChildNumberOfChildDelivered3}</TableCell>
+                                            <TableCell>{selectedRow.userChildComplication3}</TableCell>
+                                          </TableRow>
+                                          }
+                                          
+                                          
                                         </TableBody>
                                       </Table>
                                     </TableContainer>
@@ -1610,73 +1630,73 @@ dischargeMedication:"",
                                             <TableRow key={row.disease}>
                                               <TableCell >Tubercolosis</TableCell>
                                               <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userTBPersonal}</TableCell>
+                                                <TableCell>{selectedRow.userTBPersonal===false?"no":"yes"}</TableCell>
                                               </TableCell>
                                               <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userTBFamily}</TableCell>
+                                                <TableCell>{selectedRow.userTBFamily===false?"no":"yes"}</TableCell>
                                               </TableCell>
                                             </TableRow>
                                             <TableRow key={row.disease}>
                                               <TableCell >Heart Diseases</TableCell>
                                               <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userHeartDiseasesPersonal}</TableCell>
+                                                <TableCell>{selectedRow.userHeartDiseasesPersonal===false?"no":"yes"}</TableCell>
                                               </TableCell>
                                               <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userHeartDiseasesFamily}</TableCell>
+                                                <TableCell>{selectedRow.userHeartDiseasesFamily===false?"no":"yes"}</TableCell>
                                               </TableCell>
                                             </TableRow>
                                             <TableRow key={row.disease}>
                                               <TableCell >Diabetes</TableCell>
                                               <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userDiabetesPersonal}</TableCell>
+                                                <TableCell>{selectedRow.userDiabetesPersonal===false?"no":"yes"}</TableCell>
                                               </TableCell>
                                               <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userDiabetesFamily}</TableCell>
+                                                <TableCell>{selectedRow.userDiabetesFamily===false?"no":"yes"}</TableCell>
                                               </TableCell>
                                             </TableRow>
                                             <TableRow key={row.disease}>
                                               <TableCell >Hypertension</TableCell>
                                               <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userHypertensionPersonal}</TableCell>
+                                                <TableCell>{selectedRow.userHypertensionPersonal===false?"no":"yes"}</TableCell>
                                               </TableCell>
                                               <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userTBFamily}</TableCell>
+                                                <TableCell>{selectedRow.userTBFamily===false?"no":"yes"}</TableCell>
                                               </TableCell>
                                             </TableRow>
                                             <TableRow key={row.disease}>
                                               <TableCell >Bronchial Asthma</TableCell>
                                               <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userBronchialAsthmaPersonal}</TableCell>
+                                                <TableCell>{selectedRow.userBronchialAsthmaPersonal===false?"no":"yes"}</TableCell>
                                               </TableCell>
                                               <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userBronchialAsthmaPersonal}</TableCell>
+                                                <TableCell>{selectedRow.userBronchialAsthmaPersonal===false?"no":"yes"}</TableCell>
                                               </TableCell>
                                             </TableRow>
                                             <TableRow key={row.disease}>
                                               <TableCell >Urinary Tract Infection</TableCell>
                                               <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userUTIPersonal}</TableCell>
+                                                <TableCell>{selectedRow.userUTIPersonal===false?"no":"yes"}</TableCell>
                                               </TableCell>
                                               <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userUTIFamily}</TableCell>
+                                                <TableCell>{selectedRow.userUTIFamily===false?"no":"yes"}</TableCell>
                                               </TableCell>
                                             </TableRow>
                                             <TableRow key={row.disease}>
                                               <TableCell >Parasitism</TableCell>
                                               <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userParasitismPersonal}</TableCell>
+                                                <TableCell>{selectedRow.userParasitismPersonal===false?"no":"yes"}</TableCell>
                                               </TableCell>
                                               <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userParasitismFamily}</TableCell>
+                                                <TableCell>{selectedRow.userParasitismFamily===false?"no":"yes"}</TableCell>
                                               </TableCell>
                                             </TableRow>
                                             <TableRow key={row.disease}>
                                               <TableCell >Goiter</TableCell>
                                               <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userGoiterPersonal}</TableCell>
+                                                <TableCell>{selectedRow.userGoiterPersonal===false?"no":"yes"}</TableCell>
                                               </TableCell>
                                               <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userGoiterFamily}</TableCell>
+                                                <TableCell>{selectedRow.userGoiterFamily===false?"no":"yes"}</TableCell>
                                               </TableCell>
                                             </TableRow>
                                             <TableRow key={row.disease}>

@@ -92,8 +92,8 @@ const Reports = () => {
         </Button>
       </FormControl>
       {form === 'PatientHistory' && (
-        <div ref={ref}>
-         <PatientHistoryForm />
+        <div>
+         <PatientHistoryForm  ref={ref}/>
         </div>
       )}
        {form === 'ClinicalCoverSheet'  && (

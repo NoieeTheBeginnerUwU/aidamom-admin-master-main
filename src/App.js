@@ -47,7 +47,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Loading from './animations/Loading';
 import { collection, getDocs, onSnapshot, query, where } from 'firebase/firestore';
 import { faUserCircle, faLock } from '@fortawesome/free-solid-svg-icons';
-import { GraphicEqOutlined, PostAddOutlined, PregnantWomanRounded, Report, SettingsApplications } from '@material-ui/icons';
+import { ComputerSharp, GraphicEqOutlined, PostAddOutlined, PregnantWomanRounded, Report, SettingsApplications, TableChartOutlined } from '@material-ui/icons';
 import { FormControl, List } from '@material-ui/core';
 
 function App() {
@@ -537,7 +537,7 @@ try {
               <Link to="Systemreport" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Systemreport"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Systemreport")}>
                   <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Systemreport"?"white":"rgb(0,0,40)"}}  color="primary">
-                    <GraphicEqOutlined fontSize="large" color="" />
+                    <TableChartOutlined fontSize="large" color="" />
                   </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Systemreport"?"none":"none",color:active==="Systemreport"?"white":"rgb(0,0,40)"}}>Reports</h3>
                 </div>
