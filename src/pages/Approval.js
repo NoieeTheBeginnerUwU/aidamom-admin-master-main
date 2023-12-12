@@ -12,24 +12,76 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import { Paper, Grid, Divider, Typography , Box} from '@mui/material';
+import { Paper, Grid, Divider, Typography, Box } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+
 //firebase
 import { database } from '../config/firebase';
 import { updateDoc, doc, query, where, collection, getDocs, orderBy, increment } from 'firebase/firestore';
 import moment from 'moment';
 
+
+const [isRejectDialog, setIsRejectDialog] = useState(false);
+
+const theme = createTheme({
+  components: {
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          minWidth:'40%',
+          minHeight:'40%',
+          textAlign:'center',
+          justifyContent:'center',
+          justifyItems:'center',
+          backgroundColor: '#fff', // White background
+          color: '#000', // Black text
+          fontSize:'16px',
+          display:'flex'
+        },
+      },
+    },
+    MuiDialogTitle: {
+      styleOverrides: {
+        root: {
+          backgroundColor: isRejectDialog ? '#f44336' : '#2196f3', // Blue background for the title
+          color: '#fff', // White text
+        },
+      },
+    },
+    MuiDialogActions: {
+      styleOverrides: {
+        root: {
+          borderTop: `1px solid ${isRejectDialog ? '#d32f2f' : '#1565c0'}`, // Darker red or blue top border for actions
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: isRejectDialog ? '#f44336' : '#2196f3', // Red or blue button text
+        },
+      },
+    },
+  },
+});
+
 export default function Approval() {
 
-
-// Dummy data for Appoinment table
+  // Dummy data for Appoinment table
   const columns = [
-    { field: 'appointmentDate', headerName: 'DATE', flex:.5},
-    { field: 'time', headerName: 'TIME', flex:.5},
-    { field: 'name', headerName: 'PATIENT', flex:.5 },
-    { field: 'purpose', headerName: 'PURPOSE', flex:.5 },
+    { field: 'appointmentDate', headerName: 'DATE', flex: .5},
+    { field: 'time', headerName: 'TIME', flex: .5 },
+    { field: 'name', headerName: 'PATIENT', flex: .5 },
+    { field: 'purpose', headerName: 'PURPOSE', flex: .5 },
     {
       field: 'status',
-      headerName: 'STATUS', flex:.5,
+      headerName: 'STATUS', flex: .5,
       renderCell: (params) => {
         if (params.value === 'pending') {
           return <div><PendingActionsIcon color="action" /> {params.value}</div>;
@@ -42,18 +94,56 @@ export default function Approval() {
     },
     {
       field: 'action',
-      headerName: 'ACTION', flex:.7,
+      headerName: 'ACTION', flex: .7,
       renderCell: (params) => (
         params.row.status === 'pending' ? (
+          <ThemeProvider theme={theme}>
           <div>
-            <Button variant="contained" color="primary" onClick={() => handleApproveAppointment(params.row.id)}>Approve</Button>
-            <Button variant="contained" color="error" onClick={() => handleRejectAppointment(params.row.id)}>Reject</Button>
+            <Button variant="contained"sx={{ padding:2 }}  onClick={handleClickOpenDialogMess} >Approve</Button>
+            <Button variant="contained" color="error" backgroundColor = "#FF0000" onClick={handleClickDialogMessReject}>Reject</Button>
+
+            <Dialog open={openDialogMessage} onClose={handleCloseDialogMess}  minWidth="xs">
+              <DialogTitle>Confirmation</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Are you sure you want to approve the appointment?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseDialogMess} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={() => handleConfirmation(params.row.id)} color="primary">
+                  Approve
+                </Button>
+              </DialogActions>
+            </Dialog>
+
+            <Dialog open={openDialogMessageReject} onClose={handleCloseDialogMessReject}  maxWidth="xs">
+              <DialogTitle>Confirmation</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Are you sure you want to reject the appointment?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseDialogMessReject} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={() => handleRejectAppointment(params.row.id)} color="primary">
+                  Reject
+                </Button>
+              </DialogActions>
+            </Dialog>
+            
+
           </div>
+          </ThemeProvider>
         ) : null
       ),
     },
   ];
-  
+
   const allRows = [
     { id: 1, date: '2023-11-26 15:55', patient: 'Doe, John', purpose: 'Prenatal Checkup', address: 'Barangay 1, Municipality 1, Province 1', status: 'Pending' },
     { id: 2, date: '2023-11-27 10:00', patient: 'Smith, Jane', purpose: 'Referral', address: 'Barangay 2, Municipality 2, Province 2', status: 'Scheduled' },
@@ -61,10 +151,10 @@ export default function Approval() {
     { id: 4, date: '2023-11-26 15:55', patient: 'Doe, John', purpose: 'Prenatal Checkup', address: 'Barangay 1, Municipality 1, Province 1', status: 'Pending' },
     { id: 5, date: '2023-11-27 10:00', patient: 'Smith, Jane', purpose: 'Referral', address: 'Barangay 2, Municipality 2, Province 2', status: 'Scheduled' },
     { id: 6, date: '2023-11-28 14:30', patient: 'Brown, Bob', purpose: 'Checkup', address: 'Barangay 3, Municipality 3, Province 3', status: 'Denied' },
-  
-  
+
+
   ];
-  
+
   const [searchTerm, setSearchTerm] = useState('');
   const [showPending, setShowPending] = useState(true);
   const [showScheduled, setShowScheduled] = useState(true);
@@ -83,7 +173,7 @@ export default function Approval() {
     );
   });
 
-///Messageee pop up
+  ///Messageee pop up
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
@@ -106,132 +196,193 @@ export default function Approval() {
   };
 
   const [onlineAppointments, setOnlineAppointments] = useState([]);
-  const fetchOnlineAppointments = async() => {
+  const fetchOnlineAppointments = async () => {
     let arr = [];
-    let q = query(collection(database,"onlineAppointments"),where("status","==","pending"))
-    const querySnapshot = await getDocs(q, orderBy("appointmentDate","desc"))
-    querySnapshot.forEach((doc)=>{
-      arr.push({id:doc.id, uid:doc.data().uid, name: doc.data().name, purpose:doc.data().purpose, status:doc.data().status,appointmentDate: moment(doc.data().appointmentDate,"YYYY/MM/DD").format("MMMM DD, YYYY"), time:doc.data().time})
+    let q = query(collection(database, "onlineAppointments"), where("status", "==", "pending"))
+    const querySnapshot = await getDocs(q, orderBy("appointmentDate", "desc"))
+    querySnapshot.forEach((doc) => {
+      arr.push({ id: doc.id, uid: doc.data().uid, name: doc.data().name, purpose: doc.data().purpose, status: doc.data().status, appointmentDate: moment(doc.data().appointmentDate, "YYYY/MM/DD").format("MMMM DD, YYYY"), time: doc.data().time })
     })
     setOnlineAppointments(arr);
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchOnlineAppointments()
     console.log(onlineAppointments)
-  },[])
+  }, [])
 
-  const handleApproveAppointment = async(id, name, purpose) => {
-    try{
-      updateDoc(doc(database,"onlineAppointments",id),{
-        status:"approved"
+  const handleApproveAppointment = async (id, name, purpose) => {
+    try {
+      updateDoc(doc(database, "onlineAppointments", id), {
+        status: "approved"
       })
-      alert(name +"'s request for " + purpose + " has been approved.")
+     
       setSnackbarMessage('Appointment Approved');
       setSnackbarSeverity('success');
       setSnackbarOpen(true);
       fetchOnlineAppointments()
-    }catch(e){
+    } catch (e) {
       alert(e)
     }
   }
 
-  const handleRejectAppointment = async(id, name, purpose) => {
-    try{
-      updateDoc(doc(database,"onlineAppointments",id),{
-        status:"denied"
+  const handleRejectAppointment = async (id, name, purpose) => {
+    try {
+      updateDoc(doc(database, "onlineAppointments", id), {
+        status: "denied"
       })
-      alert(name +"'s request for " + purpose + " has been rejected.")
+     
       setSnackbarMessage('Appointment Rejected');
       setSnackbarSeverity('error');
       setSnackbarOpen(true);
       fetchOnlineAppointments()
-    }catch(e){
+    } catch (e) {
       alert(e)
     }
   }
 
-  return (
-    <div style={{width:'100%',height:'80%',backgroundColor:'white',display:'flex',flexDirection:'column',alignItems:'start',justifyContent:'start'}} marginTop={1}>
+  ////------------------for Confirmation messages--------------------------
+ 
+  const handleConfirmation = (appointmentId) => {
+    // API call to update appointment status to "approved"
+    // Update local state or table data based on the response
+    // ...
+    const id = appointmentId;
+    handleApproveAppointment(id);
+    // Close the dialog after successful confirmation
 
-   
-    <Box sx={{alignItems:'start',justifyContent:'start', textAlign:'left'}}>
-     
 
+
+
+    handleCloseDialogMess();
+  };
+  
+  const handleClickOpenDialogMess = () => {
+    // Open the confirmation dialog
+    setOpenDialogMessage(true);
+  };
+  
+  const handleCloseDialogMess = () => {
+    // Close the confirmation dialog
+    setOpenDialogMessage(false);
+    // Reset confirmation flag
+    setConfirmationFlag(false);
+  };
+
+  const handleClickDialogMessReject = () => {
+    // Close the confirmation dialog
+    setOpenDialogMessageReject(true);
+    setIsRejectDialog(true);
+ 
+  };
+
+  const handleCloseDialogMessReject = () => {
+    // Close the confirmation dialog
+    setOpenDialogMessageReject(false);
+    // Reset confirmation flag
+    setConfirmationFlag(false);
     
-    <Box  style={{ maxHeight: '90%', maxWidth: '98%' , padding:'1%'}} >
-<Grid container >
-<Grid xs={5} mb={1}>
-<TextField
-  label="Search"
-  variant="standard"
-  value={searchTerm}
-  fullWidth
-  onChange={(e) => setSearchTerm(e.target.value)}
-  InputProps={{
-    startAdornment: (
-      <InputAdornment position="start">
-        <SearchIcon />
-      </InputAdornment>
-    ),
-  }}
-/>
-    </Grid>
-   <Grid xs={2}></Grid>
-    <Grid xs={5} marginTop={1}>
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={showPending}
-            onChange={(e) => setShowPending(e.target.checked)}
-            color="primary"
-          />
-        }
-        label="Show Pending"
-      />
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={showScheduled}
-            onChange={(e) => setShowScheduled(e.target.checked)}
-            color="primary"
-          />
-        }
-        label="Show Scheduled"
-      />
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={showAll}
-            onChange={(e) => setShowAll(e.target.checked)}
-            color="primary"
-          />
-        }
-        label="Show All"
-      />
-      </Grid>
-      <Grid xs={12}>
-  {/* ----------------------------------------------------------------- Appointment Table ----------------------------------------------------------------- */}
-  <Box sx={{ height: 460, width: '100%' }}>
-      <DataGrid autoHeight={false}
-      rowsPerPageOptions={[]} 
-        rows={onlineAppointments}
-        columns={columns}
-        pageSize={5}
-        density="compact"
-       
-      />
-  </Box>
-      </Grid>
-      </Grid>
-    </Box>
-    {/* ----------------------------------------------------------Messaggeeeeeeeee pop up---------------------------------------------------------- */}
-    <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleSnackbarClose}>
-        <MuiAlert elevation={6} variant="filled" severity={snackbarSeverity}>
-          {snackbarMessage}
-        </MuiAlert>
-      </Snackbar>
-    </Box>
+  };
+
+  const [appointmentId, setAppointmentId] = useState(null);
+  
+   const [openDialogMessageReject, setOpenDialogMessageReject] = useState(false);
+  const [openDialogMessage, setOpenDialogMessage] = useState(false);
+  const [confirmationFlag, setConfirmationFlag] = useState(false);
+
+  return (
+
+    <ThemeProvider theme={theme}>
+    <div style={{ width: '100%', height: '80%', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start' }} marginTop={1}>
+
+
+      <Box sx={{ alignItems: 'start', justifyContent: 'start', textAlign: 'left' }}>
+
+
+
+        <Box style={{ maxHeight: '90%', maxWidth: '98%', padding: '1%' }} >
+          <Grid container >
+            <Grid xs={5} mb={1}>
+              <TextField
+                label="Search"
+                variant="standard"
+                value={searchTerm}
+                fullWidth
+                onChange={(e) => setSearchTerm(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+            <Grid xs={2}></Grid>
+            <Grid xs={5} marginTop={1}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={showPending}
+                    onChange={(e) => setShowPending(e.target.checked)}
+                    color="primary"
+                  />
+                }
+                label="Show Pending"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={showScheduled}
+                    onChange={(e) => setShowScheduled(e.target.checked)}
+                    color="primary"
+                  />
+                }
+                label="Show Scheduled"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={showAll}
+                    onChange={(e) => setShowAll(e.target.checked)}
+                    color="primary"
+                  />
+                }
+                label="Show All"
+              />
+            </Grid>
+            <Grid xs={12}>
+              {/* ----------------------------------------------------------------- Appointment Table ----------------------------------------------------------------- */}
+              <Box sx={{ height: 500, width: '100%', position: 'relative'}}>
+                <DataGrid 
+                headerHeight={20} 
+               
+                   style={{
+                    position: 'sticky',
+                    marginTop:'10px',
+                    backgroundColor: 'white', // adjust background color
+                    display: 'flex',
+                    justifyContent: 'center', // center the header
+                  }}
+                  rowsPerPageOptions={[]}
+                  rows={onlineAppointments}
+                  columns={columns}
+                 
+                  density="compact"
+
+                />
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+        {/* ----------------------------------------------------------Messaggeeeeeeeee pop up---------------------------------------------------------- */}
+        <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleSnackbarClose}>
+          <MuiAlert elevation={6} variant="filled" severity={snackbarSeverity}>
+            {snackbarMessage}
+          </MuiAlert>
+        </Snackbar>
+      </Box>
     </div>
+    </ThemeProvider>
   );
 }

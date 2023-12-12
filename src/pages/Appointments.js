@@ -29,6 +29,7 @@ import { useReactToPrint } from 'react-to-print';
 //Font
 import "../animations/Bohemian-Typewriter.ttf"
 import TopNav from './messages/TopNav';
+import { ThemeProvider } from 'styled-components';
 
 const Appointment = () => {
 
@@ -1375,9 +1376,11 @@ dischargeMedication:"",
 )
 
   return (    
+    <ThemeProvider theme={theme}>
   <div style={{width:'100%',height:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'start',overflow:'hidden'}}>
     <PatientTable/>
   </div>
+  </ThemeProvider>
   )
 }
 
