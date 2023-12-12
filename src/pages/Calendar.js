@@ -32,17 +32,23 @@ const Calendar_ = ()=> {
 
 
     const [clickedDayApp, setClickedDayApp] = useState([]);
-    async function handleFetchAppointmentsOnClick() {
+
+    async function handleFetchAppointmentsOnClick(date) {
       let appointments = [];
       let dateNow = moment(date).format("YYYY/MM/DD");
-      const querySnapshot = await getDocs(query(collection(database, 'appointments'),where("appointmentDate","==",dateNow)));
+      const querySnapshot = await getDocs(query(collection(database, 'onlineAppointments'),where('status',"==","approved"),where("appointmentDate","==",date)));
       querySnapshot.forEach((doc)=>{
         appointments.push({id:doc.id, appointmentdate:doc.data().appointmentDate, purpose:doc.data().purpose, name:doc.data().name,time:doc.data().time})
       })
       setClickedDayApp(appointments);
     }
+
+    const [activDate, setActiveDate] = useState(new Date())
     
-   
+    useEffect(()=>{
+      handleFetchAppointmentsOnClick(moment(activDate).format("YYYY/MM/DD"))
+    },[activDate])
+
     return (
      <div style={{display:'flex',flexDirection:'column',width:'100%',height:'100vh',backgroundColor:'white',overflow:'hidden'}}>
       {
@@ -50,7 +56,7 @@ const Calendar_ = ()=> {
         <div style={{display:'flex',flexDirection:'row',width:'100%',flexWrap:'wrap',height:'100vh',backgroundColor:'white'}}>
         <div style={{display:'flex',flexDirection:'column',width:'100%',alignItems:'center',justifyContent:'space-evenly',height:'100vh',color:'black',backgroundColor:'ghostwhite'}}>
           <div className='calendar-container'>
-            <Calendar onChange={setDate} onClickDay={()=> handleFetchAppointmentsOnClick()} value={date} />
+            <Calendar onChange={setDate} onClickDay={(e)=> setActiveDate(e)} value={date} />
           </div>
           <p style={{fontSize:16}}>Your appointments for {date.toDateString()}</p>
           <div style={{width:'100%',height:'50%',backgroundColor:'white',overflowY:'scroll',display:'flex',flexDirection:'column',alignItems:'center'}}>

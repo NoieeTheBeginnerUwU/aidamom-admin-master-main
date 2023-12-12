@@ -820,6 +820,7 @@ const rows = [
 // Calculate the total number of pregnant women
 const totalPregnantWomen = rows.reduce((total, row) => total + row.pregnantWomen, 110);
 
+const [activeDate, setActiveDate] = useState("");
 
 // Calculate the total number of deliveries for each category
 const totalDeliveriesByProfessionals = data.reduce((total, row) => total + row.NumberOfDeliveriesAttendedByHealthProfessionals.Doctor + row.NumberOfDeliveriesAttendedByHealthProfessionals.Nurse + row.NumberOfDeliveriesAttendedByHealthProfessionals.Midwife, 0);

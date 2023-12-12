@@ -385,9 +385,14 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                              <Grid container   component={Paper} padding={2}>
                             
                             <Grid xs={1}>
-                                <Avatar sx={{ width: 200, height: 200 }}>
-                                    {initials}
-                                </Avatar>
+                                {
+                                    !selectedPatient.userPic?
+                                    <Avatar sx={{ width: 140, height: 140 }}>
+                                        {initials}
+                                    </Avatar>
+                                    :
+                                    <div style={{ width: 80, height: 80, backgroundImage: `url(${selectedPatient.userPic})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: 'white', marginLeft: 4 }} />
+                                }
 
                             </Grid>
 
@@ -418,7 +423,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                     <Typography fontSize={'medium'}>
                                         ESTIMATED DUE DATE
                                         <Box fontSize={'medium'} fontWeight={'650'} color={'black'}>
-                                        {!selectedPatient.lastPeriod||selectedPatient.lastPeriod==="No data"?"No data":moment(selectedPatient.lastPeriod,"YYYY/MM/DD").format("MMMM DD, YYYY")}
+                                        {!selectedPatient.lastPeriod||selectedPatient.lastPeriod==="No data"?"No data":moment(selectedPatient.lastPeriod,"YYYY/MM/DD").add(280,"days").format("MMMM DD, YYYY")}
                                         </Box>
                                     </Typography>
                                 </Box>
