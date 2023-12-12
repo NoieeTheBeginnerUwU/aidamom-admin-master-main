@@ -27,29 +27,22 @@ import { updateDoc, doc, query, where, collection, getDocs, orderBy, increment }
 import moment from 'moment';
 
 
-const [isRejectDialog, setIsRejectDialog] = useState(false);
+
 
 const theme = createTheme({
   components: {
     MuiDialog: {
       styleOverrides: {
         paper: {
-          minWidth:'40%',
-          minHeight:'40%',
-          textAlign:'center',
-          justifyContent:'center',
-          justifyItems:'center',
           backgroundColor: '#fff', // White background
           color: '#000', // Black text
-          fontSize:'16px',
-          display:'flex'
         },
       },
     },
     MuiDialogTitle: {
       styleOverrides: {
         root: {
-          backgroundColor: isRejectDialog ? '#f44336' : '#2196f3', // Blue background for the title
+          backgroundColor: '#2196f3', // Blue background for the title
           color: '#fff', // White text
         },
       },
@@ -57,14 +50,14 @@ const theme = createTheme({
     MuiDialogActions: {
       styleOverrides: {
         root: {
-          borderTop: `1px solid ${isRejectDialog ? '#d32f2f' : '#1565c0'}`, // Darker red or blue top border for actions
+          borderTop: '1px solid #1565c0', // Darker blue top border for actions
         },
       },
     },
     MuiButton: {
       styleOverrides: {
         root: {
-          color: isRejectDialog ? '#f44336' : '#2196f3', // Red or blue button text
+          color: '#2196f3', // Blue button text
         },
       },
     },
@@ -102,7 +95,7 @@ export default function Approval() {
             <Button variant="contained"sx={{ padding:2 }}  onClick={handleClickOpenDialogMess} >Approve</Button>
             <Button variant="contained" color="error" backgroundColor = "#FF0000" onClick={handleClickDialogMessReject}>Reject</Button>
 
-            <Dialog open={openDialogMessage} onClose={handleCloseDialogMess}  minWidth="xs">
+            <Dialog open={openDialogMessage} onClose={handleCloseDialogMess}  minWidth="sm">
               <DialogTitle>Confirmation</DialogTitle>
               <DialogContent>
                 <DialogContentText>
@@ -272,7 +265,6 @@ export default function Approval() {
   const handleClickDialogMessReject = () => {
     // Close the confirmation dialog
     setOpenDialogMessageReject(true);
-    setIsRejectDialog(true);
  
   };
 
@@ -281,7 +273,6 @@ export default function Approval() {
     setOpenDialogMessageReject(false);
     // Reset confirmation flag
     setConfirmationFlag(false);
-    
   };
 
   const [appointmentId, setAppointmentId] = useState(null);
