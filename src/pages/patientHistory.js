@@ -20,11 +20,13 @@ const theme = createTheme({
     const containerStyle = {
         fontSize: '12px',
         lineHeight: '1',
+        width:'100%',
+        height:'100%'
       };
 
   return (
     <ThemeProvider theme={theme}>
-    <div className="container" ref={props.ref} style={containerStyle}>
+    <div ref={props.ref} style={containerStyle}>
       
       <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
       <Box mr={6}><img src={daetlogo} alt="Daet Logo"  width='85px'/></Box>

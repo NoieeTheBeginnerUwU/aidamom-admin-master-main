@@ -87,7 +87,10 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
     const [efficases, setEfficaces] = React.useState('');
     const [fundalHeight, setFundalHeight] = React.useState('');
     const [fetalMovement, setFetalMovement] = React.useState('');
-
+    const [urinalysis, setUrinalysis] = React.useState('');
+    const [completeBloodCount, setCompleteBloodCount] = React.useState('');
+    const [hepatitisB, setHepatitisB] = React.useState('');
+    const [oralHealth, setOralHealth] = React.useState('');
 
 
     const bmi = (weight && height) ? (weight / ((height / 100) ** 2)).toFixed(2) : '';
@@ -133,15 +136,22 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
 
 
 
-    const [rows, setRows] = useState([{ pill: '', amount: 0, dosage: '' }]);
+    const [rows, setRows] = useState([{ pill: '', amount: 0, dosage: '', from:'', to:'' }]);
     const [open, setOpen] = useState(false);
+    const [l, setL] = useState(0);
 
     const addRow = () => {
         const lastRow = rows[rows.length - 1];
-        if (lastRow.pill && lastRow.amount > 0 && lastRow.dosage) {
-            setRows([...rows, { pill: '', amount: 0, dosage: '' }]);
-        } else {
-            setOpen(true);
+        setL(rows.length+1)
+        if(rows.length>2){
+            alert("Cannot exceed three prescriptions at a time, thank you.")
+        }else{
+            if (lastRow.pill && lastRow.amount > 0 && lastRow.dosage && lastRow.from && lastRow.to) {
+                    setRows([...rows, { pill: '', amount: 0, dosage: '', from:"", to:""}]);
+            } else {
+                alert("Please fill up all the needed inputs before adding another prescription, thank you.")
+                setOpen(true);
+            }
         }
     };
 
@@ -197,12 +207,102 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                 dateCreated:  moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY"),
                 dateMade:  moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY")
             })
+            if(l===1){
+                addDoc(collection(database,"prescription"),{
+                    uid:selectedPatient.docid,
+                    name:selectedPatient.userFname+ " "+selectedPatient.userLname,
+                    purpose: "supplements",
+                    for:"mother",
+                    vaccine:rows[0].pill,
+                    from:rows[0].from,
+                    to:rows[0].to,
+                    amountAdministered:rows[0].amount,
+                    note:rows[0].dosage,
+                    day:moment(new Date()).format("DD"),
+                    month:moment(new Date()).format("MM"),
+                    year:moment(new Date()).format("YYYY")
+                  })
+            }
+            if(l===2){
+                addDoc(collection(database,"prescription"),{
+                    uid:selectedPatient.docid,
+                    name:selectedPatient.userFname+ " "+selectedPatient.userLname,
+                    purpose: "supplements",
+                    for:"mother",
+                    vaccine:rows[0].pill,
+                    from:rows[0].from,
+                    to:rows[0].to,
+                    amountAdministered:rows[0].amount,
+                    note:rows[0].dosage,
+                    day:moment(new Date()).format("DD"),
+                    month:moment(new Date()).format("MM"),
+                    year:moment(new Date()).format("YYYY")
+                  })
+                  addDoc(collection(database,"prescription"),{
+                    uid:selectedPatient.docid,
+                    name:selectedPatient.userFname+ " "+selectedPatient.userLname,
+                    purpose: "supplements",
+                    for:"mother",
+                    vaccine:rows[1].pill,
+                    from:rows[1].from,
+                    to:rows[1].to,
+                    amountAdministered:rows[1].amount,
+                    note:rows[1].dosage,
+                    day:moment(new Date()).format("DD"),
+                    month:moment(new Date()).format("MM"),
+                    year:moment(new Date()).format("YYYY")
+                  })
+            }
+            if(l===3){
+                addDoc(collection(database,"prescription"),{
+                    uid:selectedPatient.docid,
+                    name:selectedPatient.userFname+ " "+selectedPatient.userLname,
+                    purpose: "supplements",
+                    for:"mother",
+                    vaccine:rows[0].pill,
+                    from:rows[0].from,
+                    to:rows[0].to,
+                    amountAdministered:rows[0].amount,
+                    note:rows[0].dosage,
+                    day:moment(new Date()).format("DD"),
+                    month:moment(new Date()).format("MM"),
+                    year:moment(new Date()).format("YYYY")
+                  })
+                  addDoc(collection(database,"prescription"),{
+                    uid:selectedPatient.docid,
+                    name:selectedPatient.userFname+ " "+selectedPatient.userLname,
+                    purpose: "supplements",
+                    for:"mother",
+                    vaccine:rows[1].pill,
+                    from:rows[1].from,
+                    to:rows[1].to,
+                    amountAdministered:rows[1].amount,
+                    note:rows[1].dosage,
+                    day:moment(new Date()).format("DD"),
+                    month:moment(new Date()).format("MM"),
+                    year:moment(new Date()).format("YYYY")
+                  })
+                  addDoc(collection(database,"prescription"),{
+                    uid:selectedPatient.docid,
+                    name:selectedPatient.userFname+ " "+selectedPatient.userLname,
+                    purpose: "supplements",
+                    for:"mother",
+                    vaccine:rows[2].pill,
+                    from:rows[2].from,
+                    to:rows[2].to,
+                    amountAdministered:rows[2].amount,
+                    note:rows[2].dosage,
+                    day:moment(new Date()).format("DD"),
+                    month:moment(new Date()).format("MM"),
+                    year:moment(new Date()).format("YYYY")
+                  })
+            }
                 addDoc(collection(database,"appointments"),{
                     name:selectedPatient.userFname + selectedPatient.userLname,
                     uid: selectedPatient.docid,
                     appointmentDate: moment(new Date()).format("YYYY/MM/DD"),
                     lmp: moment(selectedPatient.lastPeriod,"YYYY/MM/DD").format("MMMM DD, YYYY"),
-                    aog: moment(new Date()).diff(moment(selectedPatient.lastPeriod,"YYYY/MM/DD"),"weeks") + "weeks",
+                    aog: !selectedPatient.lastPeriod?"No data":moment(new Date()).diff(moment(selectedPatient.lastPeriod,"YYYY/MM/DD"),"weeks") + "weeks",
                     height: height,
                     weight: weight,
                     bmi: bmi,
@@ -215,8 +315,13 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                     fundalHeight: fundalHeight,
                     fetalMovement: fetalMovement,
                     presentation: presentation,
+                    urinalysis: urinalysis,
+                    completeBloodCount: completeBloodCount,
+                    hepatitisB: hepatitisB,
+                    oralHealth: oralHealth,
                     remarks: text
-                }).then(alert("ADDED"))
+                }).then(alert("A"))
+                    handleChange("")
                     setLmp("");
                     setHeight("");
                     setWeight("");
@@ -225,10 +330,21 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                     setDilates(0);
                     setEfficaces(0);
                     setFetalMovement(0);
+                    setL(0);
                     setFundalHeight(0);
                     setPresentation("");
                     setText("");
-                    
+                    setUrinalysis("")
+                    setCompleteBloodCount("")
+                    setHepatitisB("")
+                    setOralHealth("")
+                    setRows([{ pill: '', amount: 0, dosage: '', from:'', to:'' }])
+                    setChecked({
+                        urinalysis: false,
+                        cbcTest: false,
+                        hepatitisB: false,
+                        oralHealth: false,
+                    })
         }catch(e){
             alert(e)
         }
@@ -239,6 +355,24 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
     useEffect(()=>{
         //console.log(selectedDate)
     },[selectedDate])
+
+
+        try{
+            if(rows[0].pill!==undefined){
+                console.log("ROW 1: " + rows[0].pill)
+    
+            } if(rows[1].pill!==undefined){
+                console.log("ROW 1: " + rows[0].pill)
+                console.log("ROW 2: " + rows[1].pill)
+            }
+            if(rows[2].pill!==undefined){
+                console.log("ROW 1: " + rows[0].pill)
+                console.log("ROW 2: " + rows[1].pill)
+                console.log("ROW 3: " + rows[2].pill)
+            }
+        }catch(e){
+            console.log("ERROR BOI")
+        }
 
     return (
         <div>
@@ -251,9 +385,14 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                              <Grid container   component={Paper} padding={2}>
                             
                             <Grid xs={1}>
-                                <Avatar sx={{ width: 200, height: 200 }}>
-                                    {initials}
-                                </Avatar>
+                                {
+                                    !selectedPatient.userPic?
+                                    <Avatar sx={{ width: 140, height: 140 }}>
+                                        {initials}
+                                    </Avatar>
+                                    :
+                                    <div style={{ width: 80, height: 80, backgroundImage: `url(${selectedPatient.userPic})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: 'white', marginLeft: 4 }} />
+                                }
 
                             </Grid>
 
@@ -284,7 +423,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                     <Typography fontSize={'medium'}>
                                         ESTIMATED DUE DATE
                                         <Box fontSize={'medium'} fontWeight={'650'} color={'black'}>
-                                        {!selectedPatient.lastPeriod||selectedPatient.lastPeriod==="No data"?"No data":moment(selectedPatient.lastPeriod,"YYYY/MM/DD").format("MMMM DD, YYYY")}
+                                        {!selectedPatient.lastPeriod||selectedPatient.lastPeriod==="No data"?"No data":moment(selectedPatient.lastPeriod,"YYYY/MM/DD").add(280,"days").format("MMMM DD, YYYY")}
                                         </Box>
                                     </Typography>
                                 </Box>
@@ -312,6 +451,8 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                 <DatePicker
                                     label="Date of visit"
                                     size='small'
+                                    disablePast
+                                    disableFuture
                                     value={selectedDate}
                                     onChange={(newValue) => {
                                         [handleDateChange(newValue)];
@@ -433,7 +574,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
 
                         <Grid container>
 
-                            <Grid container xs={3} margin={2}>
+                            <Grid container xs={5} margin={2}>
                                 <Paper>
                                 <Box display="flex" justifyContent="center" padding={2} backgroundColor={'primary.main'} color={'white'} fontWeight={700}>
                                                 Laboratory Test
@@ -445,7 +586,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                                 control={<Checkbox checked={checked.urinalysis} onChange={handleChange} name="urinalysis" />}
                                                 label="Urinalysis"
                                             />
-                                            {checked.urinalysis && <TextField label="Urinalysis Diagnosis" variant="standard" fullWidth />}
+                                            {checked.urinalysis && <TextField onChange={(text)=> setUrinalysis(text.target.value)} label="Urinalysis Diagnosis" variant="standard" fullWidth />}
                                         </Grid>
 
                                         <Grid xs={12}>
@@ -453,20 +594,20 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                                 control={<Checkbox checked={checked.cbcTest} onChange={handleChange} name="cbcTest" />}
                                                 label="Complete Blood Count Test"
                                             />
-                                            {checked.cbcTest && <TextField label="CBC Test Diagnosis" variant="standard" fullWidth />}
+                                            {checked.cbcTest && <TextField onChange={(text)=> setCompleteBloodCount(text.target.value)} label="CBC Test Diagnosis" variant="standard" fullWidth />}
 
                                         </Grid><Grid xs={12}>
                                             <FormControlLabel
                                                 control={<Checkbox checked={checked.hepatitisB} onChange={handleChange} name="hepatitisB" />}
                                                 label="Hepatitis B Testing"
                                             />
-                                            {checked.hepatitisB && <TextField label="Hepatitis B Testing Diagnosis" variant="standard" fullWidth />}
+                                            {checked.hepatitisB && <TextField onChange={(text)=> setHepatitisB(text.target.value)} label="Hepatitis B Testing Diagnosis" variant="standard" fullWidth />}
                                         </Grid><Grid xs={12}>
                                             <FormControlLabel
                                                 control={<Checkbox checked={checked.oralHealth} onChange={handleChange} name="oralHealth" />}
                                                 label="Oral Health Testing"
                                             />
-                                            {checked.oralHealth && <TextField label="Oral Health Testing Diagnosis" variant="standard" fullWidth />}
+                                            {checked.oralHealth && <TextField onChange={(text)=> setOralHealth(text.target.value)} label="Oral Health Testing Diagnosis" variant="standard" fullWidth />}
                                         </Grid>
                                     </Grid>
                                 </Paper>
@@ -474,7 +615,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
 
 
 
-                            <Grid container xs={2.5} margin={2}>
+                            <Grid container xs={5} margin={2}>
 
 
                                 <Paper>
@@ -560,7 +701,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
 
 
                             </Grid>
-                            <Grid container xs={5} margin={2}>
+                            <Grid container xs={10} margin={2}>
                                 <Paper>
                                  
                                     <Box display="flex" justifyContent="center" padding={2} backgroundColor={'primary.main'} color={'white'} fontWeight={700}>
@@ -616,6 +757,14 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                                                     </MenuItem>
                                                                 ))}
                                                             </Select>
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            FROM
+                                                            <input type='date' style={{width:120}} value={row.from}  onChange={(event) => updateRow(index, 'from', event.target.value)}/>
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            TO
+                                                            <input type='date' style={{width:120}} value={row.to} onChange={(event) => updateRow(index, 'to', event.target.value)}/>
                                                         </TableCell>
                                                     </TableRow>
                                                 ))}

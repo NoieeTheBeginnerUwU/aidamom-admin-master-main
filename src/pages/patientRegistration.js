@@ -236,7 +236,9 @@ export default function PatientRegistrationForm() {
           userBarangay: registrationForm.userBarangay,
           userTown: registrationForm.userTown,
           userProvince: registrationForm.userProvince,
-          userPlaceOfBirth: registrationForm.userPlaceOfBirth,
+          userProvincebirth: registrationForm.userProvincebirth,
+          userTownbirth: registrationForm.userTownbirth,
+          userBarangaybirth:registrationForm.userBarangaybirth,
           //family details
           userHusbandsLName: registrationForm.userHusbandsLName,
           userHusbandsFName: registrationForm.userHusbandsFName,
@@ -256,27 +258,23 @@ export default function PatientRegistrationForm() {
           userNameOfBarangayCaptain: registrationForm.userNameOfBarangayCaptain,
           //user pregnancy history
           //child1
-          userChild1: registrationForm.userChild1,
           userChildDateOfDelivery1: registrationForm.userChild1DateOfDelivery1,
           userChildTypeOfDelivery1: registrationForm.userChild1TypeOfDelivery1,
           userChildBirthOutcome1: registrationForm.userChild1BirthOutcome1,
           userChildNumberOfChildDelivered1: registrationForm.userChild1NumberOfChildDelivered1,
           userChildComplication1: registrationForm.userChild1Complication1,
           //child2
-          userChild2: registrationForm.userChild2,
           userChildDateOfDelivery2: registrationForm.userChild1DateOfDelivery2,
           userChildTypeOfDelivery2: registrationForm.userChild1TypeOfDelivery2,
           userChildBirthOutcome2: registrationForm.userChild1BirthOutcome2,
           userChildNumberOfChildDelivered2: registrationForm.userChild1NumberOfChildDelivered2,
           userChildComplication2: registrationForm.userChild1Complication2,
           //child3
-          userChild3: registrationForm.userChild3,
           userChildDateOfDelivery3: registrationForm.userChild1DateOfDelivery3,
           userChildTypeOfDelivery3: registrationForm.userChild1TypeOfDelivery3,
           userChildBirthOutcome3: registrationForm.userChild1BirthOutcome3,
           userChildNumberOfChildDelivered3: registrationForm.userChild1DateOfDelivery3,
           userChildComplication3: registrationForm.userChild1Complication3,
-
           //user other health conditions 
           userTuberculosisPersonal: registrationForm.userTuberculosisPersonal,
           userTuberculosisFamily: registrationForm.userTuberculosisFamily,
@@ -298,7 +296,6 @@ export default function PatientRegistrationForm() {
           userAnemiaFamily: registrationForm.userAnemiaFamily,
           userGenitalTrackInfection: registrationForm.userGenitalTrackInfection,
           userOtherInfectiousDiseases: registrationForm.userOtherInfectiousDiseases,
-          userHighRiskBehavior: registrationForm.userHighRiskBehavior,
           userSmokingPersonal:registrationForm.userSmokingPersonal,
           userSmokingFamily:registrationForm.userSmokingFamily,
           userAlcoholPersonal:registrationForm.userAlcoholPersonal,
@@ -560,7 +557,7 @@ export default function PatientRegistrationForm() {
 
 
 
-  console.log("Registration form:", registrationForm);
+  console.log("Registration form:",);
 
 
 

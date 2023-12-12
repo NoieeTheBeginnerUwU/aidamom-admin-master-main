@@ -92,27 +92,27 @@ const Reports = () => {
         </Button>
       </FormControl>
       {form === 'PatientHistory' && (
-        <div>
+        <div className='container'  ref={ref}>
          <PatientHistoryForm  ref={ref}/>
         </div>
       )}
        {form === 'ClinicalCoverSheet'  && (
-        <div ref={ref}>
+        <div className='container' ref={ref}>
          <ClinicalCoverSheet/>
         </div>
       )}
       {form === 'PatientDataForm' && (
-        <div ref={ref}>
+        <div className='container' ref={ref}>
           <PatientDataForm/>
         </div>
       )}
       {form === 'dischargesummary' && (
-        <div ref={ref}>
+        <div className='container' ref={ref}>
       <DischargeSummary/>
         </div>
       )}
        {form === 'Consent' && (
-        <div ref={ref}>
+        <div className='container' ref={ref}>
         < Consent/>
         
         </div>

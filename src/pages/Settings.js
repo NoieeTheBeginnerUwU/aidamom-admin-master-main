@@ -151,7 +151,7 @@ export default function Settings() {
       setPassword('');
       setConfirmPassword('');
       setSelectedOptions([]);
-      setSnackbarMessage('You have changed the password successfully');
+      setSnackbarMessage('Admin account created successfully');
       setSeverity('success');
     }
 
