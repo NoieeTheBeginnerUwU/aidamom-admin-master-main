@@ -95,7 +95,7 @@ export default function Approval() {
             <Button variant="contained"sx={{ padding:2 }}  onClick={handleClickOpenDialogMess} >Approve</Button>
             <Button variant="contained" color="error" backgroundColor = "#FF0000" onClick={handleClickDialogMessReject}>Reject</Button>
 
-            <Dialog open={openDialogMessage} onClose={handleCloseDialogMess}  minWidth="sm">
+            <Dialog open={openDialogMessage} onClose={handleCloseDialogMess}  minWidth="xs">
               <DialogTitle>Confirmation</DialogTitle>
               <DialogContent>
                 <DialogContentText>
