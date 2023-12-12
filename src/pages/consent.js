@@ -21,11 +21,15 @@ const Consent = () => {
     const containerStyle = {
         fontSize: '12px',
         lineHeight: '1.5',
+        width: '21cm',
+        height: '29.7cm',
+        margin: '1cm auto',
+        padding: '1cm',
       };
 
   return (
     <ThemeProvider theme={theme}>
-    <div className="container" style={containerStyle}>
+    <div  style={containerStyle}>
       <div className="container1">
       <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
       <Box mr={6}><img src={daetlogo} alt="Daet Logo"  width='85px'/></Box>

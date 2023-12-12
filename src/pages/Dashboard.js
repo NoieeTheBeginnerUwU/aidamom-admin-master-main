@@ -1252,7 +1252,7 @@ const totalWeight = weightRows.reduce((total, row) => total + row.count, 0);
     <Grid container xs={12} padding={2} m={.5} mr={2} spacing={2} >
 
       {/*-------------------------------NUMBER OF TOTAL DELIVERIES------------------------------ */}
-      <Grid xs={12} sx={{ minHeight: '10vh', minWidth: '8%', }} mb={1} >
+      <Grid xs={12} sx={{ minHeight: '5vh', minWidth: '8%', }} mb={1} >
         <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'black'} color='white' padding={1.4} >
           filter data by month/year
           <select defaultValue={"12"} onChange={(text)=> [setMonth(text.target.value)]} style={{height:'100%',padding:10,marginLeft:40,textAlign:'center',width:200}}>
@@ -1537,7 +1537,7 @@ const totalWeight = weightRows.reduce((total, row) => total + row.count, 0);
     </Grid>
     {/*------------------------------- End Grid------------------------------ */}
   </Grid>
-  <Grid item xs={3} sx={{ height:'100vh',}}>
+  <Grid item xs={3} sx={{ height:'140vh',}}>
     <Card elevation={4} sx={{ height: 100 + '%', justifyContent: 'center' }} m={1} padding={2}>
       <CardContent>
       </CardContent >

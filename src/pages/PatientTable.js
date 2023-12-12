@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, Modal, Box, Typography, Paper, Stack, Card, Tooltip, Divider, Grid, styled, Tab, TextField, Checkbox, FormControlLabel, InputAdornment, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, InputLabel, FilledInput, FormHelperText, MenuItem, Select, Radio, RadioGroup, FormLabel } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -42,7 +42,8 @@ import Appoinment from './Approval';
 import Approval from './Approval';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
-
+import { useReactToPrint } from 'react-to-print';
+import ReferralForm from './refferalForm';
 
 const useStyles = makeStyles({
   root: {
@@ -93,6 +94,13 @@ function  PatientTable({ handleSubmit, userData }) {
   const handleHomeMedicationChange = (event) => {
     setHomeMedication(event.target.value);
   };
+
+
+  const componentRef = useRef();
+
+  const handlePrint = useReactToPrint({
+    content: ()=> componentRef.current,
+  }) 
 
 
   const [value2, setValue2] = useState('');
@@ -2334,30 +2342,99 @@ dischargeMedication:"",
               {/*--------------------------------------------------------------------------------------------- Modal for Visits Reports ---------------------------------------------------------------------------------------------*/}
               <Modal open={openPrenatalVisitReports} onClose={handleClosePrenatalVisitReports}>
 
-                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height:'90%', bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
                   {/* Your content goes here */}
                   <Typography variant="h6" component="div">
-                    Pre natal visit reports
+                    Pre natal visit report
                   </Typography>
 
-                  {/* Add your form or other components here */}
+                  <div style={{width:'100%',height:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',overflowY:'scroll'}}>
+                            <div className='container' style={{marginTop:'60%'}}>
+                                <div style={{width:'100%',height:200,display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                                  <div style={{marginBottom:60,fontSize:18,width:'100%',height:'20%',display:'flex',alignItems:'center',justifyContent:'center'}} class= "header " align=" center">
+                                    <div className='adminPic' style={{width:120,height:120,borderRadius:150,marginRight:10,padding:10, fontSize:14,marginTop:'6vh',}}/>
+                                  </div>
+                                  <div style={{marginBottom:60,fontSize:20,width:'100%',height:'20%'}} class= "header " align=" center"><h4>Republic of the Philippines</h4>
+                                      <h4>Province of Camarines Norte</h4>
+                                      <h4>Municipality of Daet</h4>
+                                      <h4>MUNICIPAL HEALTH OFFICE</h4>
+                                      <h4><strong>RHU 3 - BIRTHING CENTER</strong></h4>
+                                      <h4><strong>Prenatal Visit Report</strong></h4>
+                                  </div>
+                                  <div style={{marginBottom:60,fontSize:18,width:'100%',height:'20%',display:'flex',alignItems:'center',justifyContent:'center'}} class= "header " align=" center">
+                                    <div className='wew3' style={{width:100,height:100,borderRadius:150,marginRight:10,padding:10, fontSize:14,marginTop:'6vh',}}/>
+                                  </div>
+                                </div>
+                                <div style={{width:'100%',height:800,display:'flex',flexDirection:'column',alignItems:'start',justifyContent:'start'}}>
+                                  <div style={{}}>
+                                  <Grid xs={11} justify="center" padding={0}>
+                                    <Box>
+                                      <Box padding={1} textAlign={'center'} sx={{ backgroundColor: 'skyblue', color: 'white' }}><Typography fontWeight='700' >PRE-NATAL VISITS</Typography></Box>
+                                      <TableContainer component={Paper} sx={{ minHeight: '30vh', maxHeight: '70vh' }} >
+                                        <Table size="small" aria-label="prenatalvistisTable" stickyHeader sx={{ minWidth: '' }}>
+                                          <TableHead style={{ backgroundColor: 'skyblue' }} >
+                                            <TableRow>
+                                              <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }} >Date of Visit</TableCell>
+                                              <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Blood Pressure</TableCell>
+                                              <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Weight</TableCell>
+                                              <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>BMI</TableCell>
+                                              <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Age of Gestation</TableCell>
+                                              <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Fundal Height</TableCell>
+                                              <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Fetal Movement</TableCell>
+                                              <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Presentation</TableCell>
+                                            </TableRow>
+                                          </TableHead>
+                                          <TableBody>
+                                            {appointments.length > 0 ? (
+                                              appointments.map((row2) => (
+                                                <TableRow key={row2.appointmentDate}>
+                                                  <TableCell>{row2.appointmentDate}</TableCell>
+                                                  <TableCell>{row2.diastolic}/{row2.systolic}</TableCell>
+                                                  <TableCell>{row2.weight}</TableCell>
+                                                  <TableCell>{row2.bmi}</TableCell>
+                                                  <TableCell align='center'>{row2.aog}</TableCell>
+                                                  <TableCell>{row2.fundalHeight}</TableCell>
+                                                  <TableCell>{row2.fetalMovement}</TableCell>
+                                                  <TableCell>{row2.presentation}</TableCell>
+                                                </TableRow>
+                                              ))
+                                            ) : (
+                                              <TableRow>
+                                                <TableCell colSpan={9} align="center">
+                                                  No Pre-natal visits found
+                                                </TableCell>
+                                              </TableRow>
+                                            )}
+                                          </TableBody>
+                                        </Table>
+                                      </TableContainer>
+                                    </Box>
+                                  </Grid>
+                                  </div>
+                                </div>
+                                <div style={{display:'flex',width:220,height:60,marginLeft:'40%',flexDirection:'column',alignItems:'center',justifyContent:'center',paddingBottom:'10%'}}>
+                                      <input type='text'  style={{width:300,height:50,fontWeight:500,lineHeight:5,outline:'none',backgroundColor:'transparent',textAlign:'center'}}/>
+                                      <p style={{textAlign:'center'}}>person in charge</p>
+                                    </div>
+                                </div>
+                          </div>
                 </Box>
               </Modal>
               {/* -----------------------------------------------------------------------------------------------------Modal for Refferal----------------------------------------------------------------------------------------------------- */}
               <Modal open={openCreateRefferal} onClose={handleCloseCreateRefferal}>
-                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '100%',height:'100%',overflowY:'scroll', bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%',height:'100%',overflowY:'scroll', bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
                   {/* Your content goes here */}
                   <Typography variant="h6" component="div">
                     Create Refferal
                   </Typography>
                   {/* Add your form or other components here */}
-                  <referralForm/>
+                    <ReferralForm/>
                 </Box>
               </Modal>
               {/*----------------------------------------------------------------------------------------------- Modal for Complete Pregnancy -----------------------------------------------------------------------------------------------*/}
               <Modal open={openCompletePregnancy} onClose={handleCloseCompletePregnancy}>
 
-                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '90%', bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
                   {/* Your content goes here */}
                   <Typography variant="h6" component="div">
                     Complete Pregnancy

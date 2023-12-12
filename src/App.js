@@ -259,11 +259,13 @@ try {
                 {
                   signIN===true?
                   <>
-                    <Box sx={{ width: '60%', height: '100%', backgroundColor: 'white' }}>
+      <Box sx={{ width: '60%', height: '100%', backgroundColor: 'white' }}>
         {/* Additional content for the left side */}
+        <div className='bg' style={{width:'100%',height:'100%',backgroundColor:'navy',}}/>
         <div style={{}}>{/* Add your content here */}</div>
       </Box>
       <Box component={Paper}
+      style={{transition:'ease-in-out',transitionDuration:'.5s'}}
       elevation={6}
         sx={{
           width: '40%',
@@ -272,9 +274,9 @@ try {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'space-evenly',
+          
         }}
       >
-       
         <Box
           sx={{
             width: '80%',
@@ -285,11 +287,10 @@ try {
             alignItems: 'center',
             justifyContent: 'space-evenly',
           }}
-        >   <Typography variant="h4">Login </Typography>
+        >   <Typography variant="h4">Daet RHU Birthing Center Admin</Typography>
         <Avatar sx={{ m: 1, bgcolor: 'primary.main', width:70, height:70 }}>
         <LockOutlinedIcon />
       </Avatar>
-         
           {message}
           <TextField
             onMouseOver={() => setActiveIN('email')}
@@ -310,7 +311,7 @@ try {
               width: '100%',
               height: 60,
               padding: '1%',
-              marginTop: '1%',
+              marginTop: '3%',
               // border: activeIN === 'email' ? '3px solid skyblue' : '3px solid lightgrey',
               backgroundColor: 'transparent',
               display: 'flex',
@@ -337,7 +338,7 @@ try {
               width: '100%',
               height: 60,
               padding: '1%',
-              marginTop: '1%',
+              marginTop: '4%',
               // border: activeIN === 'password' ? '3px solid skyblue' : '3px solid lightgrey',
               backgroundColor: 'transparent',
              
@@ -367,7 +368,7 @@ try {
         </Box>
         <Typography
             onClick={() => setSignIn(false)}
-            sx={{ cursor: 'pointer', color: 'skyblue', outlineWidth: 10, outlineColor: 'navy' }}
+            sx={{ cursor: 'pointer', color: 'black', outlineWidth: 10, outlineColor: 'navy' }}
           >
             Forgot password?
           </Typography>
@@ -416,7 +417,7 @@ try {
                   height: 60,
                   padding: '1%',
                   marginTop: '5%',
-                  // border: activeIN === 'email' ? '3px solid skyblue' : '3px solid lightgrey',
+                  // border: activeIN === 'email' ? '3px solid black' : '3px solid lightgrey',
                   backgroundColor: 'transparent',
                   display: 'flex',
                   alignItems: 'center',
@@ -450,7 +451,7 @@ try {
                 sx={{
                   width: '100%',
                   height: 60,
-                  backgroundColor: activeIN === 'submit' ? 'skyblue' : '#1976D2',
+                  backgroundColor: activeIN === 'submit' ? 'black' : '#1976D2',
                   color: 'white',
                   margin: '2%',
                   border: 'none',
@@ -504,66 +505,66 @@ try {
             <div style={{width:'100%',height:400,backgroundColor:'transparent',marginBottom:10,alignSelf:'start',textDecoration:'none',alignItems:'center',justifyContent:'space-evenly',}}>                
             <Link to="/" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Overview"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Overview")} >
-                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Overview"?"white":"rgb(0,0,40)"}}  color="primary">
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Overview"?"white":"rgb(100,100,100)"}}  color="primary">
                     <DashboardCustomize fontSize="large" color="" />
                   </Badge>
-                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Overview"|""?"none":"none",color:active==="Overview"?"white":"rgb(0,0,40)"}}>Dashboard</h3>
+                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Overview"|""?"none":"none",color:active==="Overview"?"white":"rgb(100,100,100)"}}>Dashboard</h3>
                 </div>
               </Link>
               <Link to="Appointments"  style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Appointments"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Appointments")}>
-                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Appointments"?"white":"rgb(0,0,40)"}}  color="primary">
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Appointments"?"white":"rgb(100,100,100)"}}  color="primary">
                     <PregnantWomanRounded fontSize="large" color="" />
                   </Badge>
-                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Appointments"?"none":"none",color:active==="Appointments"?"white":"rgb(0,0,40)"}}>Patients</h3>
+                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Appointments"?"none":"none",color:active==="Appointments"?"white":"rgb(100,100,100)"}}>Patients</h3>
                 </div>
               </Link>
               <Link to="Content" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Content"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Content")}>
-                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Content"?"white":"rgb(0,0,40)"}}  color="primary">
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Content"?"white":"rgb(100,100,100)"}}  color="primary">
                     <PostAddOutlined fontSize="large" color="" />
                   </Badge>
-                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Content"?"none":"none",color:active==="Content"?"white":"rgb(0,0,40)"}}>Create Content</h3>
+                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Content"?"none":"none",color:active==="Content"?"white":"rgb(100,100,100)"}}>Create Content</h3>
                 </div>
               </Link>
               <Link to="Messages" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Messages"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Messages")}>
-                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Messages"?"white":"rgb(0,0,40)"}} badgeContent={counter} color="primary">
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Messages"?"white":"rgb(100,100,100)"}} badgeContent={counter} color="primary">
                     <MailOutlineSharp fontSize="large" color="" />
                   </Badge>
-                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Messages"?"none":"none",color:active==="Messages"?"white":"rgb(0,0,40)"}}>Messages</h3>
+                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Messages"?"none":"none",color:active==="Messages"?"white":"rgb(100,100,100)"}}>Messages</h3>
                 </div>
               </Link>
               <Link to="Systemreport" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Systemreport"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Systemreport")}>
-                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Systemreport"?"white":"rgb(0,0,40)"}}  color="primary">
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Systemreport"?"white":"rgb(100,100,100)"}}  color="primary">
                     <TableChartOutlined fontSize="large" color="" />
                   </Badge>
-                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Systemreport"?"none":"none",color:active==="Systemreport"?"white":"rgb(0,0,40)"}}>Reports</h3>
+                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Systemreport"?"none":"none",color:active==="Systemreport"?"white":"rgb(100,100,100)"}}>Reports</h3>
                 </div>
               </Link>
               <Link to="Forms" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Forms"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Forms")}>
-                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Forms"?"white":"rgb(0,0,40)"}}  color="primary">
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Forms"?"white":"rgb(100,100,100)"}}  color="primary">
                     <FileCopySharp fontSize="large" color="" />
                   </Badge>
-                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Forms"?"none":"none",color:active==="Forms"?"white":"rgb(0,0,40)"}}>Forms</h3>
+                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Forms"?"none":"none",color:active==="Forms"?"white":"rgb(100,100,100)"}}>Forms</h3>
                 </div>
               </Link>
               <Link to="Log" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Log"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Log")}>
-                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Log"?"white":"rgb(0,0,40)"}}  color="primary">
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Log"?"white":"rgb(100,100,100)"}}  color="primary">
                     <BookOnline fontSize="large" color="" />
                   </Badge>
-                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Log"?"none":"none",color:active==="Log"?"white":"rgb(0,0,40)"}}>Activity Log</h3>
+                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Log"?"none":"none",color:active==="Log"?"white":"rgb(100,100,100)"}}>Activity Log</h3>
                 </div>
               </Link>
               <Link to="settings" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="settings"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("settings")}>
-                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="settings"?"white":"rgb(0,0,40)"}}  color="primary">
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="settings"?"white":"rgb(100,100,100)"}}  color="primary">
                     <SettingsApplications fontSize="large" color="" />
                   </Badge>
-                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="settings"?"none":"none",color:active==="settings"?"white":"rgb(0,0,40)"}}>Account Settings</h3>
+                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="settings"?"none":"none",color:active==="settings"?"white":"rgb(100,100,100)"}}>Account Settings</h3>
                 </div>
               </Link>
             </div>

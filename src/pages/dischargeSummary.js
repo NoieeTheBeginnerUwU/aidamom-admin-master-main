@@ -21,11 +21,13 @@ const DischargeSummary = () => {
     const containerStyle = {
         fontSize: '12px',
         lineHeight: '1.5',
+        width:'100%',
+        height:'100%'
       };
 
   return (
     <ThemeProvider theme={theme}>
-    <div className="container" style={containerStyle}>
+    <div  style={containerStyle}>
       <div className="container1">
       <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
       <Box mr={6}><img src={daetlogo} alt="Daet Logo"  width='85px'/></Box>
@@ -48,7 +50,7 @@ const DischargeSummary = () => {
 
         <table>
           <tr>
-            <td colspan="2" className="normal">
+            <td colspan="3" className="normal">
               <div>
                 <label> NAME : </label>
                 <input type="text" id="name" className="long"  style={{ width: '45%' }}  class="centered-input" />
