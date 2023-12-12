@@ -44,7 +44,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 
 
-
 const useStyles = makeStyles({
   root: {
     '& > .MuiGrid-item': {
@@ -1268,6 +1267,7 @@ dischargeMedication:"",
         childSuffix:discharge.childSuffix,
         childDob:discharge.childDob,
         childWeight:discharge.childWeight,
+        childWeightType: discharge.childWeight<2.5&&"low"||discharge.childWeight>2.5&&discharge.childWeight<3.6&&"normal"||discharge.childWeight>3.6&&"low",
         childGender:discharge.childGender,
         typeOfDelivery:discharge.typeOfDelivery,
         healthProfessionalAttended:discharge.healthProfessionalAttended,
@@ -2161,7 +2161,7 @@ dischargeMedication:"",
 
                               </Grid>
                               <Grid xs={1}>
-                              <Button onClick={()=> handleDischarger()} variant='contained' >
+                              <Button onClick={()=> handleDischarge()} variant='contained' >
                                    Submit
                                   </Button>
                               </Grid>
