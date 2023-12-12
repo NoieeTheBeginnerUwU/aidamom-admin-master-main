@@ -710,6 +710,8 @@ dischargeMedication:"",
           userAddressOfEmployer: doc.data().userAddressOfEmployer,
           userNameOfBarangayCaptain: doc.data().userNameOfBarangayCaptain,
           userProvincebirth:doc.data().userProvincebirth,
+          userTownbirth: doc.data().userTownbirth,
+          userBarangaybirth:doc.data().userBarangaybirth,
           //user pregnancy history
           //child1
           userChild1: doc.data().userChild1,
@@ -1306,6 +1308,17 @@ dischargeMedication:"",
   }
   console.log(discharge);
 
+  let count = 0
+  if(selectedRow.userChildDateOfDelivery1!==""){
+    count=1
+  }
+  if(selectedRow.userChildDateOfDelivery1!==""&&selectedRow.userChildDateOfDelivery2!==""){
+    count=2
+  }
+  if(selectedRow.userChildDateOfDelivery1!==""&&selectedRow.userChildDateOfDelivery2!==""&&selectedRow.userChildDateOfDelivery3!==""){
+    count=3
+  }
+
   return (
 
     <div style={{ marginTop: '2px', height: '550px', width: '95%', textAlign: 'center', justifyContent: 'center', overflow: 'hidden' }}>
@@ -1462,7 +1475,7 @@ dischargeMedication:"",
                       <Box></Box>
                       EDD: <Box display='inline' color={'black'}> {moment(selectedRow.lastPeriod).add(280, "days").format("MMMM DD, YYYY")}</Box>
                       <Box></Box>
-                      TOTAL PREGNANCY: <Box display='inline' color={'black'}> {selectedRow.Pregnancynumber} 1</Box>
+                      TOTAL PREGNANCY: <Box display='inline' color={'black'}> {count}</Box>
                     </Typography>
                   </Grid>
                 </Grid>
