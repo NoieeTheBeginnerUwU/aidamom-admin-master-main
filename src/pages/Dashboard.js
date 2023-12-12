@@ -106,7 +106,7 @@ const rows = [
   createData('Age 20-29', 0),
 ];
 // Calculate the total number of pregnant women
-const totalPregnantWomen = rows.reduce((total, row) => total + row.pregnantWomen, 0);
+const totalPregnantWomen = rows.reduce((total, row) => total + row.pregnantWomen, 110);
 
 
 // Calculate the total number of deliveries for each category
@@ -145,24 +145,24 @@ const Dashboard = ({ counter }) => {
 
   const classes = useStyles();
 
-  const [flipped, setFlipped] = useState(false);
+  const [flipped, setFlipped] = useState(true);
 
   const handleFlip = () => {
-    setFlipped(!flipped);
+    setFlipped(true);
   };
 
 
   const [flipped1, setFlipped1] = useState(false);
 
   const handleFlip1 = () => {
-    setFlipped1(!flipped1);
+    setFlipped1(false);
   };
 
 
   const [flipped2, setFlipped2] = useState(false);
 
   const handleFlip2 = () => {
-    setFlipped2(!flipped2);
+    setFlipped2(false);
   };
 
 
@@ -682,8 +682,172 @@ const Dashboard = ({ counter }) => {
 
 
   const [date_, setDate_] = useState("")
-  const [month, setMonth] = useState("");
+  const [month, setMonth] = useState(moment(new Date()).format("MMMM"));
+  useEffect(()=>{
+    setMonth(moment(new Date()).format("MM"))
+  },[])
   const [year_, setYear_] = useState(2023);
+  const [summary, setSummary] = useState([]);
+  let [todV, setTodV] = useState(0);
+  let [todVM, setTodVM] = useState(0)
+  let [todVN, setTodVN] = useState(0)
+  let [todVD, setTodVD] = useState(0)
+  let [todVag, setTodVag] = useState(0)
+  let [todCae, setTodCae] = useState(0)
+  let [todAlv, setTodAlv] = useState(0)
+  let [todStl, setTodStl] = useState(0)
+  let [todMis, setTodMis] = useState(0)
+  let [todMal, setTodMal] = useState(0)
+  let [todFal, setTodFal] = useState(0)
+  let [todGen, setTodGen] = useState(0)
+  let [childWeight, setChildWeight] = useState(0)
+  let [childWeightL, setChildWeightL] = useState(0)
+  let [childWeightN, setChildWeightN] = useState(0)
+  let [childWeightO, setChildWeightO] = useState(0)
+  let [mAgeU, setMAgeU] = useState(0)
+  let [mAgeN, setMAgeN] = useState(0)
+  let [mAgeO, setMAgeO] = useState(0)
+  let [mAgeT, setMAgeT] = useState(0)
+
+
+  const fetchdischarge = async(month, year) => {
+    let tod = 0
+    let tod_d = 0
+    let tod_n = 0
+    let tod_m = 0
+    let tod_v = 0
+    let tod_a = 0
+    let tod_s = 0
+    let tod_mc = 0
+    let tod_vag = 0
+    let tod_al = 0
+    let tod_st = 0
+    let tod_ms = 0
+    let tod_ml = 0
+    let tod_fl = 0
+    let cw = 0;
+    let cwL = 0;
+    let cwN = 0;
+    let cwO = 0;
+    const querySummary = await getDocs(query(collection(database,"discharge_child"),where("month","==",month),where("year","==",year)));
+    const querySummary2 = await getDocs(query(collection(database,"userData")));
+
+    querySummary.forEach((doc)=>{
+      if(doc.data().healthProfessionalAttended==="Midwife"){
+        tod_m++
+      }
+      if(doc.data().healthProfessionalAttended==="Nurse"){
+        tod_n++
+      }
+      if(doc.data().healthProfessionalAttended==="Doctor"){
+        tod_d++
+      }
+      if(doc.data().deliveredVia==="Vaginal"){
+        tod_vag++
+      }
+      if(doc.data().childGender==="male"){
+        tod_ml++
+      }
+      if(doc.data().childGender==="female"){
+        tod_fl++
+      }
+      if(doc.data().childWeightType==="low"){
+        cwL++
+      }
+      if(doc.data().childWeightType==="normal"){
+        cwL++
+      }
+      if(doc.data().childWeightType==="overweight"){
+        cwL++
+      }
+    })
+    setTodV(tod_m+tod_d+tod_n);
+    setTodVD(tod_d)
+    setTodVM(tod_m)
+    setTodVN(tod_n)
+    setTodVag(tod_vag);
+    setTodMal(tod_ml)
+    setTodFal(tod_fl)
+    setTodGen(tod_fl+tod_ml)
+    setChildWeightL(cwL)
+    setChildWeightN(cwN)
+    setChildWeightO(cwO)
+    setChildWeight(cwL+cwN+cwO)
+
+
+    let over = 0
+    let normal = 0
+    let under = 0
+    let mothers = [];
+    querySummary2.forEach((doc)=>{
+  
+      if(!doc.data().lastPeriod){
+
+      }else{
+        if(moment(new Date(),"YYYY/MM/DD").diff(doc.data().userDob,"years")<15&&doc.data().lastPeriod!==""){
+          under++;
+        }
+        if(moment(new Date(),"YYYY/MM/DD").diff(doc.data().userDob,"years")>=15&&moment(new Date(),"YYYY/MM/DD").diff(doc.data().userDob,"years")<=20&&doc.data().lastPeriod!==""){
+          under++;
+        }
+        if(moment(new Date(),"YYYY/MM/DD").diff(doc.data().userDob,"years">20&&doc.data().lastPeriod!=="")){
+          over++;
+        }
+      }
+    })
+    setMAgeN(normal)
+    setMAgeU(under)
+    setMAgeO(over)
+    setMAgeT(normal+under+over)
+  }
+
+  useEffect(()=>{
+    if(month!==""&&year_!==""){
+      fetchdischarge(month,year)
+    }
+  },[month,year_])
+
+  
+function createData(ageGroup, pregnantWomen) {
+  return { ageGroup, pregnantWomen };
+}
+
+const rows = [
+  createData('Age 10-14', 0),
+  createData('Age 15-19', 0),
+  createData('Age 20-29', 0),
+];
+// Calculate the total number of pregnant women
+const totalPregnantWomen = rows.reduce((total, row) => total + row.pregnantWomen, 110);
+
+
+// Calculate the total number of deliveries for each category
+const totalDeliveriesByProfessionals = data.reduce((total, row) => total + row.NumberOfDeliveriesAttendedByHealthProfessionals.Doctor + row.NumberOfDeliveriesAttendedByHealthProfessionals.Nurse + row.NumberOfDeliveriesAttendedByHealthProfessionals.Midwife, 0);
+const totalTypeOfDelivery = data.reduce((total, row) => total + row.TypeOfDelivery.Vaginal + row.TypeOfDelivery.Ceasarian, 0);
+const totalDeliveryOutcome = data.reduce((total, row) => total + row.DeliveryOutcome.ALIVE + row.DeliveryOutcome.Stillbirth + row.DeliveryOutcome.Miscarriage, 0);
+
+
+
+function createData1(name, count) {
+  return { name, count };
+}
+
+const genderRows = [
+  createData1('Male', 190),
+  createData1('Female', 1300),
+];
+
+const weightRows = [
+  createData1('Normal', 1338),
+  createData1('Low', 332),
+  createData1('Unknown', 0),
+];
+
+// Calculate the total number of live births for each category
+const totalGender = genderRows.reduce((total, row) => total + row.count, 0);
+const totalWeight = weightRows.reduce((total, row) => total + row.count, 0);
+
+
 
   return (
 //     <div style={{ width: '100%', height: '100%', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'start', overflow: 'hidden', justifyContent: 'start' }}>
@@ -1091,19 +1255,19 @@ const Dashboard = ({ counter }) => {
       <Grid xs={12} sx={{ minHeight: '10vh', minWidth: '8%', }} mb={1} >
         <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'black'} color='white' padding={1.4} >
           Sort data by month/year
-          <select onChange={(text)=> [setMonth(text.target.value)]} style={{height:'100%',padding:10,marginLeft:40,textAlign:'center',width:200}}>
-            <option value={1}>January</option>
-            <option value={2}>February</option>
-            <option value={3}>March</option>
-            <option value={4}>April</option>
-            <option value={5}>May</option>
-            <option value={6}>June</option>
-            <option value={7}>July</option>
-            <option value={8}>August</option>
-            <option value={9}>September</option>
-            <option value={10}>October</option>
-            <option value={11}>November</option>
-            <option value={12}>December</option>
+          <select defaultValue={"12"} onChange={(text)=> [setMonth(text.target.value)]} style={{height:'100%',padding:10,marginLeft:40,textAlign:'center',width:200}}>
+            <option value={"1"}>January</option>
+            <option value={"2"}>February</option>
+            <option value={"3"}>March</option>
+            <option value={"4"}>April</option>
+            <option value={"5"}>May</option>
+            <option value={"6"}>June</option>
+            <option value={"7"}>July</option>
+            <option value={"8"}>August</option>
+            <option value={"9"}>September</option>
+            <option value={"10"}>October</option>
+            <option value={"11"}>November</option>
+            <option value={"12"}>December</option>
             </select> 
               <Button onClick={()=> setYear_(year_-1)} style={{fontSize:20}}>
                 <FontAwesomeIcon icon={faMinus} size="1x" color='white'/>
@@ -1124,7 +1288,7 @@ const Dashboard = ({ counter }) => {
             </Box>
           )}
           <Box component={Paper}>
-            {flipped ? (
+            {flipped===false ? (
               /* Content for the flipped state */
               <Box sx={{ height: '50%', width: '100%' }}>
                 {/* Your flipped content goes here */}
@@ -1180,20 +1344,20 @@ const Dashboard = ({ counter }) => {
                   <TableBody>
                     {data.map((row) => (
                       <TableRow key={row}>
-                        <TableCell className={classes.dataCell}>{row.NumberOfDeliveriesAttendedByHealthProfessionals.Doctor}</TableCell>
-                        <TableCell className={classes.dataCell}>{row.NumberOfDeliveriesAttendedByHealthProfessionals.Nurse}</TableCell>
-                        <TableCell className={classes.dataCell}>{row.NumberOfDeliveriesAttendedByHealthProfessionals.Midwife}</TableCell>
-                        <TableCell className={classes.dataCell}>{row.TypeOfDelivery.Vaginal}</TableCell>
-                        <TableCell className={classes.dataCell}>{row.TypeOfDelivery.Ceasarian}</TableCell>
-                        <TableCell className={classes.dataCell}>{row.DeliveryOutcome.ALIVE}</TableCell>
-                        <TableCell className={classes.dataCell}>{row.DeliveryOutcome.Stillbirth}</TableCell>
-                        <TableCell className={classes.dataCell}>{row.DeliveryOutcome.Miscarriage}</TableCell>
+                        <TableCell className={classes.dataCell}>{todVD}</TableCell>
+                        <TableCell className={classes.dataCell}>{todVN}</TableCell>
+                        <TableCell className={classes.dataCell}>{todVM}</TableCell>
+                        <TableCell className={classes.dataCell}>{todVag}</TableCell>
+                        <TableCell className={classes.dataCell}>{0}</TableCell>
+                        <TableCell className={classes.dataCell}>{todV}</TableCell>
+                        <TableCell className={classes.dataCell}>{0}</TableCell>
+                        <TableCell className={classes.dataCell}>{0}</TableCell>
                       </TableRow>
                     ))}
                     <TableRow>
-                      <TableCell colSpan={3} className={classes.dataCell}><strong>Total: {totalDeliveriesByProfessionals}</strong></TableCell>
-                      <TableCell colSpan={2} className={classes.dataCell}><strong>Total: {totalTypeOfDelivery}</strong></TableCell>
-                      <TableCell colSpan={3} className={classes.dataCell}><strong>Total: {totalDeliveryOutcome}</strong></TableCell>
+                      <TableCell colSpan={3} className={classes.dataCell}><strong>Total: {todV}</strong></TableCell>
+                      <TableCell colSpan={2} className={classes.dataCell}><strong>Total: {todVag}</strong></TableCell>
+                      <TableCell colSpan={3} className={classes.dataCell}><strong>Total: {todV}</strong></TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>
@@ -1209,29 +1373,29 @@ const Dashboard = ({ counter }) => {
 
 
         <Grid xs={12} sx={{ minHeight: flipped1 ? '35vh' : '25vh', minWidth: flipped1 ? '8%' : '8%', cursor: 'pointer' }} onClick={handleFlip1}>
-          {flipped1 ? (
+          {flipped1 ===false ? (
             <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'#00BA88'} padding={1} color={'white'} component={Paper}>TOTAL PREGNANT WOMAN</Box>
           ) : (
 
             <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'#00BA88'} padding={1} color={'white'} component={Paper}>TOTAL PREGNANT WOMAN</Box>
           )}
           <Box>
-            {flipped1 ? (
+            {flipped1 ===false ? (
               /* Content for the flipped state */
               <Box sx={{ height: '100%', width: '100%' }}>
                 {/* Your flipped content goes here */}
                 <Grid container component={Paper} item xs={12} padding={1} sx={{ minHeight: '20vh', minWidth: '8%', }}>
-                  <Grid xs={3.9} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '3em', fontWeight: '750', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#00BA88' }}>0</Box></Grid>
+                  <Grid xs={3.9} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '3em', fontWeight: '750', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#00BA88' }}>{mAgeT}</Box></Grid>
                   <Divider orientation="vertical" flexItem />
 
                   <Divider orientation="vertical" flexItem />
                   <Grid container xs={8} sx={{ flexDirection: 'row' }} padding={1}>
                     <Grid item xs={12}> <Box fontSize={'medium'} ml={1} fontWeight='600' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} ></Box> <Box fontSize={'14px' } fontWeight={600}>Age Group</Box></Grid>
-                    <Grid item xs={3.9}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#F4B740'}>143</Box><Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Age 10-14</Box></Grid>
+                    <Grid item xs={3.9}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#F4B740'}>{mAgeU}</Box><Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Age 10-14</Box></Grid>
                     <Divider orientation="vertical" flexItem />
-                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#486DF1'}>300</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Age 15-19 </Box></Grid>
+                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#486DF1'}>{mAgeN}</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Age 15-19 </Box></Grid>
                     <Divider orientation="vertical" flexItem />
-                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#D32F2F'}>300</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Age 20-29</Box></Grid>
+                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#D32F2F'}>{mAgeO}</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} fontSize={'12px'}>Age 20-29</Box></Grid>
                   </Grid>
                 </Grid>
 
@@ -1273,13 +1437,13 @@ const Dashboard = ({ counter }) => {
 
 
       <Grid xs={12} sx={{ minHeight: flipped2 ? '15vh' : '15vh', minWidth: flipped2 ? '8%' : '8%', cursor: 'pointer' }} onClick={handleFlip2}>
-          {flipped2 ? (
+          {flipped ===true ? (
             <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'#F4B740'} padding={1} color={'white'} component={Paper}>NUMBER OF LIVE BIRTHS</Box>
           ) : (
             <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'#F4B740'} padding={1} color={'white'} component={Paper}>NUMBER OF LIVE BIRTHS</Box>
           )}
           <Box component={Paper}>
-            {flipped2 ? (
+            {flipped2 ===false ? (
               /* Content for the flipped state */
               <Box sx={{ height: '100%', width: '100%' }}>
                 {/* Your flipped content goes here */}
@@ -1287,20 +1451,20 @@ const Dashboard = ({ counter }) => {
                 <Grid container component={Paper} item xs={12}  padding={1} sx={{ minHeight: '15vh', minWidth: '8%', }}>
                   <Grid containercomponent={Paper} xs={6}>
                     <Grid xs={12} ml={1} > <Box fontSize={'medium'} ml={1} fontWeight='600' sx={{ justifyContent: 'center', alignItems: 'center' }}></Box> <Box >Gender</Box></Grid>
-                    <Grid xs={12}> <Box fontSize='1.5em' ml={1} fontWeight='700' color={'#4E4B66'}>300</Box> <Box >Male</Box></Grid>
-                    <Grid xs={12}> <Box fontSize='1.5em' ml={1} fontWeight='700' color={'#4E4B66'}>300</Box> <Box>Female</Box></Grid>
+                    <Grid xs={12}> <Box fontSize='1.5em' ml={1} fontWeight='700' color={'#4E4B66'}>{todMal}</Box> <Box >Male</Box></Grid>
+                    <Grid xs={12}> <Box fontSize='1.5em' ml={1} fontWeight='700' color={'#4E4B66'}>{todFal}</Box> <Box>Female</Box></Grid>
                   </Grid>
                   <Divider orientation="vertical" flexItem />
-                  <Grid xs={5} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '3em', fontWeight: '750', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#F4B740' }}>0</Box></Grid>
+                  <Grid xs={5} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '3em', fontWeight: '750', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#F4B740' }}>{todGen}</Box></Grid>
                   <Divider orientation="vertical" flexItem />
 
                   <Grid container xs={12} sx={{ flexDirection: 'row' }} padding={1}>
                     <Grid item xs={12}> <Box fontSize={'medium'} ml={1} fontWeight='600' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#F4B740'}></Box><Box >Weight at Birth</Box></Grid>
-                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#00BA88'}>143</Box><Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }}>Normal</Box></Grid>
+                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#00BA88'}>{childWeightN}</Box><Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }}>Normal</Box></Grid>
                     <Divider orientation="vertical" flexItem />
-                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#486DF1'}>300</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }}>Low</Box></Grid>
+                    <Grid item xs={4}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#486DF1'}>{childWeightL}</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }}>Low</Box></Grid>
                     <Divider orientation="vertical" flexItem />
-                    <Grid item xs={3}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#D32F2F'}>0</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }}>Unknown</Box></Grid>
+                    <Grid item xs={3}> <Box fontSize='1.5em' ml={1} fontWeight='700' sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }} color={'#D32F2F'}>{childWeightO}</Box> <Box sx={{ justifyContent: 'center', justifyItems: "center", textAlign: 'center' }}>Overweight</Box></Grid>
                   </Grid>
                 </Grid>
 
