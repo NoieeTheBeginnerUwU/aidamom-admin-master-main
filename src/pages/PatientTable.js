@@ -42,7 +42,7 @@ import Appoinment from './Approval';
 import Approval from './Approval';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
-import ReferralForm from './refferalForm';
+
 
 
 const useStyles = makeStyles({
@@ -1319,7 +1319,7 @@ dischargeMedication:"",
         >
           <Box sx={{
             position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '90%', height: '95%',
-            bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4
+            bgcolor: 'background.paper', boxShadow: 24, p: 4
           }}>
             <Box display="flex" justifyContent="space-between" alignItems="center">
               <Typography id="modal-modal-title" variant="h6" component="h2" font>
@@ -1397,11 +1397,12 @@ dischargeMedication:"",
 
 
 
-      <div style={{ height: '90%', width: '100%', marginTop: '5px' }}>
+      <div style={{ height: '100%', width: '100%', marginTop: '5px' }}>
         <DataGrid
+         headerHeight={20}
           rows={userSearch}
           columns={columns}
-          pageSize={5}
+         
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 20 },
@@ -1409,11 +1410,8 @@ dischargeMedication:"",
           }}
           pageSizeOptions={[5, 10]}
           disableSelectionOnClick
-          componentsProps={{
-            columnMenu: {
-              style: { padding: '5px' },
-            },
-          }}
+          density='compact'
+          
         />
       </div>
       {/* Modal for displaying details */}
