@@ -23,8 +23,8 @@ const Systemreport = () => {
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
+      backgroundColor: theme.palette.common.white,
+      color: theme.palette.common.black,
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
@@ -225,6 +225,30 @@ const Systemreport = () => {
                           <StyledTableCell align="right">Alive</StyledTableCell>
                           <StyledTableCell align="right">Stillbirth</StyledTableCell>
                           <StyledTableCell align="right">Miscarriage</StyledTableCell>
+                          <StyledTableCell align="right">Total</StyledTableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {rows.map((row) => (
+                          <StyledTableRow key={row.name}>
+                            <StyledTableCell component="th" scope="row">
+                              {row.name}
+                            </StyledTableCell>
+                            <StyledTableCell align="right">{row.alive}</StyledTableCell>
+                            <StyledTableCell align="right">{row.stillbirth}</StyledTableCell>
+                            <StyledTableCell align="right">{row.miscarriage}</StyledTableCell>
+                            <StyledTableCell align="right">{row.total}</StyledTableCell>
+                          </StyledTableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                    <Table sx={{ minWidth: "50%" }} aria-label="customized table">
+                      <TableHead>
+                        <TableRow>
+                          <StyledTableCell></StyledTableCell>
+                          <StyledTableCell align="right">Low</StyledTableCell>
+                          <StyledTableCell align="right">Normal</StyledTableCell>
+                          <StyledTableCell align="right">Overweight</StyledTableCell>
                           <StyledTableCell align="right">Total</StyledTableCell>
                         </TableRow>
                       </TableHead>

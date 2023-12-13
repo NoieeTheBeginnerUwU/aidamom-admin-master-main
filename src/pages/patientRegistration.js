@@ -928,10 +928,10 @@ export default function PatientRegistrationForm() {
                         <MenuItem value="" disabled>
                           <em>select the value</em>
                         </MenuItem>
-                        <MenuItem value='Single'>Single</MenuItem>
-                        <MenuItem value='Married'>Married</MenuItem>
-                        <MenuItem value='Widowed'>Widowed</MenuItem>
-                        <MenuItem value='Legally Separated'>Legally Separated</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='Single'>Single</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='Married'>Married</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='Widowed'>Widowed</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='Legally Separated'>Legally Separated</MenuItem>
                       </Select>
                     </FormControl>
                   </Box>
@@ -957,13 +957,13 @@ export default function PatientRegistrationForm() {
                         <MenuItem value="" disabled>
                           <em>select the value</em>
                         </MenuItem>
-                        <MenuItem value='A+'>A+</MenuItem>
-                        <MenuItem value='A-'>A-</MenuItem>
-                        <MenuItem value='B-'>B-</MenuItem>
-                        <MenuItem value='AB+'>AB+</MenuItem>
-                        <MenuItem value='AB-'>AB-</MenuItem>
-                        <MenuItem value='O+'>O+</MenuItem>
-                        <MenuItem value='O-'>O-</MenuItem>
+                        <MenuItem value='A+'  style={{ display: 'block', width: '100%', padding: '3px' }}>A+</MenuItem>
+                        <MenuItem value='A-'  style={{ display: 'block', width: '100%', padding: '3px' }}>A-</MenuItem>
+                        <MenuItem value='B-'  style={{ display: 'block', width: '100%', padding: '3px' }}>B-</MenuItem>
+                        <MenuItem value='AB+'  style={{ display: 'block', width: '100%', padding: '3px' }}>AB+</MenuItem>
+                        <MenuItem value='AB-'  style={{ display: 'block', width: '100%', padding: '3px' }}>AB-</MenuItem>
+                        <MenuItem value='O+'  style={{ display: 'block', width: '100%', padding: '3px' }}>O+</MenuItem>
+                        <MenuItem value='O-'  style={{ display: 'block', width: '100%', padding: '3px' }}>O-</MenuItem>
                       </Select>
                     </FormControl>
                   </Box>
@@ -988,16 +988,16 @@ export default function PatientRegistrationForm() {
                         <MenuItem value="" disabled>
                           <em>select the value</em>
                         </MenuItem>
-                        <MenuItem value='Roman Catholic'>Roman Catholic</MenuItem>
-                        <MenuItem value='Islam'>Islam</MenuItem>
-                        <MenuItem value='Iglesia ni Cristo'>Iglesia ni Cristo</MenuItem>
-                        <MenuItem value='Philippine Independent Church'>Philippine Independent Church</MenuItem>
-                        <MenuItem value='Seventh-day Adventist-'>Seventh-day Adventist-</MenuItem>
-                        <MenuItem value='Bible Baptist Church'>Bible Baptist Church</MenuItem>
-                        <MenuItem value='United Church of Christ in the Philippines'>United Church of Christ in the Philippines</MenuItem>
-                        <MenuItem value="Jehovah's Witnesses">Jehovah's Witnesses</MenuItem>
-                        <MenuItem value='Church of Christ'>Church of Christ</MenuItem>
-                        <MenuItem value='None'>None</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='Roman Catholic'>Roman Catholic</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='Islam'>Islam</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='Iglesia ni Cristo'>Iglesia ni Cristo</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='Philippine Independent Church'>Philippine Independent Church</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='Seventh-day Adventist-'>Seventh-day Adventist-</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='Bible Baptist Church'>Bible Baptist Church</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='United Church of Christ in the Philippines'>United Church of Christ in the Philippines</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value="Jehovah's Witnesses">Jehovah's Witnesses</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='Church of Christ'>Church of Christ</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='None'>None</MenuItem>
                       </Select>
                     </FormControl>
                   </Box>
@@ -1409,14 +1409,14 @@ export default function PatientRegistrationForm() {
                   disabled={!checkboxEnable2}
                 >
 
-                  <MenuItem value='JR'>JR</MenuItem>
-                  <MenuItem value='SR'>SR</MenuItem>
-                  <MenuItem value='I'>I</MenuItem>
-                  <MenuItem value='II'>II</MenuItem>
-                  <MenuItem value='III'>III</MenuItem>
-                  <MenuItem value='IV'>IV</MenuItem>
-                  <MenuItem value='V'>V</MenuItem>
-                  <MenuItem value='VI'>VI</MenuItem>
+                  <MenuItem value='JR'  style={{ display: 'block', width: '100%', padding: '3px' }}>JR</MenuItem>
+                  <MenuItem value='SR'  style={{ display: 'block', width: '100%', padding: '3px' }}>SR</MenuItem>
+                  <MenuItem value='I'  style={{ display: 'block', width: '100%', padding: '3px' }}>I</MenuItem>
+                  <MenuItem value='II'  style={{ display: 'block', width: '100%', padding: '3px' }}>II</MenuItem>
+                  <MenuItem value='III'  style={{ display: 'block', width: '100%', padding: '3px' }}>III</MenuItem>
+                  <MenuItem value='IV'  style={{ display: 'block', width: '100%', padding: '3px' }}>IV</MenuItem>
+                  <MenuItem value='V'  style={{ display: 'block', width: '100%', padding: '3px' }}>V</MenuItem>
+                  <MenuItem value='VI'  style={{ display: 'block', width: '100%', padding: '3px' }}>VI</MenuItem>
                 </Select>
               </Grid>
               <Grid item xs={12} mt={2}>
@@ -1548,7 +1548,8 @@ export default function PatientRegistrationForm() {
                             <TableCell>{row.pregnancyNumber}</TableCell>
                             <TableCell>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker
+                                <input
+                                type='date'
                                   disableToolbar
                                   disableFuture
                                   variant="standard"
@@ -1556,7 +1557,7 @@ export default function PatientRegistrationForm() {
                                   size="small"
                                   id={`dateofdelivery${index}`}
                                   label="Date of Delivery"
-                                  value={row.dateOfDelivery}
+                                  value={row.userChild1dateOfDelivery1}
                                   onChange={handleDateChange(index)}
                                   renderInput={(params) => <TextField {...params} />}
                                 />
