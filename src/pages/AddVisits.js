@@ -320,7 +320,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                     hepatitisB: hepatitisB,
                     oralHealth: oralHealth,
                     remarks: text
-                }).then(alert("A"))
+                }).then(alert("Sesion saved, thank you."))
                     handleChange("")
                     setLmp("");
                     setHeight("");

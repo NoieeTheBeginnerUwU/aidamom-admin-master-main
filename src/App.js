@@ -49,6 +49,7 @@ import { collection, getDocs, onSnapshot, query, where } from 'firebase/firestor
 import { faUserCircle, faLock } from '@fortawesome/free-solid-svg-icons';
 import { ComputerSharp, GraphicEqOutlined, PostAddOutlined, PregnantWomanRounded, Report, SettingsApplications, TableChartOutlined } from '@material-ui/icons';
 import { FormControl, List } from '@material-ui/core';
+import { sendPasswordResetEmail } from 'firebase/auth';
 
 function App() {
   let pic = "../blue_abstract_lines_2.jpg"
@@ -61,6 +62,16 @@ function App() {
   function refreshPage() {
     window.location.reload(false);
   }
+
+const handlePasswordReset = async (email) => {
+  try {
+    const auth = getAuth();
+    await sendPasswordResetEmail(auth, email);
+    alert('Password reset email sent!');
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   const [loading, setLoading] = useState(false);
   useEffect(()=>{

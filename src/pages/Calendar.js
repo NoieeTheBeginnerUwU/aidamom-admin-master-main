@@ -92,7 +92,7 @@ const Calendar_ = ()=> {
                     const hasAppointmentsForDate = appointmentsDates.includes(formattedDate);
                     return (
                       <div style={{ position: 'relative' }}>
-                        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(0%, 50%)' }}>
                           {date.getDate()}
                         </div>
                         {hasAppointmentsForDate && <DateBadge />}

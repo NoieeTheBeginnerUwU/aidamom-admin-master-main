@@ -67,7 +67,7 @@ export default function Settings() {
 
   const options = ['RN', 'RM', 'M.D', 'Option4', 'Option5'];
 
-
+  const activeEmail = authentication.currentUser.email;
   const [checked, setChecked] = useState(false);
   const uid = authentication.currentUser.uid;
   const email_ = authentication.currentUser.email;
@@ -300,6 +300,20 @@ export default function Settings() {
   const createAdmin = () => {
 
   }
+
+  const [adminAccount, setAdminAccount] = useState([])
+  const fetchAdminData = async() => {
+    let d = [];
+    const queryAdmin = await getDocs(query(collection(database, "adminData"),where("email","==",activeEmail)))
+    queryAdmin.forEach((doc)=>{
+      d.push({id:doc.id, name:doc.data().name, adminPosition:doc.data().position, email:doc.data().email,})
+    })
+    setAdminAccount(d);
+  }
+
+  useEffect(()=>{
+    fetchAdminData()
+  },[])
 
   return (
 
