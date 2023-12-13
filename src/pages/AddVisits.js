@@ -320,7 +320,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                     hepatitisB: hepatitisB,
                     oralHealth: oralHealth,
                     remarks: text
-                }).then(alert("A"))
+                }).then(alert("The session was saved to the databased sucessfully"))
                     handleChange("")
                     setLmp("");
                     setHeight("");
@@ -346,7 +346,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                         oralHealth: false,
                     })
         }catch(e){
-            alert(e)
+          handleCloseAddVisitModal();
         }
     }
     const [lmp, setLMP] = useState("");

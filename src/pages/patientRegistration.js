@@ -1543,7 +1543,8 @@ export default function PatientRegistrationForm() {
                             <TableCell>{row.pregnancyNumber}</TableCell>
                             <TableCell>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker
+                                <input
+                                type='date'
                                   disableToolbar
                                   disableFuture
                                   variant="standard"
@@ -1551,7 +1552,7 @@ export default function PatientRegistrationForm() {
                                   size="small"
                                   id={`dateofdelivery${index}`}
                                   label="Date of Delivery"
-                                  value={row.dateOfDelivery}
+                                  value={row.userChild1dateOfDelivery1}
                                   onChange={handleDateChange(index)}
                                   renderInput={(params) => <TextField {...params} />}
                                 />
