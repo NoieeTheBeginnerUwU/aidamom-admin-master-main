@@ -722,7 +722,6 @@ export default function PatientRegistrationForm() {
   };
 
 
-
   return (
 
     <Box sx={{ flexGrow: 1 }}>
@@ -901,8 +900,7 @@ export default function PatientRegistrationForm() {
                       onChange={(text) => setRegistrationForm(prev => { return { ...prev, userSex: text.target.value } })}
 
                     >
-                      <FormControlLabel value="female" control={<Radio />} label="Female" />
-                      <FormControlLabel value="male" control={<Radio />} label="Male" />
+                      <FormControlLabel defaultValue="female" value="female" control={<Radio />} label="Female" />
                     </RadioGroup>
                   </FormControl>
 
