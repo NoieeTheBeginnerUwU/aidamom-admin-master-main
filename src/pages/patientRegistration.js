@@ -923,10 +923,10 @@ export default function PatientRegistrationForm() {
                         <MenuItem value="" disabled>
                           <em>select the value</em>
                         </MenuItem>
-                        <MenuItem value='Single'>Single</MenuItem>
-                        <MenuItem value='Married'>Married</MenuItem>
-                        <MenuItem value='Widowed'>Widowed</MenuItem>
-                        <MenuItem value='Legally Separated'>Legally Separated</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='Single'>Single</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='Married'>Married</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='Widowed'>Widowed</MenuItem>
+                        <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value='Legally Separated'>Legally Separated</MenuItem>
                       </Select>
                     </FormControl>
                   </Box>
