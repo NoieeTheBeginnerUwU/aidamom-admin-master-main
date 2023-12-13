@@ -218,10 +218,58 @@ const Systemreport = () => {
                       <div className='wew3' style={{width:100,height:100,borderRadius:150,marginRight:10,padding:10, fontSize:14}}/>
                     </div>
                   </div>
-                  <div style={{width:'100%',height:'70%',display:'flex',flexDirection:'column',alignItems:'start',justifyContent:'start'}}>
-                    <p><span style={{fontWeight:'bold',marginTop:20}}>Report Date:</span> {moment(new Date()).format("MMMM DD, YYYY")}</p>
-                    <p><span style={{fontWeight:'bold',marginTop:20}}>Report Period:</span> from {firstDayOfMonth.format('MMMM DD, YYYY')} to {moment(new Date()).format("MMMM DD, YYYY")}</p>
-
+                  <div style={{width:'100%',height:'80%',display:'flex',flexDirection:'column',alignItems:'start',justifyContent:'start'}}>
+                  <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: "50%" }} aria-label="customized table">
+                      <TableHead>
+                        <TableRow>
+                          <StyledTableCell></StyledTableCell>
+                          <StyledTableCell align="right">Alive</StyledTableCell>
+                          <StyledTableCell align="right">Stillbirth</StyledTableCell>
+                          <StyledTableCell align="right">Miscarriage</StyledTableCell>
+                          <StyledTableCell align="right">Total</StyledTableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {rows.map((row) => (
+                          <StyledTableRow key={row.name}>
+                            <StyledTableCell component="th" scope="row">
+                              {row.name}
+                            </StyledTableCell>
+                            <StyledTableCell align="right">{row.alive}</StyledTableCell>
+                            <StyledTableCell align="right">{row.stillbirth}</StyledTableCell>
+                            <StyledTableCell align="right">{row.miscarriage}</StyledTableCell>
+                            <StyledTableCell align="right">{row.total}</StyledTableCell>
+                          </StyledTableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                    <Table sx={{ minWidth: "50%" }} aria-label="customized table">
+                      <TableHead>
+                        <TableRow>
+                          <StyledTableCell></StyledTableCell>
+                          <StyledTableCell align="right">Low</StyledTableCell>
+                          <StyledTableCell align="right">Norma</StyledTableCell>
+                          <StyledTableCell align="right">Overweight</StyledTableCell>
+                          <StyledTableCell align="right">Total</StyledTableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {rows.map((row) => (
+                          <StyledTableRow key={row.name}>
+                            <StyledTableCell component="th" scope="row">
+                              {row.name}
+                            </StyledTableCell>
+                            <StyledTableCell align="right">{row.alive}</StyledTableCell>
+                            <StyledTableCell align="right">{row.stillbirth}</StyledTableCell>
+                            <StyledTableCell align="right">{row.miscarriage}</StyledTableCell>
+                            <StyledTableCell align="right">{row.total}</StyledTableCell>
+                          </StyledTableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                  
                     <p style={{margin:50,fontSize:20,fontWeight:700}}>Report Generation</p>
                     <p style={{margin:20,width:'96%',textAlign:'center'}}>The report was generated using our healthcare reporting system, which compiles and analyzes the data collected. The report is updated monthly and serves as a valuable tool for tracking and improving our healthcare operations.</p>
                     <div style={{display:'flex',width:220,height:60,marginLeft:'70%',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>

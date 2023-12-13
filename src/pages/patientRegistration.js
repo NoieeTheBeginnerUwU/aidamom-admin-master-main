@@ -739,7 +739,7 @@ export default function PatientRegistrationForm() {
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
-                  <Box>
+                <Box marginBottom={3} marginTop={0}  backgroundColor="#F0F2F5" padding={1}>
                     <Typography> <Box component="span" fontWeight='bold'>1. Name -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please enter your name correctly.</Box></Typography>
                   </Box>
                 </Grid>
@@ -818,7 +818,7 @@ export default function PatientRegistrationForm() {
                 </Grid> */}
 
                 <Grid item xs={12} mt={2}>
-                  <Box>
+                <Box marginBottom={3} marginTop={0}  backgroundColor="#F0F2F5" padding={1}>
                     <Typography> <Box component="span" fontWeight='bold'>2. Address -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Select province first, then city and finally your barangay.</Box></Typography>
                   </Box>
                 </Grid>
@@ -852,7 +852,7 @@ export default function PatientRegistrationForm() {
                   />
                 </Grid>
                 <Grid item xs={12} mt={2}>
-                  <Box>
+                <Box marginBottom={3} marginTop={0}  backgroundColor="#F0F2F5" padding={1}>
                     <Typography> <Box component="span" fontWeight='bold'>3. Birth Date -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Indicate your birth date correctly</Box></Typography>
                   </Box>
                 </Grid>
@@ -1070,7 +1070,7 @@ export default function PatientRegistrationForm() {
                 </Grid>
 
                 <Grid item xs={12} mt={2}>
-                  <Box>
+                <Box marginBottom={3} marginTop={0}  backgroundColor="#F0F2F5" padding={1}>
                     <Typography> <Box component="span" fontWeight='bold'>11. Birth Place -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please indicate your place of birth correclty.</Box></Typography>
                   </Box>
                 </Grid>
@@ -1123,7 +1123,7 @@ export default function PatientRegistrationForm() {
                 </Box>
               </Grid>
               <Grid item xs={12} mt={2}>
-                <Box>
+              <Box marginBottom={3} marginTop={0}  backgroundColor="#F0F2F5" padding={1}>
                   <Typography> <Box component="span" fontWeight='bold'>12. Name of your spouse -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please indicate the name of your spouse correclty.</Box></Typography>
                 </Box>
               </Grid>
@@ -1137,7 +1137,7 @@ export default function PatientRegistrationForm() {
                   onChange={(text) => setRegistrationForm(prev => { return { ...prev, userHusbandsLName: text.target.value } })}
 
 
-                  required
+                  
 
                 />
               </Grid>
@@ -1151,7 +1151,7 @@ export default function PatientRegistrationForm() {
 
                   value={registrationForm.userHusbandsFName}
                   onChange={(text) => setRegistrationForm(prev => { return { ...prev, userHusbandsFName: text.target.value } })}
-                  required
+                  
 
                 />
               </Grid>
@@ -1217,7 +1217,7 @@ export default function PatientRegistrationForm() {
                     value={registrationForm.userHusbandsNumber}
                     onChange={(text) => setRegistrationForm(prev => { return { ...prev, userHusbandsNumber: text.target.value } })}
 
-                    required
+                    
                   />
                 </Box>
               </Grid>
@@ -1269,7 +1269,7 @@ export default function PatientRegistrationForm() {
               </Grid>
 
               <Grid item xs={12} mt={2}>
-                <Box>
+              <Box marginBottom={3} marginTop={0}  backgroundColor="#F0F2F5" padding={1}>
                   <Typography> <Box component="span" fontWeight='bold'>13. Marriage Details:</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Indicate the Marriage details correctly (select date of marriage, then Select the marriage address  ).</Box></Typography>
                 </Box>
               </Grid>
@@ -1277,7 +1277,7 @@ export default function PatientRegistrationForm() {
               <Grid container item xs={12} mt={2} direction='row' spacing={1}>
                 <Grid xs={12} marginLeft={2}>
                   <FormControl required>
-                    <LocalizationProvider dateAdapter={AdapterDayjs} required>
+                    <LocalizationProvider dateAdapter={AdapterDayjs} >
                       <DatePicker
                         label="Date of Marriage"
                         value={dayjs(registrationForm.userDateOfMarriage)} // Convert back to dayjs object for DatePicker
@@ -1337,7 +1337,7 @@ export default function PatientRegistrationForm() {
 
 
               <Grid item xs={12} mt={2}>
-                <Box>
+              <Box marginBottom={3} marginTop={0}  backgroundColor="#F0F2F5" padding={1}>
                   <Typography> <Box component="span" fontWeight='bold'>14. Name of your Father -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please indicate the name of your father correclty.</Box></Typography>
                 </Box>
               </Grid>
@@ -1415,7 +1415,7 @@ export default function PatientRegistrationForm() {
                 </Select>
               </Grid>
               <Grid item xs={12} mt={2}>
-                <Box>
+              <Box marginBottom={3} marginTop={0}  backgroundColor="#F0F2F5" padding={1}>
                   <Typography> <Box component="span" fontWeight='bold'>15. Name of your Mother -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please indicate the name of your mother correclty.</Box></Typography>
                 </Box>
               </Grid>
@@ -1505,7 +1505,7 @@ export default function PatientRegistrationForm() {
                 </Box>
               </Grid>
               <Grid item xs={12} mt={2}>
-                <Box>
+              <Box marginBottom={3} marginTop={0}  backgroundColor="#F0F2F5" padding={1}>
                   <Typography>
                     <Box component="span" fontWeight="bold">
                       16. Pregnancy history-
@@ -1520,7 +1520,7 @@ export default function PatientRegistrationForm() {
 
               <Grid item xs={12}>
 
-                <Button variant="contained" color="primary" margin={5} onClick={addRow} >
+                <Button variant="contained" color="primary" style={{backgroundColor:'#1976D2', marginBottom:'10px', padding:'5px', color:'white'}} margin={5} onClick={addRow} >
                   Add Row
                 </Button>
                 <Box sx={{ border: '1px solid grey' }}>
@@ -1660,7 +1660,7 @@ export default function PatientRegistrationForm() {
                 </Box>
               </Grid>
               <Grid item xs={12}>
-                <Box>
+              <Box marginBottom={3} marginTop={0}  backgroundColor="#F0F2F5" padding={1}>
                   <Typography> <Box component="span" fontWeight='bold'>17. Other health conditions -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please check the checkbox if applied.</Box></Typography>
                 </Box>
               </Grid>
@@ -1714,7 +1714,7 @@ export default function PatientRegistrationForm() {
               </Grid>
 
               <Grid item xs={12}>
-                <Box>
+              <Box marginBottom={3} marginTop={0}  backgroundColor="#F0F2F5" padding={1}>
                   <Typography> <Box component="span" fontWeight='bold'>18. High risk behavior (mga gawing mapanganib) -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please check the checkbox if applied.</Box></Typography>
                 </Box>
               </Grid>
@@ -1764,7 +1764,7 @@ export default function PatientRegistrationForm() {
                   </Grid>
                   <Grid xs={1} flexDirection={'space-between'}>
                       <Box>
-                      <Button variant="contained" size="large" backgroundColor="primary.main" onClick={() => handleCreateAccount()} padding={4} >
+                      <Button variant="contained" size="large" backgroundColor="primary.main" style={{backgroundColor:'red', marginTop:'10px', padding:'5px', color:'white'}} onClick={() => handleCreateAccount()} padding={4} >
                         Submit
                       </Button>
                       </Box>

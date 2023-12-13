@@ -1392,7 +1392,7 @@ dischargeMedication:"",
       </Box>
 
 
-      <Dialog open={openAddPatient} onClose={handleClose}>
+      <Dialog open={openAddPatient} onClose={handleClose} maxWidth='lg'>
         <DialogTitle>
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Box fontWeight={'600'} >Register Patient</Box>
@@ -1810,7 +1810,7 @@ dischargeMedication:"",
 
 
                         <Grid item xs={12}>
-                          <Box>
+                          <Box marginBottom={5} marginTop={5}  backgroundColor="#F0F2F5" padding={1}>
                             <Typography> <Box component="span" fontWeight='bold'>1. Name -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please enter your name correctly.</Box></Typography>
                           </Box>
                         </Grid>

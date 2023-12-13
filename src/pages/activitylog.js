@@ -66,14 +66,22 @@ export default function Activitylog() {
   const [rows, setRows] = useState(initialRows);
 
   const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-    const searchTermRegex = new RegExp(searchTerm, 'i'); // 'i' for case-insensitive search
+    const term = event.target.value;
+    setSearchTerm(term);
+  
+    const selectedDateTimestamp = dayjs(selectedDate).startOf('day').unix();
   
     setRows(
-      initialRows.filter((row) => searchTermRegex.test(row.description))
+      initialRows.filter((row) => {
+        const rowDateTimestamp = dayjs(row.dateAndTime).startOf('day').unix();
+        return (
+          (term === '' || new RegExp(term, 'i').test(row.description)) &&
+          rowDateTimestamp === selectedDateTimestamp
+        );
+      })
     );
   };
-
+  
   const handleDateSearch = (date) => {
     handleDateChange(date);
     const selectedDateTimestamp = dayjs(date).startOf('day').unix();
@@ -85,7 +93,6 @@ export default function Activitylog() {
       })
     );
   };
-
   const handleClear = () => {
     setSearchTerm('');
     handleDateChange(dayjs());
@@ -140,6 +147,7 @@ export default function Activitylog() {
           <Box margin={2}></Box>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker value={selectedDate} onChange={handleDateSearch}
+            disableFuture
             />
           </LocalizationProvider>
           <Box margin={2}></Box>
@@ -152,9 +160,9 @@ export default function Activitylog() {
             <Table className={classes.table} aria-label="activity log table" stickyHeader sx={{minWidth:'100%', minHeight:'90%'}}>
               <TableHead>
                 <TableRow>
-                  <TableCell>No</TableCell>
-                  <TableCell align="right">Action</TableCell>
-                  <TableCell align="right">Timestamp</TableCell>
+                  <TableCell style={{backgroundColor:"#1976D2", color:'white'}}>No</TableCell>
+                  <TableCell  style={{backgroundColor:"#1976D2", color:'white'}} align="right">Action</TableCell>
+                  <TableCell   style={{backgroundColor:"#1976D2", color:'white'}} align="right">Timestamp</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
