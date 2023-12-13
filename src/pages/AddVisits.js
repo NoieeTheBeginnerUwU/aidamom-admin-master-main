@@ -449,7 +449,9 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                         <Grid container justifyContent="center" spacing={2} padding={4}>
                             <Grid item xs={selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"?6:12}>
                                 <DatePicker
+                                    type='date'
                                     label="Date of visit"
+                                    fullWidth
                                     size='small'
                                     disablePast
                                     disableFuture
@@ -465,7 +467,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                             {
                                 selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"&&
                                 <Grid item xs={selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"?6:12}>
-                                    <input type='date' onChange={(e)=> [setLmp(e.target.value),alert(e.target.value)]} style={{width:'50%',height:40}}/>
+                                    <TextField  disableFuture  size='small' variant="standard"  label='LMP' type='date' onChange={(e)=> [setLmp(e.target.value),alert(e.target.value)]} style={{width:'50%',height:40}} />
                                 </Grid>
                                 
                             }
@@ -671,7 +673,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                                 onChange={(text)=> setFetalMovement(text.target.value)}
                                                 inputProps={{ min: 0, max: 10 }}
                                                 InputProps={{
-                                                    endAdornment: <InputAdornment position="end">count</InputAdornment>,
+                                                    endAdornment: <InputAdornment position="end">count per hour</InputAdornment>,
                                                 }} variant='standard' fullWidth
                                             />
                                         </Grid>
@@ -807,6 +809,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                     renderInput={(params) => <TextField {...params} />}
                                     disabled={!isTextAreaValid}
                                     minDate={AdapterDayjs}
+                                    disablePast
 
                                 />
                                 <Box marginTop={2}>
