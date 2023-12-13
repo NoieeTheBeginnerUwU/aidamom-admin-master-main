@@ -219,13 +219,13 @@ const Systemreport = () => {
                   <div style={{width:'100%',height:'80%',display:'flex',flexDirection:'column',alignItems:'start',justifyContent:'start'}}>
                   <TableContainer component={Paper}>
                     <Table sx={{ minWidth: "50%" }} aria-label="customized table">
-                      <TableHead>
+                      <TableHead style={{backgroundColor:'GrayText'}}>
                         <TableRow>
                           <StyledTableCell></StyledTableCell>
-                          <StyledTableCell align="right">Alive</StyledTableCell>
-                          <StyledTableCell align="right">Stillbirth</StyledTableCell>
-                          <StyledTableCell align="right">Miscarriage</StyledTableCell>
-                          <StyledTableCell align="right">Total</StyledTableCell>
+                          <StyledTableCell   align="right">Alive</StyledTableCell>
+                          <StyledTableCell  align="right">Stillbirth</StyledTableCell>
+                          <StyledTableCell  align="right">Miscarriage</StyledTableCell>
+                          <StyledTableCell  align="right">Total</StyledTableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -234,7 +234,7 @@ const Systemreport = () => {
                             <StyledTableCell component="th" scope="row">
                               {row.name}
                             </StyledTableCell>
-                            <StyledTableCell align="right">{row.alive}</StyledTableCell>
+                            <StyledTableCell  align="right">{row.alive}</StyledTableCell>
                             <StyledTableCell align="right">{row.stillbirth}</StyledTableCell>
                             <StyledTableCell align="right">{row.miscarriage}</StyledTableCell>
                             <StyledTableCell align="right">{row.total}</StyledTableCell>
@@ -247,7 +247,7 @@ const Systemreport = () => {
                         <TableRow>
                           <StyledTableCell></StyledTableCell>
                           <StyledTableCell align="right">Low</StyledTableCell>
-                          <StyledTableCell align="right">Norma</StyledTableCell>
+                          <StyledTableCell align="right">Normal</StyledTableCell>
                           <StyledTableCell align="right">Overweight</StyledTableCell>
                           <StyledTableCell align="right">Total</StyledTableCell>
                         </TableRow>

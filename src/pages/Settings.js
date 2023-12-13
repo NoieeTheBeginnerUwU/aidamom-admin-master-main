@@ -22,6 +22,11 @@ import moment from 'moment';
 import citiesData from './city.json'
 import barangaysData from './barangay.json'
 import provincesData from './province.json'
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 //code for asterisk to be red
 const theme = createTheme({
@@ -42,6 +47,23 @@ const theme = createTheme({
 
 
 export default function Settings() {
+
+
+  const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
+
+  const handleLogoutDialogOpen = () => {
+    setLogoutDialogOpen(true);
+  };
+
+  const handleLogoutDialogClose = () => {
+    setLogoutDialogOpen(false);
+  };
+
+  const handleLogoutConfirmed = () => {
+    logout(); // Call your logout function here
+    handleLogoutDialogClose();
+  };
+
 
   const options = ['RN', 'RM', 'M.D', 'Option4', 'Option5'];
 
@@ -404,14 +426,36 @@ export default function Settings() {
 
       <Divider sx={{ marginBottom: 3 }}></Divider>
 
-      <Button variant="contained" color="primary" onClick={() => [logout(), refreshPage()]}>
+
+      <Button variant="contained" color="primary" onClick={handleOpen} >
+        Create Account
+      </Button> 
+      
+      <Button variant="contained" color="error" onClick={handleLogoutDialogOpen}>
         Logout
       </Button>
-      <Box margin={2}></Box>
 
-      <Button variant="contained" color="primary" onClick={handleOpen}>
-        Create Account
-      </Button>
+
+      <Dialog open={logoutDialogOpen} onClose={handleLogoutDialogClose} maxWidth="xs">
+        <DialogTitle>Logout Confirmation</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to log out?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleLogoutDialogClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleLogoutConfirmed} color="primary">
+            Logout
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+
+
+      <Box margin={2}></Box>
 
       <Modal
         open={open}
