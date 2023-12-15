@@ -1997,15 +1997,7 @@ function PatientTable({ handleSubmit, userData }) {
                             </Box>
                           </Grid>
                           <Grid container item xs={12} flexDirection={"row"}>
-                            <Grid xs={3}>
-                              <Box >
-                                <FormControlLabel
-                                  control={<Checkbox checked={checked} onChange={URINEOUTPUT} />}
-                                  label="URINE OUTPUT :"
-                                />
-                                {checked && <TextField label="Diagnosis" value={discharge.urineOutputDiagnosis} variant='standard' onChange={(text) => setDischarger(prev => { return { ...prev, urineOutputDiagnosis: text.target.value } })} />}
-                              </Box>
-                            </Grid><Grid xs={3}>
+                           <Grid xs={3}>
                               <Box marginLeft={4} >
 
                                 <FormControlLabel
