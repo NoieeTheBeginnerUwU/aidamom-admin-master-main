@@ -143,20 +143,20 @@ export default function PatientRegistrationForm() {
     //child1
     userChild1: "",
     userChild1DateOfDelivery1: "",
-    userChild1TypeOfDelivery1: "",
+    userChild1TypeOfDelivery1: "Normal",
     userChild1BirthOutcome1: "",
     userChild1NumberOfChildDelivered1: "",
     userChild1Complication1: "",
     //child2
     userChild2: "",
-    userChild1DateOfDelivery2: "",
+    userChild1DateOfDelivery2: "Normal",
     userChild1TypeOfDelivery2: "",
     userChild1BirthOutcome2: "",
     userChild1NumberOfChildDelivered2: "",
     userChild1Complication2: "",
     //child3
     userChild3: "",
-    userChild1DateOfDelivery3: "",
+    userChild1DateOfDelivery3: "Normal",
     userChild1TypeOfDelivery3: "",
     userChild1BirthOutcome3: "",
     userChild1NumberOfChildDelivered3: "",
@@ -1557,6 +1557,7 @@ export default function PatientRegistrationForm() {
                                   size="small"
                                   id={`dateofdelivery${index}`}
                                   label="Date of Delivery"
+                                  style={{width:'100%'}}
                                   value={row.userChild1dateOfDelivery1}
                                   onChange={handleDateChange(index)}
                                   renderInput={(params) => <TextField {...params} />}
@@ -1573,7 +1574,7 @@ export default function PatientRegistrationForm() {
                                   label=""
                                 >
                                   <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value={'Normal'}>Normal</MenuItem>
-                                  <MenuItem style={{ display: 'block', width: '100%', padding: '3px' }} value={'Cesarean'}>Cesarean</MenuItem>
+                                 
                                 </Select>
                               </FormControl>
                             </TableCell>

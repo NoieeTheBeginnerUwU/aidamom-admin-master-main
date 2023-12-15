@@ -115,18 +115,23 @@ export default function Approval() {
               </DialogActions>
             </Dialog>
 
-            <Dialog open={openDialogMessageReject} onClose={handleCloseDialogMessReject}  maxWidth="xs">
+            <Dialog open={openDialogMessageReject} onClose={handleCloseDialogMessReject}  maxWidth="sm">
               <DialogTitle style={{color:"error", backgroundColor:"#FF0000"}}>Confirmation</DialogTitle>
               <DialogContent style={{ display: 'flex', alignItems: 'center' }}>
                 <DialogContentText >
                   Are you sure you want to reject the appointment?
                 </DialogContentText>
+                <TextField
+          label="Reason for Refusal"
+          value={reasonForRefusal}
+          onChange={(event) => setReasonForRefusal(event.target.value)}
+        />
               </DialogContent>
               <DialogActions>
                 <Button onClick={handleCloseDialogMessReject} color="primary">
                   Cancel
                 </Button>
-                <Button onClick={() => handleRejectAppointment(params.row.id)} color="primary">
+                <Button onClick={() => handleRejectAppointment(params.row.id) } color="primary" disabled={!isRejectDisabled}>
                   Reject
                 </Button>
               </DialogActions>
@@ -277,12 +282,19 @@ export default function Approval() {
     // Reset confirmation flag
     setConfirmationFlag(false);
   };
-
+  const [reasonForRefusal, setReasonForRefusal] = useState('');
   const [appointmentId, setAppointmentId] = useState(null);
   
    const [openDialogMessageReject, setOpenDialogMessageReject] = useState(false);
   const [openDialogMessage, setOpenDialogMessage] = useState(false);
   const [confirmationFlag, setConfirmationFlag] = useState(false);
+
+  const isRejectDisabled = () => {
+    const words = reasonForRefusal.trim().split(/\s+/);
+    return words.length < 3;
+  };
+
+
 
   return (
 
