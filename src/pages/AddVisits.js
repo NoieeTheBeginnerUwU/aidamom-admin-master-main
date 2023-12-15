@@ -86,7 +86,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
     const [dilates, setDilates] = React.useState('');
     const [efficases, setEfficaces] = React.useState('');
     const [fundalHeight, setFundalHeight] = React.useState('');
-    const [fetalMovement, setFetalMovement] = React.useState('');
+    const [fetalHeathTone, setFetalHearthTone] = React.useState('');
     const [urinalysis, setUrinalysis] = React.useState('');
     const [completeBloodCount, setCompleteBloodCount] = React.useState('');
     const [hepatitisB, setHepatitisB] = React.useState('');
@@ -313,7 +313,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                     dilates: dilates,
                     efficases: efficases,
                     fundalHeight: fundalHeight,
-                    fetalMovement: fetalMovement,
+                    fetalHeathTone: fetalHeathTone,
                     presentation: presentation,
                     urinalysis: urinalysis,
                     completeBloodCount: completeBloodCount,
@@ -329,7 +329,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                     setDiastolic("");
                     setDilates(0);
                     setEfficaces(0);
-                    setFetalMovement(0);
+                    setFetalHearthTone(0);
                     setL(0);
                     setFundalHeight(0);
                     setPresentation("");
@@ -667,13 +667,13 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                         </Grid>
                                         <Grid xs={12}>
                                             <TextField
-                                                label="Fetal movement"
+                                                label="Fetal Hearth Tone"
                                                 type="number"
-                                                value={fetalMovement}
-                                                onChange={(text)=> setFetalMovement(text.target.value)}
+                                                value={fetalHeathTone}
+                                                onChange={(text)=> setFetalHearthTone(text.target.value)}
                                                 inputProps={{ min: 0, max: 10 }}
                                                 InputProps={{
-                                                    endAdornment: <InputAdornment position="end">count per hour</InputAdornment>,
+                                                    endAdornment: <InputAdornment position="end">per minute</InputAdornment>,
                                                 }} variant='standard' fullWidth
                                             />
                                         </Grid>

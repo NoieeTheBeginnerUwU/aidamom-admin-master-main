@@ -82,7 +82,7 @@ const theme = createTheme({
 });
 
 
-function  PatientTable({ handleSubmit, userData }) {
+function PatientTable({ handleSubmit, userData }) {
 
 
   const [finalDiagnosis, setFinalDiagnosis] = useState('');
@@ -100,8 +100,8 @@ function  PatientTable({ handleSubmit, userData }) {
   const componentRef = useRef();
 
   const handlePrint = useReactToPrint({
-    content: ()=> componentRef.current,
-  }) 
+    content: () => componentRef.current,
+  })
 
 
   const [value2, setValue2] = useState('');
@@ -149,220 +149,220 @@ function  PatientTable({ handleSubmit, userData }) {
     setModalIsOpen(false);
   }
 
-  
 
 
-    
-  const [referralForm, setreferralForm]=useState(
+
+
+  const [referralForm, setreferralForm] = useState(
     {
-        to:"",
-        dateandtime:"",
-        A1:"",
-        A2:"",
-        B1:"",
-        B2:"",
-        C1:"",
-        C2:"",
-        Unclassified:"",
-        facultyname:"",
+      to: "",
+      dateandtime: "",
+      A1: "",
+      A2: "",
+      B1: "",
+      B2: "",
+      C1: "",
+      C2: "",
+      Unclassified: "",
+      facultyname: "",
 
-//ReferringDetails
-facultyEmail:"",
-facultymess:"",
-facultyAddress:"",
-facultyNo:"",
+      //ReferringDetails
+      facultyEmail: "",
+      facultymess: "",
+      facultyAddress: "",
+      facultyNo: "",
 
-//Patient Details
-patientname:"",
-patientAge:"",
-patientsex:"",
-civilstatus:"",
-patientDOB:"",
-patientadress:"",
-Patientno:"",
-contactperson:"",
-bloodType:"",
-G:"",
-P:"",
-blank:"",
-lmp:"",
-edd:"",
-aog:"",
-Yesprenatal:"",
-Noprenatal:"",
-whereClinicName : "",
-
-
-//VitalSigns
-bp:"",
-hr:"",
-rr:"",
-temp:"",
-weight:"",
-fh:"",
-fht:"",
-ie:"",
+      //Patient Details
+      patientname: "",
+      patientAge: "",
+      patientsex: "",
+      civilstatus: "",
+      patientDOB: "",
+      patientadress: "",
+      Patientno: "",
+      contactperson: "",
+      bloodType: "",
+      G: "",
+      P: "",
+      blank: "",
+      lmp: "",
+      edd: "",
+      aog: "",
+      Yesprenatal: "",
+      Noprenatal: "",
+      whereClinicName: "",
 
 
-//DangerSigns
-Unconcious:"",
-Convulsing:"",
-Looksvery:"",
-Others:"",
-PreTermLabor:"",
-SevereDifficultyBreathing:"",
-Headache:"",
-VaginalBleeding:"",
-Fever:"",
-SevereVisualdisturbance:"",
-SevereAbdominalpain:"",
-SevereVomiting:"",
-Prom:"",
-OthersDangersign:"",
-
-//MedicalHistory
-medhistory:"",
-labresults:"",
-Methergin:"",
-methergindose:"",
-methergindate:"",
-MsS04:"",
-mss04dose:"",
-mss04date:"",
-Oxytocin:"",
-oxytocindose:"",
-oxytocindate:"",
-Hydralazine:"",
-hydralazinedose:"",
-hydralazinedate:"",
-Dexamethasone:"",
-dexamethasonedose:"",
-dexamethasonedate:"",
-OthersMedhistory:"",
-othersdate:"",
-medimpression:"",
-Consultation:"",
-TransferofService:"",
-DiagnosticTest:"",
-Othersreferral:"",
-Yesreferral:"",
-Noreferral:"",
-
-//Methods
-IUD:"",
-PSI:"",
-Pills:"",
-Condom:"",
-BTL:"",
-Vasectomy:"",
-Injectable:"",
-SDM:"",
-LAM:"",
-
-//Counseled
-
-Yescounseled:"",
-Nocounseled:"",
-consentNameandSign:"",
-
-//NEWBORN REFERRAL
-Yesnewborn:"",
-Nonewborn:"",
-nameofnewborn:"",
-sexnewborn:"",
-typeofdelivery:"",
-accompanying:"",
-dateandtimeofbirth:"",
-typepresentation:"",
-babyweight:"",
-apgarscore:"",
-babyclassification:"",
-
-hc:"",
-AC:"",
-CC:"",
-BL:"",
-
-vitk:"",
-bcg:"",
-hepbVac:"",
-erythromycin:"",
-nbs:"",
-
-//babyVitals
-BP:"",
-CR:"",
-TEMP:"",
-RR:"",
-Sat:"",
+      //VitalSigns
+      bp: "",
+      hr: "",
+      rr: "",
+      temp: "",
+      weight: "",
+      fh: "",
+      fht: "",
+      ie: "",
 
 
-//Condition at Birth
+      //DangerSigns
+      Unconcious: "",
+      Convulsing: "",
+      Looksvery: "",
+      Others: "",
+      PreTermLabor: "",
+      SevereDifficultyBreathing: "",
+      Headache: "",
+      VaginalBleeding: "",
+      Fever: "",
+      SevereVisualdisturbance: "",
+      SevereAbdominalpain: "",
+      SevereVomiting: "",
+      Prom: "",
+      OthersDangersign: "",
 
-meconiumstained:"",
-poorcry:"",
-convulsion:"",
-cbg:"",
-poorsuck:"",
-juandice:"",
-cyanosis:"",
-Congenitalanomalies:"",
-respiratorydistress:"",
-Bleeding:"",
-cordcoil:"",
-othersCondition:"",
+      //MedicalHistory
+      medhistory: "",
+      labresults: "",
+      Methergin: "",
+      methergindose: "",
+      methergindate: "",
+      MsS04: "",
+      mss04dose: "",
+      mss04date: "",
+      Oxytocin: "",
+      oxytocindose: "",
+      oxytocindate: "",
+      Hydralazine: "",
+      hydralazinedose: "",
+      hydralazinedate: "",
+      Dexamethasone: "",
+      dexamethasonedose: "",
+      dexamethasonedate: "",
+      OthersMedhistory: "",
+      othersdate: "",
+      medimpression: "",
+      Consultation: "",
+      TransferofService: "",
+      DiagnosticTest: "",
+      Othersreferral: "",
+      Yesreferral: "",
+      Noreferral: "",
 
-newbornimpression:"",
-babydiagnostic:"",
-management:"",
+      //Methods
+      IUD: "",
+      PSI: "",
+      Pills: "",
+      Condom: "",
+      BTL: "",
+      Vasectomy: "",
+      Injectable: "",
+      SDM: "",
+      LAM: "",
 
-//modeoftransportation
-Ambulance:"",
-Aircraft:"",
-Privatecars:"",
-Boat:"",
-Otherstransport:"",
+      //Counseled
 
-nameAccompanying:"",
+      Yescounseled: "",
+      Nocounseled: "",
+      consentNameandSign: "",
 
-Yesconfinement:"",
-Noconfinement:"",
-confinement:"",
-prevdiagnosis:"",
-NameandDesignation:"",
+      //NEWBORN REFERRAL
+      Yesnewborn: "",
+      Nonewborn: "",
+      nameofnewborn: "",
+      sexnewborn: "",
+      typeofdelivery: "",
+      accompanying: "",
+      dateandtimeofbirth: "",
+      typepresentation: "",
+      babyweight: "",
+      apgarscore: "",
+      babyclassification: "",
+
+      hc: "",
+      AC: "",
+      CC: "",
+      BL: "",
+
+      vitk: "",
+      bcg: "",
+      hepbVac: "",
+      erythromycin: "",
+      nbs: "",
+
+      //babyVitals
+      BP: "",
+      CR: "",
+      TEMP: "",
+      RR: "",
+      Sat: "",
 
 
-referringTelephoneCPNo:"",
-referringNameandDesignation:"",
-receivingTelephoneCPNo:"",
-referringFacility:"",
-addressreferringFacility:"",
-dateandTimereceived:"",
-cpno:"",
+      //Condition at Birth
 
-patientName:"",
-patientAge:"",
-patientSex:"",
-Cs:"",
-Admitted:"",
-Observation:"",
+      meconiumstained: "",
+      poorcry: "",
+      convulsion: "",
+      cbg: "",
+      poorsuck: "",
+      juandice: "",
+      cyanosis: "",
+      Congenitalanomalies: "",
+      respiratorydistress: "",
+      Bleeding: "",
+      cordcoil: "",
+      othersCondition: "",
 
-ReferredtoAnotherFacility:"",
-ReturnBacktoReferringFacility:"",
-Managedanddischarged:"",
-Othersdispo:"",
+      newbornimpression: "",
+      babydiagnostic: "",
+      management: "",
 
-Printednameandsign:"",
-CPnoreceiving:"",
-referringFacility:"",
+      //modeoftransportation
+      Ambulance: "",
+      Aircraft: "",
+      Privatecars: "",
+      Boat: "",
+      Otherstransport: "",
 
-finalDiag:"",
-dateadmission:"",
-dischargeMedication:"",
+      nameAccompanying: "",
 
-        
+      Yesconfinement: "",
+      Noconfinement: "",
+      confinement: "",
+      prevdiagnosis: "",
+      NameandDesignation: "",
+
+
+      referringTelephoneCPNo: "",
+      referringNameandDesignation: "",
+      receivingTelephoneCPNo: "",
+      referringFacility: "",
+      addressreferringFacility: "",
+      dateandTimereceived: "",
+      cpno: "",
+
+      patientName: "",
+      patientAge: "",
+      patientSex: "",
+      Cs: "",
+      Admitted: "",
+      Observation: "",
+
+      ReferredtoAnotherFacility: "",
+      ReturnBacktoReferringFacility: "",
+      Managedanddischarged: "",
+      Othersdispo: "",
+
+      Printednameandsign: "",
+      CPnoreceiving: "",
+      referringFacility: "",
+
+      finalDiag: "",
+      dateadmission: "",
+      dischargeMedication: "",
+
+
     }
-)
+  )
 
 
 
@@ -478,20 +478,20 @@ dischargeMedication:"",
 
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 50, align: 'center', headerAlign: 'center' },
-    { field: 'userFname', headerName: 'First name', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
-    { field: 'userLname', headerName: 'Last name', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
-    { field: 'lastPeriod', headerName: 'Last Menstrual Period', flex: 1, align: 'center', headerAlign: 'center' },
-    { field: 'aog', headerName: 'Age of Gestation', type: 'number', width: 100, sortable: false, align: 'center', headerAlign: 'center' },
-    { field: 'lastVisit', headerName: 'Date of Last Visit', type: 'number', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
-    { field: 'userAddress', headerName: 'Address', flex: 2, sortable: false, align: 'center', headerAlign: 'center' },
+    { field: 'id', headerName: 'ID', width: 50, align: 'left', headerAlign: 'left' },
+    { field: 'userFname', headerName: 'First name', flex: 1, sortable: false, align: 'left', headerAlign: 'left' },
+    { field: 'userLname', headerName: 'Last name', flex: 1, sortable: false, align: 'left', headerAlign: 'left' },
+    { field: 'lastPeriod', headerName: 'Last Menstrual Period', flex: 1, align: 'left', headerAlign: 'left' },
+    { field: 'aog', headerName: 'Age of Gestation', type: 'number', flex: 1, sortable: false, align: 'left', headerAlign: 'left' },
+    { field: 'lastVisit', headerName: 'Date of Last Visit', type: 'number', flex: 1.5, sortable: false, align: 'left', headerAlign: 'left' },
+    { field: 'userAddress', headerName: 'Address', flex: 2, sortable: false, align: 'left', headerAlign: 'left' },
     {
       field: 'action',
       headerName: 'Action',
       width: 120,
       sortable: false,
-      align: 'center',
-      headerAlign: 'center',
+      align: 'left',
+      headerAlign: 'left',
       renderCell: (params) => (
         <Button variant="contained" color="primary" onClick={() => [handleViewDetails(params)]}>
           <Box fontSize={10}>View Details</Box>
@@ -651,6 +651,18 @@ dischargeMedication:"",
   );
 
 
+  const [openChild, setOpenChild] = useState(false);
+
+  const handleOpenChildDetails = () => {
+    setOpenChild(true);
+  };
+
+  const handleCloseChildDetails = () => {
+    setOpenChild(false);
+  };
+
+
+
   const [openAddPatient, setOpenAddPatient] = React.useState(false);
   const handleClickAdd = () => {
     setOpenAddPatient(true);
@@ -663,9 +675,9 @@ dischargeMedication:"",
   const [users, setUsers] = useState([]);
   const [row, setRow] = useState([]);
   const [userSearch, setUserSearch] = useState([]);
-  const [appointments, setAppoitments] =useState([]);
+  const [appointments, setAppoitments] = useState([]);
   async function fetchData() {
-    const querySnapshot = await getDocs(query(collection(database, 'userData')),orderBy("dateCreated","asc"));
+    const querySnapshot = await getDocs(query(collection(database, 'userData')), orderBy("dateCreated", "asc"));
     const userData = [];
     const pending = [];
     let i = 1;
@@ -675,9 +687,9 @@ dischargeMedication:"",
         userData.push({
           id: i++,
           docid: doc.id,
-          aog: moment(new Date(),"YYYY/MM/DD").diff(doc.data().lastPeriod,"weeks") + " weeks",
-          lastVisit: !doc.data().lastVisit?"No Data": doc.data().lastVisit,
-          lastPeriod: !doc.data().lastPeriod? "No data":doc.data().lastPeriod,
+          aog: moment(new Date(), "YYYY/MM/DD").diff(doc.data().lastPeriod, "weeks") + " weeks",
+          lastVisit: !doc.data().lastVisit ? "No Data" : doc.data().lastVisit,
+          lastPeriod: !doc.data().lastPeriod ? "No data" : doc.data().lastPeriod,
           userFname: doc.data().userFname,
           userMname: doc.data().userMname,
           userLname: doc.data().userLname,
@@ -710,9 +722,9 @@ dischargeMedication:"",
           userSalary: doc.data().userSalary,
           userAddressOfEmployer: doc.data().userAddressOfEmployer,
           userNameOfBarangayCaptain: doc.data().userNameOfBarangayCaptain,
-          userProvincebirth:doc.data().userProvincebirth,
+          userProvincebirth: doc.data().userProvincebirth,
           userTownbirth: doc.data().userTownbirth,
-          userBarangaybirth:doc.data().userBarangaybirth,
+          userBarangaybirth: doc.data().userBarangaybirth,
           //user pregnancy history
           //child1
           userChild1: doc.data().userChild1,
@@ -815,7 +827,7 @@ dischargeMedication:"",
     })
     setUsers(userData);
     setUserSearch(userData);
-   
+
     //var i = 1;
     //alert("running "+i++ +" times")
   };
@@ -828,30 +840,30 @@ dischargeMedication:"",
 
   const [nChild, setNChild] = useState([]);
 
-/**
- *  let arrs = [];
-    const queryAppointments = await getDocs(query(collection(database,"appointments"),where("uid","==",selectedRow.docid)));
-    queryAppointments.forEach((doc)=>{
-      arrs.push({id:doc.id,aog:doc.data().aog,appointmentDate:doc.data().appointmentDate,bmi:doc.data().bmi,bp:doc.data().bp,bpCategory:doc.data().bpCategory,diastolic:doc.data().diastolic,dilates:doc.data().dilates,efficases:doc.data().efficases,fetalMovement:doc.data().fetalMovement,fundalHeight:doc.data().fundalHeight,height:doc.data().height,lmp:doc.data().lmp,name:doc.data().name,presentation:doc.data().presentation,remarks:doc.data().remarks,systolic:doc.data().systolic,uid:doc.data().uid,weight:doc.data().weight})
-    })
-    setAppoitments(arrs)
- */
-
-  const [onlineAppointments, setOnlineAppointments] = useState([])
-  useEffect(()=>{
-    let arrs = [];
-    if(selectedRow.docid!==undefined){
-      const fetchApps = async() => {
-        const queryAppointments = await getDocs(query(collection(database,"appointments"),where("uid","==",selectedRow.docid)));
+  /**
+   *  let arrs = [];
+      const queryAppointments = await getDocs(query(collection(database,"appointments"),where("uid","==",selectedRow.docid)));
       queryAppointments.forEach((doc)=>{
         arrs.push({id:doc.id,aog:doc.data().aog,appointmentDate:doc.data().appointmentDate,bmi:doc.data().bmi,bp:doc.data().bp,bpCategory:doc.data().bpCategory,diastolic:doc.data().diastolic,dilates:doc.data().dilates,efficases:doc.data().efficases,fetalMovement:doc.data().fetalMovement,fundalHeight:doc.data().fundalHeight,height:doc.data().height,lmp:doc.data().lmp,name:doc.data().name,presentation:doc.data().presentation,remarks:doc.data().remarks,systolic:doc.data().systolic,uid:doc.data().uid,weight:doc.data().weight})
       })
+      setAppoitments(arrs)
+   */
+
+  const [onlineAppointments, setOnlineAppointments] = useState([])
+  useEffect(() => {
+    let arrs = [];
+    if (selectedRow.docid !== undefined) {
+      const fetchApps = async () => {
+        const queryAppointments = await getDocs(query(collection(database, "appointments"), where("uid", "==", selectedRow.docid)));
+        queryAppointments.forEach((doc) => {
+          arrs.push({ id: doc.id, aog: doc.data().aog, appointmentDate: doc.data().appointmentDate, bmi: doc.data().bmi, bp: doc.data().bp, bpCategory: doc.data().bpCategory, diastolic: doc.data().diastolic, dilates: doc.data().dilates, efficases: doc.data().efficases, fetalMovement: doc.data().fetalMovement, fundalHeight: doc.data().fundalHeight, height: doc.data().height, lmp: doc.data().lmp, name: doc.data().name, presentation: doc.data().presentation, remarks: doc.data().remarks, systolic: doc.data().systolic, uid: doc.data().uid, weight: doc.data().weight })
+        })
       }
       const fetchOnlineApps = async () => {
         let a = [];
-        const queryAppointments = await getDocs(query(collection(database,"onlineAppointments"),where("uid","==",selectedRow.docid)));
-        queryAppointments.forEach((doc)=> {
-          a.push({id:doc.id, appointmentDate:doc.data().appointmentDate, purpose:doc.data().purpose, status:doc.data().status, time:doc.data().time})
+        const queryAppointments = await getDocs(query(collection(database, "onlineAppointments"), where("uid", "==", selectedRow.docid)));
+        queryAppointments.forEach((doc) => {
+          a.push({ id: doc.id, appointmentDate: doc.data().appointmentDate, purpose: doc.data().purpose, status: doc.data().status, time: doc.data().time })
         })
         setOnlineAppointments(a)
       }
@@ -859,8 +871,8 @@ dischargeMedication:"",
       fetchOnlineApps()
     }
     setAppoitments(arrs)
-    console.log("ASS "+arrs)
-  },[selectedRow.docid])
+    console.log("ASS " + arrs)
+  }, [selectedRow.docid])
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -896,276 +908,276 @@ dischargeMedication:"",
 
   const handleChildRegistration = () => {
     try {
-      addDoc(collection(database,"dischargeSummary_child"),{
+      addDoc(collection(database, "dischargeSummary_child"), {
         data: "data"
       })
-      addDoc(collection(database,"dischargeSummary_mother"),{
+      addDoc(collection(database, "dischargeSummary_mother"), {
         data: "data"
       })
-      updateDoc(doc(database,"userData",selectedRow.docid),{
-        lastPeriod:"",
-        dateOfDischarge: moment(new Date(),"YYYY/MM/DD").format("YYYY/MM/DD")
+      updateDoc(doc(database, "userData", selectedRow.docid), {
+        lastPeriod: "",
+        dateOfDischarge: moment(new Date(), "YYYY/MM/DD").format("YYYY/MM/DD")
       })
     } catch (e) {
       alert(e)
     }
   }
 
-  async function searchUsers(vals){
+  async function searchUsers(vals) {
     let ins = [];
-      let docs = users;
-      try{
-        let fun = docs.map((doc)=>{
-          if(vals!==""){
-           let val = vals.toLowerCase();
-           if(doc.userFname.toLowerCase().includes(val)||doc.userMname.toLowerCase().includes(val)||doc.userLname.toLowerCase().includes(val)){
+    let docs = users;
+    try {
+      let fun = docs.map((doc) => {
+        if (vals !== "") {
+          let val = vals.toLowerCase();
+          if (doc.userFname.toLowerCase().includes(val) || doc.userMname.toLowerCase().includes(val) || doc.userLname.toLowerCase().includes(val)) {
             ins.push({
               id: doc.id,
               docid: doc.docid,
               aog: doc.aog,
-              userAddress:doc.userAddress,
+              userAddress: doc.userAddress,
               lastVisit: doc.lastVisit,
               lastPeriod: doc.lastPeriod,
-              userFname:doc.userFname,
-              userMname:doc.userMname,
-              userLname:doc.userLname,
-              userSuffix:doc.userSuffix,
-              userSex:doc.userSex,
-              userCivilStatus:doc.userCivilStatus,
-              userBloodType:doc.userBloodType,
-              userReligion:doc.userReligion,
-              userNumber:doc.userNumber,
-              userDob:doc.userDob,
-              userAge:doc.userAge,
-              userNationality:doc.userNationality,
-              userOccupation:doc.userOccupation,
-              userPurok:doc.userPurok,
-              userBarangay:doc.userBarangay,
-              userTown:doc.userTown,
-              userProvince:doc.userProvince,
-              userPlaceOfBirth:doc.userPlaceOfBirth,
+              userFname: doc.userFname,
+              userMname: doc.userMname,
+              userLname: doc.userLname,
+              userSuffix: doc.userSuffix,
+              userSex: doc.userSex,
+              userCivilStatus: doc.userCivilStatus,
+              userBloodType: doc.userBloodType,
+              userReligion: doc.userReligion,
+              userNumber: doc.userNumber,
+              userDob: doc.userDob,
+              userAge: doc.userAge,
+              userNationality: doc.userNationality,
+              userOccupation: doc.userOccupation,
+              userPurok: doc.userPurok,
+              userBarangay: doc.userBarangay,
+              userTown: doc.userTown,
+              userProvince: doc.userProvince,
+              userPlaceOfBirth: doc.userPlaceOfBirth,
               //family details
-              userFathersName:doc.userFathersName,
-              userMothersName:doc.userMothersName,
-              userHusbandsName:doc.userHusbandsName,
-              userHusbandsOccuupation:doc.userHusbandsOccuupation,
-              userDateOfMarriage:doc.userDateOfMarriage,
-              userPlaceOfMarriage:doc.userPlaceOfMarriage,
-              userHusbandsNumber:doc.userHusbandsNumber,
-              userCompleteAddress:doc.userCompleteAddress,
-              userEmployedBy:doc.userEmployedBy,
-              userSalary:doc.userSalary,
-              userAddressOfEmployer:doc.userAddressOfEmployer,
-              userNameOfBarangayCaptain:doc.userNameOfBarangayCaptain,
+              userFathersName: doc.userFathersName,
+              userMothersName: doc.userMothersName,
+              userHusbandsName: doc.userHusbandsName,
+              userHusbandsOccuupation: doc.userHusbandsOccuupation,
+              userDateOfMarriage: doc.userDateOfMarriage,
+              userPlaceOfMarriage: doc.userPlaceOfMarriage,
+              userHusbandsNumber: doc.userHusbandsNumber,
+              userCompleteAddress: doc.userCompleteAddress,
+              userEmployedBy: doc.userEmployedBy,
+              userSalary: doc.userSalary,
+              userAddressOfEmployer: doc.userAddressOfEmployer,
+              userNameOfBarangayCaptain: doc.userNameOfBarangayCaptain,
               //user pregnancy history
-                //child1
-              userChild1:doc.userChild1,
-              userChildDateOfDelivery1:doc.userChildDateOfDelivery1,
-              userChildTypeOfDelivery1:doc.userChildTypeOfDelivery1,
-              userChildBirthOutcome1:doc.userChildBirthOutcome1,
-              userChildNumberOfChildDelivered1:doc.userChildNumberOfChildDelivered1,
-              userChildComplication1:doc.userChildComplication1,
-                //child2
-              userChild2:doc.userChild2,
-              userChildDateOfDelivery2:doc.userChildDateOfDelivery2,
-              userChildTypeOfDelivery2:doc.userChildTypeOfDelivery2,
-              userChildBirthOutcome2:doc.userChildBirthOutcome2,
-              userChildNumberOfChildDelivered2:doc.userChildNumberOfChildDelivered2,
-              userChildComplication2:doc.userChildComplication2,
+              //child1
+              userChild1: doc.userChild1,
+              userChildDateOfDelivery1: doc.userChildDateOfDelivery1,
+              userChildTypeOfDelivery1: doc.userChildTypeOfDelivery1,
+              userChildBirthOutcome1: doc.userChildBirthOutcome1,
+              userChildNumberOfChildDelivered1: doc.userChildNumberOfChildDelivered1,
+              userChildComplication1: doc.userChildComplication1,
+              //child2
+              userChild2: doc.userChild2,
+              userChildDateOfDelivery2: doc.userChildDateOfDelivery2,
+              userChildTypeOfDelivery2: doc.userChildTypeOfDelivery2,
+              userChildBirthOutcome2: doc.userChildBirthOutcome2,
+              userChildNumberOfChildDelivered2: doc.userChildNumberOfChildDelivered2,
+              userChildComplication2: doc.userChildComplication2,
               //child3
-              userChild3:doc.userChild3,
-              userChildDateOfDelivery3:doc.userChildDateOfDelivery3,
-              userChildTypeOfDelivery3:doc.userChildTypeOfDelivery3,
-              userChildBirthOutcome3:doc.userChildBirthOutcome3,
-              userChildNumberOfChildDelivered3:doc.userChildDateOfDelivery3,
-              userChildComplication3:doc.userChildComplication3,
+              userChild3: doc.userChild3,
+              userChildDateOfDelivery3: doc.userChildDateOfDelivery3,
+              userChildTypeOfDelivery3: doc.userChildTypeOfDelivery3,
+              userChildBirthOutcome3: doc.userChildBirthOutcome3,
+              userChildNumberOfChildDelivered3: doc.userChildDateOfDelivery3,
+              userChildComplication3: doc.userChildComplication3,
               //child4
-              userChild4:doc.userChild4,
-              userChildDateOfDelivery4:doc.userChildDateOfDelivery4,
-              userChildTypeOfDelivery4:doc.userChildTypeOfDelivery4,
-              userChildBirthOutcome4:doc.userChildBirthOutcome4,
-              userChildNumberOfChildDelivered4:doc.userChildNumberOfChildDelivered4,
-              userChildComplication4 :doc.userChildComplication4,    
+              userChild4: doc.userChild4,
+              userChildDateOfDelivery4: doc.userChildDateOfDelivery4,
+              userChildTypeOfDelivery4: doc.userChildTypeOfDelivery4,
+              userChildBirthOutcome4: doc.userChildBirthOutcome4,
+              userChildNumberOfChildDelivered4: doc.userChildNumberOfChildDelivered4,
+              userChildComplication4: doc.userChildComplication4,
               //child5
-              userChild5:doc.userChild5,
-              userChildDateOfDelivery5:doc.userChildDateOfDelivery5,
-              userChildTypeOfDelivery5:doc.userChildTypeOfDelivery5,
-              userChildBirthOutcome5:doc.userChildBirthOutcome5,
-              userChildNumberOfChildDelivered5:doc.userChildNumberOfChildDelivered5,
-              userChildComplication5:doc.userChildComplication5,
+              userChild5: doc.userChild5,
+              userChildDateOfDelivery5: doc.userChildDateOfDelivery5,
+              userChildTypeOfDelivery5: doc.userChildTypeOfDelivery5,
+              userChildBirthOutcome5: doc.userChildBirthOutcome5,
+              userChildNumberOfChildDelivered5: doc.userChildNumberOfChildDelivered5,
+              userChildComplication5: doc.userChildComplication5,
               //child6
-              userChild6:doc.userChild6,
-              userChildDateOfDelivery6:doc.userChildDateOfDelivery6,
-              userChildTypeOfDelivery6:doc.userChildTypeOfDelivery6,
-              userChildBirthOutcome6:doc.userChildBirthOutcome6,
-              userChildNumberOfChildDelivered6:doc.userChildNumberOfChildDelivered6,
-              userChildComplication6:doc.userChildComplication6,
+              userChild6: doc.userChild6,
+              userChildDateOfDelivery6: doc.userChildDateOfDelivery6,
+              userChildTypeOfDelivery6: doc.userChildTypeOfDelivery6,
+              userChildBirthOutcome6: doc.userChildBirthOutcome6,
+              userChildNumberOfChildDelivered6: doc.userChildNumberOfChildDelivered6,
+              userChildComplication6: doc.userChildComplication6,
               //child7
-              userChild7:doc.userChild7,
-              userChildDateOfDelivery7:doc.userChildDateOfDelivery7,
-              userChildTypeOfDelivery7:doc.userChildTypeOfDelivery7,
-              userChildBirthOutcome7:doc.userChildBirthOutcome7,
-              userChildNumberOfChildDelivered7:doc.userChildNumberOfChildDelivered7,
-              userChildComplication7:doc.userChildComplication7,
+              userChild7: doc.userChild7,
+              userChildDateOfDelivery7: doc.userChildDateOfDelivery7,
+              userChildTypeOfDelivery7: doc.userChildTypeOfDelivery7,
+              userChildBirthOutcome7: doc.userChildBirthOutcome7,
+              userChildNumberOfChildDelivered7: doc.userChildNumberOfChildDelivered7,
+              userChildComplication7: doc.userChildComplication7,
               //child8
-              userChild8:doc.userChild8,
-              userChildDateOfDelivery8:doc.userChildDateOfDelivery8,
-              userChildTypeOfDelivery8:doc.userChildTypeOfDelivery8,
-              userChildBirthOutcome8:doc.userChildBirthOutcome8,
-              userChildNumberOfChildDelivered8:doc.userChildNumberOfChildDelivered8,
-              userChildComplication8:doc.userChildComplication8,
+              userChild8: doc.userChild8,
+              userChildDateOfDelivery8: doc.userChildDateOfDelivery8,
+              userChildTypeOfDelivery8: doc.userChildTypeOfDelivery8,
+              userChildBirthOutcome8: doc.userChildBirthOutcome8,
+              userChildNumberOfChildDelivered8: doc.userChildNumberOfChildDelivered8,
+              userChildComplication8: doc.userChildComplication8,
               //child9
-              userChild9:doc.userChild9,
-              userChildDateOfDelivery9:doc.userChildDateOfDelivery9,
-              userChildTypeOfDelivery9:doc.userChildTypeOfDelivery9,
-              userChildBirthOutcome9:doc.userChildBirthOutcome9,
-              userChildNumberOfChildDelivered9:doc.userChildNumberOfChildDelivered9,
-              userChildComplication9:doc.userChildComplication9,
+              userChild9: doc.userChild9,
+              userChildDateOfDelivery9: doc.userChildDateOfDelivery9,
+              userChildTypeOfDelivery9: doc.userChildTypeOfDelivery9,
+              userChildBirthOutcome9: doc.userChildBirthOutcome9,
+              userChildNumberOfChildDelivered9: doc.userChildNumberOfChildDelivered9,
+              userChildComplication9: doc.userChildComplication9,
               //child10
-              userChild10:doc.userChild10,
-              userChildDateOfDelivery10:doc.userChildDateOfDelivery10,
-              userChildTypeOfDelivery10:doc.userChildTypeOfDelivery10,
-              userChildBirthOutcome10:doc.userChildBirthOutcome10,
-              userChildNumberOfChildDelivered10:doc.userChildNumberOfChildDelivered10,
-              userChildComplication10:doc.userChildComplication10,
+              userChild10: doc.userChild10,
+              userChildDateOfDelivery10: doc.userChildDateOfDelivery10,
+              userChildTypeOfDelivery10: doc.userChildTypeOfDelivery10,
+              userChildBirthOutcome10: doc.userChildBirthOutcome10,
+              userChildNumberOfChildDelivered10: doc.userChildNumberOfChildDelivered10,
+              userChildComplication10: doc.userChildComplication10,
               //user other health conditions 
-              userTBPersonal:doc.userTBPersonal,
-              userTBFamily:doc.userTBFamily,
-              userHeartDiseasesPersonal:doc.userHeartDiseasesPersonal,
-              userHeartDiseasesFamily:doc.userHeartDiseasesFamily,
-              userDiabetesPersonal:doc.userDiabetesPersonal,
-              userDiabetesFamily:doc.userDiabetesFamily,
-              userHypertensionPersonal:doc.userHypertensionPersonal,
-              userHypertensionFamily:doc.userHypertensionFamily,
-              userBronchialAsthmaPersonal:doc.userBronchialAsthmaPersonal,
-              userBronchialAsthmaFamily:doc.userBronchialAsthmaFamily,
-              userUTIPersonal:doc.userUTIPersonal,
-              userUTIFamily:doc.userUTIFamily,
-              userParasitismPersonal:doc.userParasitismPersonal,
-              userParasitismFamily:doc.userParasitismFamily,
-              userGoiterPersonal:doc.userGoiterPersonal,
-              userGoiterFamily:doc.userGoiterFamily,
-              userAnemiaPersonal:doc.userAnemiaPersonal,
-              userAnemiaFamily:doc.userAnemiaFamily,
-              userGenitalTrackInfection:doc.userGenitalTrackInfection,
-              userOtherInfectiousDiseases:doc.userOtherInfectiousDiseases,
-              userHighRiskBehavior:doc.userHighRiskBehavior,
+              userTBPersonal: doc.userTBPersonal,
+              userTBFamily: doc.userTBFamily,
+              userHeartDiseasesPersonal: doc.userHeartDiseasesPersonal,
+              userHeartDiseasesFamily: doc.userHeartDiseasesFamily,
+              userDiabetesPersonal: doc.userDiabetesPersonal,
+              userDiabetesFamily: doc.userDiabetesFamily,
+              userHypertensionPersonal: doc.userHypertensionPersonal,
+              userHypertensionFamily: doc.userHypertensionFamily,
+              userBronchialAsthmaPersonal: doc.userBronchialAsthmaPersonal,
+              userBronchialAsthmaFamily: doc.userBronchialAsthmaFamily,
+              userUTIPersonal: doc.userUTIPersonal,
+              userUTIFamily: doc.userUTIFamily,
+              userParasitismPersonal: doc.userParasitismPersonal,
+              userParasitismFamily: doc.userParasitismFamily,
+              userGoiterPersonal: doc.userGoiterPersonal,
+              userGoiterFamily: doc.userGoiterFamily,
+              userAnemiaPersonal: doc.userAnemiaPersonal,
+              userAnemiaFamily: doc.userAnemiaFamily,
+              userGenitalTrackInfection: doc.userGenitalTrackInfection,
+              userOtherInfectiousDiseases: doc.userOtherInfectiousDiseases,
+              userHighRiskBehavior: doc.userHighRiskBehavior,
               dateCreated: doc.dateCreated,
-              status:doc.status,
-              userLevel:doc.userLevel,
-              userPic:doc.userPic
+              status: doc.status,
+              userLevel: doc.userLevel,
+              userPic: doc.userPic
             })
-           }
-           if(vals===""){
-            setUserSearch(docs)
-           }
-           else{
-            setUserSearch(ins)
-           }
-          }else{
+          }
+          if (vals === "") {
             setUserSearch(docs)
           }
-         })
+          else {
+            setUserSearch(ins)
+          }
+        } else {
           setUserSearch(docs)
-      }catch(e){
-        setUserSearch(docs)
-      }
-      if(vals===""){
-        setUserSearch(docs)
-      }else{
-        setUserSearch(ins)
-      }
-      console.log("USERS"+userSearch)
+        }
+      })
+      setUserSearch(docs)
+    } catch (e) {
+      setUserSearch(docs)
+    }
+    if (vals === "") {
+      setUserSearch(docs)
+    } else {
+      setUserSearch(ins)
+    }
+    console.log("USERS" + userSearch)
   }
 
   const [discharge, setDischarger] = useState({
-    childFname:"",
-    childLname:"",
-    childMname:"",
-    childSuffix:"",
-    childDob:"",
-    childWeight:"",
-    childGender:"",
-    typeOfDelivery:"",
-    healthProfessionalAttended:"",
-    urineOutputDiagnosis:"",
-    stoolDiagnosis:"",
-    bcgDate:"",
-    hepaBDate:"",
-    expandedNewBornScreeningResult:"",
-    expandedNewBornScreeningRefusal:"",
-    newbornHearingResult:"",
-    newbornHearingRefusal:"",
-    finalDiagnosis:"",
-    homeMedication:"",
-    dateOfDischarge:"",
-    followUpCheckup:"",
-    attendingPhysician:"",
-    nurseOnDuty:"",
-    deliveredBy:"",
-    receivedBy:"",
+    childFname: "",
+    childLname: "",
+    childMname: "",
+    childSuffix: "",
+    childDob: "",
+    childWeight: "",
+    childGender: "",
+    typeOfDelivery: " Normal",
+    healthProfessionalAttended: "",
+    urineOutputDiagnosis: "",
+    stoolDiagnosis: "",
+    bcgDate: "",
+    hepaBDate: "",
+    expandedNewBornScreeningResult: "",
+    expandedNewBornScreeningRefusal: "",
+    newbornHearingResult: "",
+    newbornHearingRefusal: "",
+    finalDiagnosis: "",
+    homeMedication: "",
+    dateOfDischarge: "",
+    followUpCheckup: "",
+    attendingPhysician: "",
+    nurseOnDuty: "",
+    deliveredBy: "",
+    receivedBy: "",
     dateCreated: moment(new Date()).format("YYYY/MM/DD"),
-    day:moment(new Date()).format("DD"),
-    month:moment(new Date()).format("MM"),
-    year:moment(new Date()).format("YYYY"),
+    day: moment(new Date()).format("DD"),
+    month: moment(new Date()).format("MM"),
+    year: moment(new Date()).format("YYYY"),
   })
-  
-  const handleDischarge = async() => {
-    try{
-      updateDoc(doc(database,"userData",selectedRow.docid),{
-        lastPeriod:""
+
+  const handleDischarge = async () => {
+    try {
+      updateDoc(doc(database, "userData", selectedRow.docid), {
+        lastPeriod: ""
       })
-      addDoc(collection(database,"discharge_child"),{
-        motherId:selectedRow.docid,
+      addDoc(collection(database, "discharge_child"), {
+        motherId: selectedRow.docid,
         motherName: selectedRow.userFname + " " + selectedRow.userLname,
-        motherAge: moment(new Date(),"YYYY/MM/DD").diff(moment(selectedRow.userDob,"YYYY/MM/DD"),"years"),
-        deliveredVia:"Vaginal",
-        childFame:discharge.childFname,
-        childLname:discharge.childLname,
-        childMname:discharge.childMname,
-        childSuffix:discharge.childSuffix,
-        childDob:discharge.childDob,
-        childWeight:discharge.childWeight,
-        childWeightType: discharge.childWeight<2.5&&"low"||discharge.childWeight>2.5&&discharge.childWeight<3.6&&"normal"||discharge.childWeight>3.6&&"low",
-        childGender:discharge.childGender,
-        typeOfDelivery:discharge.typeOfDelivery,
-        healthProfessionalAttended:discharge.healthProfessionalAttended,
-        urineOutputDiagnosis:discharge.urineOutputDiagnosis,
-        stoolDiagnosis:discharge.stoolDiagnosis,
-        bcgDate:discharge.bcgDate,
-        hepaBDate:discharge.hepaBDate,
-        expandedNewBornScreeningResult:discharge.expandedNewBornScreeningResult,
-        expandedNewBornScreeningRefusal:discharge.expandedNewBornScreeningRefusal,
-        newbornHearingResult:discharge.newbornHearingResult,
-        newbornHearingRefusal:discharge.newbornHearingRefusal,
-        finalDiagnosis:discharge.finalDiagnosis,
-        homeMedication:discharge.homeMedication,
-        dateOfDischarge:discharge.dateOfDischarge,
-        followUpCheckup:discharge.followUpCheckup,
-        attendingPhysician:discharge.attendingPhysician,
-        nurseOnDuty:discharge.nurseOnDuty,
-        deliveredBy:discharge.deliveredBy,
-        receivedBy:discharge.receivedBy,
+        motherAge: moment(new Date(), "YYYY/MM/DD").diff(moment(selectedRow.userDob, "YYYY/MM/DD"), "years"),
+        deliveredVia: "Vaginal",
+        childFame: discharge.childFname,
+        childLname: discharge.childLname,
+        childMname: discharge.childMname,
+        childSuffix: discharge.childSuffix,
+        childDob: discharge.childDob,
+        childWeight: discharge.childWeight,
+        childWeightType: discharge.childWeight < 2.5 && "low" || discharge.childWeight > 2.5 && discharge.childWeight < 3.6 && "normal" || discharge.childWeight > 3.6 && "low",
+        childGender: discharge.childGender,
+        typeOfDelivery: discharge.typeOfDelivery,
+        healthProfessionalAttended: discharge.healthProfessionalAttended,
+        urineOutputDiagnosis: discharge.urineOutputDiagnosis,
+        stoolDiagnosis: discharge.stoolDiagnosis,
+        bcgDate: discharge.bcgDate,
+        hepaBDate: discharge.hepaBDate,
+        expandedNewBornScreeningResult: discharge.expandedNewBornScreeningResult,
+        expandedNewBornScreeningRefusal: discharge.expandedNewBornScreeningRefusal,
+        newbornHearingResult: discharge.newbornHearingResult,
+        newbornHearingRefusal: discharge.newbornHearingRefusal,
+        finalDiagnosis: discharge.finalDiagnosis,
+        homeMedication: discharge.homeMedication,
+        dateOfDischarge: discharge.dateOfDischarge,
+        followUpCheckup: discharge.followUpCheckup,
+        attendingPhysician: discharge.attendingPhysician,
+        nurseOnDuty: discharge.nurseOnDuty,
+        deliveredBy: discharge.deliveredBy,
+        receivedBy: discharge.receivedBy,
         dateCreated: moment(new Date()).format("YYYY/MM/DD"),
-        day:moment(new Date()).format("DD"),
-        month:moment(new Date()).format("MM"),
-        year:moment(new Date()).format("YYYY")
+        day: moment(new Date()).format("DD"),
+        month: moment(new Date()).format("MM"),
+        year: moment(new Date()).format("YYYY")
       })
-    }catch(e){
+    } catch (e) {
       alert(e)
     }
   }
   console.log(discharge);
 
   let count = 0
-  if(selectedRow.userChildDateOfDelivery1!==""){
-    count=1
+  if (selectedRow.userChildDateOfDelivery1 !== "") {
+    count = 1
   }
-  if(selectedRow.userChildDateOfDelivery1!==""&&selectedRow.userChildDateOfDelivery2!==""){
-    count=2
+  if (selectedRow.userChildDateOfDelivery1 !== "" && selectedRow.userChildDateOfDelivery2 !== "") {
+    count = 2
   }
-  if(selectedRow.userChildDateOfDelivery1!==""&&selectedRow.userChildDateOfDelivery2!==""&&selectedRow.userChildDateOfDelivery3!==""){
-    count=3
+  if (selectedRow.userChildDateOfDelivery1 !== "" && selectedRow.userChildDateOfDelivery2 !== "" && selectedRow.userChildDateOfDelivery3 !== "") {
+    count = 3
   }
 
   const [page, setPage] = React.useState(2);
@@ -1226,7 +1238,7 @@ dischargeMedication:"",
               variant='outlined'
               placeholder="Search..."
               fullWidth
-              onChange={(text)=> searchUsers(text.target.value)}
+              onChange={(text) => searchUsers(text.target.value)}
               InputProps={{ style: { width: 400 } }}
             />
             <SearchIcon size="large" />
@@ -1245,8 +1257,8 @@ dischargeMedication:"",
 
         </Box>
         <Box ml={1} flex={.7} flexDirection='end '>
-          <Button variant="contained" color="primary" size='small' sx={{ backgroundColor: 'skyblue' }} onClick={()=> fetchData()}>
-            <FontAwesomeIcon icon={faRefresh} color='white'/>
+          <Button variant="contained" color="primary" size='small' sx={{ backgroundColor: 'skyblue' }} onClick={() => fetchData()}>
+            <FontAwesomeIcon icon={faRefresh} color='white' />
             refresh table
           </Button>
         </Box>
@@ -1269,17 +1281,17 @@ dischargeMedication:"",
           <PatientRegistrationForm />
           {/*-------------------------------- End Add Patient Forms -------------------------------- */}
         </DialogContent>
-       
+
       </Dialog>
 
 
 
       <div style={{ height: '100%', width: '100%', marginTop: '5px' }}>
         <DataGrid
-         headerHeight={20}
+          headerHeight={20}
           rows={userSearch}
           columns={columns}
-         
+
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 20 },
@@ -1459,40 +1471,40 @@ dischargeMedication:"",
                                         </TableHead>
                                         <TableBody>
                                           {
-                                            selectedRow.userChildDateOfDelivery1!==""&&
+                                            selectedRow.userChildDateOfDelivery1 !== "" &&
                                             <TableRow key={selectedRow.userChildDateOfDelivery1}>
-                                            <TableCell>{selectedRow.userChildDateOfDelivery1!==""?1:""}</TableCell>
-                                            <TableCell>{selectedRow.userChildDateOfDelivery1}</TableCell>
-                                            <TableCell>{selectedRow.userChildTypeOfDelivery1}</TableCell>
-                                            <TableCell>{selectedRow.userChildBirthOutcome1}</TableCell>
-                                            <TableCell>{selectedRow.userChildNumberOfChildDelivered1}</TableCell>
-                                            <TableCell>{selectedRow.userChildComplication1}</TableCell>
-                                          </TableRow>
+                                              <TableCell>{selectedRow.userChildDateOfDelivery1 !== "" ? 1 : ""}</TableCell>
+                                              <TableCell>{selectedRow.userChildDateOfDelivery1}</TableCell>
+                                              <TableCell>{selectedRow.userChildTypeOfDelivery1}</TableCell>
+                                              <TableCell>{selectedRow.userChildBirthOutcome1}</TableCell>
+                                              <TableCell>{selectedRow.userChildNumberOfChildDelivered1}</TableCell>
+                                              <TableCell>{selectedRow.userChildComplication1}</TableCell>
+                                            </TableRow>
                                           }
                                           {
-                                            selectedRow.userChildDateOfDelivery2!==""&&
+                                            selectedRow.userChildDateOfDelivery2 !== "" &&
                                             <TableRow key={selectedRow.userChildDateOfDelivery2}>
-                                            <TableCell>{selectedRow.userChildDateOfDelivery2!==""?2:""}</TableCell>
-                                            <TableCell>{selectedRow.userChildDateOfDelivery2}</TableCell>
-                                            <TableCell>{selectedRow.userChildTypeOfDelivery2}</TableCell>
-                                            <TableCell>{selectedRow.userChildBirthOutcome2}</TableCell>
-                                            <TableCell>{selectedRow.userChildNumberOfChildDelivered2}</TableCell>
-                                            <TableCell>{selectedRow.userChildComplication2}</TableCell>
-                                          </TableRow>
+                                              <TableCell>{selectedRow.userChildDateOfDelivery2 !== "" ? 2 : ""}</TableCell>
+                                              <TableCell>{selectedRow.userChildDateOfDelivery2}</TableCell>
+                                              <TableCell>{selectedRow.userChildTypeOfDelivery2}</TableCell>
+                                              <TableCell>{selectedRow.userChildBirthOutcome2}</TableCell>
+                                              <TableCell>{selectedRow.userChildNumberOfChildDelivered2}</TableCell>
+                                              <TableCell>{selectedRow.userChildComplication2}</TableCell>
+                                            </TableRow>
                                           }
                                           {
-                                            selectedRow.userChildDateOfDelivery3!==""&&
+                                            selectedRow.userChildDateOfDelivery3 !== "" &&
                                             <TableRow key={selectedRow.userChildDateOfDelivery3}>
-                                            <TableCell>{selectedRow.userChildDateOfDelivery3!==""?3:""}</TableCell>
-                                            <TableCell>{selectedRow.userChildDateOfDelivery3}</TableCell>
-                                            <TableCell>{selectedRow.userChildTypeOfDelivery3}</TableCell>
-                                            <TableCell>{selectedRow.userChildBirthOutcome3}</TableCell>
-                                            <TableCell>{selectedRow.userChildNumberOfChildDelivered3}</TableCell>
-                                            <TableCell>{selectedRow.userChildComplication3}</TableCell>
-                                          </TableRow>
+                                              <TableCell>{selectedRow.userChildDateOfDelivery3 !== "" ? 3 : ""}</TableCell>
+                                              <TableCell>{selectedRow.userChildDateOfDelivery3}</TableCell>
+                                              <TableCell>{selectedRow.userChildTypeOfDelivery3}</TableCell>
+                                              <TableCell>{selectedRow.userChildBirthOutcome3}</TableCell>
+                                              <TableCell>{selectedRow.userChildNumberOfChildDelivered3}</TableCell>
+                                              <TableCell>{selectedRow.userChildComplication3}</TableCell>
+                                            </TableRow>
                                           }
-                                          
-                                          
+
+
                                         </TableBody>
                                       </Table>
                                     </TableContainer>
@@ -1516,93 +1528,93 @@ dischargeMedication:"",
                                           </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            <TableRow key={row.disease}>
-                                              <TableCell >Tubercolosis</TableCell>
-                                              <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userTBPersonal===false?"no":"yes"}</TableCell>
-                                              </TableCell>
-                                              <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userTBFamily===false?"no":"yes"}</TableCell>
-                                              </TableCell>
-                                            </TableRow>
-                                            <TableRow key={row.disease}>
-                                              <TableCell >Heart Diseases</TableCell>
-                                              <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userHeartDiseasesPersonal===false?"no":"yes"}</TableCell>
-                                              </TableCell>
-                                              <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userHeartDiseasesFamily===false?"no":"yes"}</TableCell>
-                                              </TableCell>
-                                            </TableRow>
-                                            <TableRow key={row.disease}>
-                                              <TableCell >Diabetes</TableCell>
-                                              <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userDiabetesPersonal===false?"no":"yes"}</TableCell>
-                                              </TableCell>
-                                              <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userDiabetesFamily===false?"no":"yes"}</TableCell>
-                                              </TableCell>
-                                            </TableRow>
-                                            <TableRow key={row.disease}>
-                                              <TableCell >Hypertension</TableCell>
-                                              <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userHypertensionPersonal===false?"no":"yes"}</TableCell>
-                                              </TableCell>
-                                              <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userTBFamily===false?"no":"yes"}</TableCell>
-                                              </TableCell>
-                                            </TableRow>
-                                            <TableRow key={row.disease}>
-                                              <TableCell >Bronchial Asthma</TableCell>
-                                              <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userBronchialAsthmaPersonal===false?"no":"yes"}</TableCell>
-                                              </TableCell>
-                                              <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userBronchialAsthmaPersonal===false?"no":"yes"}</TableCell>
-                                              </TableCell>
-                                            </TableRow>
-                                            <TableRow key={row.disease}>
-                                              <TableCell >Urinary Tract Infection</TableCell>
-                                              <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userUTIPersonal===false?"no":"yes"}</TableCell>
-                                              </TableCell>
-                                              <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userUTIFamily===false?"no":"yes"}</TableCell>
-                                              </TableCell>
-                                            </TableRow>
-                                            <TableRow key={row.disease}>
-                                              <TableCell >Parasitism</TableCell>
-                                              <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userParasitismPersonal===false?"no":"yes"}</TableCell>
-                                              </TableCell>
-                                              <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userParasitismFamily===false?"no":"yes"}</TableCell>
-                                              </TableCell>
-                                            </TableRow>
-                                            <TableRow key={row.disease}>
-                                              <TableCell >Goiter</TableCell>
-                                              <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userGoiterPersonal===false?"no":"yes"}</TableCell>
-                                              </TableCell>
-                                              <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userGoiterFamily===false?"no":"yes"}</TableCell>
-                                              </TableCell>
-                                            </TableRow>
-                                            <TableRow key={row.disease}>
-                                              <TableCell >Anemia</TableCell>
-                                              <TableCell style={{ backgroundColor: "white"}}>
-                                                <TableCell>{selectedRow.userAnemiaPersonal}</TableCell>
-                                              </TableCell>
-                                              <TableCell style={{ backgroundColor:"white"}}>
-                                                <TableCell>{selectedRow.userAnemiaFamily}</TableCell>
-                                              </TableCell>
-                                            </TableRow>
+                                          <TableRow key={row.disease}>
+                                            <TableCell >Tubercolosis</TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userTBPersonal === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userTBFamily === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                          </TableRow>
+                                          <TableRow key={row.disease}>
+                                            <TableCell >Heart Diseases</TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userHeartDiseasesPersonal === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userHeartDiseasesFamily === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                          </TableRow>
+                                          <TableRow key={row.disease}>
+                                            <TableCell >Diabetes</TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userDiabetesPersonal === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userDiabetesFamily === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                          </TableRow>
+                                          <TableRow key={row.disease}>
+                                            <TableCell >Hypertension</TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userHypertensionPersonal === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userTBFamily === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                          </TableRow>
+                                          <TableRow key={row.disease}>
+                                            <TableCell >Bronchial Asthma</TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userBronchialAsthmaPersonal === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userBronchialAsthmaPersonal === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                          </TableRow>
+                                          <TableRow key={row.disease}>
+                                            <TableCell >Urinary Tract Infection</TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userUTIPersonal === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userUTIFamily === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                          </TableRow>
+                                          <TableRow key={row.disease}>
+                                            <TableCell >Parasitism</TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userParasitismPersonal === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userParasitismFamily === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                          </TableRow>
+                                          <TableRow key={row.disease}>
+                                            <TableCell >Goiter</TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userGoiterPersonal === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userGoiterFamily === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                          </TableRow>
+                                          <TableRow key={row.disease}>
+                                            <TableCell >Anemia</TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userAnemiaPersonal}</TableCell>
+                                            </TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}>
+                                              <TableCell>{selectedRow.userAnemiaFamily}</TableCell>
+                                            </TableCell>
+                                          </TableRow>
                                         </TableBody>
                                       </Table>
                                     </TableContainer>
                                   </Paper>
                                 </Grid>
-            
+
 
                               </Grid>
                             </TabPanel>
@@ -1677,7 +1689,7 @@ dischargeMedication:"",
 
 
                         <Grid item xs={12}>
-                          <Box marginBottom={5} marginTop={5}  backgroundColor="#F0F2F5" padding={1}>
+                          <Box marginBottom={5} marginTop={5} backgroundColor="#F0F2F5" padding={1}>
                             <Typography> <Box component="span" fontWeight='bold'>1. Name -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please enter your name correctly.</Box></Typography>
                           </Box>
                         </Grid>
@@ -1756,7 +1768,7 @@ dischargeMedication:"",
                             </Select>
                           </Grid>
                           <Grid item xs={12}>
-                            <Box marginBottom={5} marginTop={5}  backgroundColor="#F0F2F5" padding={1}>
+                            <Box marginBottom={5} marginTop={5} backgroundColor="#F0F2F5" padding={1}>
                               <Typography> <Box component="span" fontWeight='bold'>2. Birth Details -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please indicate the details accurately.</Box></Typography>
                             </Box>
                           </Grid>
@@ -1764,9 +1776,9 @@ dischargeMedication:"",
                             <FormControl required>
                               <LocalizationProvider dateAdapter={AdapterDayjs} required>
 
-                              <TextField variant='standard' fullWidth type='date' label="Date of birth"  value={discharge.childDob} onChange={(text) => setDischarger(prev => { return { ...prev, childDob: text.target.value } })}/>
+                                <TextField variant='standard' fullWidth type='date' label="Date of birth" value={discharge.childDob} onChange={(text) => setDischarger(prev => { return { ...prev, childDob: text.target.value } })} />
 
-                        
+
                               </LocalizationProvider>
                             </FormControl>
 
@@ -1798,7 +1810,7 @@ dischargeMedication:"",
                                 defaultValue="female"
                                 name="gender"
                                 value={discharge.childGender}
-                                
+
 
                               >
                                 <FormControlLabel value="female" onChange={(text) => setDischarger(prev => { return { ...prev, childGender: text.target.value } })} control={<Radio />} label="Female" />
@@ -1820,7 +1832,7 @@ dischargeMedication:"",
                                   <em>None</em>
                                 </MenuItem>
                                 <MenuItem value={'Normal'}>Normal</MenuItem>
-                                <MenuItem value={'Ceasarian'}>Ceasarian</MenuItem>
+
                               </Select>
                             </FormControl>
 
@@ -1847,20 +1859,12 @@ dischargeMedication:"",
                           </Grid>
 
                           <Grid item xs={12}>
-                            <Box marginBottom={5} marginTop={5}  backgroundColor="#F0F2F5" padding={1}>
+                            <Box marginBottom={5} marginTop={5} backgroundColor="#F0F2F5" padding={1}>
                               <Typography> <Box component="span" fontWeight='bold'>3. Vaccine and Test -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please indicate the Diagnosis and date accurately.</Box></Typography>
                             </Box>
                           </Grid>
                           <Grid container item xs={12} flexDirection={"row"}>
-                            <Grid xs={3}>
-                              <Box >
-                                <FormControlLabel
-                                  control={<Checkbox checked={checked} onChange={URINEOUTPUT} />}
-                                  label="URINE OUTPUT :"
-                                />
-                                {checked && <TextField label="Diagnosis" value={discharge.urineOutputDiagnosis} variant='standard'onChange={(text) => setDischarger(prev => { return { ...prev, urineOutputDiagnosis: text.target.value } })} />}
-                              </Box>
-                            </Grid><Grid xs={3}>
+                           <Grid xs={3}>
                               <Box marginLeft={4} >
 
                                 <FormControlLabel
@@ -1869,15 +1873,15 @@ dischargeMedication:"",
                                 />
                                 {checked1 && <TextField label="Diagnosis" value={discharge.stoolDiagnosis} variant='standard' onChange={(text) => setDischarger(prev => { return { ...prev, stoolDiagnosis: text.target.value } })} />}
                               </Box>
-                            </Grid><Grid xs={3}  container direction="column">
+                            </Grid><Grid xs={3} container direction="column">
                               <Box display={'block'}>
                                 <FormControlLabel
-                                  control={<Checkbox checked={checked2} onChange={BCG}  fullWidth/>}
+                                  control={<Checkbox checked={checked2} onChange={BCG} fullWidth />}
                                   label="BCG:"
                                 />
                                 {checked2 && <FormControl required>
                                   <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                    <TextField variant='standard'  fullWidth type='date' value={discharge.bcgDate} onChange={(text) => setDischarger(prev => { return { ...prev, bcgDate: text.target.value } })}/>
+                                    <TextField variant='standard' fullWidth type='date' value={discharge.bcgDate} onChange={(text) => setDischarger(prev => { return { ...prev, bcgDate: text.target.value } })} />
                                   </LocalizationProvider>
                                 </FormControl>}
                               </Box>
@@ -1889,14 +1893,14 @@ dischargeMedication:"",
                                 />
                                 {checked3 && <FormControl required>
                                   <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                    <TextField type='date' variant='standard'  fullWidth  value={discharge.hepaBDate} onChange={(text) => setDischarger(prev => { return { ...prev, hepaBDate: text.target.value } })}/>
+                                    <TextField type='date' variant='standard' fullWidth value={discharge.hepaBDate} onChange={(text) => setDischarger(prev => { return { ...prev, hepaBDate: text.target.value } })} />
                                   </LocalizationProvider>
                                 </FormControl>}
                               </Box>
                             </Grid>
 
                             <Grid item xs={12}>
-                              <Box marginBottom={5} marginTop={5}  backgroundColor="#F0F2F5" padding={1}>
+                              <Box marginBottom={5} marginTop={5} backgroundColor="#F0F2F5" padding={1}>
                                 <Typography> <Box component="span" fontWeight='bold' >4. InBorn Screening -</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please enter the details accurately.</Box></Typography>
                               </Box>
                             </Grid>
@@ -1912,7 +1916,7 @@ dischargeMedication:"",
                                 {value2 === 'yes' && (
                                   <FormControl fullWidth>
                                     <InputLabel id="Results">Results</InputLabel>
-                                    <Select  value={discharge.expandedNewBornScreeningResult} onChange={(text) => setDischarger(prev => { return { ...prev, expandedNewBornScreeningResult: text.target.value } })} id='Results' label="Results">
+                                    <Select value={discharge.expandedNewBornScreeningResult} onChange={(text) => setDischarger(prev => { return { ...prev, expandedNewBornScreeningResult: text.target.value } })} id='Results' label="Results">
                                       <MenuItem value={'Negative'}>Negative</MenuItem>
                                       <MenuItem value={'Trait'}>Trait</MenuItem>
                                       <MenuItem value={'Borderline'}>Borderline</MenuItem>
@@ -1965,7 +1969,7 @@ dischargeMedication:"",
 
                             </Grid>
                             <Grid item xs={12} >
-                              <Box marginBottom={5} marginTop={5}  backgroundColor="#F0F2F5" padding={1}>
+                              <Box marginBottom={5} marginTop={5} backgroundColor="#F0F2F5" padding={1}>
                                 <Typography> <Box component="span" fontWeight='bold' >4. Remarks-</Box><Box component="span" fontWeight='light' fontStyle={'italic'}> Please enter the details accurately.</Box></Typography>
                               </Box>
                             </Grid>
@@ -1996,7 +2000,7 @@ dischargeMedication:"",
                             <Grid xs={3}>
                               <FormControl required>
                                 <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                  <TextField   type='date' helperText={'Date of Discharge'} fullWidth variant='outlined' value={discharge.dateOfDischarge} onChange={(text) => setDischarger(prev => { return { ...prev, dateOfDischarge: text.target.value } })}/>
+                                  <TextField type='date' helperText={'Date of Discharge'} fullWidth variant='outlined' value={discharge.dateOfDischarge} onChange={(text) => setDischarger(prev => { return { ...prev, dateOfDischarge: text.target.value } })} />
                                 </LocalizationProvider>
                               </FormControl>
 
@@ -2004,9 +2008,9 @@ dischargeMedication:"",
                             </Grid>
                             <Grid xs={3}>
 
-                              <FormControl required  width={'100%'} >
+                              <FormControl required width={'100%'} >
                                 <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                  <TextField type='date' helperText={'Follow-Up Check-up'}  fullWidth value={discharge.followUpCheckup}  onChange={(text) => setDischarger(prev => { return { ...prev, followUpCheckup: text.target.value } })}/>
+                                  <TextField type='date' helperText={'Follow-Up Check-up'} fullWidth value={discharge.followUpCheckup} onChange={(text) => setDischarger(prev => { return { ...prev, followUpCheckup: text.target.value } })} />
                                 </LocalizationProvider>
                               </FormControl>
 
@@ -2015,7 +2019,7 @@ dischargeMedication:"",
 
                               <Grid xs={4} mr={5}>
                                 <TextField
-                                  label="ATTENDING PHYSISCIAN"
+                                  label="ATTENDING PHYSICIAN"
                                   fullWidth
                                   variant='standard'
                                   value={discharge.attendingPhysician}
@@ -2069,14 +2073,30 @@ dischargeMedication:"",
 
                               </Grid>
                               <Grid xs={1}>
-                              <Button onClick={()=> handleDischarge()} variant='contained' >
-                                   Submit
-                                  </Button>
+                                <Button onClick={() => { handleOpenChildDetails(); handleDischarge(); }} variant='contained' >
+                                  Submit
+                                </Button>
                               </Grid>
 
+                              <Dialog open={openChild} onClose={handleCloseChildDetails} PaperProps={{
+                                style: {
+                                  minHeight: '95%',
+                                  minWidth: '95%',  // Change this to your desired height
+                                },
+                              }}>
+                                <Box display="flex" justifyContent="space-between" alignItems="center">
+
+                                  <DialogTitle fontWeight={'600'}>Child Details</DialogTitle>
+                                  <IconButton onClick={() => { handleCloseChildDetails(); handleCloseChildRegModal(); }}>
+                                    <CloseIcon />
+                                  </IconButton>
+                                </Box>
+
+                                {/* Add your form or details here */}
+                              </Dialog>
+
                             </Grid>
-                          
-                        
+
 
                           </Grid>
 
@@ -2222,93 +2242,97 @@ dischargeMedication:"",
               {/*--------------------------------------------------------------------------------------------- Modal for Visits Reports ---------------------------------------------------------------------------------------------*/}
               <Modal open={openPrenatalVisitReports} onClose={handleClosePrenatalVisitReports}>
 
-                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height:'90%', bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '90%', bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
                   {/* Your content goes here */}
-                  <Typography variant="h6" component="div">
-                    Pre natal visit report
+                
+                  <Typography variant="h6" component="div" style={{fontWeight:'600'}}>
+                  PRE-NATAL VISIT REPORTS
                   </Typography>
+              
 
-                  <div style={{width:'100%',height:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',overflowY:'scroll'}}>
-                            <div className='container' style={{marginTop:'60%'}}>
-                                <div style={{width:'100%',height:200,display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                                  <div style={{marginBottom:60,fontSize:18,width:'100%',height:'20%',display:'flex',alignItems:'center',justifyContent:'center'}} class= "header " align=" center">
-                                    <div className='adminPic' style={{width:120,height:120,borderRadius:150,marginRight:10,padding:10, fontSize:14,marginTop:'6vh',}}/>
-                                  </div>
-                                  <div style={{marginBottom:60,fontSize:20,width:'100%',height:'20%'}} class= "header " align=" center"><h4>Republic of the Philippines</h4>
-                                      <h4>Province of Camarines Norte</h4>
-                                      <h4>Municipality of Daet</h4>
-                                      <h4>MUNICIPAL HEALTH OFFICE</h4>
-                                      <h4><strong>RHU 3 - BIRTHING CENTER</strong></h4>
-                                      <h4><strong>Prenatal Visit Report</strong></h4>
-                                  </div>
-                                  <div style={{marginBottom:60,fontSize:18,width:'100%',height:'20%',display:'flex',alignItems:'center',justifyContent:'center'}} class= "header " align=" center">
-                                    <div className='wew3' style={{width:100,height:100,borderRadius:150,marginRight:10,padding:10, fontSize:14,marginTop:'6vh',}}/>
-                                  </div>
-                                </div>
-                                <div style={{width:'100%',height:800,display:'flex',flexDirection:'column',alignItems:'start',justifyContent:'start'}}>
-                                  <div style={{}}>
-                                  <Grid xs={11} justify="center" padding={0}>
-                                    <Box>
-                                      <Box padding={1} textAlign={'center'} sx={{ backgroundColor: 'skyblue', color: 'white' }}><Typography fontWeight='700' >PRE-NATAL VISITS</Typography></Box>
-                                      <TableContainer component={Paper} sx={{ minHeight: '30vh', maxHeight: '70vh' }} >
-                                        <Table size="small" aria-label="prenatalvistisTable" stickyHeader sx={{ minWidth: '' }}>
-                                          <TableHead style={{ backgroundColor: 'skyblue' }} >
-                                            <TableRow>
-                                              <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }} >Date of Visit</TableCell>
-                                              <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Blood Pressure</TableCell>
-                                              <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Weight</TableCell>
-                                              <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>BMI</TableCell>
-                                              <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Age of Gestation</TableCell>
-                                              <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Fundal Height</TableCell>
-                                              <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Fetal Movement</TableCell>
-                                              <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Presentation</TableCell>
-                                            </TableRow>
-                                          </TableHead>
-                                          <TableBody>
-                                            {appointments.length > 0 ? (
-                                              appointments.map((row2) => (
-                                                <TableRow key={row2.appointmentDate}>
-                                                  <TableCell>{row2.appointmentDate}</TableCell>
-                                                  <TableCell>{row2.diastolic}/{row2.systolic}</TableCell>
-                                                  <TableCell>{row2.weight}</TableCell>
-                                                  <TableCell>{row2.bmi}</TableCell>
-                                                  <TableCell align='center'>{row2.aog}</TableCell>
-                                                  <TableCell>{row2.fundalHeight}</TableCell>
-                                                  <TableCell>{row2.fetalMovement}</TableCell>
-                                                  <TableCell>{row2.presentation}</TableCell>
-                                                </TableRow>
-                                              ))
-                                            ) : (
-                                              <TableRow>
-                                                <TableCell colSpan={9} align="center">
-                                                  No Pre-natal visits found
-                                                </TableCell>
-                                              </TableRow>
-                                            )}
-                                          </TableBody>
-                                        </Table>
-                                      </TableContainer>
-                                    </Box>
-                                  </Grid>
-                                  </div>
-                                </div>
-                                <div style={{display:'flex',width:220,height:60,marginLeft:'40%',flexDirection:'column',alignItems:'center',justifyContent:'center',paddingBottom:'10%'}}>
-                                      <input type='text'  style={{width:300,height:50,fontWeight:500,lineHeight:5,outline:'none',backgroundColor:'transparent',textAlign:'center'}}/>
-                                      <p style={{textAlign:'center'}}>person in charge</p>
-                                    </div>
-                                </div>
-                          </div>
+                  <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflowY: 'scroll' }}>
+                    <div className='container' style={{ marginTop: '40%' }}>
+                      <div style={{ width: '100%', height: 200, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{ marginBottom: 30, fontSize: 18, width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} class="header " align=" center">
+                          <div className='adminPic' style={{ width: 120, height: 120, borderRadius: 150, marginRight: 10, padding: 10, fontSize: 14, marginTop: '3vh', }} />
+                        </div>
+                        <div style={{ marginBottom: 60, fontSize: 20, width: '100%', height: '20%' }} class="header " align=" center"><h4>Republic of the Philippines</h4>
+                          <h4>Province of Camarines Norte</h4>
+                          <h4>Municipality of Daet</h4>
+                          <h4>MUNICIPAL HEALTH OFFICE</h4>
+                          <h4><strong>RHU 3 - BIRTHING CENTER</strong></h4>
+                          <h4><strong>Prenatal Visit Report</strong></h4>
+                        </div>
+                        <div style={{ marginBottom: 60, fontSize: 18, width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} class="header " align=" center">
+                          <div className='wew3' style={{ width: 100, height: 100, borderRadius: 150, marginRight: 10, padding: 10, fontSize: 14, marginTop: '3vh', }} />
+                        </div>
+                      </div>
+                      <div style={{ width: '100%', height:'90%', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start' }}>
+                        <div style={{}}>
+                          <Grid xs={12} justify="center" padding={0}>
+                            <Box>
+                              <Box padding={1} textAlign={'center'} sx={{ backgroundColor: 'grayText', color: 'white' }}>
+                                <Typography fontWeight='700'>PRE-NATAL VISITS</Typography>
+                              </Box>
+                              <TableContainer component={Paper} sx={{ width: '100%' }}>
+                                <Table size="small" aria-label="prenatalvistisTable" stickyHeader sx={{ minWidth: '100%', minHeight: '100%' }}>
+                                  <TableHead style={{ backgroundColor: 'skyblue' }} >
+                                    <TableRow>
+                                      <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }} >Date of Visit</TableCell>
+                                      <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Blood Pressure</TableCell>
+                                      <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Weight</TableCell>
+                                      <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>BMI</TableCell>
+                                      <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Age of Gestation</TableCell>
+                                      <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Fundal Height</TableCell>
+                                      <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Fetal Movement</TableCell>
+                                      <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Presentation</TableCell>
+                                    </TableRow>
+                                  </TableHead>
+                                  <TableBody>
+                                    {appointments.length > 0 ? (
+                                      appointments.map((row2) => (
+                                        <TableRow key={row2.appointmentDate}>
+                                          <TableCell>{row2.appointmentDate}</TableCell>
+                                          <TableCell>{row2.diastolic}/{row2.systolic}</TableCell>
+                                          <TableCell>{row2.weight}</TableCell>
+                                          <TableCell>{row2.bmi}</TableCell>
+                                          <TableCell align='center'>{row2.aog}</TableCell>
+                                          <TableCell>{row2.fundalHeight}</TableCell>
+                                          <TableCell>{row2.fetalMovement}</TableCell>
+                                          <TableCell>{row2.presentation}</TableCell>
+                                        </TableRow>
+                                      ))
+                                    ) : (
+                                      <TableRow>
+                                        <TableCell colSpan={9} align="center">
+                                          No Pre-natal visits found
+                                        </TableCell>
+                                      </TableRow>
+                                    )}
+                                  </TableBody>
+                                </Table>
+                              </TableContainer>
+                            </Box>
+                          </Grid>
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex', width: 220, height: 10, marginLeft: '60%', flexDirection: 'column', alignItems: 'Right', justifyContent: 'Right'}}>
+                        <TextField fullWidth variant='standard' sx={{fontSize:'16px', fontWeight:550, textAlign:'center'}}/>
+                        <p style={{ textAlign: 'center' }}>Person In-Charge</p>
+                      </div>
+                    </div>
+                  </div>
                 </Box>
               </Modal>
               {/* -----------------------------------------------------------------------------------------------------Modal for Refferal----------------------------------------------------------------------------------------------------- */}
               <Modal open={openCreateRefferal} onClose={handleCloseCreateRefferal}>
-                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%',height:'100%',overflowY:'scroll', bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '100%', overflowY: 'scroll', bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
                   {/* Your content goes here */}
                   <Typography variant="h6" component="div">
                     Create Refferal
                   </Typography>
                   {/* Add your form or other components here */}
-                    <ReferralForm/>
+                  <ReferralForm />
                 </Box>
               </Modal>
               {/*----------------------------------------------------------------------------------------------- Modal for Complete Pregnancy -----------------------------------------------------------------------------------------------*/}
@@ -2328,7 +2352,7 @@ dischargeMedication:"",
         </Box>
       </Modal>
 
-    </div>
+    </div >
 
   );
 }
