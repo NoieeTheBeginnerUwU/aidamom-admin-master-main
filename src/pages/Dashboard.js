@@ -1417,7 +1417,6 @@ const Dashboard = ({ counter }) => {
 
       </Grid>
     </Box>
-
   )
 }
 
