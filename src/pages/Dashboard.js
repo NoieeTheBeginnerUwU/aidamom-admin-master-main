@@ -176,18 +176,15 @@ const Dashboard = ({ counter }) => {
   };
 
 
-
+//start db
 
   const users = [];
   const [appUsers, setAppUsers] = useState(0);
   const [patients, setPatients] = useState(0);
-  const [mother, setMother] = useState([]);
-  const [child, setChild] = useState([]);
-  const monthNow = moment(new Date()).format("MM");
-  const yearNow = moment(new Date()).format("YYYY");
   var currentDate = moment(new Date(), "YYYY/MM/DD");
   const [allUsers, setAllUsers] = useState([]);
   let [_appointments, _setAppointments] = useState("");
+
   const fetchUsers = async () => {
     let usersSnap = query(collection(database, "userData"));
     let user = [];
@@ -213,475 +210,18 @@ const Dashboard = ({ counter }) => {
     })
   }
 
-  const [vax, setVax] = useState([]);
-  useEffect(() => {
-    const vaccinations = [];
-    const motherVax = [];
-    const childrenVax = [];
-    const fetchVac = async () => {
-      let userData = [];
-      const queryImmunization = await getDocs(query(collection(database, "vaccination")));
-      queryImmunization.forEach((doc) => {
-        userData.push({
-          ...doc.id,
-        })
-        if (doc.data().for === "child") {
-          motherVax.push(doc.id)
-        }
-        if (doc.data().for === "mother") {
-          childrenVax.push(doc.id)
-        }
-      })
-      setMother(motherVax.length);
-      setChild(childrenVax.length)
-      setVax(userData)
-    }
-    fetchVac();
-  }, [])
-
   const [userData, setUserData] = useState(0);
   let [completed, setCompleted] = useState(0);
   let [pendings_, setPendings_] = useState(0);
 
-  async function fetchUser() {
-    let user1 = [];
-    let user2 = [];
-    let thismonth1 = [];
-    let thismonth2 = [];
-    let pend = [];
-    const querySnapshot2 = await getDocs(query(collection(database, 'onlineAppointments')));
-    querySnapshot2.forEach((doc) => {
-      user1.push({ id: doc.id, appointmentDate: doc.data().appointmentDate, dateMade: doc.data().dateMade, purpose: doc.data().purpose, status: doc.data().status, time: doc.data().time });
-      if (moment(doc.data().appointmentDate).format("MM") === monthNow && moment(doc.data().appointmentDate).format("YYYY" === yearNow && doc.data().status === "approved")) {
-        thismonth2.push({ id: doc.id })
-      }
-      if (doc.data().status === "approved"&&moment(new Date, "YYYY/MM/DD").diff(doc.data().appointmentDate,"YYYY/MM/DD")<0) {
-        pend.push(doc.id)
-      }
-    })
-    setPendings_(pend.length)
-  }
-
-  useEffect(() => {
-    fetchUsers();
-    fetchUser();
-  }, [])
-
-  ///////////////////////////
-
-  const [document, setDocuments] = useState([]);
-  const [tabs, setTab] = useState(0);
-  const [active, setActive] = useState('');
-  const [appointmentsToday, setAppointmentsToday] = useState([]);
-  const [noOfUsers, setNoOfUsers] = useState(0);
-  const [immunizations, setImmunization] = useState(0)
-  const [appointmentsCount, setAppointmentsCount] = useState(0);
-  const [list, setList] = useState([]);
-  const [clickedDate, setClickedDate] = useState("");
-  const today = new Date();
-  const appointmentdate = moment(today).format("YYYY/MM/DD");
-  const year = moment(today).format("YYYY");
-  const [date, setDate] = useState(new Date());
-  const [jan, setJan] = useState(0);
-  const [feb, setFeb] = useState(0);
-  const [mar, setMar] = useState(0);
-  const [apr, setApr] = useState(0);
-  const [may, setMay] = useState(0);
-  const [jun, setJun] = useState(0);
-  const [jul, setJul] = useState(0);
-  const [aug, setAug] = useState(0);
-  const [sep, setSep] = useState(0);
-  const [oct, setOct] = useState(0);
-  const [nov, setNov] = useState(0);
-  const [dec, setDec] = useState(0);
-  const [jan2, setJan2] = useState(0);
-  const [feb2, setFeb2] = useState(0);
-  const [mar2, setMar2] = useState(0);
-  const [apr2, setApr2] = useState(0);
-  const [may2, setMay2] = useState(0);
-  const [jun2, setJun2] = useState(0);
-  const [jul2, setJul2] = useState(0);
-  const [aug2, setAug2] = useState(0);
-  const [sep2, setSep2] = useState(0);
-  const [oct2, setOct2] = useState(0);
-  const [nov2, setNov2] = useState(0);
-  const [dec2, setDec2] = useState(0);
-  const [notif, viewNotif] = useState(false);
-
-
-  useEffect(() => {
-    async function fetchImmunization() {
-      const querySnapshot = await getDocs(collection(database, 'vaccination'));
-      const userData = [];
-      let date = new Date();
-      const dateNow = moment(date, "YYYY/MM/DD");
-      try {
-        let i = 1;
-        const data = querySnapshot.forEach(doc => {
-          userData.push({ count: i, id: doc.id, });
-          i++;
-        })
-        setImmunization(userData.length);
-      } catch (e) {
-        console.log(e);
-      }
-      //var i = 1;
-      //alert("running "+i++ +" times")
-    };
-
-    async function fetchData() {
-      const querySnapshot = await getDocs(query(collection(database, 'userData')));
-      const querySnapshot2 = await getDocs(query(collection(database, 'child')));
-      const userData = [];
-      const data = querySnapshot.forEach(doc => {
-        if (doc.data().status === "pending") {
-          userData.push({
-            id: doc.id,
-            fName: doc.data().userFname,
-            mName: doc.data().userMname,
-            lName: doc.data().userLname,
-            number: doc.data().userNumber,
-            //birthday:doc.data().userBirthdate,
-            email: doc.data().userEmail,
-            //userPic:doc.data().userPic,
-            status: doc.data().status,
-            number: doc.data().number,
-            uid: doc.data().uid,
-            made: doc.data().dateMade
-          });
-        }
-      })
-      setNoOfUsers(document.length)
-      setDocuments(userData);
-    };
-    try {
-      fetchData();
-      fetchImmunization();
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
-
-  async function manipulateDate() {
-    let dateNow = new Date();
-    let myList = [];
-    let i = 1;
-    let formattedDate = moment(dateNow, "YYYY/MM/DD");
-    let formattedInput = "";
-    appointmentsToday.forEach((doc) => {
-      if (moment(date).format("YYYY/MM/DD") === moment(doc.dateTime).format("YYYY/MM/DD")) {
-        console.log("HIT")
-        i++;
-        myList.push({
-          id: doc.id,
-          name: doc.name,
-          purpose: doc.purpose,
-          time: doc.time,
-          dateTime: doc.dateTime
-        })
-      } else {
-        console.log("MISS")
-      }
-    })
-    setList(myList);
-    let now = moment(date).format("YYYY/MM/DD")
-    console.log(now)
-    console.log("Date manipulated: ", appointmentsToday);
-  }
-
-  const [clickedDayApp, setClickedDayApp] = useState([]);
-
-  useEffect(() => {
-    let appointments = [];
-    let dateNow = moment(date).format("YYYY/MM/DD");
-    const fetchIT = async () => {
-      const querySnapshot = await getDocs(query(collection(database, 'appointments'), where("appointmentDate", "==", dateNow)));
-      querySnapshot.forEach((doc) => {
-        appointments.push({ id: doc.id, appointmentdate: doc.data().appointmentDate, purpose: doc.data().purpose, name: doc.data().name, time: doc.data().time })
-      })
-    }
-    fetchIT()
-    setClickedDayApp(appointments);
-  }, [date])
-
-  const [hasNotif, setHasNotif] = useState(false);
-  const [pendings, setPendings] = useState([]);
-  useEffect(() => {
-
-    let i = 0;
-    let january = 0;
-    let february = 0;
-    let march = 0;
-    let april = 0;
-    let may_ = 0;
-    let june = 0;
-    let july = 0;
-    let august = 0;
-    let september = 0;
-    let october = 0;
-    let november = 0;
-    let december = 0;
-
-    onSnapshot(query(collection(database, "vaccination"), where("year", "==", yearNow)), (doc) => {
-      doc.docs.map((d) => {
-        if (moment(d.data().dateRegistered).format("MM") === "01") {
-          january++;
-        }
-        if (moment(d.data().dateRegistered).format("MM") === "02") {
-          february++;
-        }
-        if (moment(d.data().dateRegistered).format("MM") === "03") {
-          march++;
-        }
-        if (moment(d.data().dateRegistered).format("MM") === "04") {
-          april++;
-        }
-        if (moment(d.data().dateRegistered).format("MM") === "05") {
-          may_++;
-        }
-        if (moment(d.data().dateRegistered).format("MM") === "06") {
-          june++;
-        }
-        if (moment(d.data().dateRegistered).format("MM") === "07") {
-          july++;
-        }
-        if (moment(d.data().dateRegistered).format("MM") === "08") {
-          august++;
-        }
-        if (moment(d.data().dateRegistered).format("MM") === "09") {
-          september++;
-        }
-        if (moment(d.data().dateRegistered).format("MM") === "10") {
-          october++;
-        }
-        if (moment(d.data().dateRegistered).format("MM") === "11") {
-          november++;
-        }
-        if (moment(d.data().dateRegistered).format("MM") === "12") {
-          december++;
-        }
-        console.log("MONTH"+moment(d.data().appointmentDate).format("MM"))
-        setJan2(january);
-        setFeb2(february);
-        setMar2(march);
-        setMay2(may_);
-        setJun2(june);
-        setJul2(july);
-        setAug2(august);
-        setSep2(september);
-        setOct2(october);
-        setNov2(november);
-        setDec2(december);
-      })
-      setPendings(doc.docs);
-      setHasNotif(true)
-    });
-  }, [])
-  //    alert(oct2)
-
-  useEffect(() => {
-    const dateNow = moment(today, "YYYY/MM/DD");
-    async function fetchAppointments() {
-      const querySnapshot = await getDocs(query(collection(database, 'appointments'), where("year", "==", yearNow)));
-      const appointments = [];
-      let i = 0;
-      let january = 0;
-      let february = 0;
-      let march = 0;
-      let april = 0;
-      let may_ = 0;
-      let june = 0;
-      let july = 0;
-      let august = 0;
-      let september = 0;
-      let october = 0;
-      let november = 0;
-      let december = 0;
-      const data = querySnapshot.forEach(doc => {
-        appointments.push({
-          id: doc.id,
-          name: doc.data().name,
-          purpose: doc.data().purpose,
-          time: doc.data().time,
-          dateTime: doc.data().appointmentDate + " " + doc.data().time
-        });
-        if (moment(doc.data().appointmentDate).format("MM") === "01") {
-          january++;
-        }
-        if (moment(doc.data().appointmentDate).format("MM") === "02") {
-          february++;
-        }
-        if (moment(doc.data().appointmentDate).format("MM") === "03") {
-          march++;
-        }
-        if (moment(doc.data().appointmentDate).format("MM") === "04") {
-          april++;
-        }
-        if (moment(doc.data().appointmentDate).format("MM") === "05") {
-          may_++;
-        }
-        if (moment(doc.data().appointmentDate).format("MM") === "06") {
-          june++;
-        }
-        if (moment(doc.data().appointmentDate).format("MM") === "07") {
-          july++;
-        }
-        if (moment(doc.data().appointmentDate).format("MM") === "08") {
-          august++;
-        }
-        if (moment(doc.data().appointmentDate).format("MM") === "09") {
-          september++;
-        }
-        if (moment(doc.data().appointmentDate).format("MM") === "10") {
-          october++;
-        }
-        if (moment(doc.data().appointmentDate).format("MM") === "11") {
-          november++;
-        }
-        if (moment(doc.data().appointmentDate).format("MM") === "12") {
-          december++;
-        }
-        console.log(moment(doc.data().appointmentDate).format("MM"))
-      })
-      setJan(january);
-      setFeb(february);
-      setMar(march);
-      setMay(may_);
-      setJun(june);
-      setJul(july);
-      setAug(august);
-      setSep(september);
-      setOct(october);
-      setNov(november);
-      setDec(december);
-      setAppointmentsToday(appointments);
-      setAppointmentsCount(appointments.length)
-    }
-    try {
-      fetchAppointments();
-      manipulateDate();
-    } catch (e) {
-      console.log(e);
-    }
-  }, [])
-
+ 
+ 
   const [userCount, setUserCount] = useState(0);
   useEffect(() => {
-    const dateNow = moment(today, "YYYY/MM/DD");
-    let i = 0;
-    async function fetchAppointments() {
-      const querySnapshot = await getDocs(query(collection(database, 'userData')));
-      const appointments = [];
-      const data = querySnapshot.forEach(doc => {
-        i++;
-      })
-      setUserCount(i)
-      console.log("No. of users: " + userCount);
-    }
-    try {
-      fetchAppointments();
-      manipulateDate(date);
-    } catch (e) {
-      console.log(e);
-    }
+    fetchUsers();
   }, [])
 
-  const dKey = [
-    {
-      name: 'January',
-      count: jan,
-      count2: jan2
-    },
-    {
-      name: 'February',
-      count: feb,
-      count2: feb2
-    },
-    {
-      name: 'March',
-      count: mar,
-      count2: mar2
-    },
-    {
-      name: 'April',
-      count: apr,
-      count2: apr2
-    },
-    {
-      name: 'May',
-      count: may,
-      count2: may2
-    },
-    {
-      name: 'June',
-      count: jun,
-      count2: jun2
-    },
-    {
-      name: 'July',
-      count: jul,
-      count2: jul2
-    },
-    {
-      name: 'August',
-      count: aug,
-      count2: aug2
-    },
-    {
-      name: 'September',
-      count: sep,
-      count2: sep2
-    },
-    {
-      name: 'October',
-      count: oct,
-      count2: oct2
-    },
-    {
-      name: 'November',
-      count: nov,
-      count2: nov2
-    },
-    {
-      name: 'December',
-      count: dec,
-      count2: dec2
-    }
-  ]
 
-  function logout() {
-
-    try {
-      authentication.signOut()
-      function refreshPage() {
-        window.location.reload(false);
-      }
-      refreshPage()
-    } catch (error) {
-      alert(error)
-    }
-  }
-  function refreshPage() {
-    window.location.reload(false);
-  }
-
-  const months = {
-    jan: "January",
-    feb: "February",
-    mar: "March",
-    apr: "April",
-    may: "May",
-    jun: "June",
-    jul: "July",
-    aug: "August",
-    sep: "September",
-    oct: "October",
-    nov: "November",
-    dec: "December"
-  }
-
-
-  const [date_, setDate_] = useState("")
   const [month, setMonth] = useState(moment(new Date()).format("MMMM"));
   useEffect(()=>{
     setMonth(moment(new Date()).format("MM"))
@@ -1200,13 +740,13 @@ const totalWeight = weightRows.reduce((total, row) => total + row.count, 0);
 //       </div>
 //     </div>
 <Box container sx={{ height: '100%', width: '100%', overflowY: 'auto', overflowX: 'hidden' }}>
-<Divider sx={{ marginBottom: 3 }}></Divider>
+<Divider sx={{ marginBottom: 2 }}></Divider>
 <Grid container spacing={.5} >
   <Grid container ml={.5} xs={8.9} direction='row' columnGap={.5}>
 
     
     {/*------------------------------- Grid 1 Appoinment------------------------------- */}
-    <Grid container item xs={4.5} ml={.5} mb={3} padding={2} sx={{ minHeight: '7vh', minWidth: '8%', }} component={Paper}>
+    <Grid container item xs={4.5} ml={.5} mb={3} padding={2} sx={{ minHeight: '4vh', minWidth: '4%', }} component={Paper}>
       <Grid xs={3} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#486DF1' }}><EventNoteIcon fontSize='72' color="white" /></Box></Grid>
       <Grid xs={4.5} >
         <Grid xs={12} > <Box fontSize={'medium'} ml={1}fontWeight='500'>Appointments</Box></Grid>
@@ -1224,7 +764,7 @@ const totalWeight = weightRows.reduce((total, row) => total + row.count, 0);
 
     </Grid>
     {/*------------------------------- Grid 2 Registered Patient------------------------------- */}
-    <Grid container item xs={3.5} ml={.5} mb={3} padding={2} sx={{ minHeight: '7vh', minWidth: '8%', }} component={Paper}>
+    <Grid container item xs={3.5} ml={.5} mb={3} padding={2} sx={{ minHeight: '4vh', minWidth: '4%', }} component={Paper}>
       <Grid xs={3} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#00BA88' }}><PregnantWomanIcon fontSize='72' /></Box></Grid>
       <Grid xs={8} >
         <Grid xs={12}> <Box fontSize={'medium '} ml={1} fontWeight='500'>Registered Patients</Box></Grid>
@@ -1235,7 +775,7 @@ const totalWeight = weightRows.reduce((total, row) => total + row.count, 0);
 
     </Grid>
     {/*------------------------------- Grid 3 App user------------------------------- */}
-    <Grid container item xs={3.5} ml={.5} padding={2} mb={3} sx={{ minHeight: '7vh', minWidth: '8%', }} component={Paper}>
+    <Grid container item xs={3.5} ml={.5} padding={2} mb={3} sx={{ minHeight: '4vh', minWidth: '4%', }} component={Paper}>
       <Grid xs={3} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#F4B740' }}><PhoneIphoneIcon fontSize='72' color="white" /></Box></Grid>
       <Grid xs={9} >
         <Grid xs={12}> <Box fontSize={'medium '} ml={1} fontWeight='500'>MCare App User</Box></Grid>
@@ -1538,11 +1078,11 @@ const totalWeight = weightRows.reduce((total, row) => total + row.count, 0);
     </Grid>
     {/*------------------------------- End Grid------------------------------ */}
   </Grid>
-  <Grid item xs={3} sx={{ height:'140vh',}}>
+  <Grid item xs={3} sx={{ height:'140vh',alignSelf:'flex-end'}}>
     <Card elevation={4} sx={{ height: 100 + '%', justifyContent: 'center' }} m={1} padding={2}>
       <CardContent>
       </CardContent >
-      <Calendar_/>
+      
     </Card>
   </Grid>
                       

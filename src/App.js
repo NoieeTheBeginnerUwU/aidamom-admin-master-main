@@ -20,7 +20,7 @@ import Login from './pages/Login';
 import Systemreport from './pages/Systemreport';
 import Tables from './pages/Tables';
 import Screening from './Screening';
-
+import Mcare from './Mcare';
 import {
   Box,
   Grid,
@@ -34,7 +34,7 @@ import {
   ThemeProvider,
   Badge,
 } from '@mui/material';
-import { LockOutlined as LockOutlinedIcon, Email as EmailIcon, Lock as LockIcon, MailOutlineSharp, DashboardCustomize, MedicalInformation, PregnantWoman, ArticleSharp, ArticleTwoTone, FileCopySharp, SettingsAccessibility, BookOnline } from '@mui/icons-material';
+import { LockOutlined as LockOutlinedIcon, Email as EmailIcon, Lock as LockIcon, MailOutlineSharp, DashboardCustomize, MedicalInformation, PregnantWoman, ArticleSharp, ArticleTwoTone, FileCopySharp, SettingsAccessibility, BookOnline, QrCode } from '@mui/icons-material';
 
 
 //firebase
@@ -559,7 +559,7 @@ try {
                   <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Forms"?"white":"rgb(100,100,100)"}}  color="primary">
                     <FileCopySharp fontSize="large" color="" />
                   </Badge>
-                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Forms"?"none":"none",color:active==="Forms"?"white":"rgb(100,100,100)"}}>Forms</h3>
+                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Forms"?"none":"none",color:active==="Forms"?"white":"rgb(100,100,100)"}}>Health Records</h3>
                 </div>
               </Link>
               <Link to="Log" style={{textDecoration:'none'}}>
@@ -568,6 +568,14 @@ try {
                     <BookOnline fontSize="large" color="" />
                   </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Log"?"none":"none",color:active==="Log"?"white":"rgb(100,100,100)"}}>Activity Log</h3>
+                </div>
+              </Link>
+              <Link to="QR" style={{textDecoration:'none'}}>
+                <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="QR"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("QR")}>
+                  <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="QR"?"white":"rgb(100,100,100)"}}  color="primary">
+                    <QrCode fontSize="large" color="" />
+                  </Badge>
+                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="QR"?"none":"none",color:active==="QR"?"white":"rgb(100,100,100)"}}>MCare App QR</h3>
                 </div>
               </Link>
               <Link to="settings" style={{textDecoration:'none'}}>
@@ -599,6 +607,7 @@ try {
                   <Route path='Log' element={<Log/>}/>
                   <Route path='Tables' element={<Tables/>}/>
                   <Route path='settings' element={<Settings/>}/>
+                  <Route path='QR' element={<Mcare/>}/>
                 </>
                 :
                 null

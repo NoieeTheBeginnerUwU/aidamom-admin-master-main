@@ -57,7 +57,7 @@ const Calendar_ = ()=> {
     };
 
     fetchAppointmentsDates();
-  }, []);
+  }, [clickedDayApp]);
 
   const handleFetchAppointmentsOnClick = async (selectedDate) => {
     const formattedDate = moment(selectedDate).format("YYYY/MM/DD");
@@ -73,7 +73,7 @@ const Calendar_ = ()=> {
   };
   
     return (
-     <div style={{display:'flex',flexDirection:'column',width:'100%',height:'100vh',backgroundColor:'white',overflow:'hidden'}}>
+     <div style={{display:'flex',flexDirection:'column',width:'100%',height:'100%',backgroundColor:'white',overflow:'hidden'}}>
       {
         tabs===0&&
         <div style={{display:'flex',flexDirection:'row',width:'100%',flexWrap:'wrap',height:'100vh',backgroundColor:'white'}}>

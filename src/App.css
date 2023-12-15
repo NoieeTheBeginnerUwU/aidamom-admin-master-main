@@ -107,6 +107,17 @@
 	background-repeat: no-repeat;
 }
 
+.QR{
+	width: 540px;
+	height: 540px;
+	background-color: rgba(245, 245, 245, .2);
+	align-self: center;
+	background-image: url("/public/QR.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+
 .react-calendar { 
   width: 100%;
   max-width: 100%;
@@ -280,9 +291,6 @@ html.is-animating .transition-fade{
   color: skyblue;
 }
 
-.table{
-  width:98%;
-}
 
 
 .switch {

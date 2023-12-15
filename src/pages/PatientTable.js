@@ -44,6 +44,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { useReactToPrint } from 'react-to-print';
 import ReferralForm from './refferalForm';
+import TablePagination from '@mui/material/TablePagination';
 
 const useStyles = makeStyles({
   root: {
@@ -861,158 +862,6 @@ dischargeMedication:"",
     console.log("ASS "+arrs)
   },[selectedRow.docid])
 
-
-
-  const handleCreateAccount = async () => {
-    if (registrationForm.userFname !== "" || registrationForm.userLname !== "" || registrationForm.userSex !== "" || registrationForm.userAge || registrationForm.userNumber !== "") {
-      try {
-        await addDoc(collection(database, "userData"), {
-          userFname: registrationForm.userFname,
-          userMname: registrationForm.userMname,
-          userLname: registrationForm.userLname,
-          userSuffix: registrationForm.userSuffix,
-          userSex: registrationForm.userSex,
-          userCivilStatus: registrationForm.userCivilStatus,
-          userBloodType: registrationForm.userBloodType,
-          userReligion: registrationForm.userReligion,
-          userNumber: registrationForm.userNumber,
-          userDob: registrationForm.userDob,
-          userAge: registrationForm.userAge,
-          userNationality: registrationForm.userNationality,
-          userOccupation: registrationForm.userOccupation,
-          userPurok: registrationForm.userPurok,
-          userBarangay: registrationForm.userBarangay,
-          userTown: registrationForm.userTown,
-          userProvince: registrationForm.userProvince,
-          userPlaceOfBirth: registrationForm.userPlaceOfBirth,
-          //family details
-          userFathersName: registrationForm.userFathersName,
-          userMothersName: registrationForm.userMothersName,
-          userHusbandsName: registrationForm.userHusbandsName,
-          userHusbandsOccuupation: registrationForm.userHusbandsOccuupation,
-          userDateOfMarriage: registrationForm.userDateOfMarriage,
-          userPlaceOfMarriage: registrationForm.userPlaceOfMarriage,
-          userHusbandsNumber: registrationForm.userHusbandsNumber,
-          userCompleteAddress: registrationForm.userCompleteAddress,
-          userEmployedBy: registrationForm.userEmployedBy,
-          userSalary: registrationForm.userSalary,
-          userAddressOfEmployer: registrationForm.userAddressOfEmployer,
-          userNameOfBarangayCaptain: registrationForm.userNameOfBarangayCaptain,
-          //user pregnancy history
-          //child1
-          userChild1: registrationForm.userChild1,
-          userChildDateOfDelivery1: registrationForm.userChildDateOfDelivery1,
-          userChildTypeOfDelivery1: registrationForm.userChildTypeOfDelivery1,
-          userChildBirthOutcome1: registrationForm.userChildBirthOutcome1,
-          userChildNumberOfChildDelivered1: registrationForm.userChildNumberOfChildDelivered1,
-          userChildComplication1: registrationForm.userChildComplication1,
-          //child2
-          userChild2: registrationForm.userChild2,
-          userChildDateOfDelivery2: registrationForm.userChildDateOfDelivery2,
-          userChildTypeOfDelivery2: registrationForm.userChildTypeOfDelivery2,
-          userChildBirthOutcome2: registrationForm.userChildBirthOutcome2,
-          userChildNumberOfChildDelivered2: registrationForm.userChildNumberOfChildDelivered2,
-          userChildComplication2: registrationForm.userChildComplication2,
-          //child3
-          userChild3: registrationForm.userChild3,
-          userChildDateOfDelivery3: registrationForm.userChildDateOfDelivery3,
-          userChildTypeOfDelivery3: registrationForm.userChildTypeOfDelivery3,
-          userChildBirthOutcome3: registrationForm.userChildBirthOutcome3,
-          userChildNumberOfChildDelivered3: registrationForm.userChildDateOfDelivery3,
-          userChildComplication3: registrationForm.userChildComplication3,
-          //child4
-          userChild4: registrationForm.userChild4,
-          userChildDateOfDelivery4: registrationForm.userChildDateOfDelivery4,
-          userChildTypeOfDelivery4: registrationForm.userChildTypeOfDelivery4,
-          userChildBirthOutcome4: registrationForm.userChildBirthOutcome4,
-          userChildNumberOfChildDelivered4: registrationForm.userChildNumberOfChildDelivered4,
-          userChildComplication4: registrationForm.userChildComplication4,
-          //child5
-          userChild5: registrationForm.userChild5,
-          userChildDateOfDelivery5: registrationForm.userChildDateOfDelivery5,
-          userChildTypeOfDelivery5: registrationForm.userChildTypeOfDelivery5,
-          userChildBirthOutcome5: registrationForm.userChildBirthOutcome5,
-          userChildNumberOfChildDelivered5: registrationForm.userChildNumberOfChildDelivered5,
-          userChildComplication5: registrationForm.userChildComplication5,
-          //child6
-          userChild6: registrationForm.userChild6,
-          userChildDateOfDelivery6: registrationForm.userChildDateOfDelivery6,
-          userChildTypeOfDelivery6: registrationForm.userChildTypeOfDelivery6,
-          userChildBirthOutcome6: registrationForm.userChildBirthOutcome6,
-          userChildNumberOfChildDelivered6: registrationForm.userChildNumberOfChildDelivered6,
-          userChildComplication6: registrationForm.userChildComplication6,
-          //child7
-          userChild7: registrationForm.userChild7,
-          userChildDateOfDelivery7: registrationForm.userChildDateOfDelivery7,
-          userChildTypeOfDelivery7: registrationForm.userChildTypeOfDelivery7,
-          userChildBirthOutcome7: registrationForm.userChildBirthOutcome7,
-          userChildNumberOfChildDelivered7: registrationForm.userChildNumberOfChildDelivered7,
-          userChildComplication7: registrationForm.userChildComplication7,
-          //child8
-          userChild8: registrationForm.userChild8,
-          userChildDateOfDelivery8: registrationForm.userChildDateOfDelivery8,
-          userChildTypeOfDelivery8: registrationForm.userChildTypeOfDelivery8,
-          userChildBirthOutcome8: registrationForm.userChildBirthOutcome8,
-          userChildNumberOfChildDelivered8: registrationForm.userChildNumberOfChildDelivered8,
-          userChildComplication8: registrationForm.userChildComplication8,
-          //child9
-          userChild9: registrationForm.userChild9,
-          userChildDateOfDelivery9: registrationForm.userChildDateOfDelivery9,
-          userChildTypeOfDelivery9: registrationForm.userChildTypeOfDelivery9,
-          userChildBirthOutcome9: registrationForm.userChildBirthOutcome9,
-          userChildNumberOfChildDelivered9: registrationForm.userChildNumberOfChildDelivered9,
-          userChildComplication9: registrationForm.userChildComplication9,
-          //child10
-          userChild10: registrationForm.userChild10,
-          userChildDateOfDelivery10: registrationForm.userChildDateOfDelivery10,
-          userChildTypeOfDelivery10: registrationForm.userChildTypeOfDelivery10,
-          userChildBirthOutcome10: registrationForm.userChildBirthOutcome10,
-          userChildNumberOfChildDelivered10: registrationForm.userChildNumberOfChildDelivered10,
-          userChildComplication10: registrationForm.userChildComplication10,
-          //user other health conditions 
-          userTBPersonal: registrationForm.userTBPersonal,
-          userTBFamily: registrationForm.userTBFamily,
-          userHeartDiseasesPersonal: registrationForm.userHeartDiseasesPersonal,
-          userHeartDiseasesFamily: registrationForm.userHeartDiseasesFamily,
-          userDiabetesPersonal: registrationForm.userDiabetesPersonal,
-          userDiabetesFamily: registrationForm.userDiabetesFamily,
-          userHypertensionPersonal: registrationForm.userHypertensionPersonal,
-          userHypertensionFamily: registrationForm.userHypertensionFamily,
-          userBronchialAsthmaPersonal: registrationForm.userBronchialAsthmaPersonal,
-          userBronchialAsthmaFamily: registrationForm.userBronchialAsthmaFamily,
-          userUTIPersonal: registrationForm.userUTIPersonal,
-          userUTIFamily: registrationForm.userUTIFamily,
-          userParasitismPersonal: registrationForm.userParasitismPersonal,
-          userParasitismFamily: registrationForm.userParasitismFamily,
-          userGoiterPersonal: registrationForm.userGoiterPersonal,
-          userGoiterFamily: registrationForm.userGoiterFamily,
-          userAnemiaPersonal: registrationForm.userAnemiaPersonal,
-          userAnemiaFamily: registrationForm.userAnemiaFamily,
-          userGenitalTrackInfection: registrationForm.userGenitalTrackInfection,
-          userOtherInfectiousDiseases: registrationForm.userOtherInfectiousDiseases,
-          userHighRiskBehavior: registrationForm.userHighRiskBehavior,
-          dateCreated: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
-          status: "pending",
-          userLevel: "standard user",
-          userPic: "",
-        }).then(alert("Account created successfully."))
-      } catch (e) {
-        alert(e);
-      }
-      addDoc(collection(database, "adminLogs"), {
-        activity: "added a new user to the database.",
-        category: "added",
-        timestamp: moment(new Date()).format("YYYY/MM/DD hh:mm a"),
-        day: moment(new Date()).format("DD"),
-        month: moment(new Date()).format("MM"),
-        Year: moment(new Date()).format("YYYY"),
-      })
-      setActive("newsession")
-    } else {
-      alert("Please fill all the necessary inputs to create an account.")
-    }
-  }
-
   useEffect(() => {
     const fetchAppointments = async () => {
 
@@ -1319,6 +1168,18 @@ dischargeMedication:"",
     count=3
   }
 
+  const [page, setPage] = React.useState(2);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
 
     <div style={{ marginTop: '2px', height: '550px', width: '95%', textAlign: 'center', justifyContent: 'center', overflow: 'hidden' }}>
@@ -1427,9 +1288,9 @@ dischargeMedication:"",
           pageSizeOptions={[5, 10]}
           disableSelectionOnClick
           density='compact'
-          
         />
       </div>
+      
       {/* Modal for displaying details */}
 
       <Modal open={openModal} onClose={handleCloseModal} scroll='paper'>
@@ -1445,7 +1306,14 @@ dischargeMedication:"",
           boxShadow: 24,
           p: 5,
         }}>
-
+        <TablePagination
+          component="div"
+          count={100}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
           <Box sx={{ flexGrow: 1 }}>
 
             <Grid container spacing={1} rowSpacing={1}  >
@@ -1740,7 +1608,6 @@ dischargeMedication:"",
                             </TabPanel>
                           </TabContext>
                         </Box>
-
                       </Paper>
                     </Grid>
                   </Grid>
