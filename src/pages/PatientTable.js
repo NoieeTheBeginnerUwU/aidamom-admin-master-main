@@ -477,20 +477,20 @@ dischargeMedication:"",
 
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 50, align: 'center', headerAlign: 'center' },
-    { field: 'userFname', headerName: 'First name', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
-    { field: 'userLname', headerName: 'Last name', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
-    { field: 'lastPeriod', headerName: 'Last Menstrual Period', flex: 1, align: 'center', headerAlign: 'center' },
-    { field: 'aog', headerName: 'Age of Gestation', type: 'number', width: 100, sortable: false, align: 'center', headerAlign: 'center' },
-    { field: 'lastVisit', headerName: 'Date of Last Visit', type: 'number', flex: 1, sortable: false, align: 'center', headerAlign: 'center' },
-    { field: 'userAddress', headerName: 'Address', flex: 2, sortable: false, align: 'center', headerAlign: 'center' },
+    { field: 'id', headerName: 'ID', width: 50, align: 'left', headerAlign: 'left' },
+    { field: 'userFname', headerName: 'First name', flex: 1, sortable: false, align: 'left', headerAlign: 'left' },
+    { field: 'userLname', headerName: 'Last name', flex: 1, sortable: false, align: 'left', headerAlign: 'left' },
+    { field: 'lastPeriod', headerName: 'Last Menstrual Period', flex: 1, align: 'left', headerAlign: 'left' },
+    { field: 'aog', headerName: 'Age of Gestation', type: 'number', flex: 1, sortable: false, align: 'left', headerAlign: 'left' },
+    { field: 'lastVisit', headerName: 'Date of Last Visit', type: 'number', flex: 1.5, sortable: false, align: 'left', headerAlign: 'left' },
+    { field: 'userAddress', headerName: 'Address', flex: 2, sortable: false, align: 'left', headerAlign: 'left' },
     {
       field: 'action',
       headerName: 'Action',
       width: 120,
       sortable: false,
-      align: 'center',
-      headerAlign: 'center',
+      align: 'left',
+      headerAlign: 'left',
       renderCell: (params) => (
         <Button variant="contained" color="primary" onClick={() => [handleViewDetails(params)]}>
           <Box fontSize={10}>View Details</Box>
