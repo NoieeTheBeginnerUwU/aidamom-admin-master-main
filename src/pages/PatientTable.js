@@ -45,6 +45,7 @@ import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { useReactToPrint } from 'react-to-print';
 import ReferralForm from './refferalForm';
 import TablePagination from '@mui/material/TablePagination';
+//React to Priont
 
 const useStyles = makeStyles({
   root: {
@@ -99,10 +100,6 @@ function PatientTable({ handleSubmit, userData }) {
 
   const componentRef = useRef();
 
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  })
-
 
   const [value2, setValue2] = useState('');
   const [value3, setValue3] = useState('');
@@ -150,6 +147,11 @@ function PatientTable({ handleSubmit, userData }) {
   }
 
 
+  const ref = useRef();
+
+  const handlePrint = useReactToPrint({
+    content: ()=> ref.current,
+  }) 
 
 
 
@@ -481,7 +483,7 @@ function PatientTable({ handleSubmit, userData }) {
     { field: 'id', headerName: 'ID', width: 50, align: 'left', headerAlign: 'left' },
     { field: 'userFname', headerName: 'First name', flex: 1, sortable: false, align: 'left', headerAlign: 'left' },
     { field: 'userLname', headerName: 'Last name', flex: 1, sortable: false, align: 'left', headerAlign: 'left' },
-    { field: 'lastPeriod', headerName: 'Last Menstrual Period', flex: 1, align: 'left', headerAlign: 'left' },
+    { field: 'modLmp', headerName: 'Last Menstrual Period', flex: 1, align: 'left', headerAlign: 'left' },
     { field: 'aog', headerName: 'Age of Gestation', type: 'number', flex: 1, sortable: false, align: 'left', headerAlign: 'left' },
     { field: 'lastVisit', headerName: 'Date of Last Visit', type: 'number', flex: 1.5, sortable: false, align: 'left', headerAlign: 'left' },
     { field: 'userAddress', headerName: 'Address', flex: 2, sortable: false, align: 'left', headerAlign: 'left' },
@@ -646,6 +648,7 @@ function PatientTable({ handleSubmit, userData }) {
     <AddVisits
       selectedPatient={selectedRow}
       handleCloseAddVisitModal={handleCloseAddVisitModal}
+      onClick={fetchData}
     />
 
   );
@@ -690,6 +693,7 @@ function PatientTable({ handleSubmit, userData }) {
           aog: moment(new Date(), "YYYY/MM/DD").diff(doc.data().lastPeriod, "weeks") + " weeks",
           lastVisit: !doc.data().lastVisit ? "No Data" : doc.data().lastVisit,
           lastPeriod: !doc.data().lastPeriod ? "No data" : doc.data().lastPeriod,
+          modLmp: !doc.data().lastPeriod? "No data": moment(doc.data().lastPeriod).format("MMMM DD, YYYY"),
           userFname: doc.data().userFname,
           userMname: doc.data().userMname,
           userLname: doc.data().userLname,
@@ -856,7 +860,7 @@ function PatientTable({ handleSubmit, userData }) {
       const fetchApps = async () => {
         const queryAppointments = await getDocs(query(collection(database, "appointments"), where("uid", "==", selectedRow.docid)));
         queryAppointments.forEach((doc) => {
-          arrs.push({ id: doc.id, aog: doc.data().aog, appointmentDate: doc.data().appointmentDate, bmi: doc.data().bmi, bp: doc.data().bp, bpCategory: doc.data().bpCategory, diastolic: doc.data().diastolic, dilates: doc.data().dilates, efficases: doc.data().efficases, fetalMovement: doc.data().fetalMovement, fundalHeight: doc.data().fundalHeight, height: doc.data().height, lmp: doc.data().lmp, name: doc.data().name, presentation: doc.data().presentation, remarks: doc.data().remarks, systolic: doc.data().systolic, uid: doc.data().uid, weight: doc.data().weight })
+          arrs.push({ id: doc.id, aog: doc.data().aog, appointmentDate: doc.data().appointmentDate, bmi: doc.data().bmi, bp: doc.data().bp, bpCategory: doc.data().bpCategory, diastolic: doc.data().diastolic, dilates: doc.data().dilates, efficases: doc.data().efficases, fetalHeartTone: doc.data().fetalHeartTone, fundalHeight: doc.data().fundalHeight, height: doc.data().height, lmp: doc.data().lmp, name: doc.data().name, presentation: doc.data().presentation, remarks: doc.data().remarks, systolic: doc.data().systolic, uid: doc.data().uid, weight: doc.data().weight })
         })
       }
       const fetchOnlineApps = async () => {
@@ -1188,9 +1192,11 @@ function PatientTable({ handleSubmit, userData }) {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, 20));
     setPage(0);
   };
+
+
 
   return (
 
@@ -2186,7 +2192,7 @@ function PatientTable({ handleSubmit, userData }) {
                             <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>BMI</TableCell>
                             <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Age of Gestation</TableCell>
                             <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Fundal Height</TableCell>
-                            <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Fetal Movement</TableCell>
+                            <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Fetal Heart Tones</TableCell>
                             <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Presentation</TableCell>
                           </TableRow>
                         </TableHead>
@@ -2195,12 +2201,12 @@ function PatientTable({ handleSubmit, userData }) {
                             appointments.map((row2) => (
                               <TableRow key={row2.appointmentDate}>
                                 <TableCell>{row2.appointmentDate}</TableCell>
-                                <TableCell>{row2.diastolic}/{row2.systolic}</TableCell>
+                                <TableCell>{row2.systolic}/{row2.diastolic}</TableCell>
                                 <TableCell>{row2.weight}</TableCell>
                                 <TableCell>{row2.bmi}</TableCell>
-                                <TableCell align='center'>{row2.aog}</TableCell>
-                                <TableCell>{row2.fundalHeight}</TableCell>
-                                <TableCell>{row2.fetalMovement}</TableCell>
+                                <TableCell align='center'>{row2.aog} weeks</TableCell>
+                                <TableCell>{row2.fundalHeight} cm</TableCell>
+                                <TableCell>{row2.fetalHeartTone} b/m</TableCell>
                                 <TableCell>{row2.presentation}</TableCell>
                               </TableRow>
                             ))
@@ -2332,13 +2338,13 @@ function PatientTable({ handleSubmit, userData }) {
                     Create Refferal
                   </Typography>
                   {/* Add your form or other components here */}
-                  <ReferralForm />
+                  <ReferralForm selectedRow={selectedRow} ref={()=> ref}/>
                 </Box>
               </Modal>
               {/*----------------------------------------------------------------------------------------------- Modal for Complete Pregnancy -----------------------------------------------------------------------------------------------*/}
               <Modal open={openCompletePregnancy} onClose={handleCloseCompletePregnancy}>
 
-                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '90%', bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
                   {/* Your content goes here */}
                   <Typography variant="h6" component="div">
                     Complete Pregnancy

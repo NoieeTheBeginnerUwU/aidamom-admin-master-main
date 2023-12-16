@@ -9,7 +9,7 @@ import { useState, useRef } from 'react';
 import moment from 'moment';
 import { useReactToPrint } from 'react-to-print';
 
-function ReferralForm({selectedRow}) {
+function referralNodata() {
 
     const ref = useRef();
 
@@ -235,7 +235,7 @@ dischargeMedication:"",
     
 <>
 
-<div className="container" onClick={()=> handlePrint()} ref={ref}>
+<div className="container">
 <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
       <Box className="header" textAlign="center">
         <h4><strong>Republic of the Philippines</strong></h4>
@@ -255,7 +255,7 @@ dischargeMedication:"",
 <input name="to" id= "to" type = "text" style={{width:"45%", border:"none", borderBottom:"1px solid black"}} onChange={(text)=> setreferralForm(prev => {return {...prev,to:text.target.value}})}/>
 </label>
 <label style={{marginLeft:"10px"}}>Date/Time reffered:</label>
-<input name="dateandtime" id= "dateandtime" value={referralForm.dateandtimeReferred} type = "datetime-local"style={{width:"36%", border:"none", borderBottom:"1px solid black"}} onChange={(text)=> setreferralForm(prev => {return {...prev,dateandtime:text.target.value}})} />
+<input name="dateandtime" id= "dateandtime" type = "datetime-local"style={{width:"36%", border:"none", borderBottom:"1px solid black"}} onChange={(text)=> setreferralForm(prev => {return {...prev,dateandtime:text.target.value}})} />
 
 <div>
 <label>REFERRAL CATEGORY:</label>
@@ -279,70 +279,70 @@ dischargeMedication:"",
     </td>
 
     <td colspan="2">
-        <label>Email Address : </label><input type="text" value={!referralForm.facultyEmail?"":referralForm.facultyEmail} name="facultyEmail" id="facultyEmail"  style={{width:"90%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,facultyEmail:text.target.value}})}></input>
+        <label>Email Address : </label><input type="text" name="facultyEmail" id="facultyEmail"  style={{width:"90%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,facultyEmail:text.target.value}})}></input>
         
     </td>
     <td colspan="3">
-        <label>Messenger Account:</label><input type="text" value={referralForm.facultymess} name="facultymess" id="facultymess"style={{width:"92%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,facultymess:text.target.value}})}></input>
+        <label>Messenger Account:</label><input type="text"  name="facultymess" id="facultymess"style={{width:"92%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,facultymess:text.target.value}})}></input>
         
     </td>
   
 </tr>
 <tr>
     <td colspan="7">
-        <label> Addres Refering Faculty:</label><input type="text" value={referralForm.facultyAddress} name="facultyAddress" id="facultyAddress"  style={{width:"70%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,facultyAddress:text.target.value}})}></input>
+        <label> Addres Refering Faculty:</label><input type="text"  name="facultyAddress" id="facultyAddress"  style={{width:"70%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,facultyAddress:text.target.value}})}></input>
       
     </td>
 
     <td colspan="3">
-        <label> CP No. :</label><input type="number" value={referralForm.facultyNo} id="facultyNo" name="facultyNo"  style={{width:"66%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,facultyNo:text.target.value}})}></input>
+        <label> CP No. :</label><input type="number" id="facultyNo" name="facultyNo"  style={{width:"66%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,facultyNo:text.target.value}})}></input>
        
     </td>
     
 </tr>
 <tr>
     <td colspan="4">
-        <label>  Patient's Name:</label><input type="text" value={referralForm.patientname}  name="patientname"  id="patientname"  style={{width:"75%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,patientname:text.target.value}})}></input>
+        <label>  Patient's Name:</label><input type="text"  name="patientname"  id="patientname"  style={{width:"75%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,patientname:text.target.value}})}></input>
        
     </td>
 
     <td colspan="1">
-        <label>Age:</label><input type="number" name="patientAge" value={ moment(new Date(),"YYYY/MM/DD").diff(moment(selectedRow.userDob,"YYYY/MM/DD"),"years")} id="patientAge" style={{width:"50%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,patientAge:text.target.value}})} ></input>
+        <label>Age:</label><input type="number" name="patientAge" id="patientAge" style={{width:"50%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,patientAge:text.target.value}})} ></input>
       
     </td>
     <td colspan="1">
-        <label> Sex:</label><input type="text" name="patientsex" value={referralForm.patientsex} id="patientsex" style={{width:"40%", border:"none" , borderBottom:"1px solid black"}} onChange={(text)=> setreferralForm(prev => {return {...prev,patientsex:text.target.value}})}></input>
+        <label> Sex:</label><input type="text" name="patientsex" id="patientsex" style={{width:"40%", border:"none" , borderBottom:"1px solid black"}} onChange={(text)=> setreferralForm(prev => {return {...prev,patientsex:text.target.value}})}></input>
        
     </td>
     <td colspan="2">
-        <label> Civil Status: </label><input type="text" value={referralForm.civilstatus} name="civilstatus" id="civilstatus" style={{width:"40%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,civilstatus:text.target.value}})}></input>
+        <label> Civil Status: </label><input type="text" name="civilstatus" id="civilstatus" style={{width:"40%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,civilstatus:text.target.value}})}></input>
         
     </td>
     <td colspan="1">
-        <label> Date of Birth: </label><input type="date" value={referralForm.patientDOB} name="patientDOB" id="patientDOB" style={{width:"70%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,patientDOB:text.target.value}})}></input>
+        <label> Date of Birth: </label><input type="date" name="patientDOB" id="patientDOB" style={{width:"70%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,patientDOB:text.target.value}})}></input>
        
     </td>
     
 </tr>
 <tr>
     <td colspan="5">
-        <label>  Address: </label><input type="text" value={referralForm.patientadress} name="patientadress" id="patientadress" style={{width:"80%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,patientadress:text.target.value}})}></input>
+        <label>  Address: </label><input type="text" name="patientadress" id="patientadress" style={{width:"80%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,patientadress:text.target.value}})}></input>
        
     </td>
 
     <td colspan="2">
-        <label>  Tel/Cp No : </label><input type="number" value={referralForm.userNumber} name="Patientno" id="Patientno" style={{width:"60%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,Patientno:text.target.value}})}></input>
+        <label>  Tel/Cp No : </label><input type="number" name="Patientno" id="Patientno" style={{width:"60%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,Patientno:text.target.value}})}></input>
        
     </td>
     <td colspan="3">
-        <label>  Contact Person:</label><input type="text" value={referralForm.userHusband} name="contactperson" id="contactperson" style={{width:"95%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,contactperson:text.target.value}})}></input>
+        <label>  Contact Person:</label><input type="text" name="contactperson" id="contactperson" style={{width:"95%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,contactperson:text.target.value}})}></input>
        
     </td>
    
 </tr>
 <tr>
     <td colspan="2">
-        <label>  Blood Type:</label><input type="text"  value={referralForm.patientBl} name="bloodType" id="bloodType" style={{width:"25%", border:"none", borderBottom:"1px solid black" }}onChange={(text)=> setreferralForm(prev => {return {...prev,bloodType:text.target.value}})}></input>
+        <label>  Blood Type:</label><input type="text"  name="bloodType" id="bloodType" style={{width:"25%", border:"none", borderBottom:"1px solid black" }}onChange={(text)=> setreferralForm(prev => {return {...prev,bloodType:text.target.value}})}></input>
        
     </td>
 
@@ -353,16 +353,16 @@ dischargeMedication:"",
         <label> (</label><input type="text"  name="blank" id="blank" class="bottomlong" style={{width:"70%", border:"none", borderBottom:"1px solid black" }}onChange={(text)=> setreferralForm(prev => {return {...prev,blank:text.target.value}})}></input><label> )</label>
     </td>
     <td colspan="1">
-        <label>  LMP:</label><input type="text"  value={moment(referralForm.lmp,"MMMM DD, YYYY").format("YYYY/MM/DD")} name="lmp" id="lmp" class="bottomlong" style={{width:"70%", border:"none", borderBottom:"1px solid black" }}onChange={(text)=> setreferralForm(prev => {return {...prev,lmp:text.target.value}})}></input><br></br>
-        <label>  EDD:</label><input type="text" value={referralForm.edd}  name="edd" id="edd" class="bottomlong" style={{width:"70%", border:"none", borderBottom:"1px solid black" }}onChange={(text)=> setreferralForm(prev => {return {...prev,edd:text.target.value}})}></input><br></br>
-        <label> AOG:</label><input type="text" value={referralForm.aog}  name="aog" id="aog" class="bottomlong" style={{width:"70%", border:"none", borderBottom:"1px solid black" }} onChange={(text)=> setreferralForm(prev => {return {...prev,aog:text.target.value}})}></input>
+        <label>  LMP:</label><input type="text" name="lmp" id="lmp" class="bottomlong" style={{width:"70%", border:"none", borderBottom:"1px solid black" }}onChange={(text)=> setreferralForm(prev => {return {...prev,lmp:text.target.value}})}></input><br></br>
+        <label>  EDD:</label><input type="text" name="edd" id="edd" class="bottomlong" style={{width:"70%", border:"none", borderBottom:"1px solid black" }}onChange={(text)=> setreferralForm(prev => {return {...prev,edd:text.target.value}})}></input><br></br>
+        <label> AOG:</label><input type="text" name="aog" id="aog" class="bottomlong" style={{width:"70%", border:"none", borderBottom:"1px solid black" }} onChange={(text)=> setreferralForm(prev => {return {...prev,aog:text.target.value}})}></input>
      
     </td>
     <td colspan="2">
        <label>With Pre-Natal:</label> <br></br>
         <input type="checkbox" name="Yesprenatal" id="Yesprenatal" style={{margin:"1%" }}onChange={(text)=> setreferralForm(prev => {return {...prev,Yesprenatal:text.target.value}})}></input>
         <label>Yes</label>
-        <input type="checkbox"  name="Noprenatal" id="Noprenatal"onChange={(text)=> setreferralForm(prev => {return {...prev,Noprenatal:text.target.value}})}></input>
+        <input type="checkbox"  name="Noprenatal" id="Noprenatal" onChange={(text)=> setreferralForm(prev => {return {...prev,Noprenatal:text.target.value}})}></input>
         <label>No</label><br></br>
         <label>No. of PNCU</label><input type="text"  name="noPNCU" id="noPNCU" style={{width:"50%", border:"none", borderBottom:"1px solid black" }}onChange={(text)=> setreferralForm(prev => {return {...prev,noPNCU:text.target.value}})} ></input>
     </td>
@@ -972,4 +972,4 @@ dischargeMedication:"",
   );
 }
 
-export default ReferralForm;
+export default referralNodata;
