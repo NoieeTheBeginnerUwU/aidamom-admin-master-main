@@ -58,8 +58,13 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
     };
 
     const handleDateChange2 = (newDate) => {
+        let d = newDate
+        let e = moment(d).format("YYYY/MM/DD")
+        //alert(e)
+        console.log("DaTE"+date)
         setDate(newDate);
     };
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -86,7 +91,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
     const [dilates, setDilates] = React.useState('');
     const [efficases, setEfficaces] = React.useState('');
     const [fundalHeight, setFundalHeight] = React.useState('');
-    const [fetalHeathTone, setFetalHearthTone] = React.useState('');
+    const [fetalHeartTone, setFetalHeartTone] = React.useState('');
     const [urinalysis, setUrinalysis] = React.useState('');
     const [completeBloodCount, setCompleteBloodCount] = React.useState('');
     const [hepatitisB, setHepatitisB] = React.useState('');
@@ -121,7 +126,6 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
 
     const bloodPressure = `${systolic}/${diastolic}`;
     const initials = `${selectedPatient && selectedPatient.userLname ? selectedPatient.userLname[0] : ''}${selectedPatient && selectedPatient.userFname ? selectedPatient.userFname[0] : ''}`;
-
 
     const [checked, setChecked] = useState({
         urinalysis: false,
@@ -183,174 +187,182 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
         const querySnapshot = await getDocs(query(collection(database,"onlineAppointments"),where("appointmentDate","==",moment(new Date()).format("YYYY/MM/DD")),where("uid","==",selectedPatient.docid)))
         const app = doc(database, 'dashboard', '--appointments--');
         const vax = doc(database, 'dashboard', '--vaccinations--');
-        try{
-            addDoc(collection(database,"onlineAppointments"),{
-                uid: selectedPatient.docid,
-                appointmentDate: moment(new Date(),"YYYY/MM/DD").add(30,"days").format("YYYY/MM/DD"),
-                purpose: "prenatal",
-                status: "assigned by RHU",
-            })
-            await updateDoc(app, {
-                no: increment(1),
-            })
-            updateDoc(doc(database,"userData",selectedPatient.docid),{
-                lastVisit: moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY")
-            })
-            if(selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"){
-                updateDoc(doc(database,"userData",selectedPatient.docid),{
-                    lastPeriod: lmp_
-                })
-            }
-            addDoc(collection(database,"notifications"),{
-                uid: selectedPatient.docid,
-                body: "Your checkup today was saved successfully.",
-                dateCreated:  moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY"),
-                dateMade:  moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY")
-            })
-            if(l===1){
-                addDoc(collection(database,"prescription"),{
-                    uid:selectedPatient.docid,
-                    name:selectedPatient.userFname+ " "+selectedPatient.userLname,
-                    purpose: "supplements",
-                    for:"mother",
-                    vaccine:rows[0].pill,
-                    from:rows[0].from,
-                    to:rows[0].to,
-                    amountAdministered:rows[0].amount,
-                    note:rows[0].dosage,
-                    day:moment(new Date()).format("DD"),
-                    month:moment(new Date()).format("MM"),
-                    year:moment(new Date()).format("YYYY")
-                  })
-            }
-            if(l===2){
-                addDoc(collection(database,"prescription"),{
-                    uid:selectedPatient.docid,
-                    name:selectedPatient.userFname+ " "+selectedPatient.userLname,
-                    purpose: "supplements",
-                    for:"mother",
-                    vaccine:rows[0].pill,
-                    from:rows[0].from,
-                    to:rows[0].to,
-                    amountAdministered:rows[0].amount,
-                    note:rows[0].dosage,
-                    day:moment(new Date()).format("DD"),
-                    month:moment(new Date()).format("MM"),
-                    year:moment(new Date()).format("YYYY")
-                  })
-                  addDoc(collection(database,"prescription"),{
-                    uid:selectedPatient.docid,
-                    name:selectedPatient.userFname+ " "+selectedPatient.userLname,
-                    purpose: "supplements",
-                    for:"mother",
-                    vaccine:rows[1].pill,
-                    from:rows[1].from,
-                    to:rows[1].to,
-                    amountAdministered:rows[1].amount,
-                    note:rows[1].dosage,
-                    day:moment(new Date()).format("DD"),
-                    month:moment(new Date()).format("MM"),
-                    year:moment(new Date()).format("YYYY")
-                  })
-            }
-            if(l===3){
-                addDoc(collection(database,"prescription"),{
-                    uid:selectedPatient.docid,
-                    name:selectedPatient.userFname+ " "+selectedPatient.userLname,
-                    purpose: "supplements",
-                    for:"mother",
-                    vaccine:rows[0].pill,
-                    from:rows[0].from,
-                    to:rows[0].to,
-                    amountAdministered:rows[0].amount,
-                    note:rows[0].dosage,
-                    day:moment(new Date()).format("DD"),
-                    month:moment(new Date()).format("MM"),
-                    year:moment(new Date()).format("YYYY")
-                  })
-                  addDoc(collection(database,"prescription"),{
-                    uid:selectedPatient.docid,
-                    name:selectedPatient.userFname+ " "+selectedPatient.userLname,
-                    purpose: "supplements",
-                    for:"mother",
-                    vaccine:rows[1].pill,
-                    from:rows[1].from,
-                    to:rows[1].to,
-                    amountAdministered:rows[1].amount,
-                    note:rows[1].dosage,
-                    day:moment(new Date()).format("DD"),
-                    month:moment(new Date()).format("MM"),
-                    year:moment(new Date()).format("YYYY")
-                  })
-                  addDoc(collection(database,"prescription"),{
-                    uid:selectedPatient.docid,
-                    name:selectedPatient.userFname+ " "+selectedPatient.userLname,
-                    purpose: "supplements",
-                    for:"mother",
-                    vaccine:rows[2].pill,
-                    from:rows[2].from,
-                    to:rows[2].to,
-                    amountAdministered:rows[2].amount,
-                    note:rows[2].dosage,
-                    day:moment(new Date()).format("DD"),
-                    month:moment(new Date()).format("MM"),
-                    year:moment(new Date()).format("YYYY")
-                  })
-            }
-                addDoc(collection(database,"appointments"),{
-                    name:selectedPatient.userFname + selectedPatient.userLname,
+       
+        if(weight!==0&&height!==0){
+            try{
+                addDoc(collection(database,"onlineAppointments"),{
                     uid: selectedPatient.docid,
-                    appointmentDate: moment(new Date()).format("YYYY/MM/DD"),
-                    lmp: moment(selectedPatient.lastPeriod,"YYYY/MM/DD").format("MMMM DD, YYYY"),
-                    aog: !selectedPatient.lastPeriod?"No data":moment(new Date()).diff(moment(selectedPatient.lastPeriod,"YYYY/MM/DD"),"weeks") + "weeks",
-                    height: height,
-                    weight: weight,
-                    bmi: bmi,
-                    systolic: systolic,
-                    diastolic:diastolic,
-                    bp: systolic+"/"+diastolic,
-                    bpCategory:bpCategory,
-                    dilates: dilates,
-                    efficases: efficases,
-                    fundalHeight: fundalHeight,
-                    fetalHeathTone: fetalHeathTone,
-                    presentation: presentation,
-                    urinalysis: urinalysis,
-                    completeBloodCount: completeBloodCount,
-                    hepatitisB: hepatitisB,
-                    oralHealth: oralHealth,
-                    remarks: text
-                }).then(alert("A"))
-                    handleChange("")
-                    setLmp("");
-                    setHeight("");
-                    setWeight("");
-                    setSystolic("");
-                    setDiastolic("");
-                    setDilates(0);
-                    setEfficaces(0);
-                    setFetalHearthTone(0);
-                    setL(0);
-                    setFundalHeight(0);
-                    setPresentation("");
-                    setText("");
-                    setUrinalysis("")
-                    setCompleteBloodCount("")
-                    setHepatitisB("")
-                    setOralHealth("")
-                    setRows([{ pill: '', amount: 0, dosage: '', from:'', to:'' }])
-                    setChecked({
-                        urinalysis: false,
-                        cbcTest: false,
-                        hepatitisB: false,
-                        oralHealth: false,
+                    appointmentDate: moment(new Date(),"YYYY/MM/DD").add(30,"days").format("YYYY/MM/DD"),
+                    purpose: "prenatal",
+                    status: "assigned by RHU",
+                })
+                await updateDoc(app, {
+                    no: increment(1),
+                })
+                updateDoc(doc(database,"userData",selectedPatient.docid),{
+                    lastVisit: moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY")
+                })
+                if(selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"){
+                    updateDoc(doc(database,"userData",selectedPatient.docid),{
+                        lastPeriod: lmp_
                     })
-        }catch(e){
-          handleCloseAddVisitModal();
+                }
+                addDoc(collection(database,"adminLogs"),{
+    
+                })
+                addDoc(collection(database,"notifications"),{
+                    uid: selectedPatient.docid,
+                    body: "Your checkup today was saved successfully.",
+                    dateCreated:  moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY"),
+                    dateMade:  moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY")
+                })
+                if(l===1){
+                    addDoc(collection(database,"prescription"),{
+                        uid:selectedPatient.docid,
+                        name:selectedPatient.userFname+ " "+selectedPatient.userLname,
+                        purpose: "supplements",
+                        for:"mother",
+                        vaccine:rows[0].pill,
+                        from:rows[0].from,
+                        to:rows[0].to,
+                        amountAdministered:rows[0].amount,
+                        note:rows[0].dosage,
+                        day:moment(new Date()).format("DD"),
+                        month:moment(new Date()).format("MM"),
+                        year:moment(new Date()).format("YYYY")
+                      })
+                }
+                if(l===2){
+                    addDoc(collection(database,"prescription"),{
+                        uid:selectedPatient.docid,
+                        name:selectedPatient.userFname+ " "+selectedPatient.userLname,
+                        purpose: "supplements",
+                        for:"mother",
+                        vaccine:rows[0].pill,
+                        from:rows[0].from,
+                        to:rows[0].to,
+                        amountAdministered:rows[0].amount,
+                        note:rows[0].dosage,
+                        day:moment(new Date()).format("DD"),
+                        month:moment(new Date()).format("MM"),
+                        year:moment(new Date()).format("YYYY")
+                      })
+                      addDoc(collection(database,"prescription"),{
+                        uid:selectedPatient.docid,
+                        name:selectedPatient.userFname+ " "+selectedPatient.userLname,
+                        purpose: "supplements",
+                        for:"mother",
+                        vaccine:rows[1].pill,
+                        from:rows[1].from,
+                        to:rows[1].to,
+                        amountAdministered:rows[1].amount,
+                        note:rows[1].dosage,
+                        day:moment(new Date()).format("DD"),
+                        month:moment(new Date()).format("MM"),
+                        year:moment(new Date()).format("YYYY")
+                      })
+                }
+                if(l===3){
+                    addDoc(collection(database,"prescription"),{
+                        uid:selectedPatient.docid,
+                        name:selectedPatient.userFname+ " "+selectedPatient.userLname,
+                        purpose: "supplements",
+                        for:"mother",
+                        vaccine:rows[0].pill,
+                        from:rows[0].from,
+                        to:rows[0].to,
+                        amountAdministered:rows[0].amount,
+                        note:rows[0].dosage,
+                        day:moment(new Date()).format("DD"),
+                        month:moment(new Date()).format("MM"),
+                        year:moment(new Date()).format("YYYY")
+                      })
+                      addDoc(collection(database,"prescription"),{
+                        uid:selectedPatient.docid,
+                        name:selectedPatient.userFname+ " "+selectedPatient.userLname,
+                        purpose: "supplements",
+                        for:"mother",
+                        vaccine:rows[1].pill,
+                        from:rows[1].from,
+                        to:rows[1].to,
+                        amountAdministered:rows[1].amount,
+                        note:rows[1].dosage,
+                        day:moment(new Date()).format("DD"),
+                        month:moment(new Date()).format("MM"),
+                        year:moment(new Date()).format("YYYY")
+                      })
+                      addDoc(collection(database,"prescription"),{
+                        uid:selectedPatient.docid,
+                        name:selectedPatient.userFname+ " "+selectedPatient.userLname,
+                        purpose: "supplements",
+                        for:"mother",
+                        vaccine:rows[2].pill,
+                        from:rows[2].from,
+                        to:rows[2].to,
+                        amountAdministered:rows[2].amount,
+                        note:rows[2].dosage,
+                        day:moment(new Date()).format("DD"),
+                        month:moment(new Date()).format("MM"),
+                        year:moment(new Date()).format("YYYY")
+                      })
+                }
+                    addDoc(collection(database,"appointments"),{
+                        name:selectedPatient.userFname + selectedPatient.userLname,
+                        uid: selectedPatient.docid,
+                        appointmentDate: moment(new Date()).format("YYYY/MM/DD"),
+                        lmp: !selectedPatient.lastPeriod?moment(lmp_,"YYYY/MM/DD").format("MMMM DD, YYYY"):moment(selectedPatient.lastPeriod,"YYYY/MM/DD").format("MMMM DD, YYYY"),
+                        aog: !selectedPatient.lastPeriod?moment(new Date()).diff(moment(lmp_,"YYYY/MM/DD"),"weeks") + "weeks":moment(new Date()).diff(moment(selectedPatient.lastPeriod,"YYYY/MM/DD"),"weeks") + "weeks",
+                        height: height,
+                        weight: weight,
+                        bmi: bmi,
+                        systolic: systolic,
+                        diastolic:diastolic,
+                        bp: systolic+"/"+diastolic,
+                        bpCategory:bpCategory,
+                        dilates: dilates,
+                        efficases: efficases,
+                        fundalHeight: fundalHeight,
+                        fetalHeartTone: fetalHeartTone,
+                        presentation: presentation,
+                        urinalysis: urinalysis,
+                        completeBloodCount: completeBloodCount,
+                        hepatitisB: hepatitisB,
+                        oralHealth: oralHealth,
+                        remarks: text
+                    }).then(alert("Session saved to the database, thank you."))
+                        setLmp("");
+                        setHeight(0);
+                        setWeight(0);
+                        setSystolic(0);
+                        setDiastolic(0);
+                        setDilates(0);
+                        setEfficaces(0);
+                        setFetalHeartTone(0);
+                        setL(0);
+                        setFundalHeight(0);
+                        setPresentation("");
+                        setText("");
+                        setUrinalysis("")
+                        setCompleteBloodCount("")
+                        setHepatitisB("")
+                        setOralHealth("")
+                        setRows([{ pill: '', amount: 0, dosage: '', from:'', to:'' }])
+                        setChecked({
+                            urinalysis: false,
+                            cbcTest: false,
+                            hepatitisB: false,
+                            oralHealth: false,
+                        })
+            }catch(e){
+                alert(e)
+            }
         }
+
     }
     const [lmp, setLMP] = useState("");
     const ref = useRef(null)
+
+    //alert(moment(new Date()).diff(moment(lmp_,"YYYY/MM/DD"),"weeks") + "weeks")
 
     useEffect(()=>{
         //console.log(selectedDate)
@@ -467,7 +479,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                             {
                                 selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"&&
                                 <Grid item xs={selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"?6:12}>
-                                    <TextField  disableFuture  size='small' variant="standard"  label='LMP' type='date' onChange={(e)=> [setLmp(e.target.value),alert(e.target.value)]} style={{width:'50%',height:40}} />
+                                    <TextField  disableFuture  size='small' variant="standard"  label='LMP' type='date' onChange={(e)=> [setLmp(e.target.value)]} style={{width:'50%',height:40}} />
                                 </Grid>
                                 
                             }
@@ -669,8 +681,8 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                             <TextField
                                                 label="Fetal Hearth Tone"
                                                 type="number"
-                                                value={fetalHeathTone}
-                                                onChange={(text)=> setFetalHearthTone(text.target.value)}
+                                                value={fetalHeartTone}
+                                                onChange={(text)=> setFetalHeartTone(text.target.value)}
                                                 inputProps={{ min: 0, max: 10 }}
                                                 InputProps={{
                                                     endAdornment: <InputAdornment position="end">per minute</InputAdornment>,
@@ -806,7 +818,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                     label="Date of next Visit"
                                     value={date}
                                     onChange={handleDateChange2}
-                                    renderInput={(params) => <TextField {...params} />}
+                                    renderInput={(params) => <TextField onChange={()=> setDate(...params)} {...params} />}
                                     disabled={!isTextAreaValid}
                                     minDate={AdapterDayjs}
                                     disablePast

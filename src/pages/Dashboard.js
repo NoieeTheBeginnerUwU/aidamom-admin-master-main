@@ -299,7 +299,6 @@ const [year_, setYear_] = useState(moment(new Date()).format("YYYY"));
     let cwN = 0;
     let cwO = 0;
     const querySummary = await getDocs(query(collection(database, "discharge_child"), where("month", "==", month), where("year", "==", year)));
-    const querySummary2 = await getDocs(query(collection(database, "userData")));
 
     querySummary.forEach((doc) => {
       if (doc.data().healthProfessionalAttended === "Midwife") {
@@ -348,7 +347,7 @@ const [year_, setYear_] = useState(moment(new Date()).format("YYYY"));
     let normal = 0
     let under = 0
     let mothers = [];
-    querySummary2.forEach((doc) => {
+    allUsers.forEach((doc) => {
 
       if (!doc.data().lastPeriod) {
 
@@ -768,7 +767,7 @@ const [year_, setYear_] = useState(moment(new Date()).format("YYYY"));
 //         </div>
 //       </div>
 //     </div>
-<Box container sx={{ height: '100%', width: '100%', overflowY: 'auto', overflowX: 'hidden' }}>
+<Box container sx={{ height: '100%', width: '100%', overflow: 'auto', overflowX: 'hidden' }}>
 <Divider sx={{ marginBottom: 3 }}></Divider>
 <Grid container spacing={.5} >
   <Grid container ml={.5} xs={8.9} direction='row' columnGap={.5}>
@@ -1111,10 +1110,11 @@ const [year_, setYear_] = useState(moment(new Date()).format("YYYY"));
     {/*------------------------------- End Grid------------------------------ */}
   </Grid>
   <Grid item xs={3} sx={{ height:'140vh',}}>
-    <Card elevation={4} sx={{ height: 100 + '%', justifyContent: 'center' }} m={1} padding={2}>
+    <Card elevation={4} sx={{ height: 100 + '%', justifyContent: 'center' }} m={1} >
       <CardContent>
-      </CardContent >
       <Calendar_/>
+
+      </CardContent >
     </Card>
   </Grid>
 

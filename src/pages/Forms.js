@@ -12,9 +12,6 @@ import { addDoc, collection, } from 'firebase/firestore';
 //moment js
 import moment from 'moment';
 
-
-
-
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -27,7 +24,7 @@ import Consent from './consent';
 import PatientDataForm from './patientdata';
 import PatientHistoryForm from './patientHistory';
 import ClinicalCoverSheet from './clinicalCoverSheet';
-import ReferralForm from './refferalForm';
+import referralNodata from './referralNodata';
 import PrintIcon from '@mui/icons-material/Print';
 
 const useStyles = makeStyles((theme) => ({
@@ -85,7 +82,7 @@ const Reports = () => {
           <MenuItem value={'dischargesummary'}>Discharge Summary</MenuItem>
           <MenuItem value={'Consent'}>Consent Form</MenuItem>
           <MenuItem value={'ClinicalCoverSheet'}>Clinical Cover Sheet</MenuItem>
-          <MenuItem value={'RefferalForm'}>Refferal Form</MenuItem>
+          <MenuItem value={'RefferalForm'}>Referral Form</MenuItem>
         </Select>
         <Button onClick={()=> handlePrint()} style={{backgroundColor:'skyblue',color:'white',fontWeight:600,marginTop:20}}>
             <FontAwesomeIcon icon={faPrint} size='1x' color='white'/>
@@ -119,8 +116,7 @@ const Reports = () => {
       )}
        {form === 'RefferalForm' && (
         <div ref={ref}>
-        < ReferralForm/>
-        
+        < referralNodata/>
         </div>
       )}
     </div>
