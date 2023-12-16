@@ -730,6 +730,7 @@ const Dashboard = ({ counter }) => {
     let cwN = 0;
     let cwO = 0;
     const querySummary = await getDocs(query(collection(database, "discharge_child"), where("month", "==", month), where("year", "==", year)));
+    const querySummary2 = await getDocs(query(collection(database, "userData")));
 
     querySummary.forEach((doc) => {
       if (doc.data().healthProfessionalAttended === "Midwife") {
@@ -778,7 +779,7 @@ const Dashboard = ({ counter }) => {
     let normal = 0
     let under = 0
     let mothers = [];
-    allUsers.forEach((doc) => {
+    querySummary2.forEach((doc) => {
 
       if (!doc.data().lastPeriod) {
 
@@ -1157,67 +1158,68 @@ const Dashboard = ({ counter }) => {
 
 
 
-//           </div>
-//           <div style={{ width: '25%', height: 600, backgroundColor: 'ghostwhite', borderTop: '2px solid lightgrey', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start' }}>
-//             <div style={{ display: 'flex', flexDirection: 'column', width: '97%', margin: '1%', alignItems: 'center', justifyContent: 'space-evenly', height: '92%', color: 'black', backgroundColor: 'ghostwhite' }}>
-//               <div className='calendar-container'>
-//                 <Calendar onChange={setDate} value={date} />
-//               </div>
-//               <p style={{ fontSize: 16 }}>Your appointments for {date.toDateString()}</p>
-//               <div style={{ width: '100%', height: '80%', backgroundColor: 'white', overflowY: 'scroll', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-//                 {
-//                   clickedDayApp.length < 1 ?
-//                     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-//                       <div style={{ width: '80%', height: '90%', marginTop: '10%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-//                         <NoData />
-//                       </div>
-//                       <p style={{ color: 'black', fontSize: 20 }}>NO APPOINTMENTS ON THIS DATE</p>
-//                     </div>
-//                     :
-//                     <>
-//                       {
-//                         clickedDayApp.map((doc) => (
-//                           <div style={{ width: '98%', height: 40, marginTop: 10, backgroundColor: 'rgb(0,0,60)', display: 'flex', alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
-//                             <div style={{ width: '50%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start' }}>
-//                               <p style={{ fontSize: 10, color: 'white', marginLeft: 20 }}>{doc.name}</p>
-//                             </div>
-//                             <div style={{ width: '20%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start' }}>
-//                               <p style={{ fontSize: 12, color: 'white', marginLeft: 20 }}>{doc.time}</p>
-//                             </div>
-//                             <div style={{ width: '30%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start' }}>
-//                               <p style={{ fontSize: 12, color: 'white', marginLeft: 20 }}>{doc.purpose}</p>
-//                             </div>
-//                           </div>
-//                         ))
-//                       }
-//                     </>
-//                 }
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-<Box container sx={{ height: '100%', width: '100%', overflowY: 'auto', overflowX: 'hidden' }}>
-<Divider sx={{ marginBottom: 3 }}></Divider>
-<Grid container spacing={.5} >
-  <Grid container ml={.5} xs={8.9} direction='row' columnGap={.5}>
+    //           </div>
+    //           <div style={{ width: '25%', height: 600, backgroundColor: 'ghostwhite', borderTop: '2px solid lightgrey', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start' }}>
+    //             <div style={{ display: 'flex', flexDirection: 'column', width: '97%', margin: '1%', alignItems: 'center', justifyContent: 'space-evenly', height: '92%', color: 'black', backgroundColor: 'ghostwhite' }}>
+    //               <div className='calendar-container'>
+    //                 <Calendar onChange={setDate} value={date} />
+    //               </div>
+    //               <p style={{ fontSize: 16 }}>Your appointments for {date.toDateString()}</p>
+    //               <div style={{ width: '100%', height: '80%', backgroundColor: 'white', overflowY: 'scroll', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    //                 {
+    //                   clickedDayApp.length < 1 ?
+    //                     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+    //                       <div style={{ width: '80%', height: '90%', marginTop: '10%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    //                         <NoData />
+    //                       </div>
+    //                       <p style={{ color: 'black', fontSize: 20 }}>NO APPOINTMENTS ON THIS DATE</p>
+    //                     </div>
+    //                     :
+    //                     <>
+    //                       {
+    //                         clickedDayApp.map((doc) => (
+    //                           <div style={{ width: '98%', height: 40, marginTop: 10, backgroundColor: 'rgb(0,0,60)', display: 'flex', alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
+    //                             <div style={{ width: '50%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start' }}>
+    //                               <p style={{ fontSize: 10, color: 'white', marginLeft: 20 }}>{doc.name}</p>
+    //                             </div>
+    //                             <div style={{ width: '20%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start' }}>
+    //                               <p style={{ fontSize: 12, color: 'white', marginLeft: 20 }}>{doc.time}</p>
+    //                             </div>
+    //                             <div style={{ width: '30%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start' }}>
+    //                               <p style={{ fontSize: 12, color: 'white', marginLeft: 20 }}>{doc.purpose}</p>
+    //                             </div>
+    //                           </div>
+    //                         ))
+    //                       }
+    //                     </>
+    //                 }
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    <Box container sx={{ overflowY: 'auto', overflowX: 'hidden' }}>
+      <Divider sx={{ marginBottom: 1 }}></Divider>
+      <Grid container>
+        <Grid container ml={.5} xs={8.9} direction='row' >
 
-    
-    {/*------------------------------- Grid 1 Appoinment------------------------------- */}
-    <Grid container item xs={4.5} ml={.5} mb={3} padding={2} sx={{ minHeight: '7vh', minWidth: '8%', }} component={Paper}>
-      <Grid xs={3} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: "white", backgroundColor: '#486DF1' }}><EventNoteIcon fontSize='72' color="white" /></Box></Grid>
-      <Grid xs={4.5} >
-        <Grid xs={12} > <Box fontSize={'medium'} ml={1}fontWeight='500'>Appointments</Box></Grid>
-        <Grid xs={12}> <Box fontSize='2em' ml={1} fontWeight='700' color={'#4E4B66'}>{_appointments}</Box></Grid>
-      </Grid>
-     
-      <Divider  orientation="vertical" flexItem  sx={{ mx: 1 }}/>
-      
-      <Grid xs={3} >
-        <Grid xs={12}> <Box fontSize={'medium '} ml={1} fontWeight='600' color={'#F4B740'}>Upcoming</Box></Grid>
-        <Grid xs={12}> <Box fontSize='2em' ml={1} fontWeight='800' color={'#486DF1'}>{pendings_}</Box></Grid>
-      </Grid>
+          <Grid xs={12}>
+            <Grid container xs={12}marginTop={2} >
+              {/*------------------------------- Grid 1 Appoinment------------------------------- */}
+              <Grid container item xs={5} ml={.5} padding={2} sx={{ maxHeight: '15vh', minWidth: '8%', }} component={Paper}  >
+                <Grid xs={3} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60%', color: "white", backgroundColor: '#486DF1' }}><EventNoteIcon fontSize='72' color="white" /></Box></Grid>
+                <Grid xs={4.5} >
+                  <Grid xs={12} > <Box fontSize={'medium'} ml={1} fontWeight='500'>Appointments</Box></Grid>
+                  <Grid xs={12}> <Box fontSize='2em' ml={1} fontWeight='700' color={'#4E4B66'}>{_appointments}</Box></Grid>
+                </Grid>
+
+                <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+
+                <Grid xs={3} >
+                  <Grid xs={12}> <Box fontSize={'medium '} ml={1} fontWeight='600' color={'#F4B740'}>Upcoming</Box></Grid>
+                  <Grid xs={12}> <Box fontSize='2em' ml={1} fontWeight='800' color={'#486DF1'}>{pendings_}</Box></Grid>
+                </Grid>
 
 
 
@@ -1527,18 +1529,20 @@ const Dashboard = ({ counter }) => {
   </Box>
 </Grid>
 
-    </Grid>
-
-    </Grid>
-    {/*------------------------------- End Grid------------------------------ */}
-  </Grid>
-  <Grid item xs={3} sx={{ height:'140vh',}}>
-    <Card elevation={4} sx={{ height: 100 + '%', justifyContent: 'center' }} m={1} padding={2}>
-      <CardContent>
-      </CardContent >
-      <Calendar_/>
-    </Card>
-  </Grid>
+</Grid>
+</Grid>
+</Grid>
+ </Grid>
+                  
+          {/*------------------------------- End Grid------------------------------ */}
+        </Grid>
+        <Grid item xs={3} sx={{ height: '140vh', }}>
+          <Card elevation={4} sx={{ height: 100 + '%', justifyContent: 'center' }} m={1} padding={2}>
+            <CardContent>
+            </CardContent >
+            <Calendar_ />
+          </Card>
+        </Grid>
 
 
 
