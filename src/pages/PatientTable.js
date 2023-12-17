@@ -47,6 +47,10 @@ import ReferralForm from './refferalForm';
 import TablePagination from '@mui/material/TablePagination';
 //React to Priont
 
+//copied forms
+import PatientDataForm2 from './patientdata2';
+import Consent2 from './consent2';
+
 const useStyles = makeStyles({
   root: {
     '& > .MuiGrid-item': {
@@ -105,6 +109,9 @@ function PatientTable({ handleSubmit, userData }) {
   const [value3, setValue3] = useState('');
   const [selectValue2, setSelectValue2] = useState('');
   const [selectValue3, setSelectValue3] = useState('');
+
+  //inner inner tabs
+  const [activeInner, setActiveInner] = useState(0);
 
   const handleRadioChange = (event) => {
     setValue2(event.target.value);
@@ -416,6 +423,13 @@ function PatientTable({ handleSubmit, userData }) {
 
   const [value, setValue] = React.useState('1');
 
+  //add child
+
+  const [dischargeDob, setDischargeDob] = useState("");
+  const [dischargeDate, setDischargeDate] = useState("");
+
+  //end
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -648,7 +662,8 @@ function PatientTable({ handleSubmit, userData }) {
     <AddVisits
       selectedPatient={selectedRow}
       handleCloseAddVisitModal={handleCloseAddVisitModal}
-      onClick={fetchData}
+      fetchData={fetchData}
+
     />
 
   );
@@ -1100,7 +1115,7 @@ function PatientTable({ handleSubmit, userData }) {
     childMname: "",
     childSuffix: "",
     childDob: "",
-    childWeight: "",
+    childWeight: 0,
     childGender: "",
     typeOfDelivery: " Normal",
     healthProfessionalAttended: "",
@@ -1125,6 +1140,17 @@ function PatientTable({ handleSubmit, userData }) {
     month: moment(new Date()).format("MM"),
     year: moment(new Date()).format("YYYY"),
   })
+
+  let count = 0
+  if (selectedRow.userChildDateOfDelivery1 !== "") {
+    count = 1
+  }
+  if (selectedRow.userChildDateOfDelivery1 !== "" && selectedRow.userChildDateOfDelivery2 !== "") {
+    count = 2
+  }
+  if (selectedRow.userChildDateOfDelivery1 !== "" && selectedRow.userChildDateOfDelivery2 !== "" && selectedRow.userChildDateOfDelivery3 !== "") {
+    count = 3
+  }
 
   const handleDischarge = async () => {
     try {
@@ -1167,22 +1193,52 @@ function PatientTable({ handleSubmit, userData }) {
         month: moment(new Date()).format("MM"),
         year: moment(new Date()).format("YYYY")
       })
+      if(count===0){
+        updateDoc(doc(database,"userData",selectedRow.docid),{
+          userChildDateOfDelivery1: discharge.childDob,
+          userChildTypeOfDelivery1: discharge.typeOfDelivery,
+          userChildBirthOutcome1: "Alive",
+          userChildNumberOfChildDelivered1: 1,
+          userChildComplication1: "none",
+        })
+      }
+      if(count===1){
+        updateDoc(doc(database,"userData",selectedRow.docid),{
+          userChildDateOfDelivery2: discharge.childDob,
+          userChildTypeOfDelivery2: discharge.typeOfDelivery,
+          userChildBirthOutcome2: "Alive",
+          userChildNumberOfChildDelivered1: 1,
+          userChildComplication2: "none",
+        })
+      }
+      if(count===2){
+        updateDoc(doc(database,"userData",selectedRow.docid),{
+          userChildDateOfDelivery3: discharge.childDob,
+          userChildTypeOfDelivery3: discharge.typeOfDelivery,
+          userChildBirthOutcome3: "Alive",
+          userChildNumberOfChildDelivered3: 1,
+          userChildComplication3: "none",
+        })
+      }
+      if(count===3){
+        updateDoc(doc(database,"userData",selectedRow.docid),{
+          userChildDateOfDelivery4: discharge.childDob,
+          userChildTypeOfDelivery4: discharge.typeOfDelivery,
+          userChildBirthOutcome4: "Alive",
+          userChildNumberOfChildDelivered4: 1,
+          userChildComplication4: "none",
+        })
+      }
+      else{
+        alert("Error.")
+      }
     } catch (e) {
       alert(e)
     }
   }
   console.log(discharge);
 
-  let count = 0
-  if (selectedRow.userChildDateOfDelivery1 !== "") {
-    count = 1
-  }
-  if (selectedRow.userChildDateOfDelivery1 !== "" && selectedRow.userChildDateOfDelivery2 !== "") {
-    count = 2
-  }
-  if (selectedRow.userChildDateOfDelivery1 !== "" && selectedRow.userChildDateOfDelivery2 !== "" && selectedRow.userChildDateOfDelivery3 !== "") {
-    count = 3
-  }
+
 
   const [page, setPage] = React.useState(2);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -1292,18 +1348,12 @@ function PatientTable({ handleSubmit, userData }) {
 
 
 
-      <div style={{ height: '100%', width: '100%', marginTop: '5px' }}>
+      <div style={{ height: 4000, width: '100%', marginTop: '5px' }}>
         <DataGrid
           headerHeight={20}
           rows={userSearch}
           columns={columns}
-
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 20 },
-            },
-          }}
-          pageSizeOptions={[5, 10]}
+          pageSizeOptions={[5, 20]}
           disableSelectionOnClick
           density='compact'
         />
@@ -1324,14 +1374,6 @@ function PatientTable({ handleSubmit, userData }) {
           boxShadow: 24,
           p: 5,
         }}>
-        <TablePagination
-          component="div"
-          count={100}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
           <Box sx={{ flexGrow: 1 }}>
 
             <Grid container spacing={1} rowSpacing={1}  >
@@ -2158,9 +2200,9 @@ function PatientTable({ handleSubmit, userData }) {
                         <TableBody>
                           {onlineAppointments.length > 0 ? (
                             onlineAppointments.map((row1) => (
-                              <TableRow key={row1.appointmentDate}>
+                              <TableRow key={moment(row1.appointmentDate).format("MMMM DD, YYYY")}>
                                 <TableCell component="th" scope="row">
-                                  {row1.appointmentDate}
+                                  {moment(row1.appointmentDate).format("MMMM DD, YYYY")}
                                 </TableCell>
                                 <TableCell align="right">{row1.purpose}</TableCell>
                                 <TableCell align="right">{row1.status}</TableCell>
@@ -2199,8 +2241,8 @@ function PatientTable({ handleSubmit, userData }) {
                         <TableBody>
                           {appointments.length > 0 ? (
                             appointments.map((row2) => (
-                              <TableRow key={row2.appointmentDate}>
-                                <TableCell>{row2.appointmentDate}</TableCell>
+                              <TableRow key={moment(row2.appointmentDate).format("MMMM DD, YYYY")}>
+                                <TableCell>{moment(row2.appointmentDate).format("MMMM DD, YYYY")}</TableCell>
                                 <TableCell>{row2.systolic}/{row2.diastolic}</TableCell>
                                 <TableCell>{row2.weight}</TableCell>
                                 <TableCell>{row2.bmi}</TableCell>
@@ -2252,12 +2294,16 @@ function PatientTable({ handleSubmit, userData }) {
                   {/* Your content goes here */}
                 
                   <Typography variant="h6" component="div" style={{fontWeight:'600'}}>
-                  PRE-NATAL VISIT REPORTS
+                  PRE-NATAL VISIT RELATED REPORTS
                   </Typography>
-              
-
-                  <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflowY: 'scroll' }}>
-                    <div className='container' style={{ marginTop: '40%' }}>
+                  <Button onClick={()=> setActiveInner(0)}>Prenatal Report</Button>
+                  <Button onClick={()=> setActiveInner(1)}>Patient Data Form</Button>
+                  <Button onClick={()=> setActiveInner(2)}>Consent Form</Button>
+                  {/**---------------------------------- Forms---------------------------------- */}
+                  {
+                    activeInner===0&&
+                    <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflowY: 'scroll' }}>
+                    <div className='container' style={{ marginTop: '10%' }}>
                       <div style={{ width: '100%', height: 200, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{ marginBottom: 30, fontSize: 18, width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} class="header " align=" center">
                           <div className='adminPic' style={{ width: 120, height: 120, borderRadius: 150, marginRight: 10, padding: 10, fontSize: 14, marginTop: '3vh', }} />
@@ -2304,7 +2350,7 @@ function PatientTable({ handleSubmit, userData }) {
                                           <TableCell>{row2.bmi}</TableCell>
                                           <TableCell align='center'>{row2.aog}</TableCell>
                                           <TableCell>{row2.fundalHeight}</TableCell>
-                                          <TableCell>{row2.fetalMovement}</TableCell>
+                                          <TableCell>{row2.fetalHeartTone} b/m</TableCell>
                                           <TableCell>{row2.presentation}</TableCell>
                                         </TableRow>
                                       ))
@@ -2328,6 +2374,19 @@ function PatientTable({ handleSubmit, userData }) {
                       </div>
                     </div>
                   </div>
+                  }
+                  {
+                    activeInner===1&&
+                    <div style={{width:'100%',height:'100%',overflow:'scroll',display:'flex',alignItems:'center',justifyContent:'center'}}>
+                      <PatientDataForm2 selelectedRow={selectedRow}/>
+                    </div>
+                  }
+                  {
+                    activeInner===2&&
+                    <div style={{width:'100%',height:'100%',}}>
+                      <Consent2 selectedRow={selectedRow}/>
+                    </div>
+                  }
                 </Box>
               </Modal>
               {/* -----------------------------------------------------------------------------------------------------Modal for Refferal----------------------------------------------------------------------------------------------------- */}

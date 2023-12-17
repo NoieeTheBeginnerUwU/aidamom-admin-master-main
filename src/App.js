@@ -21,6 +21,8 @@ import Systemreport from './pages/Systemreport';
 import Tables from './pages/Tables';
 import Screening from './Screening';
 import Mcare from './Mcare';
+import OutPatient from './pages/OutPatient';
+
 import {
   Box,
   Grid,
@@ -266,11 +268,11 @@ try {
       <header>
       {
                isSignedIn===false?
-               <div style={{width:'100%',height:'100vh',backgroundColor:'white',display:'flex',flexDirection:'row',fontFamily:'verdana',overflow:'hidden'}}>
+               <div style={{width:'100%',height:'100vh',transition:'ease-in-out',transitionDuration:'.5s',backgroundColor:'white',display:'flex',flexDirection:'row',fontFamily:'verdana',overflow:'hidden'}}>
                 {
                   signIN===true?
                   <>
-      <Box sx={{ width: '60%', height: '100%', backgroundColor: 'white' }}>
+      <Box sx={{ width: '60%', height: '100%', backgroundColor: 'white',transition:'ease-in-out',transitionDuration:'1s',}}>
         {/* Additional content for the left side */}
         <div className='bg' style={{width:'100%',height:'100%',backgroundColor:'navy',}}/>
         <div style={{}}>{/* Add your content here */}</div>
@@ -285,7 +287,7 @@ try {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'space-evenly',
-          
+
         }}
       >
         <Box
@@ -298,10 +300,11 @@ try {
             alignItems: 'center',
             justifyContent: 'space-evenly',
           }}
-        >   <Typography variant="h4">Daet RHU Birthing Center Admin</Typography>
-        <Avatar sx={{ m: 1, bgcolor: 'primary.main', width:70, height:70 }}>
-        <LockOutlinedIcon />
-      </Avatar>
+        >   
+                    <Avatar sx={{  width:100, height:100 }}>
+            <div className='wew4' style={{width:'100%',height:'100%',borderRadius:'50%'}} />
+          </Avatar>
+          <Typography variant="h4">Daet RHU III - Birthing Center Admin</Typography>
           {message}
           <TextField
             onMouseOver={() => setActiveIN('email')}
@@ -391,9 +394,8 @@ try {
                   :
                   <>
                    
-      <Grid container component="main" sx={{ height: '100vh' }}>
-       
-        <Grid item xs={false} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid container component="main" sx={{ height: '100vh',width:'100%',display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center',transition:'ease-in-out',transitionDuration:'.5s'}}>
+        <Grid item xs={false} component={Paper} elevation={6} sx={{backgroundColor:'white',width:'40%',height:'100%'}} square>
           <Box
             sx={{
               my: 8,
@@ -403,10 +405,11 @@ try {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' , width:70, height:70}}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
+            <Avatar sx={{  width:100, height:100 }}>
+            <div className='wew4' style={{width:'100%',height:'100%',borderRadius:'50%'}} />
+          </Avatar>
+          <Typography variant="h4">Daet RHU III - Birthing Center Admin</Typography>
+            <Typography component="h1" mt={'20%'} variant="h5">
               Reset your password
             </Typography>
             <Box
@@ -475,15 +478,15 @@ try {
             <Box>
               <Typography
                 onClick={() => setSignIn(true)}
-                sx={{ cursor: 'pointer', color: 'skyblue', outlineWidth: 10, outlineColor: 'navy' }}
+                sx={{ cursor: 'pointer', color: 'black', outlineWidth: 10, outlineColor: 'navy' }}
               >
                 Sign In?
               </Typography>
             </Box>
           </Box>
         </Grid>
+        <div className='bg' style={{width:'60%',height:'100%',backgroundColor:'navy',transition:'ease-in-out',transitionDuration:'1s',}}/>
       </Grid>
-   
                   </>
                 }
                </div>
@@ -559,7 +562,7 @@ try {
                   <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Forms"?"white":"rgb(100,100,100)"}}  color="primary">
                     <FileCopySharp fontSize="large" color="" />
                   </Badge>
-                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Forms"?"none":"none",color:active==="Forms"?"white":"rgb(100,100,100)"}}>Health Records</h3>
+                  <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Forms"?"none":"none",color:active==="Forms"?"white":"rgb(100,100,100)"}}>Printables</h3>
                 </div>
               </Link>
               <Link to="Log" style={{textDecoration:'none'}}>

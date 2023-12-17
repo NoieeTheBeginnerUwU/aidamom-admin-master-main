@@ -48,7 +48,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 
-export default function AddVisits({ selectedPatient, handleCloseAddVisitModal }) {
+export default function AddVisits({ selectedPatient, handleCloseAddVisitModal, fetchData }) {
 
     const [text, setText] = useState('');
     const [date, setDate] = useState(null);
@@ -58,13 +58,15 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
     };
 
     const handleDateChange2 = (newDate) => {
-        let d = newDate
+        let d = dayjs(newDate).format()
         let e = moment(d).format("YYYY/MM/DD")
-        //alert(e)
-        console.log("DaTE"+date)
-        setDate(newDate);
+        alert(e)
+        setDate(e);
     };
 
+    useState(()=>{
+        
+    },[date])
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -82,7 +84,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
     const handleChange1 = (event) => {
         setPresentation(event.target.value);
     };
-
+    const [lmp_, setLmp] = useState("");
     const [selectedDate, handleDateChange] = React.useState("");
     const [height, setHeight] = React.useState('');
     const [weight, setWeight] = React.useState('');
@@ -138,7 +140,12 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
         setChecked({ ...checked, [event.target.name]: event.target.checked });
     };
 
-
+    const handleChangeLMP = (lmp) => {
+        let a = dayjs(lmp).format()
+        let b = moment(a).format("YYYY/MM/DD");
+        setLmp(b);
+ 
+    };
 
     const [rows, setRows] = useState([{ pill: '', amount: 0, dosage: '', from:'', to:'' }]);
     const [open, setOpen] = useState(false);
@@ -181,7 +188,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
         }
     }
 
-    const [lmp_, setLmp] = useState("");
+
     const submitVisit = async() =>{
         let arr = [];
         const querySnapshot = await getDocs(query(collection(database,"onlineAppointments"),where("appointmentDate","==",moment(new Date()).format("YYYY/MM/DD")),where("uid","==",selectedPatient.docid)))
@@ -192,7 +199,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
             try{
                 addDoc(collection(database,"onlineAppointments"),{
                     uid: selectedPatient.docid,
-                    appointmentDate: moment(new Date(),"YYYY/MM/DD").add(30,"days").format("YYYY/MM/DD"),
+                    appointmentDate: date,
                     purpose: "prenatal",
                     status: "assigned by RHU",
                 })
@@ -202,21 +209,21 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                 updateDoc(doc(database,"userData",selectedPatient.docid),{
                     lastVisit: moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY")
                 })
-                if(selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"){
+                if(selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"||!selectedPatient.lastPeriod){
                     updateDoc(doc(database,"userData",selectedPatient.docid),{
                         lastPeriod: lmp_
                     })
                 }
                 addDoc(collection(database,"adminLogs"),{
-    
+                    
                 })
                 addDoc(collection(database,"notifications"),{
                     uid: selectedPatient.docid,
-                    body: "Your checkup today was saved successfully.",
+                    body: "Thank you for visiting, your next checkup will be on ." + date,
                     dateCreated:  moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY"),
                     dateMade:  moment(new Date(),"YYYY/MM/DD").format("MMMM DD, YYYY")
                 })
-                if(l===1){
+                if(rows.length===1){
                     addDoc(collection(database,"prescription"),{
                         uid:selectedPatient.docid,
                         name:selectedPatient.userFname+ " "+selectedPatient.userLname,
@@ -232,7 +239,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                         year:moment(new Date()).format("YYYY")
                       })
                 }
-                if(l===2){
+                if(rows.length===2){
                     addDoc(collection(database,"prescription"),{
                         uid:selectedPatient.docid,
                         name:selectedPatient.userFname+ " "+selectedPatient.userLname,
@@ -262,7 +269,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                         year:moment(new Date()).format("YYYY")
                       })
                 }
-                if(l===3){
+                if(rows.length===3){
                     addDoc(collection(database,"prescription"),{
                         uid:selectedPatient.docid,
                         name:selectedPatient.userFname+ " "+selectedPatient.userLname,
@@ -311,7 +318,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                         uid: selectedPatient.docid,
                         appointmentDate: moment(new Date()).format("YYYY/MM/DD"),
                         lmp: !selectedPatient.lastPeriod?moment(lmp_,"YYYY/MM/DD").format("MMMM DD, YYYY"):moment(selectedPatient.lastPeriod,"YYYY/MM/DD").format("MMMM DD, YYYY"),
-                        aog: !selectedPatient.lastPeriod?moment(new Date()).diff(moment(lmp_,"YYYY/MM/DD"),"weeks") + "weeks":moment(new Date()).diff(moment(selectedPatient.lastPeriod,"YYYY/MM/DD"),"weeks") + "weeks",
+                        aog: !selectedPatient.lastPeriod?moment(new Date(),"YYYY/MM/DD").diff(moment(lmp_,"YYYY/MM/DD"),"weeks"):moment(new Date()).diff(moment(selectedPatient.lastPeriod,"YYYY/MM/DD"),"weeks"),
                         height: height,
                         weight: weight,
                         bmi: bmi,
@@ -368,23 +375,11 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
         //console.log(selectedDate)
     },[selectedDate])
 
+    let d = dayjs(date).format()
+    console.log("Date: " + d)
+    console.log("Formatted: "+ moment(d).format("YYYY/MM/DD"))
 
-        try{
-            if(rows[0].pill!==undefined){
-                console.log("ROW 1: " + rows[0].pill)
-    
-            } if(rows[1].pill!==undefined){
-                console.log("ROW 1: " + rows[0].pill)
-                console.log("ROW 2: " + rows[1].pill)
-            }
-            if(rows[2].pill!==undefined){
-                console.log("ROW 1: " + rows[0].pill)
-                console.log("ROW 2: " + rows[1].pill)
-                console.log("ROW 3: " + rows[2].pill)
-            }
-        }catch(e){
-            console.log("ERROR BOI")
-        }
+    console.log(rows.length)
 
     return (
         <div>
@@ -471,7 +466,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                                     onChange={(newValue) => {
                                         [handleDateChange(newValue)];
                                     }}
-                                    renderInput={(params) => <TextField onChange={(text)=> alert(text.target.value)} {...params} variant="standard" fullWidth />}
+                                    renderInput={(params) => <TextField onChange={(text)=> console.log(text.target.value)} {...params} variant="standard" fullWidth />}
                                  // Restrict date selection to today and past dates
                                 />
                             </Grid>
@@ -479,7 +474,18 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
                             {
                                 selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"&&
                                 <Grid item xs={selectedPatient.lastPeriod===""||selectedPatient.lastPeriod==="No data"?6:12}>
-                                    <TextField  disableFuture  size='small' variant="standard"  label='LMP' type='date' onChange={(e)=> [setLmp(e.target.value)]} style={{width:'50%',height:40}} />
+                                <DatePicker
+                                    type='date'
+                                    label="Last Menstrual Period"
+                                    fullWidth
+                                    size='small'
+                                    value={lmp}
+                                    onChange={(newValue) => {
+                                        [handleChangeLMP(newValue)];
+                                    }}
+                                    renderInput={(params) => <TextField onChange={(text)=> console.log(text.target.value)} {...params} variant="standard" fullWidth />}
+                                 // Restrict date selection to today and past dates
+                                />
                                 </Grid>
                                 
                             }
@@ -825,7 +831,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal })
 
                                 />
                                 <Box marginTop={2}>
-                                <Button onClick={()=> submitVisit()} type="submit" variant="contained" color="primary" disabled={!isFormValid} >
+                                <Button onClick={()=> [submitVisit(),fetchData]} type="submit" variant="contained" color="primary" disabled={!isFormValid} >
                                     Submit
                                 </Button>
                                 </Box>

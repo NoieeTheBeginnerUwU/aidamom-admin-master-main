@@ -106,9 +106,10 @@ input{
 	height: 100%;
 	background-color: rgba(245, 245, 245, .2);
 	align-self: center;
-	background-image: url("/public/bggg.jpg");
+	background-image: url("/public/RHU3.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
+  opacity: 100%;
 }
 
 .QR{

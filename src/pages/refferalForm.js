@@ -235,7 +235,7 @@ dischargeMedication:"",
     
 <>
 
-<div className="container" onClick={()=> handlePrint()} ref={ref}>
+<div className="container" ref={ref}>
 <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
       <Box className="header" textAlign="center">
         <h4><strong>Republic of the Philippines</strong></h4>

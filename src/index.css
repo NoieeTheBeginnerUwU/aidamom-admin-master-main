@@ -44,14 +44,24 @@ code {
 	width:30%;
 	height:30%;
 	border-radius:30%;
-	margin-right: 10%;
-	margin-top: -6%;
 	align-self:center;
 	background-image: url("../public/RHU.jpg");
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
   }
+  .wew4{
+    width:100%;
+    height:100%;
+    padding: 1%;
+    border-radius:100%;
+    align-self:center;
+    background-image: url("../public/RHU.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+    }
 
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
 

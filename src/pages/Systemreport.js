@@ -210,7 +210,7 @@ const Systemreport = () => {
           </div>
         </div>
       </div>
-      <div class="container1" style={{ overflowY: 'scroll', padding: 10 }}>
+      <div class="container1" style={{ overflowY:'scroll',scrollbarWidth:'none',msOverflowStyle:"none",padding: 10, boxShadow:'0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)-10px 5px 20px 5px lightblue'}}>
         <div ref={componentRef} className='container' style={{ width: 800, height: 1000, color: 'black', alignSelf: 'center', padding: 20, fontSize: 14, marginTop: '1vh', borderRadius: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly' }}>
           <div style={{ width: '100%', height: 200, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ marginBottom: 60, fontSize: 18, width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} class="header " align=" center">
@@ -232,7 +232,7 @@ const Systemreport = () => {
             <Box>
               <Typography fontSize={'14px'}>
                 <Box component="span" fontWeight={600}>
-                  Report Summary: </Box> RHU III Birthing Center - November 2023
+                  Report Summary: </Box> RHU III Birthing Center - <strong>{moment(month).format("MMMM")} {year_}</strong>
               </Typography>
             </Box>
             <br></br>
@@ -356,34 +356,36 @@ const Systemreport = () => {
                 <Box component="span" fontSize={16} fontWeight={600}>
                   Observations: </Box>
                 <Box>
-                  - <strong>(Number) </strong>recorded births were successfully delivered by Health Professionals.<br />
-                  - <strong>(Number)</strong> stillbirths, <strong>(Number) </strong>miscarriages were reported, indicating positive outcomes for the month.<br />
-                  - <strong>(Number)</strong> Normal weight, <strong>(number)</strong> Underweight,<strong> (Number)</strong> Overweight<br />
-                  - The male-to-female ratio for the month was 2:0 <strong>(number) </strong>.
+                  - <strong>{todVag} </strong>recorded births were successfully delivered by Health Professionals.<br />
+                  - <strong>{0}</strong> stillbirths, <strong>{0} </strong>miscarriages were reported, indicating positive outcomes for the month.<br />
+                  - <strong>{childWeightN}</strong> Normal weight, <strong>{childWeightL}</strong> Underweight,<strong>{childWeightO}</strong> Overweight<br />
+                  - The male-to-female ratio for the month was <strong>{todMal}</strong>:<strong>{todFal}</strong>.
                 </Box>
               </Typography>
             </Box>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'end', justifyContent: 'end' }}>
+          <div style={{width:'100%', display: 'flex', flexDirection: 'column', alignItems: 'end', justifyContent: 'end' }}>
               <div>
                 <input
                   type='text'
                   style={{
                     marginTop: 35,
-                    width: 200,
+                    width: 250,
                     height: 20,
                     fontWeight: 600,
                     outline: 'none',
                     backgroundColor: 'transparent',
-                    textAlign: 'right'
+                    textAlign: 'center',
+
                   }}
                 />
-                <p style={{ textAlign: 'right' }}>Officer In Charge</p>
+                <p style={{ textAlign: 'center',}}>Officer In Charge</p>
               </div>
             </div>
 
           </div>
         </div>
-      </div>
+      </div> 
+      <br/>
     </div>
   )
 }
