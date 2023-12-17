@@ -331,7 +331,7 @@ dischargeMedication:"",
     </td>
 
     <td colspan="2">
-        <label>  Tel/Cp No : </label><input type="number" value={referralForm.userNumber} name="Patientno" id="Patientno" style={{width:"60%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,Patientno:text.target.value}})}></input>
+        <label>  Tel/Cp No : </label><input type="number" value={referralForm.Patientno} name="Patientno" id="Patientno" style={{width:"60%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,Patientno:text.target.value}})}></input>
        
     </td>
     <td colspan="3">
@@ -342,7 +342,7 @@ dischargeMedication:"",
 </tr>
 <tr>
     <td colspan="2">
-        <label>  Blood Type:</label><input type="text"  value={referralForm.patientBl} name="bloodType" id="bloodType" style={{width:"25%", border:"none", borderBottom:"1px solid black" }}onChange={(text)=> setreferralForm(prev => {return {...prev,bloodType:text.target.value}})}></input>
+        <label>  Blood Type:</label><input type="text"  value={selectedRow.userBloodType} name="bloodType" id="bloodType" style={{width:"25%", border:"none", borderBottom:"1px solid black" }}onChange={(text)=> setreferralForm(prev => {return {...prev,bloodType:text.target.value}})}></input>
        
     </td>
 
