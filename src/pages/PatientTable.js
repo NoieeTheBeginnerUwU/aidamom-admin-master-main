@@ -705,7 +705,7 @@ function PatientTable({ handleSubmit, userData }) {
         userData.push({
           id: i++,
           docid: doc.id,
-          aog: moment(new Date(), "YYYY/MM/DD").diff(doc.data().lastPeriod, "weeks") + " weeks",
+          aog: !doc.data().lastPeriod?"No data":moment(new Date(), "YYYY/MM/DD").diff(doc.data().lastPeriod, "weeks") + " weeks",
           lastVisit: !doc.data().lastVisit ? "No Data" : doc.data().lastVisit,
           lastPeriod: !doc.data().lastPeriod ? "No data" : doc.data().lastPeriod,
           modLmp: !doc.data().lastPeriod? "No data": moment(doc.data().lastPeriod).format("MMMM DD, YYYY"),
