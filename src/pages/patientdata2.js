@@ -17,13 +17,15 @@
     });
 
 
-    const PatientDataForm2 = ({user}) => {
+    const PatientDataForm2 = ({selectedRow}) => {
 
         const containerStyle = {
             fontSize: '12px',
             lineHeight: '1.5',
             marginTop:'50%'
         };
+
+    console.log(selectedRow)
 
     return (
 
@@ -55,7 +57,7 @@
 
         <div align="right">
             <label>DATE:</label>
-            <input  type="date" id="province" className="dual1" />
+            <input  type="date" id="province" className="dual1"  style={{width:'20%'}}/>
             <br />
             <br />
         </div>

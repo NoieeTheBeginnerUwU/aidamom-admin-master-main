@@ -1229,9 +1229,6 @@ function PatientTable({ handleSubmit, userData }) {
           userChildComplication4: "none",
         })
       }
-      else{
-        alert("Error.")
-      }
     } catch (e) {
       alert(e)
     }

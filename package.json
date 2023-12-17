@@ -48,6 +48,7 @@
     "react-firebase-hooks": "^5.1.1",
     "react-scripts": "5.0.1",
     "react-time-picker": "^6.5.2",
+    "react-to-pdf": "^1.0.1",
     "react-to-print": "^2.14.13",
     "react-vertical-timeline-component": "^3.6.0",
     "recharts": "^2.7.2",

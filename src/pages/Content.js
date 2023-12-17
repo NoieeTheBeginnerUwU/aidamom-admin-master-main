@@ -77,20 +77,24 @@ const Content = () => {
 
   function sendData() {
     let dateNow = moment(today, "YYYY/MM/DD").toString;
-    addDoc(collection(database, 'articles'), {
-      uid: id,
-      dateMade: moment(new Date()).format("YYYY/MM/DD"),
-      title: title,
-      author: author,
-      topic: topic,
-      content: content
-    }).then(() => {
-      alert("Article published successfully.");
-      setTitle("");
-      setAuthor("");
-      setTopic("");
-      setContent("");
-    })
+    if(title!==""&&author!==""&&content!==""){
+      addDoc(collection(database, 'articles'), {
+        uid: id,
+        dateMade: moment(new Date()).format("YYYY/MM/DD"),
+        title: title,
+        author: author,
+        topic: topic,
+        content: content
+      }).then(() => {
+        alert("Article published successfully.");
+        setTitle("");
+        setAuthor("");
+        setTopic("");
+        setContent("");
+      })
+    }else{
+      alert("Please fill all the necessary inputs to publish.")
+    }
   }
 
   const [cont, setCont] = useState([]);
@@ -139,12 +143,19 @@ const Content = () => {
     // Handle publishing logic here
    try {
     // Example: Perform the publishing logic
-    await sendData(); // Assuming sendData handles the actual publishing logic
-    alert("Article published successfully.");
-    setTitle("");
-    setAuthor("");
-    setTopic("");
-    setContent("");
+    try{
+      if(title!==""&&content!==""&&author!==""){
+        sendData();
+      }else{
+        alert("Please fill all the necessary inputs to publish.")
+      } // Assuming sendData handles the actual publishing logic
+    }catch(e){
+      alert(e)
+      setTitle("");
+      setAuthor("");
+      setTopic("");
+      setContent("");
+    }
   } catch (error) {
     console.error("Error publishing article:", error);
     // Handle error scenario

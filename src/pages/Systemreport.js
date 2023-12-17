@@ -305,13 +305,13 @@ const Systemreport = () => {
                     <StyledTableCell component="th" scope="row">
                       Male
                     </StyledTableCell>
-                    <StyledTableCell align="left">{rows[0].alive}</StyledTableCell>
+                    <StyledTableCell align="left">{todMal}</StyledTableCell>
                   </StyledTableRow>
                   <StyledTableRow>
                     <StyledTableCell component="th" scope="row">
                       Female
                     </StyledTableCell>
-                    <StyledTableCell align="left">{rows[0].stillbirth}</StyledTableCell>
+                    <StyledTableCell align="left">{todFal}</StyledTableCell>
                   </StyledTableRow>
                 </TableBody>
                 <TableHead>
