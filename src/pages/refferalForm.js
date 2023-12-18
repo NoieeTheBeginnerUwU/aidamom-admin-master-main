@@ -8,6 +8,9 @@ import ssb from './ssb.jpg'
 import { useState, useRef } from 'react';   
 import moment from 'moment';
 import { useReactToPrint } from 'react-to-print';
+import Print from '@mui/icons-material/Print';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileAlt } from '@fortawesome/free-solid-svg-icons';
 
 function ReferralForm({selectedRow}) {
 
@@ -234,7 +237,12 @@ dischargeMedication:"",
   return (
     
 <>
-
+<Button onClick={() => handlePrint()}>
+                <Print fontSize='large' />
+                Print</Button>
+            <Button>
+                <FontAwesomeIcon onClick={() => handlePrint()} icon={faFileAlt} size={45} color='skyblue' />
+                Save as pdf</Button>
 <div className="container" ref={ref}>
 <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
       <Box className="header" textAlign="center">
