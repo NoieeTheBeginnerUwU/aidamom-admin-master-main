@@ -16,7 +16,7 @@ const theme = createTheme({
     }
   });
 
-const DischargeSummary = () => {
+const DischargeSummary = ({selectedRow}) => {
 
   const containerStyle = {
     fontSize: '12px',
@@ -27,6 +27,8 @@ const DischargeSummary = () => {
     padding: '1cm',
 
   };
+
+  alert(selectedRow.userFname)
 
   return (
     <ThemeProvider theme={theme}>

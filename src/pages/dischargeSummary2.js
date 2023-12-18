@@ -16,7 +16,7 @@ const theme = createTheme({
     }
   });
 
-const DischargeSummary = () => {
+const DischargeSummary2 = () => {
 
   const containerStyle = {
     fontSize: '12px',
@@ -27,9 +27,11 @@ const DischargeSummary = () => {
     padding: '1cm',
 
   };
+  alert("WEWEWE")
 
   return (
     <ThemeProvider theme={theme}>
+      <Button>PRINT/SAVE AS PDF</Button>
     <div  style={containerStyle}>
       <div className="container1">
       <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
@@ -200,4 +202,4 @@ const DischargeSummary = () => {
   );
 };
 
-export default DischargeSummary;
+export default DischargeSummary2;

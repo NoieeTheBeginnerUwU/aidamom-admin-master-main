@@ -48,7 +48,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 
-export default function AddVisits({ selectedPatient, handleCloseAddVisitModal, fetchData }) {
+export default function AddVisits({ selectedPatient, handleCloseAddVisitModal, onClick }) {
 
     const [text, setText] = useState('');
     const [date, setDate] = useState(null);
@@ -831,7 +831,7 @@ export default function AddVisits({ selectedPatient, handleCloseAddVisitModal, f
 
                                 />
                                 <Box marginTop={2}>
-                                <Button onClick={()=> [submitVisit(),fetchData]} type="submit" variant="contained" color="primary" disabled={!isFormValid} >
+                                <Button onClick={()=> [submitVisit(),onClick()]} type="submit" variant="contained" color="primary" disabled={!isFormValid} >
                                     Submit
                                 </Button>
                                 </Box>

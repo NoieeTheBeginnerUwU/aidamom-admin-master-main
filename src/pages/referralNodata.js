@@ -9,15 +9,11 @@ import { useState, useRef } from 'react';
 import moment from 'moment';
 import { useReactToPrint } from 'react-to-print';
 
-function referralNodata() {
+function referralNoData() {
 
-    const ref = useRef();
 
-    const handlePrint = useReactToPrint({
-      content: ()=> ref.current,
-     
-    }) 
-  
+
+    
     const [referralForm, setreferralForm]=useState(
         {
             to:"",
@@ -29,31 +25,30 @@ function referralNodata() {
             C1:"",
             C2:"",
             Unclassified:"",
-            dateandtimeReferred:moment(new Date()).format("DD/MM/YYYY hh:mm a"),
             facultyname:"",
 
 //ReferringDetails
-facultyEmail:"rhu3daet@gmail.com / lurenetejada@gmail.com",
+facultyEmail:"",
 facultymess:"",
-facultyAddress:"4W9W+CFW, San Vicente Rd, Daet, Camarines Norte",
-facultyNo:"09209083121",
+facultyAddress:"",
+facultyNo:"",
 
 //Patient Details
-patientname: selectedRow.userFname +" " + selectedRow.userMname[0] + ", " + selectedRow.userLname,
-patientAge: moment(new Date(),"YYYY/MM/DD").diff(moment(selectedRow.userDob,"YYYY/MM/DD"),"years"),
-patientsex:selectedRow.userSex,
-civilstatus:selectedRow.userCivilStatus,
-patientDOB:selectedRow.userDob,
-patientadress:selectedRow.userBarangay+", "+selectedRow.userTown+", "+selectedRow.userProvince,
-Patientno:selectedRow.userNumber,
-contactperson:selectedRow.userHusband,
-bloodType:selectedRow.userBloodType,
+patientname:"",
+patientAge:"",
+patientsex:"",
+civilstatus:"",
+patientDOB:"",
+patientadress:"",
+Patientno:"",
+contactperson:"",
+bloodType:"",
 G:"",
 P:"",
 blank:"",
-lmp: moment(selectedRow.lastPeriod).format("MMMM DD, YYYY"),
-edd: moment(selectedRow.lastPeriod).add(280, "days").format("YYYY/MM/DD"),
-aog:moment(new Date(),"YYYY/MM/DD").diff(moment(selectedRow.lastPeriod),'weeks')+" weeks",
+lmp:"",
+edd:"",
+aog:"",
 Yesprenatal:"",
 Noprenatal:"",
 whereClinicName : "",
@@ -229,27 +224,17 @@ dischargeMedication:"",
             
         }
     )
+
+
+
+     
+console.log(referralForm)
     
 
   return (
     
-<>
 
-<div className="container">
-<Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
-      <Box className="header" textAlign="center">
-        <h4><strong>Republic of the Philippines</strong></h4>
-        <h4><strong>Province of Camarines Norte</strong></h4>
-        <h4><strong>Municipality of Daet</strong></h4>
-        <h4>MUNICIPAL HEALTH OFFICE</h4>
-        <h4><strong>RHU 3 - BIRTHING CENTER</strong></h4>
-      
-            <br/>
-        </Box>
-        <Box mr={6}><img src={daetlogo} alt="Daet Logo"  style={{borderRadius:'50%'}} width='85px'/></Box>
-        <Box mr={6}><img src={ssb} alt="SSB Logo"  style={{borderRadius:'50%'}} width='85px'/></Box>
-        <Box mr={6}><img src={rhupic} alt="RHU Logo"  style={{borderRadius:'50%'}} width='95px'/></Box>
-</Box>
+    <div className="container">
 <div >
     <label>To:
 <input name="to" id= "to" type = "text" style={{width:"45%", border:"none", borderBottom:"1px solid black"}} onChange={(text)=> setreferralForm(prev => {return {...prev,to:text.target.value}})}/>
@@ -275,22 +260,22 @@ dischargeMedication:"",
 
 <tr>
     <td colspan="5">
-       <label>Name of Reffering Faculty:</label><input  type="text" name="facultyname" value={"Daet RHU III - Birthing Center"} id="facultyname" style={{width:"50%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,facultyname:text.target.value}})}></input>
+       <label>Name of Reffering Faculty:</label><input type="text" name="facultyname" id="facultyname" style={{width:"50%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,facultyname:text.target.value}})}></input>
     </td>
 
     <td colspan="2">
-        <label>Email Address : </label><input type="text" name="facultyEmail" id="facultyEmail"  style={{width:"90%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,facultyEmail:text.target.value}})}></input>
+        <label>Email Address : </label><input type="text"  name="facultyEmail" id="facultyEmail"  style={{width:"90%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,facultyEmail:text.target.value}})}></input>
         
     </td>
     <td colspan="3">
-        <label>Messenger Account:</label><input type="text"  name="facultymess" id="facultymess"style={{width:"92%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,facultymess:text.target.value}})}></input>
+        <label>Messenger Account:</label><input type="text" name="facultymess" id="facultymess"style={{width:"92%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,facultymess:text.target.value}})}></input>
         
     </td>
   
 </tr>
 <tr>
     <td colspan="7">
-        <label> Addres Refering Faculty:</label><input type="text"  name="facultyAddress" id="facultyAddress"  style={{width:"70%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,facultyAddress:text.target.value}})}></input>
+        <label> Addres Refering Faculty:</label><input type="text" name="facultyAddress" id="facultyAddress"  style={{width:"70%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,facultyAddress:text.target.value}})}></input>
       
     </td>
 
@@ -307,11 +292,11 @@ dischargeMedication:"",
     </td>
 
     <td colspan="1">
-        <label>Age:</label><input type="number" name="patientAge" id="patientAge" style={{width:"50%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,patientAge:text.target.value}})} ></input>
+        <label>Age:</label><input type="number" name="patientAge" id="patientAge" style={{width:"40%", border:"none" , borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,patientAge:text.target.value}})} ></input>
       
     </td>
     <td colspan="1">
-        <label> Sex:</label><input type="text" name="patientsex" id="patientsex" style={{width:"40%", border:"none" , borderBottom:"1px solid black"}} onChange={(text)=> setreferralForm(prev => {return {...prev,patientsex:text.target.value}})}></input>
+        <label> Sex:</label><input type="text" name="patientsex"  id="patientsex" style={{width:"40%", border:"none" , borderBottom:"1px solid black"}} onChange={(text)=> setreferralForm(prev => {return {...prev,patientsex:text.target.value}})}></input>
        
     </td>
     <td colspan="2">
@@ -353,16 +338,16 @@ dischargeMedication:"",
         <label> (</label><input type="text"  name="blank" id="blank" class="bottomlong" style={{width:"70%", border:"none", borderBottom:"1px solid black" }}onChange={(text)=> setreferralForm(prev => {return {...prev,blank:text.target.value}})}></input><label> )</label>
     </td>
     <td colspan="1">
-        <label>  LMP:</label><input type="text" name="lmp" id="lmp" class="bottomlong" style={{width:"70%", border:"none", borderBottom:"1px solid black" }}onChange={(text)=> setreferralForm(prev => {return {...prev,lmp:text.target.value}})}></input><br></br>
-        <label>  EDD:</label><input type="text" name="edd" id="edd" class="bottomlong" style={{width:"70%", border:"none", borderBottom:"1px solid black" }}onChange={(text)=> setreferralForm(prev => {return {...prev,edd:text.target.value}})}></input><br></br>
-        <label> AOG:</label><input type="text" name="aog" id="aog" class="bottomlong" style={{width:"70%", border:"none", borderBottom:"1px solid black" }} onChange={(text)=> setreferralForm(prev => {return {...prev,aog:text.target.value}})}></input>
+        <label>  LMP:</label><input type="text"  name="lmp" id="lmp" class="bottomlong" style={{width:"70%", border:"none", borderBottom:"1px solid black" }}onChange={(text)=> setreferralForm(prev => {return {...prev,lmp:text.target.value}})}></input><br></br>
+        <label>  EDD:</label><input type="text"  name="edd" id="edd" class="bottomlong" style={{width:"70%", border:"none", borderBottom:"1px solid black" }}onChange={(text)=> setreferralForm(prev => {return {...prev,edd:text.target.value}})}></input><br></br>
+        <label> AOG:</label><input type="text"  name="aog" id="aog" class="bottomlong" style={{width:"70%", border:"none", borderBottom:"1px solid black" }} onChange={(text)=> setreferralForm(prev => {return {...prev,aog:text.target.value}})}></input>
      
     </td>
     <td colspan="2">
        <label>With Pre-Natal:</label> <br></br>
         <input type="checkbox" name="Yesprenatal" id="Yesprenatal" style={{margin:"1%" }}onChange={(text)=> setreferralForm(prev => {return {...prev,Yesprenatal:text.target.value}})}></input>
         <label>Yes</label>
-        <input type="checkbox"  name="Noprenatal" id="Noprenatal" onChange={(text)=> setreferralForm(prev => {return {...prev,Noprenatal:text.target.value}})}></input>
+        <input type="checkbox"  name="Noprenatal" id="Noprenatal"onChange={(text)=> setreferralForm(prev => {return {...prev,Noprenatal:text.target.value}})}></input>
         <label>No</label><br></br>
         <label>No. of PNCU</label><input type="text"  name="noPNCU" id="noPNCU" style={{width:"50%", border:"none", borderBottom:"1px solid black" }}onChange={(text)=> setreferralForm(prev => {return {...prev,noPNCU:text.target.value}})} ></input>
     </td>
@@ -816,7 +801,7 @@ dischargeMedication:"",
     </td>
 </tr>
     <tr>
-    <td colspan="5">
+    <td colspan="6">
         <label>Printed Name and Designation of RECEIVING facility Personnel who accepted the referral call:</label><input type="text"  name="referringNameandDesignation" id="referringNameandDesignation" style={{width:"90%", border:"none", borderBottom:"1px solid black"}}onChange={(text)=> setreferralForm(prev => {return {...prev,referringNameandDesignation:text.target.value}})}></input>
     </td>
     <td colspan="3">
@@ -968,8 +953,7 @@ dischargeMedication:"",
     
 </table>
 </div>
-</>
   );
 }
 
-export default referralNodata;
+export default referralNoData;

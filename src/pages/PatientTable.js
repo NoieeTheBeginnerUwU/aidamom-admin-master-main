@@ -51,8 +51,9 @@ import PatientDataForm2 from './patientdata2';
 import Consent2 from './consent2';
 import Print from '@mui/icons-material/Print';
 import { faFileAlt } from '@fortawesome/free-solid-svg-icons';
-import DischargeSummaryNewborn2 from './dischargeSummaryforNewborn';
-import DischargeSummary2 from './dischargeSummary';
+import DischargeSummaryNewborn from './dischargeSummaryforNewborn';
+import DischargeSummary from './dischargeSummary';
+import { PrintDisabledRounded, PrintRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles({
   root: {
@@ -144,7 +145,11 @@ function PatientTable({ handleSubmit, userData }) {
   const [openChildRegModal, setChildRegModal] = useState(false);
 
   const handleOpenChildRegModal = () => {
-    setChildRegModal(true);
+    if(selectedRow.lastPeriod===""||selectedRow.lastPeriod==="No data"){
+      alert("Cannot create discharge summary, this patient is not pregnant.")
+    }else{
+      setChildRegModal(true);
+    }
   };
 
   const handleCloseChildRegModal = () => {
@@ -466,7 +471,11 @@ function PatientTable({ handleSubmit, userData }) {
 
 
   const handleOpenCreateRefferal = () => {
-    setOpenCreateRefferal(true);
+    if(selectedRow.lastPeriod===""||selectedRow.lastPeriod==="No data"){
+      alert("This patient is not pregnant, cannot generate referral form")
+    }else{
+      setOpenCreateRefferal(true);
+    }
   };
   const handleCloseCreateRefferal = () => {
     setOpenCreateRefferal(false);
@@ -668,13 +677,11 @@ function PatientTable({ handleSubmit, userData }) {
     family: index % 3 === 0,
   }));
 
-
   const addVisitModalContent = (
     <AddVisits
       selectedPatient={selectedRow}
       handleCloseAddVisitModal={handleCloseAddVisitModal}
-      fetchData={fetchData}
-
+      onClick={fetchData}
     />
 
   );
@@ -1135,6 +1142,9 @@ function PatientTable({ handleSubmit, userData }) {
     childGender: "",
     typeOfDelivery: " Normal",
     healthProfessionalAttended: "",
+    noOfChildBirthed: 0,
+    complication:"none",
+    birthOutcome:"alive",
     urineOutputDiagnosis: "",
     stoolDiagnosis: "",
     bcgDate: "",
@@ -1156,6 +1166,7 @@ function PatientTable({ handleSubmit, userData }) {
     month: moment(new Date()).format("MM"),
     year: moment(new Date()).format("YYYY"),
   })
+  
 
   let count = 0
   if (selectedRow.userChildDateOfDelivery1 !== "") {
@@ -1168,85 +1179,92 @@ function PatientTable({ handleSubmit, userData }) {
     count = 3
   }
 
-  const handleDischarge = async () => {
-    try {
-      updateDoc(doc(database, "userData", selectedRow.docid), {
-        lastPeriod: ""
-      })
-      addDoc(collection(database, "discharge_child"), {
-        motherId: selectedRow.docid,
-        motherName: selectedRow.userFname + " " + selectedRow.userLname,
-        motherAge: moment(new Date(), "YYYY/MM/DD").diff(moment(selectedRow.userDob, "YYYY/MM/DD"), "years"),
-        deliveredVia: "Vaginal",
-        childFame: discharge.childFname,
-        childLname: discharge.childLname,
-        childMname: discharge.childMname,
-        childSuffix: discharge.childSuffix,
-        childDob: discharge.childDob,
-        childWeight: discharge.childWeight,
-        childWeightType: discharge.childWeight < 2.5 && "low" || discharge.childWeight > 2.5 && discharge.childWeight < 3.6 && "normal" || discharge.childWeight > 3.6 && "low",
-        childGender: discharge.childGender,
-        typeOfDelivery: discharge.typeOfDelivery,
-        healthProfessionalAttended: discharge.healthProfessionalAttended,
-        urineOutputDiagnosis: discharge.urineOutputDiagnosis,
-        stoolDiagnosis: discharge.stoolDiagnosis,
-        bcgDate: discharge.bcgDate,
-        hepaBDate: discharge.hepaBDate,
-        expandedNewBornScreeningResult: discharge.expandedNewBornScreeningResult,
-        expandedNewBornScreeningRefusal: discharge.expandedNewBornScreeningRefusal,
-        newbornHearingResult: discharge.newbornHearingResult,
-        newbornHearingRefusal: discharge.newbornHearingRefusal,
-        finalDiagnosis: discharge.finalDiagnosis,
-        homeMedication: discharge.homeMedication,
-        dateOfDischarge: discharge.dateOfDischarge,
-        followUpCheckup: discharge.followUpCheckup,
-        attendingPhysician: discharge.attendingPhysician,
-        nurseOnDuty: discharge.nurseOnDuty,
-        deliveredBy: discharge.deliveredBy,
-        receivedBy: discharge.receivedBy,
-        dateCreated: moment(new Date()).format("YYYY/MM/DD"),
-        day: moment(new Date()).format("DD"),
-        month: moment(new Date()).format("MM"),
-        year: moment(new Date()).format("YYYY")
-      })
-      if (count === 0) {
+  const handleDischarge = async () => { 
+    if(discharge.childDob!==""&&discharge.childFname!==""&&discharge.childLname!==""&&discharge.bcgDate!==""&&discharge.hepaBDate!==""){
+      try {
         updateDoc(doc(database, "userData", selectedRow.docid), {
-          userChildDateOfDelivery1: discharge.childDob,
-          userChildTypeOfDelivery1: discharge.typeOfDelivery,
-          userChildBirthOutcome1: "Alive",
-          userChildNumberOfChildDelivered1: 1,
-          userChildComplication1: "none",
+          lastPeriod: ""
         })
-      }
-      if (count === 1) {
-        updateDoc(doc(database, "userData", selectedRow.docid), {
-          userChildDateOfDelivery2: discharge.childDob,
-          userChildTypeOfDelivery2: discharge.typeOfDelivery,
-          userChildBirthOutcome2: "Alive",
-          userChildNumberOfChildDelivered1: 1,
-          userChildComplication2: "none",
+        addDoc(collection(database, "discharge_child"), {
+          motherId: selectedRow.docid,
+          motherName: selectedRow.userFname + " " + selectedRow.userLname,
+          motherAge: moment(new Date(), "YYYY/MM/DD").diff(moment(selectedRow.userDob, "YYYY/MM/DD"), "years"),
+          deliveredVia: "Vaginal",
+          childFame: discharge.childFname,
+          childLname: discharge.childLname,
+          childMname: discharge.childMname,
+          childSuffix: discharge.childSuffix,
+          childDob: discharge.childDob,
+          childWeight: discharge.childWeight,
+          childWeightType: discharge.childWeight < 2.5 && "low" || discharge.childWeight > 2.5 && discharge.childWeight < 3.6 && "normal" || discharge.childWeight > 3.6 && "overweight",
+          childGender: discharge.childGender,
+          typeOfDelivery: discharge.typeOfDelivery,
+          birthOutcome: discharge.birthOutcome,
+          complication: discharge.complication,
+          healthProfessionalAttended: discharge.healthProfessionalAttended,
+          urineOutputDiagnosis: discharge.urineOutputDiagnosis,
+          stoolDiagnosis: discharge.stoolDiagnosis,
+          bcgDate: discharge.bcgDate,
+          hepaBDate: discharge.hepaBDate,
+          expandedNewBornScreeningResult: discharge.expandedNewBornScreeningResult,
+          expandedNewBornScreeningRefusal: discharge.expandedNewBornScreeningRefusal,
+          newbornHearingResult: discharge.newbornHearingResult,
+          newbornHearingRefusal: discharge.newbornHearingRefusal,
+          finalDiagnosis: discharge.finalDiagnosis,
+          homeMedication: discharge.homeMedication,
+          dateOfDischarge: discharge.dateOfDischarge,
+          followUpCheckup: discharge.followUpCheckup,
+          attendingPhysician: discharge.attendingPhysician,
+          nurseOnDuty: discharge.nurseOnDuty,
+          deliveredBy: discharge.deliveredBy,
+          receivedBy: discharge.receivedBy,
+          dateCreated: moment(new Date()).format("YYYY/MM/DD"),
+          day: moment(new Date()).format("DD"),
+          month: moment(new Date()).format("MM"),
+          year: moment(new Date()).format("YYYY")
         })
+        if (count === 0) {
+          updateDoc(doc(database, "userData", selectedRow.docid), {
+            userChildDateOfDelivery1: discharge.childDob,
+            userChildTypeOfDelivery1: discharge.typeOfDelivery,
+            userChildBirthOutcome1: "Alive",
+            userChildNumberOfChildDelivered1: 1,
+            userChildComplication1: "none",
+          })
+        }
+        if (count === 1) {
+          updateDoc(doc(database, "userData", selectedRow.docid), {
+            userChildDateOfDelivery2: discharge.childDob,
+            userChildTypeOfDelivery2: discharge.typeOfDelivery,
+            userChildBirthOutcome2: "Alive",
+            userChildNumberOfChildDelivered1: 1,
+            userChildComplication2: "none",
+          })
+        }
+        if (count === 2) {
+          updateDoc(doc(database, "userData", selectedRow.docid), {
+            userChildDateOfDelivery3: discharge.childDob,
+            userChildTypeOfDelivery3: discharge.typeOfDelivery,
+            userChildBirthOutcome3: "Alive",
+            userChildNumberOfChildDelivered3: 1,
+            userChildComplication3: "none",
+          })
+        }
+        if (count === 3) {
+          updateDoc(doc(database, "userData", selectedRow.docid), {
+            userChildDateOfDelivery4: discharge.childDob,
+            userChildTypeOfDelivery4: discharge.typeOfDelivery,
+            userChildBirthOutcome4: "Alive",
+            userChildNumberOfChildDelivered4: 1,
+            userChildComplication4: "none",
+          })
+        }
+        handleOpenChildDetails()
+      } catch (e) {
+        alert(e)
       }
-      if (count === 2) {
-        updateDoc(doc(database, "userData", selectedRow.docid), {
-          userChildDateOfDelivery3: discharge.childDob,
-          userChildTypeOfDelivery3: discharge.typeOfDelivery,
-          userChildBirthOutcome3: "Alive",
-          userChildNumberOfChildDelivered3: 1,
-          userChildComplication3: "none",
-        })
-      }
-      if (count === 3) {
-        updateDoc(doc(database, "userData", selectedRow.docid), {
-          userChildDateOfDelivery4: discharge.childDob,
-          userChildTypeOfDelivery4: discharge.typeOfDelivery,
-          userChildBirthOutcome4: "Alive",
-          userChildNumberOfChildDelivered4: 1,
-          userChildComplication4: "none",
-        })
-      }
-    } catch (e) {
-      alert(e)
+    }else{
+      alert("Please fill up all the necessary inputs, thank you.")
     }
   }
   console.log(discharge);
@@ -1893,7 +1911,7 @@ function PatientTable({ handleSubmit, userData }) {
                             </FormControl>
 
                           </Grid>
-                          <Grid xs={2.5} ml={5}>
+                          <Grid xs={2.5} ml={5} mt={2.5}>
                             <FormControl fullWidth>
                               <InputLabel id="delivery-type-label">Health Professional Attended</InputLabel>
                               <Select
@@ -1909,6 +1927,44 @@ function PatientTable({ handleSubmit, userData }) {
                                 <MenuItem value={'Doctor'}>Doctor</MenuItem>
                                 <MenuItem value={'Nurse'}>Nurse</MenuItem>
                                 <MenuItem value={'Midwife'}>Midwife</MenuItem>
+                              </Select>
+                            </FormControl>
+
+                          </Grid>
+                          {/**Added these */}
+                          <Grid xs={2.5} ml={5} mt={2.5}>
+                            <FormControl fullWidth>
+                              <InputLabel id="delivery-type-label">Birth Outcome</InputLabel>
+                              <Select
+                                labelId="delivery-type-label"
+                                id="Birth Outcome"
+                                value={discharge.birthOutcome}
+                                onChange={(text) => setDischarger(prev => { return { ...prev, birthOutcome: text.target.value } })}
+                                label="Health Professional Attended"
+                              >
+                                <MenuItem value={'alive'}>Alive</MenuItem>
+                                <MenuItem value={'stillbirth'}>Stillbirth</MenuItem>
+                                <MenuItem value={'miscarriage'}>Miscarriage</MenuItem>
+                              </Select>
+                            </FormControl>
+
+                          </Grid>
+
+                          <Grid xs={2.5} ml={5} mt={2.5}>
+                            <FormControl fullWidth>
+                              <InputLabel id="delivery-type-label">Complications</InputLabel>
+                              <Select
+                                labelId="delivery-type-label"
+                                id="Birth Outcome"
+                                value={discharge.complication}
+                                onChange={(text) => setDischarger(prev => { return { ...prev, complication: text.target.value } })}
+                                label="Health Professional Attended"
+                              >
+                                <MenuItem value={'none'}>None</MenuItem>
+                                <MenuItem value={'eclampsia'}>Eclampsia</MenuItem>
+                                <MenuItem value={'preclampsia'}>Preclampsia</MenuItem>
+                                <MenuItem value={'hypertension'}>Pregnancy Enduced Hypertension</MenuItem>
+                                <MenuItem value={'perineal tears'}>Perineal Tears</MenuItem>
                               </Select>
                             </FormControl>
 
@@ -2116,7 +2172,7 @@ function PatientTable({ handleSubmit, userData }) {
 
                               </Grid>
                               <Grid xs={1}>
-                                <Button onClick={() => { handleOpenChildDetails(); handleDischarge(); }} variant='contained' >
+                                <Button onClick={() => { handleDischarge() }} variant='contained' >
                                   Submit
                                 </Button>
                               </Grid>
@@ -2146,14 +2202,15 @@ function PatientTable({ handleSubmit, userData }) {
                                 </Button>
                                 <Box>
                                   <Button size='large' variant='contained' onClick={handleClickOpen} padding={1} style={{ width: '100px', margin: '10px'  }}>
-                                    Discharge
+                                    <PrintRounded fontSize='medium' />
+                                    Print
                                   </Button>
                                 </Box>
-                                </Box>
+                                </Box> 
                                 </Grid>
                                 <Grid xs={8}>
                                 <Box >
-                                  {isMotherSummary ? <DischargeSummary2  selectedRow={selectedRow}/> : <DischargeSummaryNewborn2 discharge={discharge}/>}
+                                  {isMotherSummary ? <DischargeSummary discharge={discharge} selectedRow={selectedRow}/> : <DischargeSummaryNewborn selectedRow={selectedRow} discharge={discharge}/>}
                                 </Box>
                                 {/* Other components */}
                                 </Grid>

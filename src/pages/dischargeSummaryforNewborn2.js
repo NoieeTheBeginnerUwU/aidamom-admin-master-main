@@ -17,7 +17,7 @@ const theme = createTheme({
     }
   });
 
-const DischargeSummaryNewborn = () => {
+const DischargeSummaryNewborn2 = ({discharge}) => {
 
     const containerStyle = {
         fontSize: '12px',
@@ -28,8 +28,11 @@ const DischargeSummaryNewborn = () => {
         padding: '1cm',
       
       };
+      alert("ew") 
+
   return (
     <ThemeProvider theme={theme}>
+      <Button>PRINT/SAVE AS PDF</Button>
     <div className="container" style={containerStyle}>
       <div className="container1">
       <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
@@ -56,7 +59,7 @@ const DischargeSummaryNewborn = () => {
             <td colspan="2" className="normal">
               <div>
                 <label> NAME : </label>
-                <input type="text" id="name" className="long"  style={{ width: '45%', marginRight:'10px'}}  class="centered-input" />
+                <input type="text" id="name" className="long" value={discharge.childFname} style={{ width: '45%', marginRight:'10px'}}  class="centered-input" />
                 <label>AGE:</label>
                 <input type="text" className="short" class="centered-input"  style={{ width: '10%', marginRight:'10px' }} endAdornment={<InputAdornment position="end">kg</InputAdornment>} />
                 <label> WEIGHT : </label>
@@ -200,4 +203,4 @@ const DischargeSummaryNewborn = () => {
   );
 };
 
-export default DischargeSummaryNewborn;
+export default DischargeSummaryNewborn2; 
