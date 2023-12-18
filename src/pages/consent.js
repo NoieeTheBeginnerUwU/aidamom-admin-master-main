@@ -25,6 +25,8 @@ const Consent = () => {
         height: '29.7cm',
         margin: '1cm auto',
         padding: '1cm',
+        width:'100%',
+        height:'100%'
       };
 
   return (

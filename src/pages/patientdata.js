@@ -21,7 +21,9 @@
 
         const containerStyle = {
             fontSize: '12px',
-            lineHeight: '1.5',
+            lineHeight: '1.3',
+            width:'100%',
+            height:'100%'
         };
 
     return (
@@ -54,14 +56,14 @@
 
         <div align="right">
             <label>DATE:</label>
-            <input  type="date" id="province" className="dual1" />
+            <input  type="date" id="province" className="dual1"  style={{width:'30%'}} />
             <br />
             <br />
         </div>
 
         <div >
             <label>Name: </label>
-            <input type="text" id="lname" style={{width:'21%'}}/>
+            <input type="text" id="lname" style={{width:'85%'}}/>
             <input type="text" id="fname" />
             <input type="text" id="mname" />
             <input type="text" id="suffix" />
@@ -196,7 +198,7 @@
             <h4>DATA TAKEN BY:</h4>
            
             <br />
-            <input type="text" id="province" className="dual1" />
+            <input type="text" id="province" className="dual1"  style={{width:'30%'}} />
             <br />
             <br />
             <h4>HEALTH PERSONNEL ON DUTY</h4>

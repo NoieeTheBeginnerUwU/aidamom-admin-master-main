@@ -19,7 +19,9 @@ const theme = createTheme({
 
     const containerStyle = {
         fontSize: '12px',
-        lineHeight: '1.5',
+        lineHeight: '1',
+        width:'100%',
+        height:'100%'
       };
 
   return (
@@ -48,7 +50,7 @@ const theme = createTheme({
         </div>
        <div>
           <label>MCHCC NO.:</label>
-          <input type="text" id="province" className="dual1" />
+          <input type="text" id="province" className="dual1" style={{width:'30%', textAlign:"left"}}  />
           <br />
           <br />
           <br />
@@ -115,13 +117,12 @@ const theme = createTheme({
       </tr>
 
       <tr>
-        <td className="norightandbotborder" colSpan="6">REFERRED TO: <input type="text" id="referredto" /></td>
+        <td className="norightandbotborder" colSpan="6">REFERRED TO: <input type="text" id="referredto" style={{width:'80%'}} /></td>
       </tr>
 
             </tbody>
           </table>
         </form>
-        {/* ... (remaining JSX code) ... */}
         <div align="left">
         <br />
           <br />

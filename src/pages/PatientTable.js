@@ -2293,9 +2293,9 @@ function PatientTable({ handleSubmit, userData }) {
                   <Typography variant="h6" component="div" style={{fontWeight:'600'}}>
                   PRE-NATAL VISIT RELATED REPORTS
                   </Typography>
-                  <Button onClick={()=> setActiveInner(0)}>Prenatal Report</Button>
-                  <Button onClick={()=> setActiveInner(1)}>Patient Data Form</Button>
-                  <Button onClick={()=> setActiveInner(2)}>Consent Form</Button>
+                  <Button variant='outlined' m={1}  onClick={()=> setActiveInner(0)}>Prenatal Report</Button>
+                  <Button  variant='outlined' m={1} onClick={()=> setActiveInner(1)}>Patient Data Form</Button>
+                  <Button  variant='outlined' m={1} onClick={()=> setActiveInner(2)}>Consent Form</Button>
                   {/**---------------------------------- Forms---------------------------------- */}
                   {
                     activeInner===0&&
