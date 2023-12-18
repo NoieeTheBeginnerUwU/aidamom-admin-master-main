@@ -106,6 +106,7 @@ const DischargeSummaryNewborn = () => {
                 <label className="indented" id="indented">
                   NO :{' '}
                 </label>
+                
               
               </div>
               <div  className="short">
@@ -120,6 +121,7 @@ const DischargeSummaryNewborn = () => {
                 <label className="indented" id="indented">
                   NO :{' '}
                 </label>
+                <input type="date" id="bcg" className="short" class="centered-input" style={{ width: '30%'}} />
               
               </div>
               <div  className="short">
@@ -134,6 +136,7 @@ const DischargeSummaryNewborn = () => {
                 <label className="indented" id="indented">
                   NO :{' '}
                 </label>
+                <input type="date" id="hepaB" className="short" class="centered-input" style={{ width: '30%'}} />
               
               </div>
             </td>
