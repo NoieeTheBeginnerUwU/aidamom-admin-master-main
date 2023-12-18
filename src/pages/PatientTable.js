@@ -51,6 +51,8 @@ import PatientDataForm2 from './patientdata2';
 import Consent2 from './consent2';
 import Print from '@mui/icons-material/Print';
 import { faFileAlt } from '@fortawesome/free-solid-svg-icons';
+import DischargeSummaryNewborn from './dischargeSummaryforNewborn';
+import DischargeSummary from './dischargeSummary';
 
 const useStyles = makeStyles({
   root: {
@@ -89,6 +91,12 @@ const theme = createTheme({
 
 
 function PatientTable({ handleSubmit, userData }) {
+
+  const [isMotherSummary, setIsMotherSummary] = useState(false);
+
+  const toggleSummary = () => {
+    setIsMotherSummary(!isMotherSummary);
+  };
 
 
   const [finalDiagnosis, setFinalDiagnosis] = useState('');
@@ -158,8 +166,8 @@ function PatientTable({ handleSubmit, userData }) {
   const ref = useRef();
 
   const handlePrint = useReactToPrint({
-    content: ()=> ref.current,
-  }) 
+    content: () => ref.current,
+  })
 
 
 
@@ -412,6 +420,8 @@ function PatientTable({ handleSubmit, userData }) {
 
   const handleClose = () => {
     setOpen(false);
+    handleCloseChildDetails(); 
+    handleCloseChildRegModal(); 
   };
 
   const [openModal, setOpenModal] = useState(false);
@@ -706,10 +716,10 @@ function PatientTable({ handleSubmit, userData }) {
         userData.push({
           id: i++,
           docid: doc.id,
-          aog: !doc.data().lastPeriod?"No data":moment(new Date(), "YYYY/MM/DD").diff(doc.data().lastPeriod, "weeks") + " weeks",
+          aog: !doc.data().lastPeriod ? "No data" : moment(new Date(), "YYYY/MM/DD").diff(doc.data().lastPeriod, "weeks") + " weeks",
           lastVisit: !doc.data().lastVisit ? "No Data" : doc.data().lastVisit,
           lastPeriod: !doc.data().lastPeriod ? "No data" : doc.data().lastPeriod,
-          modLmp: !doc.data().lastPeriod? "No data": moment(doc.data().lastPeriod).format("MMMM DD, YYYY"),
+          modLmp: !doc.data().lastPeriod ? "No data" : moment(doc.data().lastPeriod).format("MMMM DD, YYYY"),
           userFname: doc.data().userFname,
           userMname: doc.data().userMname,
           userLname: doc.data().userLname,
@@ -749,7 +759,7 @@ function PatientTable({ handleSubmit, userData }) {
           userProvincebirth: doc.data().userProvincebirth,
           userTownbirth: doc.data().userTownbirth,
           userBarangaybirth: doc.data().userBarangaybirth,
-          userBirthPlace: !doc.data().userBarangaybirth? "No data":doc.data().userBarangaybirth+", "+!doc.data().userTownbirth?"":doc.data().userTownbirth+", "+!doc.data().userTownbirth?"":doc.data().userTownbirth,
+          userBirthPlace: !doc.data().userBarangaybirth ? "No data" : doc.data().userBarangaybirth + ", " + !doc.data().userTownbirth ? "" : doc.data().userTownbirth + ", " + !doc.data().userTownbirth ? "" : doc.data().userTownbirth,
           //user pregnancy history
           //child1
           userChild1: doc.data().userChild1,
@@ -1199,8 +1209,8 @@ function PatientTable({ handleSubmit, userData }) {
         month: moment(new Date()).format("MM"),
         year: moment(new Date()).format("YYYY")
       })
-      if(count===0){
-        updateDoc(doc(database,"userData",selectedRow.docid),{
+      if (count === 0) {
+        updateDoc(doc(database, "userData", selectedRow.docid), {
           userChildDateOfDelivery1: discharge.childDob,
           userChildTypeOfDelivery1: discharge.typeOfDelivery,
           userChildBirthOutcome1: "Alive",
@@ -1208,8 +1218,8 @@ function PatientTable({ handleSubmit, userData }) {
           userChildComplication1: "none",
         })
       }
-      if(count===1){
-        updateDoc(doc(database,"userData",selectedRow.docid),{
+      if (count === 1) {
+        updateDoc(doc(database, "userData", selectedRow.docid), {
           userChildDateOfDelivery2: discharge.childDob,
           userChildTypeOfDelivery2: discharge.typeOfDelivery,
           userChildBirthOutcome2: "Alive",
@@ -1217,8 +1227,8 @@ function PatientTable({ handleSubmit, userData }) {
           userChildComplication2: "none",
         })
       }
-      if(count===2){
-        updateDoc(doc(database,"userData",selectedRow.docid),{
+      if (count === 2) {
+        updateDoc(doc(database, "userData", selectedRow.docid), {
           userChildDateOfDelivery3: discharge.childDob,
           userChildTypeOfDelivery3: discharge.typeOfDelivery,
           userChildBirthOutcome3: "Alive",
@@ -1226,8 +1236,8 @@ function PatientTable({ handleSubmit, userData }) {
           userChildComplication3: "none",
         })
       }
-      if(count===3){
-        updateDoc(doc(database,"userData",selectedRow.docid),{
+      if (count === 3) {
+        updateDoc(doc(database, "userData", selectedRow.docid), {
           userChildDateOfDelivery4: discharge.childDob,
           userChildTypeOfDelivery4: discharge.typeOfDelivery,
           userChildBirthOutcome4: "Alive",
@@ -1360,7 +1370,7 @@ function PatientTable({ handleSubmit, userData }) {
           density='compact'
         />
       </div>
-      
+
       {/* Modal for displaying details */}
 
       <Modal open={openModal} onClose={handleCloseModal} scroll='paper'>
@@ -1481,7 +1491,7 @@ function PatientTable({ handleSubmit, userData }) {
                                       </Box>
                                     </Grid>
 
-                                   
+
 
                                     <Grid item xs={8}>
                                       <Box height={4 + 'vw'}>
@@ -1568,15 +1578,15 @@ function PatientTable({ handleSubmit, userData }) {
                                       <Table size='small'>
                                         <TableHead>
                                           <TableRow>
-                                            <TableCell  style={{ backgroundColor: 'white', fontWeight: '550', color: 'GrayText' }} padding="none">Diseases</TableCell>
+                                            <TableCell style={{ backgroundColor: 'white', fontWeight: '550', color: 'GrayText' }} padding="none">Diseases</TableCell>
                                             <TableCell style={{ backgroundColor: 'white', fontWeight: '550', color: 'GrayText' }} padding="none">Personal</TableCell>
                                             <TableCell style={{ backgroundColor: 'white', fontWeight: '550', color: 'GrayText' }} padding="none">Family</TableCell>
                                           </TableRow>
                                         </TableHead>
                                         <TableBody>
                                           <TableRow key={row.disease}>
-                                            <TableCell  padding="none" >Tubercolosis</TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}padding="none" > 
+                                            <TableCell padding="none" >Tubercolosis</TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }} padding="none" >
                                               <TableCell padding="none" >{selectedRow.userTBPersonal === false ? "no" : "yes"}</TableCell>
                                             </TableCell>
                                             <TableCell style={{ backgroundColor: "white" }} padding="none" >
@@ -1585,10 +1595,10 @@ function PatientTable({ handleSubmit, userData }) {
                                           </TableRow>
                                           <TableRow key={row.disease}>
                                             <TableCell padding="none"  >Heart Diseases</TableCell>
-                                            <TableCell  padding="none" style={{ backgroundColor: "white" }}>
+                                            <TableCell padding="none" style={{ backgroundColor: "white" }}>
                                               <TableCell padding="none">{selectedRow.userHeartDiseasesPersonal === false ? "no" : "yes"}</TableCell>
                                             </TableCell>
-                                            <TableCell  padding="none" style={{ backgroundColor: "white" }}>
+                                            <TableCell padding="none" style={{ backgroundColor: "white" }}>
                                               <TableCell padding="none">{selectedRow.userHeartDiseasesFamily === false ? "no" : "yes"}</TableCell>
                                             </TableCell>
                                           </TableRow>
@@ -1910,7 +1920,7 @@ function PatientTable({ handleSubmit, userData }) {
                             </Box>
                           </Grid>
                           <Grid container item xs={12} flexDirection={"row"}>
-                           <Grid xs={3}>
+                            <Grid xs={4}>
                               <Box marginLeft={4} >
 
                                 <FormControlLabel
@@ -1919,7 +1929,7 @@ function PatientTable({ handleSubmit, userData }) {
                                 />
                                 {checked1 && <TextField label="Diagnosis" value={discharge.stoolDiagnosis} variant='standard' onChange={(text) => setDischarger(prev => { return { ...prev, stoolDiagnosis: text.target.value } })} />}
                               </Box>
-                            </Grid><Grid xs={3} container direction="column">
+                            </Grid><Grid xs={4} container direction="column">
                               <Box display={'block'}>
                                 <FormControlLabel
                                   control={<Checkbox checked={checked2} onChange={BCG} fullWidth />}
@@ -1931,7 +1941,7 @@ function PatientTable({ handleSubmit, userData }) {
                                   </LocalizationProvider>
                                 </FormControl>}
                               </Box>
-                            </Grid><Grid xs={3}>
+                            </Grid><Grid xs={4}>
                               <Box>
                                 <FormControlLabel
                                   control={<Checkbox checked={checked3} onChange={HEPAB} />}
@@ -2043,23 +2053,16 @@ function PatientTable({ handleSubmit, userData }) {
                                 />
                               </Grid>
                             </Grid>
-                            <Grid xs={3}>
-                              <FormControl required>
-                                <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                  <TextField type='date' helperText={'Date of Discharge'} fullWidth variant='outlined' value={discharge.dateOfDischarge} onChange={(text) => setDischarger(prev => { return { ...prev, dateOfDischarge: text.target.value } })} />
-                                </LocalizationProvider>
-                              </FormControl>
+                            <Grid xs={6}>
 
-
+                              <LocalizationProvider dateAdapter={AdapterDayjs} required>
+                                <TextField type='date' helperText={'Date of Discharge'} style={{ width: '99%', marginTop: "10px" }} variant='outlined' value={discharge.dateOfDischarge} onChange={(text) => setDischarger(prev => { return { ...prev, dateOfDischarge: text.target.value } })} />
+                              </LocalizationProvider>
                             </Grid>
-                            <Grid xs={3}>
-
-                              <FormControl required width={'100%'} >
-                                <LocalizationProvider dateAdapter={AdapterDayjs} required>
-                                  <TextField type='date' helperText={'Follow-Up Check-up'} fullWidth value={discharge.followUpCheckup} onChange={(text) => setDischarger(prev => { return { ...prev, followUpCheckup: text.target.value } })} />
-                                </LocalizationProvider>
-                              </FormControl>
-
+                            <Grid xs={6}>
+                              <LocalizationProvider dateAdapter={AdapterDayjs} required>
+                                <TextField type='date' helperText={'Follow-Up Check-up'} style={{ width: '99%', marginTop: "10px" }} value={discharge.followUpCheckup} onChange={(text) => setDischarger(prev => { return { ...prev, followUpCheckup: text.target.value } })} />
+                              </LocalizationProvider>
                             </Grid>
                             <Grid xs={12} container>
 
@@ -2082,13 +2085,7 @@ function PatientTable({ handleSubmit, userData }) {
                                   value={discharge.nurseOnDuty}
                                   onChange={(text) => setDischarger(prev => { return { ...prev, nurseOnDuty: text.target.value } })}
                                 ></TextField>
-
-
                               </Grid>
-
-
-
-
                             </Grid>
 
                             <Grid xs={12} container>
@@ -2124,21 +2121,44 @@ function PatientTable({ handleSubmit, userData }) {
                                 </Button>
                               </Grid>
 
+                              {/* --------------------------------Child Detailssss Afterr Registration-------------------------------- */}
+
+
+
                               <Dialog open={openChild} onClose={handleCloseChildDetails} PaperProps={{
                                 style: {
-                                  minHeight: '95%',
-                                  minWidth: '95%',  // Change this to your desired height
+                                  minHeight: '98%',
+                                  minWidth: '85%',  // Change this to your desired height
                                 },
                               }}>
                                 <Box display="flex" justifyContent="space-between" alignItems="center">
-
-                                  <DialogTitle fontWeight={'600'}>Child Details</DialogTitle>
+                                  <DialogTitle fontWeight={'600'}>Mother and Child Discharge Summary</DialogTitle>
                                   <IconButton onClick={() => { handleCloseChildDetails(); handleCloseChildRegModal(); }}>
                                     <CloseIcon />
                                   </IconButton>
                                 </Box>
 
-                                {/* Add your form or details here */}
+                                <Grid container> 
+                                <Grid xs={4}>
+                                <Box padding={1} ml={2}>
+                                <Button variant="contained" color="primary" onClick={toggleSummary} style={{margin: '10px'  }}>
+                                  {isMotherSummary ? 'Toggle for Discharge Summary Child' : 'Toggle for Discharge Summary Mother'}
+                                </Button>
+                                <Box>
+                                  <Button size='large' variant='contained' onClick={handleClickOpen} padding={1} style={{ width: '100px', margin: '10px'  }}>
+                                    Discharge
+                                  </Button>
+                                </Box>
+                                </Box>
+                                </Grid>
+                                <Grid xs={8}>
+                                <Box >
+                                  {isMotherSummary ? <DischargeSummary /> : <DischargeSummaryNewborn />}
+                                </Box>
+                                {/* Other components */}
+                                </Grid>
+                                </Grid>
+
                               </Dialog>
 
                             </Grid>
@@ -2287,116 +2307,116 @@ function PatientTable({ handleSubmit, userData }) {
               {/*--------------------------------------------------------------------------------------------- Modal for Visits Reports ---------------------------------------------------------------------------------------------*/}
               <Modal open={openPrenatalVisitReports} onClose={handleClosePrenatalVisitReports}>
 
-                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '95%', height: '99%' , overflow:'scroll' , bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '95%', height: '99%', overflow: 'scroll', bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
                   {/* Your content goes here */}
                   <Grid container marginBottom={5}>
                     <Grid xs={5}>
-                  <Typography variant="h6" component="div" style={{fontWeight:'600'}}>
-                  PRE-NATAL VISIT RELATED REPORTS
-                  </Typography>
-                  </Grid >
-                  <Grid xs={1}></Grid>
-                  <Grid xs={5}>
-                 
-                  <Button  onClick={()=> setActiveInner(0)}>Prenatal Report</Button>
-                  <Button  onClick={()=> setActiveInner(1)}>Patient Data Form</Button>
-                  <Button  onClick={()=> setActiveInner(2)}>Consent Form</Button>
+                      <Typography variant="h6" component="div" style={{ fontWeight: '600' }}>
+                        PRE-NATAL VISIT RELATED REPORTS
+                      </Typography>
+                    </Grid >
+                    <Grid xs={1}></Grid>
+                    <Grid xs={5}>
+
+                      <Button onClick={() => setActiveInner(0)}>Prenatal Report</Button>
+                      <Button onClick={() => setActiveInner(1)}>Patient Data Form</Button>
+                      <Button onClick={() => setActiveInner(2)}>Consent Form</Button>
+                    </Grid>
                   </Grid>
-                  </Grid>
-                 
+
                   {/**---------------------------------- Forms---------------------------------- */}
                   {
-                    activeInner===0&&
+                    activeInner === 0 &&
                     <div style={{ width: '100%', }}>
-                        <Button onClick={() => handlePrint()}>
-                <Print fontSize='large' />
-                Print</Button>
-            <Button>
-                <FontAwesomeIcon onClick={() => handlePrint()} icon={faFileAlt} size={45} color='skyblue' />
-                Save as pdf</Button>
-                    <div className='container' ref={componentRef} style={{ overflow:'scroll' }}>
-                      <div style={{ width: '100%', height: 200, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                        <div style={{ marginBottom: 30, fontSize: 18, width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} class="header " align=" center">
-                          <div className='adminPic' style={{ width: 120, height: 120, borderRadius: 150, marginRight: 10, padding: 10, fontSize: 14, marginTop: '3vh', }} />
+                      <Button onClick={() => handlePrint()}>
+                        <Print fontSize='large' />
+                        Print</Button>
+                      <Button>
+                        <FontAwesomeIcon onClick={() => handlePrint()} icon={faFileAlt} size={45} color='skyblue' />
+                        Save as pdf</Button>
+                      <div className='container' ref={componentRef} style={{ overflow: 'scroll' }}>
+                        <div style={{ width: '100%', height: 200, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                          <div style={{ marginBottom: 30, fontSize: 18, width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} class="header " align=" center">
+                            <div className='adminPic' style={{ width: 120, height: 120, borderRadius: 150, marginRight: 10, padding: 10, fontSize: 14, marginTop: '3vh', }} />
+                          </div>
+                          <div style={{ marginBottom: 60, fontSize: 20, width: '100%', height: '20%' }} class="header " align=" center"><h4>Republic of the Philippines</h4>
+                            <h4>Province of Camarines Norte</h4>
+                            <h4>Municipality of Daet</h4>
+                            <h4>MUNICIPAL HEALTH OFFICE</h4>
+                            <h4><strong>RHU 3 - BIRTHING CENTER</strong></h4>
+                            <h4><strong>Prenatal Visit Report</strong></h4>
+                          </div>
+                          <div style={{ marginBottom: 60, fontSize: 18, width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} class="header " align=" center">
+                            <div className='wew3' style={{ width: 100, height: 100, borderRadius: 150, marginRight: 10, padding: 10, fontSize: 14, marginTop: '3vh', }} />
+                          </div>
                         </div>
-                        <div style={{ marginBottom: 60, fontSize: 20, width: '100%', height: '20%' }} class="header " align=" center"><h4>Republic of the Philippines</h4>
-                          <h4>Province of Camarines Norte</h4>
-                          <h4>Municipality of Daet</h4>
-                          <h4>MUNICIPAL HEALTH OFFICE</h4>
-                          <h4><strong>RHU 3 - BIRTHING CENTER</strong></h4>
-                          <h4><strong>Prenatal Visit Report</strong></h4>
-                        </div>
-                        <div style={{ marginBottom: 60, fontSize: 18, width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} class="header " align=" center">
-                          <div className='wew3' style={{ width: 100, height: 100, borderRadius: 150, marginRight: 10, padding: 10, fontSize: 14, marginTop: '3vh', }} />
-                        </div>
-                      </div>
-                      <div style={{ width: '100%', height:'90%', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start' }}>
-                        <div style={{}}>
-                          <Grid xs={12} justify="center" padding={0}>
-                            <Box>
-                              <Box padding={1} textAlign={'center'} sx={{ backgroundColor: 'grayText', color: 'white' }}>
-                                <Typography fontWeight='700'>PRE-NATAL VISITS</Typography>
-                              </Box>
-                              <TableContainer component={Paper} sx={{ width: '100%' }}>
-                                <Table size="small" aria-label="prenatalvistisTable" stickyHeader sx={{ minWidth: '100%', minHeight: '100%' }}>
-                                  <TableHead style={{ backgroundColor: 'skyblue' }} >
-                                    <TableRow>
-                                      <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }} >Date of Visit</TableCell>
-                                      <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Blood Pressure</TableCell>
-                                      <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Weight</TableCell>
-                                      <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>BMI</TableCell>
-                                      <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Age of Gestation</TableCell>
-                                      <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Fundal Height</TableCell>
-                                      <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Fetal Movement</TableCell>
-                                      <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Presentation</TableCell>
-                                    </TableRow>
-                                  </TableHead>
-                                  <TableBody>
-                                    {appointments.length > 0 ? (
-                                      appointments.map((row2) => (
-                                        <TableRow key={row2.appointmentDate}>
-                                          <TableCell>{row2.appointmentDate}</TableCell>
-                                          <TableCell>{row2.diastolic}/{row2.systolic}</TableCell>
-                                          <TableCell>{row2.weight}</TableCell>
-                                          <TableCell>{row2.bmi}</TableCell>
-                                          <TableCell align='center'>{row2.aog}</TableCell>
-                                          <TableCell>{row2.fundalHeight}</TableCell>
-                                          <TableCell>{row2.fetalHeartTone} b/m</TableCell>
-                                          <TableCell>{row2.presentation}</TableCell>
-                                        </TableRow>
-                                      ))
-                                    ) : (
+                        <div style={{ width: '100%', height: '90%', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start' }}>
+                          <div style={{}}>
+                            <Grid xs={12} justify="center" padding={0}>
+                              <Box>
+                                <Box padding={1} textAlign={'center'} sx={{ backgroundColor: 'grayText', color: 'white' }}>
+                                  <Typography fontWeight='700'>PRE-NATAL VISITS</Typography>
+                                </Box>
+                                <TableContainer component={Paper} sx={{ width: '100%' }}>
+                                  <Table size="small" aria-label="prenatalvistisTable" stickyHeader sx={{ minWidth: '100%', minHeight: '100%' }}>
+                                    <TableHead style={{ backgroundColor: 'skyblue' }} >
                                       <TableRow>
-                                        <TableCell colSpan={9} align="center">
-                                          No Pre-natal visits found
-                                        </TableCell>
+                                        <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }} >Date of Visit</TableCell>
+                                        <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Blood Pressure</TableCell>
+                                        <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Weight</TableCell>
+                                        <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>BMI</TableCell>
+                                        <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Age of Gestation</TableCell>
+                                        <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Fundal Height</TableCell>
+                                        <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Fetal Movement</TableCell>
+                                        <TableCell sx={{ backgroundColor: '#F0F2F5', color: 'GrayText', fontWeight: '550' }}>Presentation</TableCell>
                                       </TableRow>
-                                    )}
-                                  </TableBody>
-                                </Table>
-                              </TableContainer>
-                            </Box>
-                          </Grid>
+                                    </TableHead>
+                                    <TableBody>
+                                      {appointments.length > 0 ? (
+                                        appointments.map((row2) => (
+                                          <TableRow key={row2.appointmentDate}>
+                                            <TableCell>{row2.appointmentDate}</TableCell>
+                                            <TableCell>{row2.diastolic}/{row2.systolic}</TableCell>
+                                            <TableCell>{row2.weight}</TableCell>
+                                            <TableCell>{row2.bmi}</TableCell>
+                                            <TableCell align='center'>{row2.aog}</TableCell>
+                                            <TableCell>{row2.fundalHeight}</TableCell>
+                                            <TableCell>{row2.fetalHeartTone} b/m</TableCell>
+                                            <TableCell>{row2.presentation}</TableCell>
+                                          </TableRow>
+                                        ))
+                                      ) : (
+                                        <TableRow>
+                                          <TableCell colSpan={9} align="center">
+                                            No Pre-natal visits found
+                                          </TableCell>
+                                        </TableRow>
+                                      )}
+                                    </TableBody>
+                                  </Table>
+                                </TableContainer>
+                              </Box>
+                            </Grid>
+                          </div>
+                        </div>
+                        <div style={{ display: 'flex', width: 220, height: 10, marginLeft: '60%', flexDirection: 'column', alignItems: 'Right', justifyContent: 'Right' }}>
+                          <TextField fullWidth variant='standard' sx={{ fontSize: '16px', fontWeight: 550, textAlign: 'center' }} />
+                          <p style={{ textAlign: 'center' }}>Person In-Charge</p>
                         </div>
                       </div>
-                      <div style={{ display: 'flex', width: 220, height: 10, marginLeft: '60%', flexDirection: 'column', alignItems: 'Right', justifyContent: 'Right'}}>
-                        <TextField fullWidth variant='standard' sx={{fontSize:'16px', fontWeight:550, textAlign:'center'}}/>
-                        <p style={{ textAlign: 'center' }}>Person In-Charge</p>
-                      </div>
-                    </div>
-                  </div>
-                  }
-                  {
-                    activeInner===1&&
-                    <div style={{width:'100%',height:'100%',overflow:'scroll',display:'flex',alignItems:'center',justifyContent:'center'}}>
-                      <PatientDataForm2 selectedRow={selectedRow}/>
                     </div>
                   }
                   {
-                    activeInner===2&&
-                    <div style={{width:'100%',height:'100%',}}>
-                      
-                      <Consent2 selectedRow={selectedRow}/>
+                    activeInner === 1 &&
+                    <div style={{ width: '100%', height: '100%', overflow: 'scroll', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <PatientDataForm2 selectedRow={selectedRow} />
+                    </div>
+                  }
+                  {
+                    activeInner === 2 &&
+                    <div style={{ width: '100%', height: '100%', }}>
+
+                      <Consent2 selectedRow={selectedRow} />
                     </div>
                   }
                 </Box>
@@ -2409,7 +2429,7 @@ function PatientTable({ handleSubmit, userData }) {
                     Create Refferal
                   </Typography>
                   {/* Add your form or other components here */}
-                  <ReferralForm selectedRow={selectedRow} ref={()=> ref}/>
+                  <ReferralForm selectedRow={selectedRow} ref={() => ref} />
                 </Box>
               </Modal>
               {/*----------------------------------------------------------------------------------------------- Modal for Complete Pregnancy -----------------------------------------------------------------------------------------------*/}
