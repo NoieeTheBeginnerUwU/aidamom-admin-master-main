@@ -8,6 +8,9 @@ import './dischargeSummary.css'; // Assuming you have a CSS file named discharge
 import moment from 'moment';
 //react to print
 import { useReactToPrint } from 'react-to-print';
+import { Print } from '@material-ui/icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileAlt } from '@fortawesome/free-solid-svg-icons';
 
 const theme = createTheme({
     typography: {
@@ -28,13 +31,12 @@ const Consent2 = ({selectedRow}) => {
 
 
     const containerStyle = {
-        fontSize: '12px',
-        lineHeight: '1.5',
-        width: '21cm',
-        height: '29.7cm',
-        margin: '1cm auto',
-        padding: '1cm',
-        overflow:'hidden'
+      fontSize: '12px',
+      lineHeight: '1.5',
+      width: '21cm',
+      height: '29.7cm',
+      margin: '1cm auto',
+      padding: '1cm',
       };
   
   const [consent, setConsent] = useState({
@@ -43,7 +45,7 @@ const Consent2 = ({selectedRow}) => {
     userMname: selectedRow.userLname,
     userFullName: selectedRow.userFname+ " "+selectedRow.userMname[0]+". "+selectedRow.userLname,
     civilStatus: selectedRow.userCivilStatus,
-    date: "",
+    date: moment(new Date()).format("MMMM DD, YYYY"),
     age: 0,
     address: selectedRow.userBarangay+ ", "+ selectedRow.userTown+ ", "+selectedRow.userProvince,
     saksi:"",
@@ -54,8 +56,12 @@ const Consent2 = ({selectedRow}) => {
 
   return (
     <ThemeProvider theme={theme}>
-    <Button onClick={()=> handlePrint()}>Print</Button>
-    <Button>Save as pdf</Button>
+    <Button onClick={()=> handlePrint()}>
+      <Print fontSize='large'/>
+      Print</Button>
+    <Button>
+      <FontAwesomeIcon onClick={()=> handlePrint()} icon={faFileAlt} size={45} color='skyblue'/>
+      Save as pdf</Button>
     <div ref={ref} style={containerStyle}>
       <div className="container1"  style={{border:'1px'}}>
       <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
@@ -81,7 +87,7 @@ const Consent2 = ({selectedRow}) => {
         </div>
         <div align="right">
           <label>DATE:</label>
-          <input type="date"  value={date} onChange={(date)=> setDate(date.target.value)} id="province" className="dual1"  class="centered-input" style={{width:'30%',fontWeight:500, fontSize:12,wordSpacing:1, letterSpacing:2, fontStyle:'normal'}}/>
+          <input type="date"  value={moment(consent.date).format("MMMM DD, YYYY")}  onChange={(text) => setConsent(prev => { return { ...prev, date: text.target.value } })} id="province" className="dual1"  class="centered-input" style={{width:'30%',fontWeight:500, fontSize:12,wordSpacing:1, letterSpacing:2, fontStyle:'normal'}}/>
           <br />
           <br />
           <br />

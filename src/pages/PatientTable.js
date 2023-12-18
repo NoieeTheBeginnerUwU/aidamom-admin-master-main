@@ -42,11 +42,10 @@ import Appoinment from './Approval';
 import Approval from './Approval';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
-import { useReactToPrint } from 'react-to-print';
 import ReferralForm from './refferalForm';
 import TablePagination from '@mui/material/TablePagination';
 //React to Priont
-
+import { useReactToPrint } from 'react-to-print';
 //copied forms
 import PatientDataForm2 from './patientdata2';
 import Consent2 from './consent2';
@@ -732,6 +731,10 @@ function PatientTable({ handleSubmit, userData }) {
           userFathersName: doc.data().userFathersName,
           userMothersName: doc.data().userMothersName,
           userHusbandsName: doc.data().userHusbandsName,
+          userHusbandsFName: doc.data().userHusbandsFName,
+          userHusbandsMName: doc.data().userHusbandsMName,
+          userHusbandsLName: doc.data().userHusbandsLName,
+          userHusbandsNumber: doc.data().userHusbandsNumber,
           userHusbandsOccuupation: doc.data().userHusbandsOccuupation,
           userDateOfMarriage: doc.data().userDateOfMarriage,
           userPlaceOfMarriage: doc.data().userPlaceOfMarriage,
@@ -744,6 +747,7 @@ function PatientTable({ handleSubmit, userData }) {
           userProvincebirth: doc.data().userProvincebirth,
           userTownbirth: doc.data().userTownbirth,
           userBarangaybirth: doc.data().userBarangaybirth,
+          userBirthPlace: !doc.data().userBarangaybirth? "No data":doc.data().userBarangaybirth+", "+!doc.data().userTownbirth?"":doc.data().userTownbirth+", "+!doc.data().userTownbirth?"":doc.data().userTownbirth,
           //user pregnancy history
           //child1
           userChild1: doc.data().userChild1,
@@ -974,7 +978,7 @@ function PatientTable({ handleSubmit, userData }) {
               userBarangay: doc.userBarangay,
               userTown: doc.userTown,
               userProvince: doc.userProvince,
-              userPlaceOfBirth: doc.userPlaceOfBirth,
+              userBirthPlace: doc.userBirthPlace,
               //family details
               userFathersName: doc.userFathersName,
               userMothersName: doc.userMothersName,
@@ -1250,7 +1254,6 @@ function PatientTable({ handleSubmit, userData }) {
   };
 
 
-
   return (
 
     <div style={{ marginTop: '2px', height: '550px', width: '95%', textAlign: 'center', justifyContent: 'center', overflow: 'hidden' }}>
@@ -1478,7 +1481,7 @@ function PatientTable({ handleSubmit, userData }) {
 
                                     <Grid item xs={4}>
                                       <Box height={4 + 'vw'}>
-                                        <Typography mb={1} variant='body' fontSize={'small'} fontWeight={'medium'} color={'GrayText'}>Place of Birth<Box fontWeight={750} fontSize={'medium'}>{selectedRow.userPlaceOfBirth}</Box></Typography>
+                                        <Typography mb={1} variant='body' fontSize={'small'} fontWeight={'medium'} color={'GrayText'}>Place of Birth<Box fontWeight={750} fontSize={'medium'}>{selectedRow.userBirthPlace}</Box></Typography>
                                       </Box>
                                     </Grid>
 
@@ -2153,7 +2156,6 @@ function PatientTable({ handleSubmit, userData }) {
 
 
 
-
                   {/* --------------------- Dialog for Complete Pregnancy------------------------------------------------------------------------------------------ */}
                   <Dialog
                     open={open}
@@ -2287,20 +2289,20 @@ function PatientTable({ handleSubmit, userData }) {
               {/*--------------------------------------------------------------------------------------------- Modal for Visits Reports ---------------------------------------------------------------------------------------------*/}
               <Modal open={openPrenatalVisitReports} onClose={handleClosePrenatalVisitReports}>
 
-                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '90%', bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '90%' , overflow:'scroll' , bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
                   {/* Your content goes here */}
                 
                   <Typography variant="h6" component="div" style={{fontWeight:'600'}}>
                   PRE-NATAL VISIT RELATED REPORTS
                   </Typography>
-                  <Button variant='outlined' m={1}  onClick={()=> setActiveInner(0)}>Prenatal Report</Button>
-                  <Button  variant='outlined' m={1} onClick={()=> setActiveInner(1)}>Patient Data Form</Button>
-                  <Button  variant='outlined' m={1} onClick={()=> setActiveInner(2)}>Consent Form</Button>
+                  <Button onClick={()=> setActiveInner(0)}>Prenatal Report</Button>
+                  <Button onClick={()=> setActiveInner(1)}>Patient Data Form</Button>
+                  <Button onClick={()=> setActiveInner(2)}>Consent Form</Button>
                   {/**---------------------------------- Forms---------------------------------- */}
                   {
                     activeInner===0&&
-                    <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflowY: 'scroll' }}>
-                    <div className='container' style={{ marginTop: '10%' }}>
+                    <div style={{ width: '100%', }}>
+                    <div className='container' ref={componentRef} style={{ overflow:'scroll' }}>
                       <div style={{ width: '100%', height: 200, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{ marginBottom: 30, fontSize: 18, width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} class="header " align=" center">
                           <div className='adminPic' style={{ width: 120, height: 120, borderRadius: 150, marginRight: 10, padding: 10, fontSize: 14, marginTop: '3vh', }} />
@@ -2375,7 +2377,7 @@ function PatientTable({ handleSubmit, userData }) {
                   {
                     activeInner===1&&
                     <div style={{width:'100%',height:'100%',overflow:'scroll',display:'flex',alignItems:'center',justifyContent:'center'}}>
-                      <PatientDataForm2 selelectedRow={selectedRow}/>
+                      <PatientDataForm2 selectedRow={selectedRow}/>
                     </div>
                   }
                   {
