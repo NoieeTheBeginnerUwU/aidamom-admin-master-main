@@ -49,6 +49,8 @@ import { useReactToPrint } from 'react-to-print';
 //copied forms
 import PatientDataForm2 from './patientdata2';
 import Consent2 from './consent2';
+import Print from '@mui/icons-material/Print';
+import { faFileAlt } from '@fortawesome/free-solid-svg-icons';
 
 const useStyles = makeStyles({
   root: {
@@ -2289,19 +2291,33 @@ function PatientTable({ handleSubmit, userData }) {
               {/*--------------------------------------------------------------------------------------------- Modal for Visits Reports ---------------------------------------------------------------------------------------------*/}
               <Modal open={openPrenatalVisitReports} onClose={handleClosePrenatalVisitReports}>
 
-                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '90%' , overflow:'scroll' , bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '95%', height: '99%' , overflow:'scroll' , bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
                   {/* Your content goes here */}
-                
+                  <Grid container marginBottom={5}>
+                    <Grid xs={5}>
                   <Typography variant="h6" component="div" style={{fontWeight:'600'}}>
                   PRE-NATAL VISIT RELATED REPORTS
                   </Typography>
-                  <Button onClick={()=> setActiveInner(0)}>Prenatal Report</Button>
-                  <Button onClick={()=> setActiveInner(1)}>Patient Data Form</Button>
-                  <Button onClick={()=> setActiveInner(2)}>Consent Form</Button>
+                  </Grid >
+                  <Grid xs={1}></Grid>
+                  <Grid xs={5}>
+                 
+                  <Button  onClick={()=> setActiveInner(0)}>Prenatal Report</Button>
+                  <Button  onClick={()=> setActiveInner(1)}>Patient Data Form</Button>
+                  <Button  onClick={()=> setActiveInner(2)}>Consent Form</Button>
+                  </Grid>
+                  </Grid>
+                 
                   {/**---------------------------------- Forms---------------------------------- */}
                   {
                     activeInner===0&&
                     <div style={{ width: '100%', }}>
+                        <Button onClick={() => handlePrint()}>
+                <Print fontSize='large' />
+                Print</Button>
+            <Button>
+                <FontAwesomeIcon onClick={() => handlePrint()} icon={faFileAlt} size={45} color='skyblue' />
+                Save as pdf</Button>
                     <div className='container' ref={componentRef} style={{ overflow:'scroll' }}>
                       <div style={{ width: '100%', height: 200, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{ marginBottom: 30, fontSize: 18, width: '100%', height: '20%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} class="header " align=" center">
@@ -2383,6 +2399,7 @@ function PatientTable({ handleSubmit, userData }) {
                   {
                     activeInner===2&&
                     <div style={{width:'100%',height:'100%',}}>
+                      
                       <Consent2 selectedRow={selectedRow}/>
                     </div>
                   }

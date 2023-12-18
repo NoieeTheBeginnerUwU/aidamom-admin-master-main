@@ -36,7 +36,8 @@ const Consent2 = ({selectedRow}) => {
       width: '21cm',
       height: '29.7cm',
       margin: '1cm auto',
-      padding: '1cm',
+    
+   
       };
   
   const [consent, setConsent] = useState({
@@ -56,12 +57,13 @@ const Consent2 = ({selectedRow}) => {
 
   return (
     <ThemeProvider theme={theme}>
-    <Button onClick={()=> handlePrint()}>
-      <Print fontSize='large'/>
-      Print</Button>
-    <Button>
-      <FontAwesomeIcon onClick={()=> handlePrint()} icon={faFileAlt} size={45} color='skyblue'/>
-      Save as pdf</Button>
+     <Button onClick={() => handlePrint()}>
+                <Print fontSize='large' />
+                Print</Button>
+            <Button>
+                <FontAwesomeIcon onClick={() => handlePrint()} icon={faFileAlt} size={45} color='skyblue' />
+                Save as pdf</Button>
+                  
     <div ref={ref} style={containerStyle}>
       <div className="container1"  style={{border:'1px'}}>
       <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
