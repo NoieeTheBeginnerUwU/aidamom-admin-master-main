@@ -1411,7 +1411,7 @@ function PatientTable({ handleSubmit, userData }) {
                 </Grid>
               </Grid>
               {/* --------------------------------------Taaaaaaab ----------------------------------------------------------------------------------------------------------------- */}
-              <Grid item xs={9}>
+              <Grid item xs={10}>
 
                 <Box padding={.3} sx={{ width: '100%', height: '100%' }} marginTop={0} mb={0}>
 
@@ -1481,13 +1481,9 @@ function PatientTable({ handleSubmit, userData }) {
                                       </Box>
                                     </Grid>
 
-                                    <Grid item xs={4}>
-                                      <Box height={4 + 'vw'}>
-                                        <Typography mb={1} variant='body' fontSize={'small'} fontWeight={'medium'} color={'GrayText'}>Place of Birth<Box fontWeight={750} fontSize={'medium'}>{selectedRow.userBirthPlace}</Box></Typography>
-                                      </Box>
-                                    </Grid>
+                                   
 
-                                    <Grid item xs={4}>
+                                    <Grid item xs={8}>
                                       <Box height={4 + 'vw'}>
                                         <Typography mb={1} variant='body' fontSize={'small'} fontWeight={'medium'} color={'GrayText'}> Current Address<Box fontWeight={750} fontSize={'medium'}>{selectedRow.userBarangay}, Daet, Camarines Norte</Box></Typography>
                                       </Box>
