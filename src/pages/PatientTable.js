@@ -1568,91 +1568,91 @@ function PatientTable({ handleSubmit, userData }) {
                                       <Table size='small'>
                                         <TableHead>
                                           <TableRow>
-                                            <TableCell style={{ backgroundColor: 'white', fontWeight: '550', color: 'GrayText' }}>Diseases</TableCell>
-                                            <TableCell style={{ backgroundColor: 'white', fontWeight: '550', color: 'GrayText' }}>Personal</TableCell>
-                                            <TableCell style={{ backgroundColor: 'white', fontWeight: '550', color: 'GrayText' }}>Family</TableCell>
+                                            <TableCell  style={{ backgroundColor: 'white', fontWeight: '550', color: 'GrayText' }} padding="none">Diseases</TableCell>
+                                            <TableCell style={{ backgroundColor: 'white', fontWeight: '550', color: 'GrayText' }} padding="none">Personal</TableCell>
+                                            <TableCell style={{ backgroundColor: 'white', fontWeight: '550', color: 'GrayText' }} padding="none">Family</TableCell>
                                           </TableRow>
                                         </TableHead>
                                         <TableBody>
                                           <TableRow key={row.disease}>
-                                            <TableCell >Tubercolosis</TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userTBPersonal === false ? "no" : "yes"}</TableCell>
+                                            <TableCell  padding="none" >Tubercolosis</TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }}padding="none" > 
+                                              <TableCell padding="none" >{selectedRow.userTBPersonal === false ? "no" : "yes"}</TableCell>
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userTBFamily === false ? "no" : "yes"}</TableCell>
-                                            </TableCell>
-                                          </TableRow>
-                                          <TableRow key={row.disease}>
-                                            <TableCell >Heart Diseases</TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userHeartDiseasesPersonal === false ? "no" : "yes"}</TableCell>
-                                            </TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userHeartDiseasesFamily === false ? "no" : "yes"}</TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }} padding="none" >
+                                              <TableCell padding="none">{selectedRow.userTBFamily === false ? "no" : "yes"}</TableCell>
                                             </TableCell>
                                           </TableRow>
                                           <TableRow key={row.disease}>
-                                            <TableCell >Diabetes</TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userDiabetesPersonal === false ? "no" : "yes"}</TableCell>
+                                            <TableCell padding="none"  >Heart Diseases</TableCell>
+                                            <TableCell  padding="none" style={{ backgroundColor: "white" }}>
+                                              <TableCell padding="none">{selectedRow.userHeartDiseasesPersonal === false ? "no" : "yes"}</TableCell>
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userDiabetesFamily === false ? "no" : "yes"}</TableCell>
+                                            <TableCell  padding="none" style={{ backgroundColor: "white" }}>
+                                              <TableCell padding="none">{selectedRow.userHeartDiseasesFamily === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                          </TableRow>
+                                          <TableRow key={row.disease} >
+                                            <TableCell padding="none" >Diabetes</TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }} padding="none">
+                                              <TableCell padding="none">{selectedRow.userDiabetesPersonal === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                            <TableCell padding="none" style={{ backgroundColor: "white" }}>
+                                              <TableCell padding="none" >{selectedRow.userDiabetesFamily === false ? "no" : "yes"}</TableCell>
                                             </TableCell>
                                           </TableRow>
                                           <TableRow key={row.disease}>
-                                            <TableCell >Hypertension</TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userHypertensionPersonal === false ? "no" : "yes"}</TableCell>
+                                            <TableCell padding="none" >Hypertension</TableCell>
+                                            <TableCell padding="none" style={{ backgroundColor: "white" }}>
+                                              <TableCell padding="none" >{selectedRow.userHypertensionPersonal === false ? "no" : "yes"}</TableCell>
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userTBFamily === false ? "no" : "yes"}</TableCell>
+                                            <TableCell padding="none" style={{ backgroundColor: "white" }}>
+                                              <TableCell padding="none">{selectedRow.userTBFamily === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                          </TableRow>
+                                          <TableRow key={row.disease} >
+                                            <TableCell padding="none" >Bronchial Asthma</TableCell>
+                                            <TableCell padding="none" style={{ backgroundColor: "white" }}>
+                                              <TableCell padding="none">{selectedRow.userBronchialAsthmaPersonal === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                            <TableCell style={{ backgroundColor: "white" }} padding="none">
+                                              <TableCell padding="none">{selectedRow.userBronchialAsthmaPersonal === false ? "no" : "yes"}</TableCell>
                                             </TableCell>
                                           </TableRow>
                                           <TableRow key={row.disease}>
-                                            <TableCell >Bronchial Asthma</TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userBronchialAsthmaPersonal === false ? "no" : "yes"}</TableCell>
+                                            <TableCell padding="none" >Urinary Tract Infection</TableCell>
+                                            <TableCell padding="none" style={{ backgroundColor: "white" }}>
+                                              <TableCell padding="none" >{selectedRow.userUTIPersonal === false ? "no" : "yes"}</TableCell>
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userBronchialAsthmaPersonal === false ? "no" : "yes"}</TableCell>
-                                            </TableCell>
-                                          </TableRow>
-                                          <TableRow key={row.disease}>
-                                            <TableCell >Urinary Tract Infection</TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userUTIPersonal === false ? "no" : "yes"}</TableCell>
-                                            </TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userUTIFamily === false ? "no" : "yes"}</TableCell>
+                                            <TableCell padding="none" style={{ backgroundColor: "white" }}>
+                                              <TableCell padding="none" >{selectedRow.userUTIFamily === false ? "no" : "yes"}</TableCell>
                                             </TableCell>
                                           </TableRow>
                                           <TableRow key={row.disease}>
-                                            <TableCell >Parasitism</TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userParasitismPersonal === false ? "no" : "yes"}</TableCell>
+                                            <TableCell padding="none" >Parasitism</TableCell>
+                                            <TableCell padding="none" style={{ backgroundColor: "white" }}>
+                                              <TableCell padding="none">{selectedRow.userParasitismPersonal === false ? "no" : "yes"}</TableCell>
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userParasitismFamily === false ? "no" : "yes"}</TableCell>
-                                            </TableCell>
-                                          </TableRow>
-                                          <TableRow key={row.disease}>
-                                            <TableCell >Goiter</TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userGoiterPersonal === false ? "no" : "yes"}</TableCell>
-                                            </TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userGoiterFamily === false ? "no" : "yes"}</TableCell>
+                                            <TableCell padding="none" style={{ backgroundColor: "white" }}>
+                                              <TableCell padding="none">{selectedRow.userParasitismFamily === false ? "no" : "yes"}</TableCell>
                                             </TableCell>
                                           </TableRow>
                                           <TableRow key={row.disease}>
-                                            <TableCell >Anemia</TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userAnemiaPersonal}</TableCell>
+                                            <TableCell padding="none" >Goiter</TableCell>
+                                            <TableCell padding="none" style={{ backgroundColor: "white" }}>
+                                              <TableCell padding="none" >{selectedRow.userGoiterPersonal === false ? "no" : "yes"}</TableCell>
                                             </TableCell>
-                                            <TableCell style={{ backgroundColor: "white" }}>
-                                              <TableCell>{selectedRow.userAnemiaFamily}</TableCell>
+                                            <TableCell padding="none" style={{ backgroundColor: "white" }}>
+                                              <TableCell padding="none">{selectedRow.userGoiterFamily === false ? "no" : "yes"}</TableCell>
+                                            </TableCell>
+                                          </TableRow>
+                                          <TableRow key={row.disease}>
+                                            <TableCell padding="none" >Anemia</TableCell>
+                                            <TableCell padding="none" style={{ backgroundColor: "white" }}>
+                                              <TableCell padding="none">{selectedRow.userAnemiaPersonal}</TableCell>
+                                            </TableCell>
+                                            <TableCell padding="none" style={{ backgroundColor: "white" }}>
+                                              <TableCell padding="none">{selectedRow.userAnemiaFamily}</TableCell>
                                             </TableCell>
                                           </TableRow>
                                         </TableBody>
