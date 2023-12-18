@@ -51,8 +51,8 @@ import PatientDataForm2 from './patientdata2';
 import Consent2 from './consent2';
 import Print from '@mui/icons-material/Print';
 import { faFileAlt } from '@fortawesome/free-solid-svg-icons';
-import DischargeSummaryNewborn from './dischargeSummaryforNewborn';
-import DischargeSummary from './dischargeSummary';
+import DischargeSummaryNewborn2 from './dischargeSummaryforNewborn';
+import DischargeSummary2 from './dischargeSummary';
 
 const useStyles = makeStyles({
   root: {
@@ -2153,7 +2153,7 @@ function PatientTable({ handleSubmit, userData }) {
                                 </Grid>
                                 <Grid xs={8}>
                                 <Box >
-                                  {isMotherSummary ? <DischargeSummary /> : <DischargeSummaryNewborn />}
+                                  {isMotherSummary ? <DischargeSummary2  selectedRow={selectedRow}/> : <DischargeSummaryNewborn2 discharge={discharge}/>}
                                 </Box>
                                 {/* Other components */}
                                 </Grid>

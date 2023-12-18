@@ -222,7 +222,7 @@ const PatientDataForm2 = ({ selectedRow }) => {
                         <h4>DATA TAKEN BY:</h4>
 
                         <br />
-                        <input type="text" id="province" className="dual1" style={{ width: '35%' }} />
+                        <input type="text" id="province" className="dual1" style={{ width: '35%', outline:'none',textAlign:'center'}} />
                         <br />
                         <br />
                         <h4>HEALTH PERSONNEL ON DUTY</h4>

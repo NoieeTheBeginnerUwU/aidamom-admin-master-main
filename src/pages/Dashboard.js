@@ -255,7 +255,7 @@ const Dashboard = ({ counter }) => {
       if (moment(doc.data().appointmentDate).format("MM") === monthNow && moment(doc.data().appointmentDate).format("YYYY" === yearNow && doc.data().status === "approved")) {
         thismonth2.push({ id: doc.id })
       }
-      if (doc.data().status === "approved" && moment(new Date, "YYYY/MM/DD").diff(doc.data().appointmentDate, "YYYY/MM/DD") < 0) {
+      if (doc.data().status === "approved" && moment(new Date, "YYYY/MM/DD").diff(doc.data().appointmentDate, "YYYY/MM/DD") <= 0) {
         pend.push(doc.id)
       }
     })
@@ -1335,8 +1335,8 @@ const Dashboard = ({ counter }) => {
                             <TableCell className={classes.subHeader}>Doctor</TableCell>
                             <TableCell className={classes.subHeader}>Nurse</TableCell>
                             <TableCell className={classes.subHeader}>Midwife</TableCell>
-                            <TableCell className={classes.subHeader}>Vaginal</TableCell>
-                            <TableCell className={classes.subHeader}>Ceasarian</TableCell>
+                            <TableCell className={classes.subHeader}>Normal</TableCell>
+                            <TableCell className={classes.subHeader}></TableCell>
                             <TableCell className={classes.subHeader}>ALIVE</TableCell>
                             <TableCell className={classes.subHeader}>Stillbirth</TableCell>
                             <TableCell className={classes.subHeader}>Miscarriage</TableCell>
@@ -1348,8 +1348,8 @@ const Dashboard = ({ counter }) => {
                               <TableCell className={classes.dataCell}>{todVD}</TableCell>
                               <TableCell className={classes.dataCell}>{todVN}</TableCell>
                               <TableCell className={classes.dataCell}>{todVM}</TableCell>
-                              <TableCell className={classes.dataCell}>{todVag}</TableCell>
-                              <TableCell className={classes.dataCell}>{0}</TableCell>
+                              <TableCell className={classes.dataCell}>{todV}</TableCell>
+                              <TableCell className={classes.dataCell}>{}</TableCell>
                               <TableCell className={classes.dataCell}>{todV}</TableCell>
                               <TableCell className={classes.dataCell}>{0}</TableCell>
                               <TableCell className={classes.dataCell}>{0}</TableCell>
@@ -1357,7 +1357,7 @@ const Dashboard = ({ counter }) => {
                           ))}
                           <TableRow>
                             <TableCell colSpan={3} className={classes.dataCell}><strong>Total: {todV}</strong></TableCell>
-                            <TableCell colSpan={2} className={classes.dataCell}><strong>Total: {todVag}</strong></TableCell>
+                            <TableCell colSpan={2} className={classes.dataCell}><strong>Total: {todV}</strong></TableCell>
                             <TableCell colSpan={3} className={classes.dataCell}><strong>Total: {todV}</strong></TableCell>
                           </TableRow>
                         </TableBody>
