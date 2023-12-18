@@ -92,10 +92,10 @@ export default function PatientRegistrationForm() {
   const [registrationForm, setRegistrationForm] = useState({
     //basic personal details
     userEmail: "No data",
-    userFname: "No data",
-    userMname: "No data",
-    userLname: "No data",
-    userSuffix: "No data",
+    userFname: "",
+    userMname: "",
+    userLname: "",
+    userSuffix: "",
     userSex: "female",
     userCivilStatus: "No data",
     userBloodType: "No data",
