@@ -36,7 +36,7 @@ const Consent2 = ({selectedRow}) => {
       width: '21cm',
       height: '29.7cm',
       margin: '1cm auto',
-    
+      padding:'1cm'
    
       };
   
