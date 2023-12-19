@@ -26,6 +26,10 @@ import PatientHistoryForm from './patientHistory';
 import ClinicalCoverSheet from './clinicalCoverSheet';
 import referralNoData from './referralNodata';
 import PrintIcon from '@mui/icons-material/Print';
+import ReferralFormClone from './refferalFormClone';
+import DischargeSummaryNewborn2 from './dischargeSummaryforNewborn2';
+import DischargeSummaryMother from './dischargeSummaryMother';
+
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -81,6 +85,9 @@ const Reports = () => {
           <MenuItem value={'PatientDataForm'}>Patient DataForm</MenuItem>
           <MenuItem value={'Consent'}>Consent Form</MenuItem>
           <MenuItem value={'ClinicalCoverSheet'}>Clinical Cover Sheet</MenuItem>
+          <MenuItem value={'ReferralFormClone'}>Referral Form </MenuItem>
+          <MenuItem value={'DischargeSummaryNewborn2'}>Discharge Summary For Newborn</MenuItem>
+          <MenuItem value={'DischargeSummaryMother'}>Discharge Summary For Mother</MenuItem>
         </Select>
         <Button onClick={()=> handlePrint()} style={{backgroundColor:'skyblue',color:'white',fontWeight:600,marginTop:20}}>
             <FontAwesomeIcon icon={faPrint} size='1x' color='white'/>
@@ -109,6 +116,25 @@ const Reports = () => {
        {form === 'Consent' && (
         <div className='container' ref={ref}>
         < Consent/>
+        
+        </div>
+      )}
+       
+       {form === 'ReferralFormClone' && (
+        <div className='container' ref={ref} style={{alignContent:'left', textAlign:'left' }}>
+        < ReferralFormClone/>
+        
+        </div>
+      )}
+      {form === 'DischargeSummaryNewborn2' && (
+        <div className='container' ref={ref} style={{alignContent:'left', textAlign:'left' }}>
+        < DischargeSummaryNewborn2/>
+        
+        </div>
+      )}
+       {form === 'DischargeSummaryMother' && (
+        <div className='container' ref={ref} style={{alignContent:'left', textAlign:'left' }}>
+        < DischargeSummaryMother/>
         
         </div>
       )}
