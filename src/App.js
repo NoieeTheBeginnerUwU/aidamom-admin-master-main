@@ -35,6 +35,7 @@ import {
   Avatar,
   ThemeProvider,
   Badge,
+  Tooltip,
 } from '@mui/material';
 import { LockOutlined as LockOutlinedIcon, Email as EmailIcon, Lock as LockIcon, MailOutlineSharp, DashboardCustomize, MedicalInformation, PregnantWoman, ArticleSharp, ArticleTwoTone, FileCopySharp, SettingsAccessibility, BookOnline, QrCode } from '@mui/icons-material';
 
@@ -520,7 +521,9 @@ try {
             <Link to="/" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Overview"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Overview")} >
                   <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Overview"?"white":"rgb(100,100,100)"}}  color="primary">
+                  <Tooltip title="Dashboard">
                     <DashboardCustomize fontSize="large" color="" />
+                    </Tooltip>  
                   </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Overview"|""?"none":"none",color:active==="Overview"?"white":"rgb(100,100,100)"}}>Dashboard</h3>
                 </div>
@@ -528,7 +531,9 @@ try {
               <Link to="Appointments"  style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Appointments"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Appointments")}>
                   <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Appointments"?"white":"rgb(100,100,100)"}}  color="primary">
+                  <Tooltip title="Appointments">
                     <PregnantWomanRounded fontSize="large" color="" />
+                    </Tooltip>
                   </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Appointments"?"none":"none",color:active==="Appointments"?"white":"rgb(100,100,100)"}}>Patients</h3>
                 </div>
@@ -536,7 +541,9 @@ try {
               <Link to="Content" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Content"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Content")}>
                   <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Content"?"white":"rgb(100,100,100)"}}  color="primary">
+                  <Tooltip title="Content">
                     <PostAddOutlined fontSize="large" color="" />
+                    </Tooltip>
                   </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Content"?"none":"none",color:active==="Content"?"white":"rgb(100,100,100)"}}>Create Content</h3>
                 </div>
@@ -544,7 +551,9 @@ try {
               <Link to="Messages" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Messages"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Messages")}>
                   <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Messages"?"white":"rgb(100,100,100)"}} badgeContent={counter} color="primary">
+                  <Tooltip title="Messages">
                     <MailOutlineSharp fontSize="large" color="" />
+                    </Tooltip>
                   </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Messages"?"none":"none",color:active==="Messages"?"white":"rgb(100,100,100)"}}>Messages</h3>
                 </div>
@@ -552,7 +561,9 @@ try {
               <Link to="Systemreport" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Systemreport"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Systemreport")}>
                   <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Systemreport"?"white":"rgb(100,100,100)"}}  color="primary">
+                    <Tooltip title="System Reports">
                     <TableChartOutlined fontSize="large" color="" />
+                    </Tooltip>
                   </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Systemreport"?"none":"none",color:active==="Systemreport"?"white":"rgb(100,100,100)"}}>Reports</h3>
                 </div>
@@ -560,7 +571,9 @@ try {
               <Link to="Forms" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Forms"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Forms")}>
                   <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Forms"?"white":"rgb(100,100,100)"}}  color="primary">
+                  <Tooltip title="Printables">
                     <FileCopySharp fontSize="large" color="" />
+                    </Tooltip>
                   </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Forms"?"none":"none",color:active==="Forms"?"white":"rgb(100,100,100)"}}>Printables</h3>
                 </div>
@@ -568,7 +581,9 @@ try {
               <Link to="Log" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="Log"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("Log")}>
                   <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="Log"?"white":"rgb(100,100,100)"}}  color="primary">
+                  <Tooltip title="Activity Log">
                     <BookOnline fontSize="large" color="" />
+                    </Tooltip>
                   </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="Log"?"none":"none",color:active==="Log"?"white":"rgb(100,100,100)"}}>Activity Log</h3>
                 </div>
@@ -576,7 +591,9 @@ try {
               <Link to="QR" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="QR"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("QR")}>
                   <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="QR"?"white":"rgb(100,100,100)"}}  color="primary">
+                 <Tooltip title="QrCode">
                     <QrCode fontSize="large" color="" />
+                    </Tooltip>
                   </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="QR"?"none":"none",color:active==="QR"?"white":"rgb(100,100,100)"}}>MCare App QR</h3>
                 </div>
@@ -584,7 +601,9 @@ try {
               <Link to="settings" style={{textDecoration:'none'}}>
                 <div className='tabs' style={{width:'100%',height:50,marginLeft:'0%',borderBottom:'.5px solid transparent',display:'flex',fontSize:14,flexDirection:'row',alignSelf:'center',justifyContent:'start',backgroundColor:active==="settings"?"rgb(0,0,50)":"white"}} onClick={()=> setActive("settings")}>
                   <Badge style={{marginLeft:'10%',zIndex:120,fontSize:20,color:active==="settings"?"white":"rgb(100,100,100)"}}  color="primary">
+                  <Tooltip title="Settings">
                     <SettingsApplications fontSize="large" color="" />
+                    </Tooltip>
                   </Badge>
                   <h3 className='in' style={{opacity:hide===true?'0%':'100%',textDecoration:active==="settings"?"none":"none",color:active==="settings"?"white":"rgb(100,100,100)"}}>Account Settings</h3>
                 </div>
