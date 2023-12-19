@@ -1432,7 +1432,7 @@ const Dashboard = ({ counter }) => {
               </Grid>
           
             {/*-------------------------------NUMBER OF LIVE BIRTHS------------------------------ */}  
-          <Grid xs={6} sx={{ minHeight: '15vh', minWidth: '8%', }}>
+          <Grid xs={6} sx={{ minHeight: '15vh', width: '50%', }}>
 
 
 <Grid xs={12} sx={{ minHeight: flipped2 ? '15vh' : '15vh', minWidth: flipped2 ? '8%' : '8%', cursor: 'pointer' }} onClick={handleFlip2}>
@@ -1447,7 +1447,7 @@ const Dashboard = ({ counter }) => {
       <Box sx={{ height: '100%', width: '100%' }}>
         {/* Your flipped content goes here */}
 
-        <Grid container component={Paper} item xs={12} padding={1} sx={{ minHeight: '15vh', minWidth: '70%', }}>
+        <Grid container component={Paper} item xs={12} padding={1} sx={{ minHeight: '15vh', minWidth: '60%', }}>
           <Grid containercomponent={Paper} xs={6}>
             <Grid xs={12} ml={1} > <Box fontSize={'medium'} ml={1} fontWeight='600' sx={{ justifyContent: 'center', alignItems: 'center' }}></Box> <Box >Gender</Box></Grid>
             <Grid xs={12}> <Box fontSize='1.5em' ml={1} fontWeight='700' color={'#4E4B66'}>{todMal}</Box> <Box >Male</Box></Grid>
