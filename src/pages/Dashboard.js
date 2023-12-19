@@ -1372,10 +1372,10 @@ const Dashboard = ({ counter }) => {
               <Grid xs={6} sx={{ minHeight: '25vh', minWidth: '30%', }} padding={1} >
                 <Grid xs={12} sx={{ minHeight: flipped1 ? '35vh' : '25vh', minWidth: flipped1 ? '8%' : '8%', cursor: 'pointer' }} onClick={handleFlip1}>
                   {flipped1 === false ? (
-                    <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'#00BA88'} padding={1} color={'white'} component={Paper}>TALLY OF PREGNANT WOMEN</Box>
+                    <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'#00BA88'} padding={1} color={'white'} component={Paper}>NUMBER OF PREGNANT WOMEN</Box>
                   ) : (
 
-                    <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'#00BA88'} padding={1} color={'white'} component={Paper}>TALLY OF PREGNANT WOMEN</Box>
+                    <Box m={1} fontSize={'medium'} fontWeight={600} backgroundColor={'#00BA88'} padding={1} color={'white'} component={Paper}>NUMBER OF PREGNANT WOMEN</Box>
                   )}
                   <Box>
                     {flipped1 === false ? (
@@ -1419,7 +1419,7 @@ const Dashboard = ({ counter }) => {
                             ))}
                             <TableRow>
                               <TableCell component="th" scope="row">
-                                <strong>Tally of Pregnant Women</strong>
+                                <strong>Number of Pregnant Women</strong>
                               </TableCell>
                               <TableCell align="right"><strong>{totalPregnantWomen}</strong></TableCell>
                             </TableRow>
