@@ -1207,7 +1207,7 @@ const Dashboard = ({ counter }) => {
           <Grid xs={12}>
             <Grid container xs={12}marginTop={2} >
               {/*------------------------------- Grid 1 Appoinment------------------------------- */}
-              <Grid container item xs={5} ml={.5} padding={2} sx={{ maxHeight: '15vh', minWidth: '8%', }} component={Paper}  >
+              <Grid container item xs={5} ml={3} padding={2} sx={{ maxHeight: '15vh', minWidth: '8%', }} component={Paper}  >
                 <Grid xs={3} justifyContent='center' justifyItems="center"><Box sx={{ fontSize: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60%', color: "white", backgroundColor: '#486DF1' }}><EventNoteIcon fontSize='72' color="white" /></Box></Grid>
                 <Grid xs={4.5} >
                   <Grid xs={12} > <Box fontSize={'medium'} ml={1} fontWeight='500'>Appointments</Box></Grid>
@@ -1246,7 +1246,7 @@ const Dashboard = ({ counter }) => {
             </Grid>
 
             {/*------------------------------- Start of Table and Charts------------------------------ */}
-            <Grid xs={12} marginTop={3} mb={1} maxHeight={'20%'}>
+            <Grid xs={12} marginTop={3} mb={1} maxHeight={'20%'} paddingLeft={3} paddingRight={3}>
               <Box fontSize={'medium'} fontWeight={600} backgroundColor={'black'} color='white' padding={.5} >
                 filter data by month/year
                 <select defaultValue={"12"} onChange={(text) => [setMonth(text.target.value)]} style={{ height: '100%', padding: 2, marginLeft: 40, textAlign: 'center', width: 200, height: '15%' }}>
@@ -1273,7 +1273,7 @@ const Dashboard = ({ counter }) => {
               </Box>
             </Grid>
                  {/*-------------------------------NUMBER OF TOTAL DELIVERIES------------------------------ */}
-            <Grid xs={12}  >
+            <Grid xs={12} paddingLeft={3} paddingRight={3} >
 
               <Grid xs={12} sx={{ minHeight: flipped ? '10vh' : '10vh', minWidth: flipped ? '8%' : '8%', cursor: 'pointer' }} onClick={handleFlip}>
                 {flipped ? (
@@ -1447,7 +1447,7 @@ const Dashboard = ({ counter }) => {
       <Box sx={{ height: '100%', width: '100%' }}>
         {/* Your flipped content goes here */}
 
-        <Grid container component={Paper} item xs={12} padding={1} sx={{ minHeight: '15vh', minWidth: '8%', }}>
+        <Grid container component={Paper} item xs={12} padding={1} sx={{ minHeight: '15vh', minWidth: '70%', }}>
           <Grid containercomponent={Paper} xs={6}>
             <Grid xs={12} ml={1} > <Box fontSize={'medium'} ml={1} fontWeight='600' sx={{ justifyContent: 'center', alignItems: 'center' }}></Box> <Box >Gender</Box></Grid>
             <Grid xs={12}> <Box fontSize='1.5em' ml={1} fontWeight='700' color={'#4E4B66'}>{todMal}</Box> <Box >Male</Box></Grid>
