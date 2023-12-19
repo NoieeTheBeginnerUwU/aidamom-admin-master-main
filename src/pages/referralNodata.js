@@ -7,9 +7,14 @@ import './referralForm.css';
 import ssb from './ssb.jpg'
 import { useState, useRef } from 'react';   
 import moment from 'moment';
+import { useReactToPrint } from 'react-to-print';
 
-export default referralNoData = () => {
 
+const referralNoData = () => {
+
+
+
+    
     const [referralForm, setreferralForm]=useState(
         {
             to:"",
@@ -222,12 +227,15 @@ dischargeMedication:"",
     )
 
 
+
+     
+console.log(referralForm)
     
 
-return (
+  return (
     
 
-<div className="container" style={{width:'100%',height:'100%',backgroundColor:'red'}}>
+    <div className="container">
 <div >
     <label>To:
 <input name="to" id= "to" type = "text" style={{width:"45%", border:"none", borderBottom:"1px solid black"}} onChange={(text)=> setreferralForm(prev => {return {...prev,to:text.target.value}})}/>
@@ -949,3 +957,4 @@ return (
   );
 }
 
+export default referralNoData;

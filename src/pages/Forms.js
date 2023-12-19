@@ -79,10 +79,8 @@ const Reports = () => {
         >
           <MenuItem value={'PatientHistory'}>Patient History</MenuItem>
           <MenuItem value={'PatientDataForm'}>Patient DataForm</MenuItem>
-          <MenuItem value={'dischargesummary'}>Discharge Summary</MenuItem>
           <MenuItem value={'Consent'}>Consent Form</MenuItem>
           <MenuItem value={'ClinicalCoverSheet'}>Clinical Cover Sheet</MenuItem>
-          <MenuItem value={'Referral'}>Referral Form</MenuItem>
         </Select>
         <Button onClick={()=> handlePrint()} style={{backgroundColor:'skyblue',color:'white',fontWeight:600,marginTop:20}}>
             <FontAwesomeIcon icon={faPrint} size='1x' color='white'/>
@@ -111,12 +109,6 @@ const Reports = () => {
        {form === 'Consent' && (
         <div className='container' ref={ref}>
         < Consent/>
-        
-        </div>
-      )}
-       {form === 'Referral' && (
-        <div className='container' ref={ref}>
-        < referralNoData/>
         
         </div>
       )}
