@@ -42,7 +42,8 @@ const Systemreport = () => {
   useEffect(() => {
     setMonth(moment(new Date()).format("MM"))
   }, [])
-  const [year_, setYear_] = useState(2023);
+  let y = moment(new Date()).format("YYYY")
+  const [year_, setYear_] = useState(Number(y));
   const [summary, setSummary] = useState([]);
   let [todV, setTodV] = useState(0);
   let [todVM, setTodVM] = useState(0)
@@ -111,10 +112,10 @@ const Systemreport = () => {
         cwL++
       }
       if (doc.data().childWeightType === "normal") {
-        cwL++
+        cwN++
       }
       if (doc.data().childWeightType === "overweight") {
-        cwL++
+        cwO++
       }
     })
     setTodV(tod_m + tod_d + tod_n);
@@ -206,7 +207,7 @@ const Systemreport = () => {
         </div>
         <div style={{ width: '30%', height: '100%', backgroundColor: 'transparent', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
           <div onClick={() => [handlePrint()]} style={{ width: 120, height: 35, borderRadius: 5, backgroundColor: 'navy', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <p style={{ color: 'white', fontSize: 12 }}>generate report</p>
+            <p style={{ color: 'white', fontSize: 12 }}>print report</p>
           </div>
         </div>
       </div>
@@ -277,19 +278,19 @@ const Systemreport = () => {
                     <StyledTableCell component="th" scope="row">
                       Normal
                     </StyledTableCell>
-                    <StyledTableCell align="left">{rows[0].alive}</StyledTableCell>
+                    <StyledTableCell align="left">{childWeightN}</StyledTableCell>
                   </StyledTableRow>
                   <StyledTableRow>
                     <StyledTableCell component="th" scope="row">
                       Underweight
                     </StyledTableCell>
-                    <StyledTableCell align="left">{rows[0].stillbirth}</StyledTableCell>
+                    <StyledTableCell align="left">{childWeightL}</StyledTableCell>
                   </StyledTableRow>
                   <StyledTableRow>
                     <StyledTableCell component="th" scope="row">
                       Overweight
                     </StyledTableCell>
-                    <StyledTableCell align="left">{rows[0].miscarriage}</StyledTableCell>
+                    <StyledTableCell align="left">{childWeightO}</StyledTableCell>
                   </StyledTableRow>
 
                 </TableBody>
@@ -325,19 +326,19 @@ const Systemreport = () => {
                     <StyledTableCell component="th" scope="row">
                       Doctor
                     </StyledTableCell>
-                    <StyledTableCell align="left">{rows[0].alive}</StyledTableCell>
+                    <StyledTableCell align="left">{todVD}</StyledTableCell>
                   </StyledTableRow>
                   <StyledTableRow>
                     <StyledTableCell component="th" scope="row">
                       Nurse
                     </StyledTableCell>
-                    <StyledTableCell align="left">{rows[0].stillbirth}</StyledTableCell>
+                    <StyledTableCell align="left">{todVN}</StyledTableCell>
                   </StyledTableRow>
                   <StyledTableRow>
                     <StyledTableCell component="th" scope="row">
                       Midwife
                     </StyledTableCell>
-                    <StyledTableCell align="left">{rows[0].miscarriage}</StyledTableCell>
+                    <StyledTableCell align="left">{todVM}</StyledTableCell>
                   </StyledTableRow>
                   <StyledTableRow>
                     <StyledTableCell component="th" scope="row" style={{ fontWeight: 800, fontSize: '16px', }}>

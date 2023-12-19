@@ -755,10 +755,10 @@ const Dashboard = ({ counter }) => {
         cwL++
       }
       if (doc.data().childWeightType === "normal") {
-        cwL++
+        cwN++
       }
       if (doc.data().childWeightType === "overweight") {
-        cwL++
+        cwO++
       }
     })
     setTodV(tod_m + tod_d + tod_n);
