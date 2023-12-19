@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import rhupic from './rhupic.jpg'
 import daetlogo from './daet logo.jpg'
 import './dischargeSummary.css'; // Assuming you have a CSS file named dischargesummary.css
+import moment from 'moment';
 
 
 const theme = createTheme({
@@ -16,7 +17,7 @@ const theme = createTheme({
     }
   });
 
-const DischargeSummary = ({selectedRow}) => {
+const DischargeSummary = ({selectedRow, discharge}) => {
 
   const containerStyle = {
     fontSize: '12px',
@@ -28,7 +29,8 @@ const DischargeSummary = ({selectedRow}) => {
 
   };
 
-  alert(selectedRow.userFname)
+  console.log(selectedRow.userDob)
+  console.log(discharge)
 
   return (
     <ThemeProvider theme={theme}>
@@ -58,15 +60,15 @@ const DischargeSummary = ({selectedRow}) => {
             <td colspan="3" className="normal">
               <div>
                 <label> NAME : </label>
-                <input type="text" id="name" className="long"  style={{ width: '46%' }}  class="centered-input" />
+                <input type="text" id="name" value={selectedRow.userFname +" "+ selectedRow.userMname[0]+", "+selectedRow.userLname} className="long"  style={{ width: '46%' }}  class="centered-input" />
                 <label>AGE:</label>
-                <input type="number" className="short" class="centered-input"  style={{ width: '11%' }} />
+                <input type="number" value={moment(new Date()).diff(moment(selectedRow.userDob),'years')} className="short" class="centered-input"  style={{ width: '11%' }} />
                 <label> STATUS : </label>
-                <input type="text" id="status" className="medium" style={{ width: '24%' }} class="centered-input"  />
+                <input type="text" id="status" value={selectedRow.userCivilStatus} className="medium" style={{ width: '24%' }} class="centered-input"  />
               </div>
               <div>
                 <label> ADDRESS : </label>
-                <input type="text" id="address" className="verylong" style={{ width: '90%' }} class="centered-input" />
+                <input type="text" id="address" value={selectedRow.userBarangay+ ", "+ selectedRow.userTown+", "+selectedRow.userProvince} className="verylong" style={{ width: '90%' }} class="centered-input" />
               </div>
               <div>
                 <label> DATE ADMITTED : </label>
@@ -76,7 +78,7 @@ const DischargeSummary = ({selectedRow}) => {
                 <label>P : </label>
                 <input type="text" id="p" className="short"  style={{ width: '10%' }} class="centered-input" />
                 <label> BLOOD TYPE: </label>
-                <input type="bloodtype" id="dateadmitted" className="medium"  style={{ width: '18%' }} class="centered-input"  />
+                <input type="bloodtype" id="dateadmitted" value={selectedRow.userBloodType} className="medium"  style={{ width: '18%' }} class="centered-input"  />
               </div>
               <div>
                 <label> DATE DELIVERED : </label>
@@ -141,7 +143,7 @@ const DischargeSummary = ({selectedRow}) => {
                 <br />
                 <label>FINAL DIAGNOSIS</label>
                 <br />
-                <textarea cols="55" rows="5" class='centered-input'></textarea>
+                <textarea value={discharge.finalDiagnosis} cols="55" rows="5" class='centered-input'></textarea>
               </div>
             </td>
             <td>
@@ -174,17 +176,17 @@ const DischargeSummary = ({selectedRow}) => {
               <textarea id="homemedication" cols="90" rows="3" class="centered-input" ></textarea>
               <br />
               <label>FOLLOW-UP CHECK-UP :</label>
-              <input type="date"  id="followup" style={{ width: '20%' }} class="centered-input" />
+              <input type="date"  id="followup" value={discharge.followUpCheckup} style={{ width: '20%' }} class="centered-input" />
                
               <br />
               <br />
               <label>ATTENDING PHYSICIAN :</label>
-              <input type="text" id="attendingphysician" style={{ width: '290px' }} class="centered-input" />
+              <input type="text" id="attendingphysician" value={discharge.attendingPhysician} style={{ width: '290px' }} class="centered-input" />
               <label>DELIVERED BY :</label>
-              <input type="text" id="deliveredby" style={{ width: '150px' }} class="centered-input"  />
+              <input type="text" id="deliveredby" value={discharge.deliveredBy} style={{ width: '150px' }} class="centered-input"  />
               <br />
               <label>NURSE ON DUTY :</label>
-              <input type="text" id="nurseonduty" style={{ width: '84%' }} class="centered-input" />
+              <input type="text" id="nurseonduty" value={discharge.nurseOnDuty} style={{ width: '84%' }} class="centered-input" />
             </td>
           </tr>
         </table>
