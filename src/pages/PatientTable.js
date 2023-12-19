@@ -1229,7 +1229,7 @@ function PatientTable({ handleSubmit, userData }) {
             userChildTypeOfDelivery1: discharge.typeOfDelivery,
             userChildBirthOutcome1: "Alive",
             userChildNumberOfChildDelivered1: 1,
-            userChildComplication1: "none",
+            userChildComplication1: discharge.complication,
           })
         }
         if (count === 1) {
@@ -1238,7 +1238,7 @@ function PatientTable({ handleSubmit, userData }) {
             userChildTypeOfDelivery2: discharge.typeOfDelivery,
             userChildBirthOutcome2: "Alive",
             userChildNumberOfChildDelivered1: 1,
-            userChildComplication2: "none",
+            userChildComplication2: discharge.complication,
           })
         }
         if (count === 2) {
@@ -1247,7 +1247,7 @@ function PatientTable({ handleSubmit, userData }) {
             userChildTypeOfDelivery3: discharge.typeOfDelivery,
             userChildBirthOutcome3: "Alive",
             userChildNumberOfChildDelivered3: 1,
-            userChildComplication3: "none",
+            userChildComplication3: discharge.complication,
           })
         }
         if (count === 3) {
@@ -1256,7 +1256,7 @@ function PatientTable({ handleSubmit, userData }) {
             userChildTypeOfDelivery4: discharge.typeOfDelivery,
             userChildBirthOutcome4: "Alive",
             userChildNumberOfChildDelivered4: 1,
-            userChildComplication4: "none",
+            userChildComplication4: discharge.complication,
           })
         }
         handleOpenChildDetails()
@@ -1551,7 +1551,7 @@ function PatientTable({ handleSubmit, userData }) {
                                               <TableCell>{selectedRow.userChildDateOfDelivery1}</TableCell>
                                               <TableCell>{selectedRow.userChildTypeOfDelivery1}</TableCell>
                                               <TableCell>{selectedRow.userChildBirthOutcome1}</TableCell>
-                                              <TableCell>{selectedRow.userChildNumberOfChildDelivered1}</TableCell>
+                                              <TableCell>{1}</TableCell>
                                               <TableCell>{selectedRow.userChildComplication1}</TableCell>
                                             </TableRow>
                                           }
@@ -1562,7 +1562,7 @@ function PatientTable({ handleSubmit, userData }) {
                                               <TableCell>{selectedRow.userChildDateOfDelivery2}</TableCell>
                                               <TableCell>{selectedRow.userChildTypeOfDelivery2}</TableCell>
                                               <TableCell>{selectedRow.userChildBirthOutcome2}</TableCell>
-                                              <TableCell>{selectedRow.userChildNumberOfChildDelivered2}</TableCell>
+                                              <TableCell>{1}</TableCell>
                                               <TableCell>{selectedRow.userChildComplication2}</TableCell>
                                             </TableRow>
                                           }
@@ -1573,7 +1573,7 @@ function PatientTable({ handleSubmit, userData }) {
                                               <TableCell>{selectedRow.userChildDateOfDelivery3}</TableCell>
                                               <TableCell>{selectedRow.userChildTypeOfDelivery3}</TableCell>
                                               <TableCell>{selectedRow.userChildBirthOutcome3}</TableCell>
-                                              <TableCell>{selectedRow.userChildNumberOfChildDelivered3}</TableCell>
+                                              <TableCell>{1}</TableCell>
                                               <TableCell>{selectedRow.userChildComplication3}</TableCell>
                                             </TableRow>
                                           }
@@ -2201,15 +2201,15 @@ function PatientTable({ handleSubmit, userData }) {
                                   {isMotherSummary ? 'Toggle for Discharge Summary Child' : 'Toggle for Discharge Summary Mother'}
                                 </Button>
                                 <Box>
-                                  <Button size='large' variant='contained' onClick={handleClickOpen} padding={1} style={{ width: '100px', margin: '10px'  }}>
-                                    <PrintRounded fontSize='medium' />
+                                  <Button size='large' variant='contained' onClick={()=> handlePrint()} padding={1} style={{ width: '100px', margin: '10px'  }}>
+                                    <PrintRounded fontSize='medium'/>
                                     Print
                                   </Button>
                                 </Box>
                                 </Box> 
                                 </Grid>
                                 <Grid xs={8}>
-                                <Box >
+                                <Box ref={ref}>
                                   {isMotherSummary ? <DischargeSummary discharge={discharge} selectedRow={selectedRow}/> : <DischargeSummaryNewborn selectedRow={selectedRow} discharge={discharge}/>}
                                 </Box>
                                 {/* Other components */}
